@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Weadives</string>
+    <string name="btnHorario">Horario</string>
+    <string name="btnAñadirNotificacion">Añadir Notificación</string>
+    <string name="a_adir_notificaci_n">Añadir Notificación</string>
+    <string name="horarios">Horarios</string>
+    <string name="todo">TODO</string>
 </resources>
