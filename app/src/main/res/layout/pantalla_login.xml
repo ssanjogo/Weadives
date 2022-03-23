@@ -3,20 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme = "@style/Theme.AppCompat.Light.Dialog"
+    android:background="@color/fondo">
+
+    <ImageView
+        android:id="@+id/btn_home2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/boton_home"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/txt_LogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/log_in"
+        android:text="@string/logIn"
         android:textSize="24sp"
         app:autoSizeMaxTextSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.211" />
+        app:layout_constraintVertical_bias="0.211"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/txt_Correo"
@@ -28,7 +42,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.009"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_LogIn" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_LogIn"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/txt_contraseña"
@@ -36,11 +51,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="44dp"
-        android:text="@string/cotrase_a"
+        android:text="@string/password2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.009"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Correo" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_Correo"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/etA_correo"
@@ -48,14 +64,15 @@
         android:layout_height="48dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/dummy_gmail_com"
+        android:hint="@string/dummycorreo"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.732"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.332" />
+        app:layout_constraintVertical_bias="0.332"
+        android:textColorHint="@color/grey"/>
 
     <EditText
         android:id="@+id/etP_contraseña"
@@ -63,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:ems="10"
-        android:hint="@string/etP_Contraseña"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,7 +89,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_LogIn"
         app:layout_constraintVertical_bias="0.206"
-        android:autofillHints="" />
+        android:autofillHints=""
+        android:textColorHint="@color/grey"/>
 
     <CheckBox
         android:id="@+id/chkb_mantenerSession"
@@ -84,7 +102,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintVertical_bias="0.526"
+        android:textColor="@color/black"
+        android:buttonTint="@color/black"/>
 
     <Button
         android:id="@+id/btn_registrarse"
@@ -98,19 +118,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.68"
-        android:background="@drawable/button_rounded_border"/>
+        android:background="@drawable/button_rounded"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:text="@string/btn_log_in"
+        android:text="@string/btn_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.991"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.68"
-        android:background="@drawable/button_rounded"/>
+        android:background="@drawable/button_rounded"
+        android:textColor="@color/white"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

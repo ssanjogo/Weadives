@@ -17,6 +17,7 @@ public class PantallaLogIn extends AppCompatActivity {
     private TextView txt_LogIn, txt_Correo, txt_contraseña;
     private EditText etA_correo, etP_contraseña;
     private CheckBox chkb_mantenerSession;
+    private ImageView btn_home2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +31,16 @@ public class PantallaLogIn extends AppCompatActivity {
         EditText etA_correo = findViewById(R.id.etA_correo);
         EditText etP_contraseña = findViewById(R.id.etP_contraseña);
         CheckBox chkb_mantenerSession = findViewById(R.id.chkb_mantenerSession);
+        ImageView btn_home2 = findViewById(R.id.btn_home2);
 
         Intent intent = getIntent();
 
+        btn_registrarse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent register = new Intent(getApplicationContext(), PantallaRegistro.class);
+                startActivity(register);
+            }
+        });
     }
 }

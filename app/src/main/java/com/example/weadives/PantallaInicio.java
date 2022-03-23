@@ -18,9 +18,10 @@ import android.widget.Toast;
 
 public class PantallaInicio extends AppCompatActivity {
 
-    ImageView Imagen_superior;
-    Bitmap results, maskbitmap;
-    Button btn_invisible;
+    private ImageView Imagen_superior;
+    private Bitmap results, maskbitmap;
+    private Button btn_invisible;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

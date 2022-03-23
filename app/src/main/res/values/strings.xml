@@ -1,16 +1,19 @@
 <resources>
     <string name="app_name">Weadives</string>
-    <string name="btnHorario">Horario</string>
-    <string name="btnAñadirNotificacion">Añadir Notificación</string>
-    <string name="a_adir_notificaci_n">Añadir Notificación</string>
+    <string name="AñadirNotificacion">Añadir Notificación</string>
     <string name="horarios">Horarios</string>
+    <string name="TODO">TODO</string>
     <string name="todo">TODO</string>
-    <string name="etP_Contraseña">***********</string>
-    <string name="dummy_gmail_com">dummy@gmail.com</string>
+    <string name="password">***********</string>
+    <string name="password2">Cotraseña:</string>
+    <string name="dummycorreo">dummy@gmail.com</string>
     <string name="correo">Correo:</string>
-    <string name="cotrase_a">Cotraseña:</string>
-    <string name="log_in">LOG IN</string>
-    <string name="btn_log_in">Log In</string>
+    <string name="logIn">LOG IN</string>
+    <string name="btn_login">Log In</string>
     <string name="btn_registrarse">Registrarse</string>
     <string name="mantener_sessi_n_iniciada">Mantener sessión iniciada</string>
+    <string name="registro">REGISTRO</string>
+    <string name="nombre">Nombre:</string>
+    <string name="nombre2">Nombre</string>
+    <string name="confirmar">Confirmar</string>
 </resources>

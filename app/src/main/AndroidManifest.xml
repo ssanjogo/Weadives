@@ -26,6 +26,10 @@
             android:name=".PantallaLogIn"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".PantallaRegistro"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
