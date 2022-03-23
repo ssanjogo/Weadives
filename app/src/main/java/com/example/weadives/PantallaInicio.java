@@ -2,6 +2,7 @@ package com.example.weadives;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -9,7 +10,10 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class PantallaInicio extends AppCompatActivity {
 
@@ -20,9 +24,27 @@ public class PantallaInicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_inicio);
+        LinearLayout layout = findViewById(R.id.LinearMainLayout);
         Imagen_superior = findViewById(R.id.imageview1);
-
         Bitmap finalMasking = MaskingProcess();
+
+        Imagen_superior.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent testIntent = new Intent(getApplicationContext(), PantallaPrincipal.class);
+                startActivity(testIntent);
+            }
+        });
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent testIntent = new Intent(getApplicationContext(), PantallaPrincipal.class);
+                startActivity(testIntent);
+            }
+        });
+
+
     }
 
     private Bitmap MaskingProcess() {
@@ -47,12 +69,10 @@ public class PantallaInicio extends AppCompatActivity {
                 paint.setXfermode(null);
                 paint.setStyle(Paint.Style.STROKE);
             }
-            } catch (OutOfMemoryError outOfMemoryError) {
+        } catch (OutOfMemoryError outOfMemoryError) {
             outOfMemoryError.printStackTrace();
         }
         Imagen_superior.setImageBitmap(results);
         return results;
     }
-
-
 }
