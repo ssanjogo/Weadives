@@ -9,14 +9,14 @@
     android:background="@drawable/test2"
     android:gravity="top"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".PantallaInicio">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageview1"
+            android:id="@+id/img_inicio"
             android:layout_width="387dp"
             android:layout_height="675dp"
             android:layout_marginTop="-10dp"
@@ -30,7 +30,7 @@
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/invisible"
+            android:id="@+id/btn_invisible"
             android:layout_width="1039dp"
             android:layout_height="952dp"
             android:layout_marginStart="-730dp"
@@ -39,8 +39,8 @@
             android:rotation="-54"
             android:text="@string/TODO"
             android:visibility="visible"
-            app:layout_constraintStart_toStartOf="@+id/imageview1"
-            app:layout_constraintTop_toTopOf="@+id/imageview1"
+            app:layout_constraintStart_toStartOf="@+id/img_inicio"
+            app:layout_constraintTop_toTopOf="@+id/img_inicio"
             tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

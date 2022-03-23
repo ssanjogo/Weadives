@@ -10,14 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name=".PantallaInicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PantallaPrincipal"
+            android:exported="false" >
+        </activity>
+
     </application>
 
 </manifest>
