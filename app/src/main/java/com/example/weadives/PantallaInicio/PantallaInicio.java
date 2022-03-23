@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.PantallaInicio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
+import com.example.weadives.R;
 
 public class PantallaInicio extends AppCompatActivity {
 

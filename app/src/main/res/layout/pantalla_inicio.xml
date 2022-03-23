@@ -9,7 +9,7 @@
     android:background="@drawable/test2"
     android:gravity="top"
     android:orientation="vertical"
-    tools:context=".PantallaInicio">
+    tools:context=".PantallaInicio.PantallaInicio">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

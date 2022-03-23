@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.PantallaRegistro;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.weadives.R;
 
 public class PantallaRegistro extends AppCompatActivity {
 

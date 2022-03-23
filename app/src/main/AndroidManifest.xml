@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".PantallaInicio"
+            android:name=".PantallaInicio.PantallaInicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,15 +19,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PantallaPrincipal"
+            android:name=".PantallaPrincipal.PantallaPrincipal"
             android:exported="false">
         </activity>
         <activity
-            android:name=".PantallaLogIn"
+            android:name=".PantallaLogIn.PantallaLogIn"
             android:exported="false">
         </activity>
         <activity
-            android:name=".PantallaRegistro"
+            android:name=".PantallaRegistro.PantallaRegistro"
             android:exported="false">
         </activity>
     </application>

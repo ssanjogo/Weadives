@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.PantallaPrincipal;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.weadives.PantallaLogIn.PantallaLogIn;
+import com.example.weadives.R;
 
 public class PantallaPrincipal extends AppCompatActivity {
 

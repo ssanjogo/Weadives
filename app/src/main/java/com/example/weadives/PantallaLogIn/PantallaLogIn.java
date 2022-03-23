@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.PantallaLogIn;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.weadives.PantallaRegistro.PantallaRegistro;
+import com.example.weadives.R;
 
 public class PantallaLogIn extends AppCompatActivity {
 
