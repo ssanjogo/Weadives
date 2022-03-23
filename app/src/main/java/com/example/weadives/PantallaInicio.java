@@ -11,39 +11,56 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class PantallaInicio extends AppCompatActivity {
 
-    private ImageView Imagen_superior,Imagen_inferior;
-    private Bitmap results, maskbitmap;
-
+    ImageView Imagen_superior;
+    Bitmap results, maskbitmap;
+    Button btn_invisible;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_inicio);
-        LinearLayout layout = findViewById(R.id.LinearMainLayout);
-        Imagen_superior = findViewById(R.id.imageview1);
+        LinearLayout layout =findViewById(R.id.LinearMainLayout);
+        Imagen_superior = findViewById(R.id.img_inicio);
+        btn_invisible = findViewById(R.id.btn_invisible);
         Bitmap finalMasking = MaskingProcess();
-
-        Imagen_superior.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent testIntent = new Intent(getApplicationContext(), PantallaPrincipal.class);
-                startActivity(testIntent);
-            }
-        });
-
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent testIntent = new Intent(getApplicationContext(), PantallaPrincipal.class);
-                startActivity(testIntent);
+                Toast toast = Toast.makeText(getApplicationContext(), "Viajando a pantalla principal", Toast.LENGTH_SHORT);
+                toast.show();
+                try {
+                    Intent testIntent = new Intent(getApplicationContext(), PantallaPrincipal.class);
+                    startActivity(testIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast toast2 = Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT);
+                    toast2.show();
+                }
+
+
             }
         });
 
+        btn_invisible.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Viajando a pantalla de mapa", Toast.LENGTH_SHORT);
+                toast.show();
+                try {
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast toast2 = Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT);
+                    toast2.show();
+                }
+            }
+        });
 
     }
 
@@ -69,10 +86,12 @@ public class PantallaInicio extends AppCompatActivity {
                 paint.setXfermode(null);
                 paint.setStyle(Paint.Style.STROKE);
             }
-        } catch (OutOfMemoryError outOfMemoryError) {
+            } catch (OutOfMemoryError outOfMemoryError) {
             outOfMemoryError.printStackTrace();
         }
         Imagen_superior.setImageBitmap(results);
         return results;
     }
+
+
 }
