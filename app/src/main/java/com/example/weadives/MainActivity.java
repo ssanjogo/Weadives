@@ -9,7 +9,10 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     ImageView Imagen_superior,Imagen_inferior;
@@ -19,10 +22,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LinearLayout layout =findViewById(R.id.LinearMainLayout);
         Imagen_superior = findViewById(R.id.imageview1);
-
-
         Bitmap finalMasking = MaskingProcess();
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Background", Toast.LENGTH_SHORT);
+                toast.show();
+
+            }
+        });
+        Imagen_superior.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Imagen", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
     }
 
     private Bitmap MaskingProcess() {
