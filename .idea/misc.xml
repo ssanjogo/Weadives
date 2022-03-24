@@ -3,7 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/drawable/button_rounded.xml" value="0.1875" />
+        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/drawable/button_rounded_black.xml" value="0.1875" />
+        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/activity_mapa.xml" value="0.264" />
+        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/fragment_maps.xml" value="0.17447916666666666" />
         <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_inicio.xml" value="0.22554347826086957" />
+        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_login.xml" value="0.1984375" />
+        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_principal.xml" value="0.1984375" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.335" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/button_rounded.xml" value="0.194" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/button_rounded_border.xml" value="0.194" />

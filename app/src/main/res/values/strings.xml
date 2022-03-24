@@ -16,4 +16,5 @@
     <string name="nombre">Nombre:</string>
     <string name="nombre2">Nombre</string>
     <string name="confirmar">Confirmar</string>
+    <string name="title_activity_pantalla_mapa">PantallaMapa</string>
 </resources>

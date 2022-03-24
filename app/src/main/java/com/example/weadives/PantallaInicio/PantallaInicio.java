@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.weadives.PantallaMapa.MapaActivity;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 
@@ -57,7 +58,8 @@ public class PantallaInicio extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Viajando a pantalla de mapa", Toast.LENGTH_SHORT);
                 toast.show();
                 try {
-
+                    Intent testIntent = new Intent(getApplicationContext(), MapaActivity.class);
+                    startActivity(testIntent);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast toast2 = Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT);
