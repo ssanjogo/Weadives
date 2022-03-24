@@ -3,12 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_inicio.xml" value="0.22554347826086957" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.335" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/button_rounded.xml" value="0.194" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/button_rounded_border.xml" value="0.194" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/ic_launcher_background.xml" value="0.335" />
+        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/layout_border.xml" value="0.253" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/area_usuario.xml" value="0.1" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_inicio.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_login.xml" value="0.33" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_principal.xml" value="0.33" />

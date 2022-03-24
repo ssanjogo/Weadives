@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weadives.AreaUsuario.AreaUsuario;
+import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 
 public class PantallaRegistro extends AppCompatActivity {
@@ -35,6 +37,22 @@ public class PantallaRegistro extends AppCompatActivity {
         ImageView btn_home3 = findViewById(R.id.btn_home3);
 
         Intent intent = getIntent();
+
+        btn_home3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
+            }
+        });
+
+        btn_confirmar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                startActivity(areaUsuario);
+            }
+        });
 
     }
 }

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weadives.AreaUsuario.AreaUsuario;
+import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
 
@@ -38,11 +40,27 @@ public class PantallaLogIn extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        btn_home2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
+            }
+        });
+
         btn_registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent register = new Intent(getApplicationContext(), PantallaRegistro.class);
                 startActivity(register);
+            }
+        });
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                startActivity(areaUsuario);
             }
         });
     }

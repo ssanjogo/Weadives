@@ -30,6 +30,10 @@
             android:name=".PantallaRegistro.PantallaRegistro"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".AreaUsuario.AreaUsuario"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

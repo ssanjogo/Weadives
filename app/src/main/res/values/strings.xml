@@ -16,4 +16,6 @@
     <string name="nombre">Nombre:</string>
     <string name="nombre2">Nombre</string>
     <string name="confirmar">Confirmar</string>
+    <string name="code">burcar por codigo</string>
+    <string name="nombre_de_perfil">Nombre de perfil</string>
 </resources>
