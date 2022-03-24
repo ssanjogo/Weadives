@@ -18,4 +18,6 @@
     <string name="confirmar">Confirmar</string>
     <string name="code">burcar por codigo</string>
     <string name="nombre_de_perfil">Nombre de perfil</string>
+    <string name="title_activity_pantalla_mapa">PantallaMapa</string>
+    <string name="gestion_notificaciones">Gestion Notificaciones</string>
 </resources>
