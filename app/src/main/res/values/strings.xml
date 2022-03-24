@@ -15,9 +15,11 @@
     <string name="registro">REGISTRO</string>
     <string name="nombre">Nombre:</string>
     <string name="nombre2">Nombre</string>
-    <string name="confirmar">Confirmar</string>
     <string name="code">burcar por codigo</string>
     <string name="nombre_de_perfil">Nombre de perfil</string>
     <string name="title_activity_pantalla_mapa">PantallaMapa</string>
     <string name="gestion_notificaciones">Gestion Notificaciones</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="gesti_n_de_notificaciones_de_inundacion">Gestión de notificaciones de inundacion</string>
+
 </resources>

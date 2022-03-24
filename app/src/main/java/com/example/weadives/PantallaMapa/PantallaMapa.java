@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.weadives.PantallaGestorInundaciones.PantallaGestorInundaciones;
 import com.example.weadives.R;
 import com.example.weadives.databinding.PantallaMapaBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,9 +49,9 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_gestorNotificaciones.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                /*
-                Intent testIntent = new Intent(getApplicationContext(), PantallaMapa.class);
-                startActivity(testIntent);*/
+
+                Intent testIntent = new Intent(getApplicationContext(), PantallaGestorInundaciones.class);
+                startActivity(testIntent);
             }
         });
     }
