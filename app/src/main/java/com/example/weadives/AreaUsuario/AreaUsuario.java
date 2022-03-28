@@ -9,9 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weadives.PantallaInicio.PantallaInicio;
+import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
 import com.example.weadives.R;
 
 public class AreaUsuario extends AppCompatActivity {
@@ -32,7 +35,7 @@ public class AreaUsuario extends AppCompatActivity {
         ImageView btn_añadir = findViewById(R.id.btn_añadir);
         ImageView img_perfil = findViewById(R.id.img_perfil);
         RecyclerView rv_llistaUsuarios = findViewById(R.id.rv_llistaUsuarios);
-
+        ConstraintLayout constraintLayout=findViewById(R.id.constraintLayout);
         Intent intent = getIntent();
 
         btn_home4.setOnClickListener(new View.OnClickListener(){
@@ -40,6 +43,13 @@ public class AreaUsuario extends AppCompatActivity {
             public void onClick(View view){
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
+            }
+        });
+        constraintLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent pantallaMiperfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);
+                startActivity(pantallaMiperfil);
             }
         });
 
