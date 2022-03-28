@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 
@@ -44,9 +45,11 @@ public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerVie
         btn_config.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //TODO
+                Intent ajustePerfil = new Intent(getApplicationContext(), AjustesPerfil.class);
+                startActivity(ajustePerfil);
             }
         });
+
         ArrayList<String> animalNames = new ArrayList<>();
         animalNames.add("Horse");
         animalNames.add("Cow");

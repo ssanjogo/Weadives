@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PantallaMiPerfil.PantallaMiPerfil">
+    tools:context=".PantallaMiPerfil.PantallaMiPerfil"
+    android:theme = "@style/Theme.AppCompat.Light.Dialog"
+    android:background="@color/fondo"
+    >
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -79,10 +83,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_llistaAjustes"
-        android:layout_width="320dp"
-        android:layout_height="495dp"
-        app:layoutManager="LinearLayoutManager"
+        android:layout_width="312dp"
+        android:layout_height="445dp"
         android:scrollbars="vertical"
+        app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
