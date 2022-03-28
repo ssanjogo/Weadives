@@ -9,9 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.PantallaInicio.PantallaInicio;
+import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
 import com.example.weadives.R;
 
 public class AjustesPerfil extends AppCompatActivity {
@@ -26,7 +25,19 @@ public class AjustesPerfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ajustes_perfil);
         Button btn_guardarCambios = findViewById(R.id.btn_guardarCambios);
+        TextView txt_correo = findViewById(R.id.txt_correo);
+        TextView txt_nombre2 = findViewById(R.id.txt_nombre2);
+        TextView txt_contraseña3 = findViewById(R.id.txt_contraseña3);
+        TextView txt_nombrePerfil2 = findViewById(R.id.txt_nombrePerfil2);
+        TextView txt_codigo2 = findViewById(R.id.txt_codigo2);
+        EditText etA_correo3 = findViewById(R.id.etA_correo3);
+        EditText etP_contraseña3 = findViewById(R.id.etP_contraseña3);
+        EditText etN_nombrepersona2 = findViewById(R.id.etN_nombrepersona2);;
         ImageView btn_home6 = findViewById(R.id.btn_home6);
+        ImageView img_perfil = findViewById(R.id.img_perfil);
+        ImageView btn_edtitarN = findViewById(R.id.btn_edtitarN);
+        ImageView btn_editarC = findViewById(R.id.btn_editarC);
+        ImageView btn_editarP = findViewById(R.id.btn_editarP);
 
         Intent intent = getIntent();
 
@@ -41,10 +52,9 @@ public class AjustesPerfil extends AppCompatActivity {
         btn_guardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                startActivity(areaUsuario);
+                Intent miPerfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);
+                startActivity(miPerfil);
             }
         });
-
     }
 }

@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".PantallaMiPerfil.PantallaMiPerfil"
     android:theme = "@style/Theme.AppCompat.Light.Dialog"
-    android:background="@color/fondo"
-    >
+    android:background="@color/fondo">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -89,8 +88,9 @@
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.484"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

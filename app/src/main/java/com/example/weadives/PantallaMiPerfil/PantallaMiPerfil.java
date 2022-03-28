@@ -29,10 +29,12 @@ public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_mi_perfil);
-        btn_home = findViewById(R.id.btn_home7);
+        ImageView btn_home = findViewById(R.id.btn_home7);
         ImageView img_perfil = findViewById(R.id.img_perfil2);
         RecyclerView recyclerView = findViewById(R.id.rv_llistaAjustes);
-        btn_config = findViewById(R.id.btn_config);
+        ImageView btn_config = findViewById(R.id.btn_config);
+
+        Intent intent = getIntent();
 
 
         btn_home.setOnClickListener(new View.OnClickListener(){

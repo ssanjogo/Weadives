@@ -55,6 +55,9 @@
         <activity
             android:name=".AreaUsuario.AreaUsuario"
             android:exported="false" />
+        <activity
+            android:name=".AjustesPerfil.AjustesPerfil"
+            android:exported="false" />
     </application>
 
 </manifest>
