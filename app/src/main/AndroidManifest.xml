@@ -64,6 +64,9 @@
         <activity
             android:name=".SeleccionDeAjuste.SeleccionDeAjuste"
             android:exported="false" />
+        <activity
+            android:name=".PantallaDeHorarios.PantallaDeHorarios"
+            android:exported="false" />
     </application>
 
 </manifest>

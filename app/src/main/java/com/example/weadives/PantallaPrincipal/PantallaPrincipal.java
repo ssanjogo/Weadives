@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.ConfiguracionDePreferencias.ConfiguracionDePreferencias;
+import com.example.weadives.PantallaDeHorarios.PantallaDeHorarios;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.R;
 import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
@@ -60,6 +61,14 @@ public class PantallaPrincipal extends AppCompatActivity {
             public void onClick(View view){
                 Intent configuracionParametros = new Intent(getApplicationContext(), ConfiguracionDePreferencias.class);
                 startActivity(configuracionParametros);
+            }
+        });
+
+        btnHorario.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent pantallaHorarios = new Intent(getApplicationContext(), PantallaDeHorarios.class);
+                startActivity(pantallaHorarios);
             }
         });
 
