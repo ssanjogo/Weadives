@@ -58,6 +58,12 @@
         <activity
             android:name=".AjustesPerfil.AjustesPerfil"
             android:exported="false" />
+        <activity
+            android:name=".ConfiguracionDePreferencias.ConfiguracionDePreferencias"
+            android:exported="false" />
+        <activity
+            android:name=".SeleccionDeAjuste.SeleccionDeAjuste"
+            android:exported="false" />
     </application>
 
 </manifest>

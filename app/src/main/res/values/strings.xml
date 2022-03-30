@@ -24,4 +24,9 @@
     <string name="editar">editar</string>
     <string name="_4432">#4432</string>
     <string name="guardar_cambios">Guardar Cambios</string>
+    <string name="guardar">Guardar</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="mostrar_en_perfil">Mostrar en perfil</string>
+    <string name="gestionar_parametros">Gestionar Parametros</string>
+    <string name="confirmar_parametros">Confirmar Parametros</string>
 </resources>

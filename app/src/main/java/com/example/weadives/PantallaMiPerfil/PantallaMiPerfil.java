@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
 
-
     private ImageView img_perfil, btn_home, btn_config;
     private TextView txt_nombrePerfil, txt_codigo;
     private RecyclerView recyclerView;
