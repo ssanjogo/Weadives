@@ -15,5 +15,18 @@
     <string name="registro">REGISTRO</string>
     <string name="nombre">Nombre:</string>
     <string name="nombre2">Nombre</string>
+    <string name="code">burcar por codigo</string>
+    <string name="nombre_de_perfil">Nombre de perfil</string>
+    <string name="title_activity_pantalla_mapa">PantallaMapa</string>
+    <string name="gestion_notificaciones">Gestion Notificaciones</string>
     <string name="confirmar">Confirmar</string>
+    <string name="gesti_n_de_notificaciones_de_inundacion">Gestión de notificaciones de inundacion</string>
+    <string name="editar">editar</string>
+    <string name="_4432">#4432</string>
+    <string name="guardar_cambios">Guardar Cambios</string>
+    <string name="guardar">Guardar</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="mostrar_en_perfil">Mostrar en perfil</string>
+    <string name="gestionar_parametros">Gestionar Parametros</string>
+    <string name="confirmar_parametros">Confirmar Parametros</string>
 </resources>

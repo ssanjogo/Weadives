@@ -4,23 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".PantallaMiPerfil.PantallaMiPerfil"
     android:theme = "@style/Theme.AppCompat.Light.Dialog"
     android:background="@color/fondo">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="300dp"
-        android:layout_height="150dp"
+        android:layout_width="289dp"
+        android:layout_height="107dp"
+        android:background="@drawable/layout_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.215"
-        android:background="@drawable/layout_border">
+        app:layout_constraintVertical_bias="0.132">
 
         <ImageView
-            android:id="@+id/img_perfil"
+            android:id="@+id/img_perfil2"
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -28,10 +30,10 @@
             app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/imagen_de_perfil"/>
+            app:srcCompat="@drawable/imagen_de_perfil" />
 
         <TextView
-            android:id="@+id/txt_nombrePerfil"
+            android:id="@+id/txt_nombrePerfil2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@android:string/unknownName"
@@ -39,26 +41,26 @@
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_perfil"
+            app:layout_constraintStart_toEndOf="@+id/img_perfil2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.415" />
 
         <TextView
-            android:id="@+id/txt_codigo"
+            android:id="@+id/txt_codigo2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="#4432"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.493"
-            app:layout_constraintStart_toEndOf="@+id/img_perfil"
+            app:layout_constraintHorizontal_bias="0.517"
+            app:layout_constraintStart_toEndOf="@+id/img_perfil2"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.618" />
+            app:layout_constraintVertical_bias="0.715"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/btn_home4"
+        android:id="@+id/btn_home7"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="24dp"
@@ -69,40 +71,26 @@
         android:contentDescription="@string/todo" />
 
     <ImageView
-        android:id="@+id/btn_añadir"
+        android:id="@+id/btn_config"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/boton_anadir" />
-
-    <EditText
-        android:id="@+id/etT_buscarPorCodigo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/code"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_añadir"
-        app:layout_constraintHorizontal_bias="0.04"
-        app:layout_constraintStart_toEndOf="@+id/btn_home4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        android:textColorHint="@color/grey"/>
+        app:srcCompat="@drawable/boton_ajustes" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_llistaUsuarios"
-        android:layout_width="300dp"
-        android:layout_height="350dp"
+        android:id="@+id/rv_llistaAjustes"
+        android:layout_width="312dp"
+        android:layout_height="445dp"
+        android:scrollbars="vertical"
+        app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.484" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

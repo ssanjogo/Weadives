@@ -10,6 +10,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
+            android:name=".PantallaMiPerfil.PantallaMiPerfil"
+            android:exported="false" />
+        <activity
+            android:name=".PantallaGestorInundaciones.PantallaGestorInundaciones"
+            android:exported="false" />
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
+
+             To get one, follow the directions here:
+
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_API_KEY" />
+
+        <activity
+            android:name=".PantallaMapa.PantallaMapa"
+            android:exported="false"
+            android:label="@string/title_activity_pantalla_mapa" />
+        <activity
             android:name=".PantallaInicio.PantallaInicio"
             android:exported="true">
             <intent-filter>
@@ -20,16 +45,28 @@
         </activity>
         <activity
             android:name=".PantallaPrincipal.PantallaPrincipal"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".PantallaLogIn.PantallaLogIn"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".PantallaRegistro.PantallaRegistro"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
+        <activity
+            android:name=".AreaUsuario.AreaUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".AjustesPerfil.AjustesPerfil"
+            android:exported="false" />
+        <activity
+            android:name=".ConfiguracionDePreferencias.ConfiguracionDePreferencias"
+            android:exported="false" />
+        <activity
+            android:name=".SeleccionDeAjuste.SeleccionDeAjuste"
+            android:exported="false" />
+        <activity
+            android:name=".PantallaDeHorarios.PantallaDeHorarios"
+            android:exported="false" />
     </application>
 
 </manifest>
