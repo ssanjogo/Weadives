@@ -40,19 +40,12 @@ public class PantallaPrincipal extends AppCompatActivity {
 
         final Context context;
         final Resources resources;
-
         context = LocaleHelper.setLocale(PantallaPrincipal.this, cargarPreferencias());
         resources = context.getResources();
         btnHorario.setText(resources.getString(R.string.horarios));
         btnAñadirNotificacion.setText((resources.getString(R.string.AñadirNotificacion)));
         btn_gestionarParametros.setText((resources.getString(R.string.gestionar_parametros)));
 
-        /*
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        String idioma = sharedPref.getString("idioma","default");
-
-        Toast toast2 = Toast.makeText(getApplicationContext(), idioma, Toast.LENGTH_SHORT);
-        toast2.show();*/
 
         Intent intent = getIntent();
 

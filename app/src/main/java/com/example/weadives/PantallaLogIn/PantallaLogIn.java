@@ -1,6 +1,9 @@
 package com.example.weadives.PantallaLogIn;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +15,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
+import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
+import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
 
@@ -37,6 +42,16 @@ public class PantallaLogIn extends AppCompatActivity {
         EditText etP_contraseña = findViewById(R.id.etP_contraseña);
         CheckBox chkb_mantenerSession = findViewById(R.id.chkb_mantenerSession);
         ImageView btn_home2 = findViewById(R.id.btn_home2);
+
+        final Context context;
+        final Resources resources;
+        context = LocaleHelper.setLocale(this, cargarPreferencias());
+        resources = context.getResources();
+        txt_Correo.setText(resources.getString(R.string.correo));
+        txt_contraseña.setText(resources.getString(R.string.password2));
+        chkb_mantenerSession.setText(resources.getString(R.string.mantener_sessi_n_iniciada));
+        btn_registrarse.setText(resources.getString(R.string.btn_registrarse));
+
 
         Intent intent = getIntent();
 
@@ -63,5 +78,16 @@ public class PantallaLogIn extends AppCompatActivity {
                 startActivity(areaUsuario);
             }
         });
+    }
+    private void guardarPreferencias(String string) {
+        SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("idioma",string);
+        editor.commit();
+    }
+
+    private String cargarPreferencias() {
+        SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
+        return preferencias.getString("idioma","en");
     }
 }

@@ -2,19 +2,19 @@
     <string name="id">en</string>
     <string name="language">English</string>
     <string name="app_name">Weadives</string>
-    <string name="AñadirNotificacion">Añadir Notificación</string>
-    <string name="horarios">Horarios</string>
+    <string name="AñadirNotificacion">Add notification</string>
+    <string name="horarios">Schedules</string>
     <string name="TODO">TODO</string>
     <string name="todo">TODO</string>
     <string name="password">***********</string>
-    <string name="password2">Cotraseña:</string>
+    <string name="password2">Password:</string>
     <string name="dummycorreo">dummy@gmail.com</string>
-    <string name="correo">Correo:</string>
+    <string name="correo">Mail Adress:</string>
     <string name="logIn">LOG IN</string>
     <string name="btn_login">Log In</string>
-    <string name="btn_registrarse">Registrarse</string>
-    <string name="mantener_sessi_n_iniciada">Mantener sessión iniciada</string>
-    <string name="registro">REGISTRO</string>
+    <string name="btn_registrarse">Sign up</string>
+    <string name="mantener_sessi_n_iniciada">Save credentials</string>
+    <string name="registro">Sign up</string>
     <string name="nombre">Nombre:</string>
     <string name="nombre2">Nombre</string>
     <string name="code">burcar por codigo</string>
@@ -29,6 +29,6 @@
     <string name="guardar">Guardar</string>
     <string name="notificaciones">Notificaciones</string>
     <string name="mostrar_en_perfil">Mostrar en perfil</string>
-    <string name="gestionar_parametros">Gestionar Parametros</string>
-    <string name="confirmar_parametros">Confirmar Parametros</string>
+    <string name="gestionar_parametros">Modify Parameters</string>
+    <string name="confirmar_parametros">Confirm Parameters</string>
 </resources>
