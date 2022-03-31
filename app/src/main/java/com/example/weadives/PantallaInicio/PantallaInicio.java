@@ -2,7 +2,9 @@ package com.example.weadives.PantallaInicio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -29,11 +31,23 @@ public class PantallaInicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("idioma",getString(R.string.language));
+        editor.apply();
+
+
+
         setContentView(R.layout.pantalla_inicio);
         LinearLayout layout =findViewById(R.id.LinearMainLayout);
         Imagen_superior = findViewById(R.id.img_inicio);
         btn_invisible = findViewById(R.id.btn_invisible);
         Bitmap finalMasking = MaskingProcess();
+
+
+
+
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
