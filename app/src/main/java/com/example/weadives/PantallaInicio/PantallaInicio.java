@@ -37,19 +37,6 @@ public class PantallaInicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("idioma",getString(R.string.id));
-
-        System.out.println(this.getPreferences(Context.MODE_PRIVATE));
-        String idioma = sharedPref.getString("idioma","default");
-        System.out.println(idioma);
-        editor.apply();
-        System.out.println(getResources().getString(R.string.horarios));
-        Context con=LocaleHelper.setLocale(this, "en");
-        System.out.println(con.getResources().getString(R.string.horarios));
-        Context con=LocaleHelper.setLocale(this, "es");
-        System.out.println(con.getResources().getString(R.string.horarios));*/
 
 
 

@@ -1,6 +1,9 @@
 package com.example.weadives.PantallaRegistro;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
+import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 
@@ -36,6 +40,16 @@ public class PantallaRegistro extends AppCompatActivity {
         EditText etN_nombrepersona = findViewById(R.id.etN_nombrepersona);
         ImageView btn_home3 = findViewById(R.id.btn_home3);
 
+        final Context context;
+        final Resources resources;
+        context = LocaleHelper.setLocale(this, cargarPreferencias());
+        resources = context.getResources();
+        txt_correo2.setText(resources.getString(R.string.correo));
+        txt_contraseña2.setText(resources.getString(R.string.password2));
+        txt_nombre.setText(resources.getString(R.string.nombre));
+        etN_nombrepersona.setText(resources.getString(R.string.nombre2));
+        btn_confirmar.setText(resources.getString(R.string.confirmar));
+
         Intent intent = getIntent();
 
         btn_home3.setOnClickListener(new View.OnClickListener(){
@@ -54,5 +68,9 @@ public class PantallaRegistro extends AppCompatActivity {
             }
         });
 
+    }
+    private String cargarPreferencias() {
+        SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
+        return preferencias.getString("idioma","en");
     }
 }
