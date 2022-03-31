@@ -1,4 +1,5 @@
 <resources>
+    <string name="id">en</string>
     <string name="language">English</string>
     <string name="app_name">Weadives</string>
     <string name="AñadirNotificacion">Añadir Notificación</string>

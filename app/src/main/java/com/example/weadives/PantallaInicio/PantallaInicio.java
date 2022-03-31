@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,13 +15,17 @@ import android.graphics.PorterDuffXfermode;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaMapa.PantallaMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
+
+import java.util.Locale;
 
 public class PantallaInicio extends AppCompatActivity {
 
@@ -32,10 +37,19 @@ public class PantallaInicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        /*SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("idioma",getString(R.string.language));
+        editor.putString("idioma",getString(R.string.id));
+
+        System.out.println(this.getPreferences(Context.MODE_PRIVATE));
+        String idioma = sharedPref.getString("idioma","default");
+        System.out.println(idioma);
         editor.apply();
+        System.out.println(getResources().getString(R.string.horarios));
+        Context con=LocaleHelper.setLocale(this, "en");
+        System.out.println(con.getResources().getString(R.string.horarios));
+        Context con=LocaleHelper.setLocale(this, "es");
+        System.out.println(con.getResources().getString(R.string.horarios));*/
 
 
 
@@ -44,7 +58,23 @@ public class PantallaInicio extends AppCompatActivity {
         Imagen_superior = findViewById(R.id.img_inicio);
         btn_invisible = findViewById(R.id.btn_invisible);
         Bitmap finalMasking = MaskingProcess();
+        ImageButton btn_en=findViewById(R.id.btn_en);
+        ImageButton btn_es=findViewById(R.id.btn_es);
 
+
+
+        btn_en.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                guardarPreferencias("en");
+            }
+        });
+        btn_es.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                guardarPreferencias("es");
+            }
+        });
 
 
 
@@ -82,6 +112,18 @@ public class PantallaInicio extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void guardarPreferencias(String string) {
+        SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("idioma",string);
+        editor.commit();
+    }
+
+    private String cargarPreferencias() {
+        SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
+        return preferencias.getString("idioma","en");
     }
 
     private Bitmap MaskingProcess() {

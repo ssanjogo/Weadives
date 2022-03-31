@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <string name="id">es</string>
     <string name="language">ESPAÑOL</string>
     <string name="app_name">Weadives</string>
     <string name="AñadirNotificacion">Añadir Notificación</string>

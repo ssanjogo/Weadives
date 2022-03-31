@@ -44,6 +44,31 @@
             app:layout_constraintTop_toTopOf="@+id/img_inicio"
             tools:visibility="visible" />
 
+        <LinearLayout
+            android:layout_width="146dp"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageButton
+                android:id="@+id/btn_en"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/TODO"
+                app:srcCompat="@drawable/england" />
+
+            <ImageButton
+                android:id="@+id/btn_es"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/TODO"
+                app:srcCompat="@drawable/spain" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
