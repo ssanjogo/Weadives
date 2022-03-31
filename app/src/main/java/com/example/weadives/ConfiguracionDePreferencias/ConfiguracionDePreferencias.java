@@ -1,6 +1,9 @@
 package com.example.weadives.ConfiguracionDePreferencias;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +13,10 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
+import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
 
@@ -37,6 +43,14 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        final Context context;
+        final Resources resources;
+        context = LocaleHelper.setLocale(this, cargarPreferencias());
+        resources = context.getResources();
+        btn_guardar.setText(resources.getString(R.string.guardar));
+        sw_notificaciones.setText(resources.getString(R.string.notificaciones));
+        sw_mostrarEnPerfil.setText(resources.getString(R.string.mostrar_en_perfil));
+
         btn_home8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,5 +66,9 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 startActivity(seleccionDeAjuste);
             }
         });
+    }
+    private String cargarPreferencias() {
+        SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
+        return preferencias.getString("idioma","en");
     }
 }

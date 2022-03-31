@@ -1,6 +1,9 @@
 package com.example.weadives.PantallaMapa;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +11,7 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaGestorInundaciones.PantallaGestorInundaciones;
 import com.example.weadives.R;
 import com.example.weadives.databinding.PantallaMapaBinding;
@@ -46,6 +50,11 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
             }
         });
         Button btn_gestorNotificaciones =findViewById(R.id.btn_gestorNotificaciones);
+        final Context context;
+        final Resources resources;
+        context = LocaleHelper.setLocale(this, cargarPreferencias());
+        resources = context.getResources();
+        btn_gestorNotificaciones.setText(resources.getString(R.string.gestion_notificaciones));
         btn_gestorNotificaciones.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -73,5 +82,9 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+    private String cargarPreferencias() {
+        SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
+        return preferencias.getString("idioma","en");
     }
 }

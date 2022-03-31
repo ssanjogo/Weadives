@@ -40,7 +40,7 @@ public class PantallaPrincipal extends AppCompatActivity {
 
         final Context context;
         final Resources resources;
-        context = LocaleHelper.setLocale(PantallaPrincipal.this, cargarPreferencias());
+        context = LocaleHelper.setLocale(this, cargarPreferencias());
         resources = context.getResources();
         btnHorario.setText(resources.getString(R.string.horarios));
         btnAñadirNotificacion.setText((resources.getString(R.string.AñadirNotificacion)));
