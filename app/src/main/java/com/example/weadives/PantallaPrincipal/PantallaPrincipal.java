@@ -8,13 +8,16 @@ import android.media.midi.MidiOutputPort;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.ConfiguracionDePreferencias.ConfiguracionDePreferencias;
+import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaDeHorarios.PantallaDeHorarios;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
@@ -27,16 +30,18 @@ public class PantallaPrincipal extends AppCompatActivity {
     private ImageView btn_home, btn_social;
     private Spinner DesplegableMarcadores;
 
+    private DatabaseAdapter dbA;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_principal);
-        Button btnHorario = findViewById(R.id.btnHorario);
-        Button btnAñadirNotificacion = findViewById(R.id.btnAñadirNotificacion);
-        Button btn_gestionarParametros = findViewById(R.id.btn_gestionarParametros);
-        ImageView btn_home = findViewById(R.id.btn_home);
-        ImageView btn_social = findViewById(R.id.btn_social);
-        Spinner DesplegableMarcadores = findViewById(R.id.spn_desplegableMarcadores);
+        btnHorario = findViewById(R.id.btnHorario);
+        btnAñadirNotificacion = findViewById(R.id.btnAñadirNotificacion);
+        btn_gestionarParametros = findViewById(R.id.btn_gestionarParametros);
+        btn_home = findViewById(R.id.btn_home);
+        btn_social = findViewById(R.id.btn_social);
+        DesplegableMarcadores = findViewById(R.id.spn_desplegableMarcadores);
 
         final Context context;
         final Resources resources;
@@ -45,7 +50,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         btnHorario.setText(resources.getString(R.string.horarios));
         btnAñadirNotificacion.setText((resources.getString(R.string.AñadirNotificacion)));
         btn_gestionarParametros.setText((resources.getString(R.string.gestionar_parametros)));
-
+        dbA = new DatabaseAdapter();
 
         Intent intent = getIntent();
 
@@ -59,8 +64,10 @@ public class PantallaPrincipal extends AppCompatActivity {
         btn_social.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent LogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
-                startActivity(LogIn);
+
+                    Intent LogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
+                    startActivity(LogIn);
+
             }
         });
 
