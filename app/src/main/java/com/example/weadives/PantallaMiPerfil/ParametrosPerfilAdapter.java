@@ -17,8 +17,8 @@ import java.util.List;
 public class ParametrosPerfilAdapter extends RecyclerView.Adapter<ParametrosPerfilAdapter.ParametrosPerfilViewHolder> {
 
 
-    List<ParametrosClass> parametrosClassList;
-    Context context;
+    private List<ParametrosClass> parametrosClassList;
+    private Context context;
 
 
     public ParametrosPerfilAdapter(List<ParametrosClass> parametrosClassList, Context context) {

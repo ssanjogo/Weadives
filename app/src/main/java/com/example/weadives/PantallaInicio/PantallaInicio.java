@@ -1,11 +1,8 @@
 package com.example.weadives.PantallaInicio;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -20,12 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.weadives.LocaleHelper;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.weadives.PantallaMapa.PantallaMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
-
-import java.util.Locale;
 
 public class PantallaInicio extends AppCompatActivity {
 
@@ -36,10 +32,6 @@ public class PantallaInicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
         setContentView(R.layout.pantalla_inicio);
         LinearLayout layout =findViewById(R.id.LinearMainLayout);
         Imagen_superior = findViewById(R.id.img_inicio);

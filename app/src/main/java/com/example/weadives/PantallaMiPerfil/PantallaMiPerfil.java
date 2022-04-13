@@ -38,7 +38,7 @@ public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerVie
         ImageView btn_config = findViewById(R.id.btn_config);
 
         parametrosList = fillParametrosList();
-        System.out.println(parametrosList);
+
 
         RecyclerView recyclerView = findViewById(R.id.rv_llistaAjustes);
         //mejorar performance
