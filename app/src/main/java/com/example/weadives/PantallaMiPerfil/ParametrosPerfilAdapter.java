@@ -30,8 +30,7 @@ public class ParametrosPerfilAdapter extends RecyclerView.Adapter<ParametrosPerf
     @Override
     public ParametrosPerfilViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_parameter_list,parent,false);
-        ParametrosPerfilViewHolder holder = new ParametrosPerfilViewHolder(view);
-        return holder;
+        return new ParametrosPerfilViewHolder(view);
     }
 
     @Override
@@ -43,17 +42,13 @@ public class ParametrosPerfilAdapter extends RecyclerView.Adapter<ParametrosPerf
 
         //holder.txt_viento.setText(resources.getString(R.string.viento)+ " : ");
         //holder.txt_activityName.setText(resources.getString(R.string.NombreActividad) + " : ");
-        System.out.println("TEST ENTRA EN ONBIND");
-        System.out.println("Hay : "+getItemCount());
         holder.txt_viento.setText("Wind :");
-        System.out.println("1 ONBIND");
         holder.txt_userIdOutput.setText(Integer.toString(parametrosClassList.get(position).getUserID()));
-        System.out.println("2 ONBIND");
         holder.txt_activityName.setText("Activity Name : ");
         holder.txt_vientoOutput.setText(Float.toString(parametrosClassList.get(position).getViento()));
         holder.txt_activityNameOutput.setText(parametrosClassList.get(position).getNombreActividad());
         holder.txt_userId.setText("ID");
-        System.out.println("SALE EN ONBIND");
+
 
 
 
