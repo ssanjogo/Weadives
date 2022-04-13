@@ -81,6 +81,9 @@
         app:srcCompat="@drawable/boton_ajustes" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:divider="@drawable/mydivider"
+        android:dividerPadding="22dp"
+        android:showDividers="middle"
         android:id="@+id/rv_llistaAjustes"
         android:layout_width="312dp"
         android:layout_height="445dp"

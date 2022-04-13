@@ -31,4 +31,6 @@
     <string name="mostrar_en_perfil">Show Profile</string>
     <string name="gestionar_parametros">Modify Parameters</string>
     <string name="confirmar_parametros">Confirm Parameters</string>
+    <string name="viento">wind</string>
+    <string name="NombreActividad">Activity Name</string>
 </resources>
