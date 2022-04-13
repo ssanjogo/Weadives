@@ -3,14 +3,12 @@ package com.example.weadives.AreaUsuario;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weadives.PantallaInicio.PantallaInicio;
@@ -37,6 +35,9 @@ public class AreaUsuario extends AppCompatActivity {
         RecyclerView rv_llistaUsuarios = findViewById(R.id.rv_llistaUsuarios);
         ConstraintLayout constraintLayout=findViewById(R.id.constraintLayout);
         Intent intent = getIntent();
+
+
+
 
         btn_home4.setOnClickListener(new View.OnClickListener(){
             @Override

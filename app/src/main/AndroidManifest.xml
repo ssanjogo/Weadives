@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
+            android:name=".PantallaPerfilAmigo.PantallaPerfilAmigo"
+            android:exported="false" />
+        <activity
             android:name=".PantallaMiPerfil.PantallaMiPerfil"
             android:exported="false" />
         <activity

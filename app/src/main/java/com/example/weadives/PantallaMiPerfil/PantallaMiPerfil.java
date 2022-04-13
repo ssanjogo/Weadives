@@ -42,7 +42,7 @@ public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerVie
 
         RecyclerView recyclerView = findViewById(R.id.rv_llistaAjustes);
         //mejorar performance
-        //recyclerView.hasFixedSize();
+        recyclerView.hasFixedSize();
         //lineal layout
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

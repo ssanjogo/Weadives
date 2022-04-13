@@ -28,8 +28,8 @@ public class AjustesPerfil extends AppCompatActivity {
         TextView txt_correo = findViewById(R.id.txt_correo);
         TextView txt_nombre2 = findViewById(R.id.txt_nombre2);
         TextView txt_contraseña3 = findViewById(R.id.txt_contraseña3);
-        TextView txt_nombrePerfil2 = findViewById(R.id.txt_nombrePerfil2);
-        TextView txt_codigo2 = findViewById(R.id.txt_codigo2);
+        TextView txt_nombrePerfil2 = findViewById(R.id.txt_nombrePerfil3);
+        TextView txt_codigo2 = findViewById(R.id.txt_codigo3);
         EditText etA_correo3 = findViewById(R.id.etA_correo3);
         EditText etP_contraseña3 = findViewById(R.id.etP_contraseña3);
         EditText etN_nombrepersona2 = findViewById(R.id.etN_nombrepersona2);;

@@ -44,14 +44,10 @@ public class ParametrosPerfilAdapter extends RecyclerView.Adapter<ParametrosPerf
         //holder.txt_activityName.setText(resources.getString(R.string.NombreActividad) + " : ");
         holder.txt_viento.setText("Wind :");
         holder.txt_userIdOutput.setText(Integer.toString(parametrosClassList.get(position).getUserID()));
-        holder.txt_activityName.setText("Activity Name : ");
+        holder.txt_activityName.setText("Activity Name :");
         holder.txt_vientoOutput.setText(Float.toString(parametrosClassList.get(position).getViento()));
         holder.txt_activityNameOutput.setText(parametrosClassList.get(position).getNombreActividad());
         holder.txt_userId.setText("ID");
-
-
-
-
     }
 
     @Override
