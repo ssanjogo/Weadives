@@ -14,6 +14,7 @@ import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
@@ -28,20 +29,23 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     private ImageView btn_añadir2, btn_home8;
     private ScrollView scrollView2;
     private Switch sw_notificaciones, sw_mostrarEnPerfil;
+    private DatabaseAdapter dbA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuracion_de_preferencias);
-        Spinner spn_desplegableMarcadores2 = findViewById(R.id.spn_desplegableMarcadores2);
-        Button btn_guardar = findViewById(R.id.btn_guardar);
-        ImageView btn_añadir2 = findViewById(R.id.btn_añadir2);
-        ImageView btn_home8 = findViewById(R.id.btn_home8);
-        ScrollView scrollView2 = findViewById(R.id.scrollView2);
-        Switch sw_notificaciones = findViewById(R.id.sw_notificaciones);
-        Switch sw_mostrarEnPerfil = findViewById(R.id.sw_mostrarEnPerfil);
+        spn_desplegableMarcadores2 = findViewById(R.id.spn_desplegableMarcadores2);
+        btn_guardar = findViewById(R.id.btn_guardar);
+        btn_añadir2 = findViewById(R.id.btn_añadir2);
+        btn_home8 = findViewById(R.id.btn_home8);
+        scrollView2 = findViewById(R.id.scrollView2);
+        sw_notificaciones = findViewById(R.id.sw_notificaciones);
+        sw_mostrarEnPerfil = findViewById(R.id.sw_mostrarEnPerfil);
 
         Intent intent = getIntent();
+
+        dbA = DatabaseAdapter.getInstance();
 
         final Context context;
         final Resources resources;

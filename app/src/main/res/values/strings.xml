@@ -31,4 +31,5 @@
     <string name="mostrar_en_perfil">Show Profile</string>
     <string name="gestionar_parametros">Modify Parameters</string>
     <string name="confirmar_parametros">Confirm Parameters</string>
+    <string name="cerrar_sesión">Sing out</string>
 </resources>

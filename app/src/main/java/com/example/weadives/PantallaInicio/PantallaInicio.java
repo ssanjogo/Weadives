@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaMapa.PantallaMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
@@ -32,27 +33,11 @@ public class PantallaInicio extends AppCompatActivity {
     private ImageView Imagen_superior;
     private Bitmap results, maskbitmap;
     private Button btn_invisible;
+    private DatabaseAdapter dbA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("idioma",getString(R.string.id));
-
-        System.out.println(this.getPreferences(Context.MODE_PRIVATE));
-        String idioma = sharedPref.getString("idioma","default");
-        System.out.println(idioma);
-        editor.apply();
-        System.out.println(getResources().getString(R.string.horarios));
-        Context con=LocaleHelper.setLocale(this, "en");
-        System.out.println(con.getResources().getString(R.string.horarios));
-        Context con=LocaleHelper.setLocale(this, "es");
-        System.out.println(con.getResources().getString(R.string.horarios));*/
-
-
-
         setContentView(R.layout.pantalla_inicio);
         LinearLayout layout =findViewById(R.id.LinearMainLayout);
         Imagen_superior = findViewById(R.id.img_inicio);
@@ -61,7 +46,7 @@ public class PantallaInicio extends AppCompatActivity {
         ImageButton btn_en=findViewById(R.id.btn_en);
         ImageButton btn_es=findViewById(R.id.btn_es);
 
-
+        dbA = DatabaseAdapter.getInstance();
 
         btn_en.setOnClickListener(new View.OnClickListener() {
             @Override

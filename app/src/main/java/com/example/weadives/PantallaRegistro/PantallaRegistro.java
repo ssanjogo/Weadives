@@ -20,15 +20,14 @@ import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 
+import java.util.regex.Pattern;
+
 public class PantallaRegistro extends AppCompatActivity {
 
     private TextView txt_correo2, txt_nombre, txt_contraseña2, txt_registro;
     private EditText etA_correo2, etP_contraseña2, etN_nombrepersona;
     private ImageView btn_home3;
     private Button btn_confirmar;
-
-    private viewModelRegistro vmr;
-
     private DatabaseAdapter dbA;
 
 
@@ -36,15 +35,13 @@ public class PantallaRegistro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_registro);
-        Button btn_confirmar = findViewById(R.id.btn_confirmar);
-        EditText etA_correo2 = findViewById(R.id.etA_correo2);
-        EditText etP_contraseña2 = findViewById(R.id.etP_contraseña2);
-        EditText etN_nombrepersona = findViewById(R.id.etN_nombrepersona);
-        ImageView btn_home3 = findViewById(R.id.btn_home3);
-
+        btn_confirmar = findViewById(R.id.btn_confirmar);
+        etA_correo2 = findViewById(R.id.etA_correo2);
+        etP_contraseña2 = findViewById(R.id.etP_contraseña2);
+        etN_nombrepersona = findViewById(R.id.etN_nombrepersona);
+        btn_home3 = findViewById(R.id.btn_home3);
         Intent intent = getIntent();
-        vmr = new viewModelRegistro();
-        DatabaseAdapter dbA = new DatabaseAdapter();
+        dbA = DatabaseAdapter.getInstance();
 
         btn_home3.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -54,8 +51,6 @@ public class PantallaRegistro extends AppCompatActivity {
             }
         });
 
-
-
         btn_confirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,10 +58,10 @@ public class PantallaRegistro extends AppCompatActivity {
                 String correo = etA_correo2.getText().toString();
                 String contraseña = etP_contraseña2.getText().toString();
 
-                if (!vmr.validarEmail(correo)){
+                if (!validarEmail(correo)){
                     etA_correo2.setError("Email no válido");
                 }
-                String iduser = vmr.createUserID();
+                String iduser = createUserID();
 
                 if (dbA.addUser(nombre, correo, contraseña, iduser)){
                     Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
@@ -76,5 +71,17 @@ public class PantallaRegistro extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public String createUserID(){
+        int numero = dbA.getIDActual();
+        numero+=1;
+        dbA.setIDActual(String.valueOf(numero));
+        return (String.valueOf(numero));
+    }
+
+    public boolean validarEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 }

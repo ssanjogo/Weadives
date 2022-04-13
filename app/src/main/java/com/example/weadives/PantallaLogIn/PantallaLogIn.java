@@ -21,11 +21,12 @@ import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
+import com.google.android.gms.common.util.ScopeUtil;
 
 public class PantallaLogIn extends AppCompatActivity {
 
     private Button btn_registrarse, btn_login;
-    private TextView txt_LogIn, txt_Correo, txt_contraseña;
+    private TextView txt_LogIn, txt_Correo, txt_contraseña, txt_nombre, txt_id;
     private EditText etA_correo, etP_contraseña;
     private CheckBox chkb_mantenerSession;
     private ImageView btn_home2;
@@ -55,11 +56,20 @@ public class PantallaLogIn extends AppCompatActivity {
         txt_contraseña.setText(resources.getString(R.string.password2));
         chkb_mantenerSession.setText(resources.getString(R.string.mantener_sessi_n_iniciada));
         btn_registrarse.setText(resources.getString(R.string.btn_registrarse));
-        dbA = new DatabaseAdapter();
 
+        dbA = DatabaseAdapter.getInstance();
+
+        if(!dbA.currentUser()) {
+            if (cargarUser().equals("true")) {
+                Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                startActivity(areaUsuario);
+            }
+        }else {
+            dbA.singout();
+            etA_correo.setText(cargarCorreo());
+        }
 
         Intent intent = getIntent();
-
 
         btn_home2.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -80,14 +90,16 @@ public class PantallaLogIn extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Antes de llamar al metodo");
                 login = dbA.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
-                System.out.println("devuelve" + login);
+                if (chkb_mantenerSession.isChecked()){
+                    dbA.setLogInStatus(true);
+                    recordarUser();
+                    recordarCorreo(etA_correo.getText().toString());
+                }
                 if (login){
                     Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
                     startActivity(areaUsuario);
                 }
-
             }
         });
     }
@@ -102,5 +114,27 @@ public class PantallaLogIn extends AppCompatActivity {
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
+    }
+
+    private void recordarCorreo(String correo) {
+        SharedPreferences preferencias = getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("user",correo);
+        editor.commit();
+    }
+    private String cargarCorreo() {
+        SharedPreferences preferencias = getSharedPreferences("user",Context.MODE_PRIVATE);
+        return preferencias.getString("user","");
+    }
+
+    private void recordarUser() {
+        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("recuerda", "true");
+        editor.commit();
+    }
+    private String cargarUser() {
+        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
+        return preferencias.getString("recuerda","false");
     }
 }

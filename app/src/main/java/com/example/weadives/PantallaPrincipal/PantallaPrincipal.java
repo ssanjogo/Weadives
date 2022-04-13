@@ -50,7 +50,8 @@ public class PantallaPrincipal extends AppCompatActivity {
         btnHorario.setText(resources.getString(R.string.horarios));
         btnAñadirNotificacion.setText((resources.getString(R.string.AñadirNotificacion)));
         btn_gestionarParametros.setText((resources.getString(R.string.gestionar_parametros)));
-        dbA = new DatabaseAdapter();
+
+        dbA = DatabaseAdapter.getInstance();
 
         Intent intent = getIntent();
 
@@ -70,8 +71,6 @@ public class PantallaPrincipal extends AppCompatActivity {
 
             }
         });
-
-
 
         btn_gestionarParametros.setOnClickListener(new View.OnClickListener(){
             @Override
