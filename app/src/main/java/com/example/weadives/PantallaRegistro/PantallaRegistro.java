@@ -1,23 +1,30 @@
 package com.example.weadives.PantallaRegistro;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.LocaleHelper;
+import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
+
+import java.util.regex.Pattern;
 
 public class PantallaRegistro extends AppCompatActivity {
 
@@ -30,15 +37,11 @@ public class PantallaRegistro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_registro);
-        Button btn_confirmar = findViewById(R.id.btn_confirmar);
-        TextView txt_correo2 = findViewById(R.id.txt_correo2);
-        TextView txt_nombre = findViewById(R.id.txt_nombre);
-        TextView txt_contraseña2 = findViewById(R.id.txt_contraseña2);
-        TextView txt_registro = findViewById(R.id.txt_registro);
-        EditText etA_correo2 = findViewById(R.id.etA_correo2);
-        EditText etP_contraseña2 = findViewById(R.id.etP_contraseña2);
-        EditText etN_nombrepersona = findViewById(R.id.etN_nombrepersona);
-        ImageView btn_home3 = findViewById(R.id.btn_home3);
+        btn_confirmar = findViewById(R.id.btn_confirmar);
+        etA_correo2 = findViewById(R.id.etA_correo2);
+        etP_contraseña2 = findViewById(R.id.etP_contraseña2);
+        etN_nombrepersona = findViewById(R.id.etN_nombrepersona);
+        btn_home3 = findViewById(R.id.btn_home3);
 
         final Context context;
         final Resources resources;
@@ -51,6 +54,7 @@ public class PantallaRegistro extends AppCompatActivity {
         btn_confirmar.setText(resources.getString(R.string.confirmar));
 
         Intent intent = getIntent();
+        dbA = DatabaseAdapter.getInstance();
 
         btn_home3.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -63,11 +67,27 @@ public class PantallaRegistro extends AppCompatActivity {
         btn_confirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                startActivity(areaUsuario);
+                String nombre = etN_nombrepersona.getText().toString();
+                String correo = etA_correo2.getText().toString();
+                String contraseña = etP_contraseña2.getText().toString();
+
+                if (!validarEmail(correo)){
+                    etA_correo2.setError("Email no válido");
+                }
+
+                if (dbA.addUser(nombre, correo, contraseña)){
+                    Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                    startActivity(areaUsuario);
+                } else {
+                    etA_correo2.setError("Este email ya ha sido registrado.");
+                }
             }
         });
+    }
 
+    public boolean validarEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);

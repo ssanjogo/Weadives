@@ -33,4 +33,5 @@
     <string name="confirmar_parametros">Confirm Parameters</string>
     <string name="viento">wind</string>
     <string name="NombreActividad">Activity Name</string>
+    <string name="cerrar_sesión">Sing out</string>
 </resources>

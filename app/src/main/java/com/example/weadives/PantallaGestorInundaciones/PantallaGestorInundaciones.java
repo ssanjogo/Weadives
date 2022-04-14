@@ -12,15 +12,16 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.R;
 
 public class PantallaGestorInundaciones extends AppCompatActivity {
 
-
     private Button btn_confirmar;
     private ImageView btn_leave;
     private Spinner DesplegableMarcadores;
+    private DatabaseAdapter dbA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class PantallaGestorInundaciones extends AppCompatActivity {
         resources = context.getResources();
         txt_gestion.setText(resources.getString(R.string.gesti_n_de_notificaciones_de_inundacion));
         btn_confirmar.setText(resources.getString(R.string.confirmar));
+
+        dbA = DatabaseAdapter.getInstance();
 
         btn_leave.setOnClickListener(new View.OnClickListener(){
             @Override

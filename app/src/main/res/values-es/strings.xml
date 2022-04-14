@@ -34,4 +34,5 @@
     <string name="gestionar_parametros">Gestionar Parametros</string>
     <string name="confirmar_parametros">Confirmar Parametros</string>
     <string name="viento">viento</string>
+    <string name="cerrar_sesión">Cerrar sesión</string>
 </resources>

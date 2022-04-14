@@ -75,10 +75,10 @@
         android:textColorHint="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintHorizontal_bias="0.705"
         app:layout_constraintStart_toEndOf="@+id/txt_correo2"
         app:layout_constraintTop_toBottomOf="@+id/txt_registro"
-        app:layout_constraintVertical_bias="0.238" />
+        app:layout_constraintVertical_bias="0.23" />
 
     <EditText
         android:id="@+id/etP_contraseña2"
@@ -92,10 +92,10 @@
         android:textColorHint="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.295"
+        app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toEndOf="@+id/txt_contraseña2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.531" />
+        app:layout_constraintVertical_bias="0.524" />
 
     <EditText
         android:id="@+id/etN_nombrepersona"
@@ -107,10 +107,10 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/etA_correo2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintHorizontal_bias="0.818"
         app:layout_constraintStart_toEndOf="@+id/txt_nombre"
         app:layout_constraintTop_toBottomOf="@+id/txt_registro"
-        app:layout_constraintVertical_bias="0.463" />
+        app:layout_constraintVertical_bias="0.471" />
 
     <ImageView
         android:id="@+id/btn_home3"

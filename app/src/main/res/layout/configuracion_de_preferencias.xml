@@ -14,10 +14,10 @@
         android:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.391"
+        app:layout_constraintHorizontal_bias="0.403"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.144"
+        app:layout_constraintVertical_bias="0.166"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
@@ -69,11 +69,12 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="278dp"
-        android:layout_height="295dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="280dp"
+        android:layout_height="347dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/sw_notificaciones"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck">
 
@@ -85,10 +86,10 @@
         android:layout_height="30dp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/spn_desplegableMarcadores2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.818"
+        app:layout_constraintVertical_bias="0.833"
         app:srcCompat="@drawable/boton_anadir" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

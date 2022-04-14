@@ -53,7 +53,7 @@
         android:textColorHint="#546E7A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.258"
+        app:layout_constraintHorizontal_bias="0.328"
         app:layout_constraintStart_toEndOf="@+id/txt_nombre2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.411" />
@@ -102,7 +102,7 @@
         app:layout_constraintVertical_bias="0.103" />
 
     <TextView
-        android:id="@+id/txt_nombrePerfil3"
+        android:id="@+id/txt_nombrePerfil2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@android:string/unknownName"
@@ -116,7 +116,7 @@
         app:layout_constraintVertical_bias="0.216" />
 
     <TextView
-        android:id="@+id/txt_codigo3"
+        android:id="@+id/txt_codigo2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/_4432"
@@ -143,47 +143,15 @@
         android:id="@+id/img_perfil"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="120dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintBottom_toTopOf="@+id/etN_nombrepersona2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.262"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/imagen_de_perfil"
-        android:contentDescription="@string/todo" />
-
-    <ImageView
-        android:id="@+id/btn_edtitarN"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_editarC"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etN_nombrepersona2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.88"
-        app:srcCompat="@drawable/boton_editar"
-        android:contentDescription="@string/todo" />
-
-    <ImageView
-        android:id="@+id/btn_editarC"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_editarP"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etA_correo3"
-        app:srcCompat="@drawable/boton_editar"
-        android:contentDescription="@string/todo" />
-
-    <ImageView
-        android:id="@+id/btn_editarP"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginBottom="292dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etP_contraseña3"
-        app:srcCompat="@drawable/boton_editar"
-        android:contentDescription="@string/todo" />
+        app:layout_constraintVertical_bias="0.037"
+        app:srcCompat="@drawable/imagen_de_perfil" />
 
     <Button
         android:id="@+id/btn_guardarCambios"
