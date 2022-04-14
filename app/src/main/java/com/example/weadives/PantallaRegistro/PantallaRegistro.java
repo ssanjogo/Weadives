@@ -77,10 +77,13 @@ public class PantallaRegistro extends AppCompatActivity {
 
                 if (dbA.addUser(nombre, correo, contraseña)){
                     Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                    areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(areaUsuario);
+                    finish();
                 } else {
                     etA_correo2.setError("Este email ya ha sido registrado.");
                 }
+
             }
         });
     }

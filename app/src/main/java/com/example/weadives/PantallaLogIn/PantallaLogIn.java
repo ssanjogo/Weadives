@@ -98,8 +98,11 @@ public class PantallaLogIn extends AppCompatActivity {
                 }
                 if (login){
                     Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                    areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(areaUsuario);
+                    finish();
                 }
+
             }
         });
     }

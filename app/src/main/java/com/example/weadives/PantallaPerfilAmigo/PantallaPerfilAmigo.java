@@ -50,6 +50,10 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         mAdapter= new PublicacionesPerfilAdapter(publicacionList, PantallaPerfilAmigo.this);
         recyclerView.setAdapter(mAdapter);
 
+        Intent intent=getIntent();
+        String username=intent.getStringExtra("username");
+        txt_nombrePerfil.setText(username);
+
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){

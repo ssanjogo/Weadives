@@ -65,12 +65,14 @@ public class PantallaPrincipal extends AppCompatActivity {
         btn_social.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
-                    Intent LogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
-                    startActivity(LogIn);
-
+                Intent LogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
+                //LogIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(LogIn);
+                //finish();
             }
         });
+
+
 
         btn_gestionarParametros.setOnClickListener(new View.OnClickListener(){
             @Override

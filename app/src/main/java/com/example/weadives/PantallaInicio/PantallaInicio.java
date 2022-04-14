@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaMapa.PantallaMapa;
@@ -33,26 +35,10 @@ public class PantallaInicio extends AppCompatActivity {
     private ImageView Imagen_superior;
     private Bitmap results, maskbitmap;
     private Button btn_invisible;
-    private DatabaseAdapter dbA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("idioma",getString(R.string.id));
-
-        System.out.println(this.getPreferences(Context.MODE_PRIVATE));
-        String idioma = sharedPref.getString("idioma","default");
-        System.out.println(idioma);
-        editor.apply();
-        System.out.println(getResources().getString(R.string.horarios));
-        Context con=LocaleHelper.setLocale(this, "en");
-        System.out.println(con.getResources().getString(R.string.horarios));
-        Context con=LocaleHelper.setLocale(this, "es");
-        System.out.println(con.getResources().getString(R.string.horarios));*/
-
 
 
         setContentView(R.layout.pantalla_inicio);
@@ -63,7 +49,7 @@ public class PantallaInicio extends AppCompatActivity {
         ImageButton btn_en=findViewById(R.id.btn_en);
         ImageButton btn_es=findViewById(R.id.btn_es);
 
-        dbA = DatabaseAdapter.getInstance();
+
 
         btn_en.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +73,9 @@ public class PantallaInicio extends AppCompatActivity {
                 toast.show();
                 try {
                     Intent testIntent = new Intent(getApplicationContext(), PantallaPrincipal.class);
+                    //testIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(testIntent);
+                    //finish();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast toast2 = Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT);
