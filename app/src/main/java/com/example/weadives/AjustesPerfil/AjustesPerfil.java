@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
 import com.example.weadives.R;
@@ -38,7 +40,6 @@ public class AjustesPerfil extends AppCompatActivity {
         Intent intent = getIntent();
 
         dbA = DatabaseAdapter.getInstance();
-
         dbA.setName(etN_nombrepersona2);
 
         btn_home6.setOnClickListener(new View.OnClickListener(){
@@ -56,7 +57,6 @@ public class AjustesPerfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (etA_correo3.getText() != null && etN_nombrepersona2 != null && etP_contraseña3 != null){
-
 
                 }
                 Intent miPerfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);

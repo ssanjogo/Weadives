@@ -26,31 +26,27 @@ import com.example.weadives.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
+public class PantallaMiPerfil extends AppCompatActivity {
 
     private ImageView img_perfil, btn_home, btn_config;
     private TextView txt_nombrePerfil, txt_codigo;
     private RecyclerView recyclerView;
     private Button btn_cerrarSesion;
-    private MyRecyclerViewAdapter adapter;
     private DatabaseAdapter dbA;
-    MyRecyclerViewAdapter adapter;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<ParametrosClass> parametrosList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_mi_perfil);
-        ImageView btn_home = findViewById(R.id.btn_home7);
-        ImageView img_perfil = findViewById(R.id.img_perfil2);
-        ImageView btn_config = findViewById(R.id.btn_config);
 
         parametrosList = fillParametrosList();
 
 
-        RecyclerView recyclerView = findViewById(R.id.rv_llistaAjustes);
+        recyclerView = findViewById(R.id.rv_llistaAjustes);
         //mejorar performance
         recyclerView.hasFixedSize();
         //lineal layout
@@ -70,7 +66,6 @@ public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerVie
         Intent intent = getIntent();
 
         dbA = DatabaseAdapter.getInstance();
-
         dbA.setName(txt_nombrePerfil);
 
         btn_home.setOnClickListener(new View.OnClickListener(){
@@ -83,6 +78,7 @@ public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerVie
                 startActivity(pantallaInicio);
             }
         });
+
         btn_config.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -99,31 +95,6 @@ public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerVie
                 startActivity(pantallaLogIn);
             }
         });
-
-        ArrayList<String> animalNames = new ArrayList<>();
-        animalNames.add("Horse");
-        animalNames.add("Cow");
-        animalNames.add("Camel");
-        animalNames.add("Sheep");
-        animalNames.add("Goat");
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyRecyclerViewAdapter(this, animalNames);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
-
-
-
-
-
-
-
-        //ANTIGUO
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //adapter = new MyRecyclerViewAdapter(this, parametrosList);
-        //adapter.setClickListener(this);
-        //recyclerView.setAdapter(adapter);
-
-
     }
 
     private List<ParametrosClass> fillParametrosList() {
@@ -137,10 +108,5 @@ public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerVie
         parametrosList.add(new ParametrosClass("Pilota",2331, 5.1f,5.2f,5.3f,5.4f));
         parametrosList.add(new ParametrosClass("ORIND",9996, 5.1f,5.2f,5.3f,5.4f));
         return parametrosList;
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 }

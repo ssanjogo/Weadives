@@ -32,6 +32,7 @@ public class PantallaRegistro extends AppCompatActivity {
     private EditText etA_correo2, etP_contraseña2, etN_nombrepersona;
     private ImageView btn_home3;
     private Button btn_confirmar;
+    private DatabaseAdapter dbA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
