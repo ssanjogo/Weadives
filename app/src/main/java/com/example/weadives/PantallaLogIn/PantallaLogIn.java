@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
-import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
 
@@ -59,6 +58,7 @@ public class PantallaLogIn extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+
                 startActivity(pantallaInicio);
             }
         });
@@ -67,6 +67,7 @@ public class PantallaLogIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent register = new Intent(getApplicationContext(), PantallaRegistro.class);
+
                 startActivity(register);
             }
         });
@@ -75,7 +76,9 @@ public class PantallaLogIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(areaUsuario);
+                finish();
             }
         });
     }

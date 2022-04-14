@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,7 +63,9 @@ public class PantallaRegistro extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(areaUsuario);
+                finish();
             }
         });
 
