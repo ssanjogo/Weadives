@@ -101,18 +101,6 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_nombre2"
         app:layout_constraintVertical_bias="0.103" />
 
-    <TextView
-        android:id="@+id/txt_codigo2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/_4432"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.313" />
-
     <ImageView
         android:id="@+id/btn_home6"
         android:layout_width="30dp"
@@ -130,12 +118,12 @@
         android:layout_height="80dp"
         android:layout_marginTop="120dp"
         android:contentDescription="@string/todo"
-        app:layout_constraintBottom_toTopOf="@+id/txt_codigo2"
+        app:layout_constraintBottom_toTopOf="@+id/etN_nombrepersona2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.086"
+        app:layout_constraintVertical_bias="0.037"
         app:srcCompat="@drawable/imagen_de_perfil" />
 
     <Button

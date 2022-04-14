@@ -45,8 +45,6 @@ public class PantallaMiPerfil extends AppCompatActivity implements MyRecyclerVie
         dbA = DatabaseAdapter.getInstance();
 
         dbA.setName(txt_nombrePerfil);
-        dbA.setId(txt_codigo);
-
 
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override

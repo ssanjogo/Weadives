@@ -41,9 +41,7 @@ public class AjustesPerfil extends AppCompatActivity {
 
         dbA = DatabaseAdapter.getInstance();
 
-        dbA.setId(txt_codigo2);
         dbA.setName(etN_nombrepersona2);
-
 
         btn_home6.setOnClickListener(new View.OnClickListener(){
             @Override

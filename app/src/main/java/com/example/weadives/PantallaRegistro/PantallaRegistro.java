@@ -61,9 +61,8 @@ public class PantallaRegistro extends AppCompatActivity {
                 if (!validarEmail(correo)){
                     etA_correo2.setError("Email no válido");
                 }
-                String iduser = createUserID();
 
-                if (dbA.addUser(nombre, correo, contraseña, iduser)){
+                if (dbA.addUser(nombre, correo, contraseña)){
                     Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
                     startActivity(areaUsuario);
                 } else {
@@ -71,13 +70,6 @@ public class PantallaRegistro extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    public String createUserID(){
-        int numero = dbA.getIDActual();
-        numero+=1;
-        dbA.setIDActual(String.valueOf(numero));
-        return (String.valueOf(numero));
     }
 
     public boolean validarEmail(String email) {

@@ -32,7 +32,6 @@ public class AreaUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.area_usuario);
         txt_nombrePerfil = findViewById(R.id.txt_nombrePerfil);
-        txt_codigo = findViewById(R.id.txt_codigo);
         etT_buscarPorCodigo = findViewById(R.id.etT_buscarPorCodigo);
         btn_home4 = findViewById(R.id.btn_home4);
         btn_añadir = findViewById(R.id.btn_añadir);
@@ -45,7 +44,6 @@ public class AreaUsuario extends AppCompatActivity {
         dbA = DatabaseAdapter.getInstance();
 
         dbA.setName(txt_nombrePerfil);
-        dbA.setId(txt_codigo);
 
         btn_home4.setOnClickListener(new View.OnClickListener(){
             @Override

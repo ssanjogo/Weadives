@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class DatabaseAdapter extends Activity {
 
@@ -33,7 +34,7 @@ public class DatabaseAdapter extends Activity {
     //Atributos
     private DatabaseAdapter dbA;
     private boolean funciona = false, logIn = false, statusLogIn = false;
-    private String n, nombre;
+    private String n, nombre, uid;
 
     static DatabaseAdapter databaseAdapterInstance;
 
@@ -44,17 +45,17 @@ public class DatabaseAdapter extends Activity {
         return databaseAdapterInstance;
     }
 
-    public boolean addUser(String nombre, String correo, String contraseña, String iduser) {
+    public boolean addUser(String nombre, String correo, String contraseña) {
         mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    uid = mAuth.getCurrentUser().getUid();
                     Map<String, String> user = new HashMap<>();
                     user.put("Correo", correo);
                     user.put("Nombre", nombre);
-                    user.put("User ID", iduser);
 
-                    db.collection("Users").document(correo).set(user);
+                    db.collection("Users").document(uid).set(user);
                     funciona = true;
                 }
             }
@@ -74,45 +75,6 @@ public class DatabaseAdapter extends Activity {
             }
         });
         return logIn;
-    }
-
-    public boolean currentUser(){
-        return (mAuth.getCurrentUser() == null);
-    }
-
-    public void singout(){
-        mAuth.signOut();
-    }
-
-    public void setIDActual(String numeroActual){
-        db.collection("IdUserActual").document("numeroActual").set(numeroActual);
-    }
-
-    public int getIDActual(){
-        db.collection("IDs").document("idActual").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        n = document.getData().toString();
-                    }
-                }
-            }
-        });
-        return Integer.parseInt(n + 1);
-    }
-
-    public void setIDEliminados(String idEliminado){
-        db.collection("IDs").document().set(idEliminado);
-    }
-
-    public void solicitudAmistad(){
-
-    }
-
-    public void eliminarCuenta(){
-        mAuth.getCurrentUser().delete();
     }
 
     public void setName(TextView textView){
@@ -136,35 +98,24 @@ public class DatabaseAdapter extends Activity {
         });
     }
 
-    public void setId(TextView textView){
-        String correo = mAuth.getCurrentUser().getEmail();
-        db.collection("Users").document(correo).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        final String id = document.getString("User ID");
-                        textView.setText("#" + id);
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-    }
-
-
-
     public void setLogInStatus (boolean b){
         this.statusLogIn = b;
     }
 
     public boolean getLogInStatus(){
         return statusLogIn;
+    }
+
+    public void singout(){
+        mAuth.signOut();
+    }
+
+    public void eliminarCuenta(){
+        mAuth.getCurrentUser().delete();
+    }
+
+    public boolean currentUser(){
+        return (mAuth.getCurrentUser() == null);
     }
 
 }
