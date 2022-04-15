@@ -1,9 +1,11 @@
 package com.example.weadives.PantallaPerfilAmigo;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
     List<PublicacionClass> publicacionClassList;
     Context context;
 
+    LayoutInflater Linflater;
 
     public PublicacionesPerfilAdapter(List<PublicacionClass> publicacionClassList, Context context) {
         this.publicacionClassList = publicacionClassList;
@@ -31,6 +34,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
     public PublicacionesPerfilAdapter.PublicacionesPerfilViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_publicacion_list,parent,false);
+        Linflater=LayoutInflater.from(parent.getContext());
         PublicacionesPerfilViewHolder holder = new PublicacionesPerfilAdapter.PublicacionesPerfilViewHolder(view);
         return holder;
     }
@@ -52,6 +56,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             public void onClick(View view) {
                 Toast toast = Toast.makeText(context, "Comentarios", Toast.LENGTH_SHORT);
                 toast.show();
+                holder.createNewCommentListDialog();
 
             }
         });
@@ -93,6 +98,12 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
         ImageView btn_likes;
         ImageView btn_dislikes;
 
+
+        AlertDialog.Builder dialogBuilder;
+        AlertDialog dialog;
+        Button btn_test;
+
+
         public PublicacionesPerfilViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_activityName=itemView.findViewById(R.id.txt_activityName1);
@@ -107,6 +118,31 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             btn_comments=itemView.findViewById(R.id.imageView4);
             btn_likes=itemView.findViewById(R.id.imageView2);
             btn_dislikes=itemView.findViewById(R.id.imageView3);
+
+
+        }
+
+        public void createNewCommentListDialog(){
+
+            //Creamos el dialog
+            dialogBuilder = new AlertDialog.Builder(context);
+            View popupView=Linflater.inflate(R.layout.popup_listacomentarios,null);
+            //Definicion de los items
+            btn_test=popupView.findViewById(R.id.btn_test);
+
+            //Hacemos aparecer la ventana
+            dialogBuilder.setView(popupView);
+            dialog=dialogBuilder.create();
+            dialog.show();
+            //Metodos adicionales
+            btn_test.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast toast = Toast.makeText(context, "TestButton", Toast.LENGTH_SHORT);
+                    toast.show();
+                    dialog.dismiss();
+                }
+            });
         }
     }
 }
