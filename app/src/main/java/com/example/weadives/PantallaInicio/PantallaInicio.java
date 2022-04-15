@@ -1,11 +1,8 @@
 package com.example.weadives.PantallaInicio;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -22,13 +19,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weadives.DatabaseAdapter;
-import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaMapa.PantallaMapa;
+import com.example.weadives.PantallaPerfilAmigo.PantallaPerfilAmigo;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
-
-import java.util.Locale;
 
 public class PantallaInicio extends AppCompatActivity {
 
@@ -64,7 +58,8 @@ public class PantallaInicio extends AppCompatActivity {
             }
         });
 
-
+        Intent testIntent = new Intent(getApplicationContext(), PantallaPerfilAmigo.class);
+        startActivity(testIntent);
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

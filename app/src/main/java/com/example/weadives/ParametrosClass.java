@@ -4,12 +4,16 @@ public class ParametrosClass {
     private String nombreActividad;
     private float vientoMax;
     private float vientoMin;
+
     private float presionMax;
     private float presionMin;
+
     private float alturaOlaMax;
     private float alturaOlaMin;
+
     private float temperaturaMax;
     private float temperaturaMin;
+
     private int userID;
 
     public ParametrosClass(String nombreActividad,int userID, float vientoMax, float vientoMin, float presionMax, float presionMin, float alturaOlaMax, float alturaOlaMin, float temperaturaMax, float temperaturaMin) {
