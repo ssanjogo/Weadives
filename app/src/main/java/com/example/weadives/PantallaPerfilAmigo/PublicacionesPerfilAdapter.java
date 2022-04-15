@@ -1,16 +1,19 @@
 package com.example.weadives.PantallaPerfilAmigo;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weadives.R;
@@ -40,7 +43,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PublicacionesPerfilViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PublicacionesPerfilViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.txt_viento.setText("Wind :");
         holder.txt_activityName.setText("Activity Name :");
         holder.txt_vientoOutput.setText(Float.toString(publicacionClassList.get(position).getParametros().getViento()));
@@ -56,7 +59,8 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             public void onClick(View view) {
                 Toast toast = Toast.makeText(context, "Comentarios", Toast.LENGTH_SHORT);
                 toast.show();
-                holder.createNewCommentListDialog();
+                List commentList=publicacionClassList.get(position).getCommentInList();
+                holder.createNewCommentListDialog(commentList);
 
             }
         });
@@ -102,6 +106,15 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
         AlertDialog.Builder dialogBuilder;
         AlertDialog dialog;
         Button btn_test;
+        RecyclerView rv_commentList;
+        RecyclerView.Adapter mAdapter;
+        RecyclerView.LayoutManager layoutManager;
+
+
+        AlertDialog.Builder dialogBuilder2;
+        AlertDialog dialog2;
+        Button btn_addcomment;
+        EditText comment;
 
 
         public PublicacionesPerfilViewHolder(@NonNull View itemView) {
@@ -122,13 +135,24 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
 
         }
 
-        public void createNewCommentListDialog(){
+        public void createNewCommentListDialog(List<String> commentList){
 
             //Creamos el dialog
             dialogBuilder = new AlertDialog.Builder(context);
             View popupView=Linflater.inflate(R.layout.popup_listacomentarios,null);
+//___
             //Definicion de los items
             btn_test=popupView.findViewById(R.id.btn_test);
+            rv_commentList=popupView.findViewById(R.id.rv_commentList);
+            //mejorar performance
+            rv_commentList.hasFixedSize();
+            //lineal layout
+            layoutManager = new LinearLayoutManager(context);
+            rv_commentList.setLayoutManager(layoutManager);
+            //especificar adapter
+            mAdapter= new CommentListAdapter(commentList, context);
+            rv_commentList.setAdapter(mAdapter);
+
 
             //Hacemos aparecer la ventana
             dialogBuilder.setView(popupView);
@@ -140,7 +164,35 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
                 public void onClick(View view) {
                     Toast toast = Toast.makeText(context, "TestButton", Toast.LENGTH_SHORT);
                     toast.show();
-                    dialog.dismiss();
+                    createNewAddCommentDialog();
+                }
+            });
+
+
+        }
+
+
+        public void createNewAddCommentDialog(){
+
+            //Creamos el dialog
+            dialogBuilder2 = new AlertDialog.Builder(context);
+            View popupView2=Linflater.inflate(R.layout.popup_addcomment,null);
+
+            //Definicion de los items
+            btn_addcomment=popupView2.findViewById(R.id.btn_addcomment);
+            comment=popupView2.findViewById(R.id.txt_comment);
+            //Hacemos aparecer la ventana
+            dialogBuilder2.setView(popupView2);
+            dialog2=dialogBuilder2.create();
+            dialog2.show();
+
+            //Metodos adicionales
+            btn_addcomment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast toast = Toast.makeText(context, "Se ha añadido el comentario", Toast.LENGTH_SHORT);
+                    toast.show();
+                    dialog2.dismiss();
                 }
             });
         }

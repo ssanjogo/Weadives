@@ -72,7 +72,14 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         likeList1.put("0001",1);
         likeList1.put("0002",0);
         HashMap<String, String> comentariosList1=new HashMap<>();
-        comentariosList1.put("0000","HEY CHAVALE; NO VAMO?????");
+        comentariosList1.put("Carlos Chun","Oye, ta guapo etooo");
+        comentariosList1.put("Oscaroca","Esta guay para disfrutar del restaurante que hay al lado.");
+        comentariosList1.put("Mi pana miguel","Viva er beti");
+        comentariosList1.put("Racsor","Fumas?");
+        comentariosList1.put("Mikol","Jo parlo catalá");
+        comentariosList1.put("Sara","Totorooooo");
+        comentariosList1.put("Matt","Has visto como entrenar a tu dragon?");
+        comentariosList1.put("Septimus","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         publicacionList.add(new PublicacionClass(p1,likeList1,comentariosList1));
         ParametrosClass p2= new ParametrosClass("Dia de Playa", 11, 3.1f,3.2f,3.3f,3.4f);
         HashMap<String, Integer> likeList2=new HashMap<>();

@@ -20,7 +20,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.PantallaMapa.PantallaMapa;
-import com.example.weadives.PantallaPerfilAmigo.PantallaPerfilAmigo;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 
@@ -58,8 +57,6 @@ public class PantallaInicio extends AppCompatActivity {
             }
         });
 
-        Intent testIntent = new Intent(getApplicationContext(), PantallaPerfilAmigo.class);
-        startActivity(testIntent);
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

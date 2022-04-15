@@ -2,7 +2,9 @@ package com.example.weadives.PantallaPerfilAmigo;
 
 import com.example.weadives.ParametrosClass;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PublicacionClass {
@@ -41,6 +43,19 @@ public class PublicacionClass {
     public HashMap<String, Integer> getLikeList() {
         return likeList;
     }
+
+    public List<String> getCommentInList(){
+        ArrayList<String> list=new ArrayList<>();
+        String value;
+        String key;
+        for(Map.Entry<String, String> entry : comentariosList.entrySet()) {
+            key = entry.getKey();
+            value = entry.getValue();
+            list.add(key + "  \n"+value);
+        }
+        return list;
+    }
+
     public int getNumLikes(){
         int sum=0;
         int value;
