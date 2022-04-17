@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
@@ -79,15 +80,14 @@ public class PantallaRegistro extends AppCompatActivity {
                     etA_correo2.setError("Email no válido");
                 }
 
-                dbA.addUser(nombre, correo, contraseña);
-                        /*
+                if (dbA.addUser(nombre, correo, contraseña)){
                     Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
                     areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(areaUsuario);
                     finish();
                 } else {
                     etA_correo2.setError("Este email ya ha sido registrado.");
-                }*/
+                }
 
             }
         });

@@ -25,7 +25,7 @@ import com.example.weadives.R;
 
 public class PantallaInicio extends AppCompatActivity {
 
-    private ImageView Imagen_superior;
+    private ImageView Imagen_superior, btn_en, btn_es;
     private Bitmap results, maskbitmap;
     private Button btn_invisible;
 
@@ -39,8 +39,8 @@ public class PantallaInicio extends AppCompatActivity {
         Imagen_superior = findViewById(R.id.img_inicio);
         btn_invisible = findViewById(R.id.btn_invisible);
         Bitmap finalMasking = MaskingProcess();
-        ImageButton btn_en=findViewById(R.id.btn_en);
-        ImageButton btn_es=findViewById(R.id.btn_es);
+        btn_en = findViewById(R.id.btn_en);
+        btn_es = findViewById(R.id.btn_es);
 
 
 

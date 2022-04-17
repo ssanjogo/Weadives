@@ -3,6 +3,7 @@ package com.example.weadives.PantallaPerfilAmigo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
     private ImageView img_perfil, btn_home;
     private TextView txt_nombrePerfil, txt_codigo;
     private RecyclerView recyclerView;
+    private Button btn_añadirAmigo;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<PublicacionClass> publicacionList;
@@ -31,14 +33,12 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_perfil_amigo);
-        ImageView img_perfil = findViewById(R.id.img_perfil3);
-        ImageView btn_home = findViewById(R.id.btn_home11);
-        TextView txt_nombrePerfil= findViewById(R.id.txt_nombrePerfil3);
-        TextView txt_codigo = findViewById(R.id.txt_codigo3);
-
+        img_perfil = findViewById(R.id.img_perfil3);
+        btn_home = findViewById(R.id.btn_home11);
+        txt_nombrePerfil = findViewById(R.id.txt_nombrePerfil3);
+        btn_añadirAmigo = findViewById(R.id.btn_añadirAmigo);
 
         publicacionList = fillPublicacionList();
-
 
         RecyclerView recyclerView = findViewById(R.id.rv_llistaAjustes3);
         //mejorar performance
@@ -100,8 +100,6 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         comentariosList3.put("0001","---");
         comentariosList3.put("0021","---");
         publicacionList.add(new PublicacionClass(p3,likeList3,comentariosList3));
-
-
 
         return publicacionList;
     }

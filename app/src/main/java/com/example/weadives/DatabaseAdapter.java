@@ -47,7 +47,7 @@ public class DatabaseAdapter extends Activity {
         return databaseAdapterInstance;
     }
 
-    public void addUser(String nombre, String correo, String contraseña) {
+    public boolean addUser(String nombre, String correo, String contraseña) {
         mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -63,13 +63,11 @@ public class DatabaseAdapter extends Activity {
                     user.put("Solicitudes enviadas", "");
 
                     db.collection("Users").document(uid).set(user);
-                    Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                    areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(areaUsuario);
-                    finish();
+                    funciona = true;
                 }
             }
         });
+        return funciona;
     }
 
     public boolean logIn(String correo, String contraseña){

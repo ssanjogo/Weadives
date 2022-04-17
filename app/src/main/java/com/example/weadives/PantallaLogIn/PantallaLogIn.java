@@ -66,8 +66,8 @@ public class PantallaLogIn extends AppCompatActivity {
             }
         }else {
             dbA.singout();
-            etA_correo.setText(cargarCorreo());
-            etP_contraseña.setText(cargarContraseña());
+            //etA_correo.setText(cargarCorreo());
+            //etP_contraseña.setText(cargarContraseña());
         }
 
         Intent intent = getIntent();
@@ -95,8 +95,8 @@ public class PantallaLogIn extends AppCompatActivity {
                 if (chkb_mantenerSession.isChecked()){
                     dbA.setLogInStatus(true);
                     recordarUser();
-                    recordarCorreo(etA_correo.getText().toString());
-                    recordarContraseña(etP_contraseña.getText().toString());
+                    //recordarCorreo(etA_correo.getText().toString());
+                    //recordarContraseña(etP_contraseña.getText().toString());
                 }
                 if (login){
                     Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
