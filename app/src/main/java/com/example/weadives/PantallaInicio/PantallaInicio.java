@@ -122,7 +122,7 @@ public class PantallaInicio extends AppCompatActivity {
     private Bitmap MaskingProcess() {
         try{
             Bitmap test, mask1;
-            test= BitmapFactory.decodeResource(getResources(),R.drawable.pubg);
+            test= BitmapFactory.decodeResource(getResources(),R.drawable.mapa2);
             mask1 = BitmapFactory.decodeResource(getResources(),R.drawable.mask1);
             if (test != null){
 
