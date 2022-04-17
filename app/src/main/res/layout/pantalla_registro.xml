@@ -68,49 +68,46 @@
         android:id="@+id/etA_correo2"
         android:layout_width="250dp"
         android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/dummycorreo"
         android:inputType="textEmailAddress"
         android:textColorHint="@color/grey"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.705"
-        app:layout_constraintStart_toEndOf="@+id/txt_correo2"
-        app:layout_constraintTop_toBottomOf="@+id/txt_registro"
-        app:layout_constraintVertical_bias="0.23" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etN_nombrepersona"
+        app:layout_constraintTop_toBottomOf="@+id/etN_nombrepersona" />
 
     <EditText
         android:id="@+id/etP_contraseña2"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:textColorHint="@color/grey"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.761"
-        app:layout_constraintStart_toEndOf="@+id/txt_contraseña2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.524" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etA_correo2"
+        app:layout_constraintTop_toBottomOf="@+id/etA_correo2" />
 
     <EditText
         android:id="@+id/etN_nombrepersona"
         android:layout_width="250dp"
         android:layout_height="48dp"
+        android:layout_marginTop="52dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/nombre2"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/etA_correo2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintHorizontal_bias="0.647"
         app:layout_constraintStart_toEndOf="@+id/txt_nombre"
-        app:layout_constraintTop_toBottomOf="@+id/txt_registro"
-        app:layout_constraintVertical_bias="0.471" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_registro" />
 
     <ImageView
         android:id="@+id/btn_home3"

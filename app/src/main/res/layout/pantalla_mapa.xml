@@ -64,13 +64,14 @@
 
     <ImageButton
         android:id="@+id/btn_home5"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:contentDescription="@string/TODO"
-        android:src="@drawable/boton_home"
+        app:srcCompat="@drawable/boton_home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

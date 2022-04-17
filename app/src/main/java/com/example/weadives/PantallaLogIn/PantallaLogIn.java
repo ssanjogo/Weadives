@@ -18,10 +18,8 @@ import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
-import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
-import com.google.android.gms.common.util.ScopeUtil;
 
 public class PantallaLogIn extends AppCompatActivity {
 
@@ -91,6 +89,7 @@ public class PantallaLogIn extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 login = dbA.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
                 if (chkb_mantenerSession.isChecked()){
                     dbA.setLogInStatus(true);
