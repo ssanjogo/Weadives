@@ -2,12 +2,14 @@ package com.example.weadives;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -45,22 +47,29 @@ public class DatabaseAdapter extends Activity {
         return databaseAdapterInstance;
     }
 
-    public boolean addUser(String nombre, String correo, String contraseña) {
+    public void addUser(String nombre, String correo, String contraseña) {
         mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     uid = mAuth.getCurrentUser().getUid();
                     Map<String, String> user = new HashMap<>();
-                    user.put("Correo", correo);
+                    user.put("UID", uid);
                     user.put("Nombre", nombre);
+                    user.put("Correo", correo);
+                    user.put("Imagen", "");
+                    user.put("Amigos", "");
+                    user.put("Solicitudes recibidas", "");
+                    user.put("Solicitudes enviadas", "");
 
                     db.collection("Users").document(uid).set(user);
-                    funciona = true;
+                    Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                    areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(areaUsuario);
+                    finish();
                 }
             }
         });
-        return funciona;
     }
 
     public boolean logIn(String correo, String contraseña){
@@ -78,8 +87,8 @@ public class DatabaseAdapter extends Activity {
     }
 
     public void setName(TextView textView){
-        String correo = mAuth.getCurrentUser().getEmail();
-        db.collection("Users").document(correo).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        String uid = mAuth.getCurrentUser().getUid();
+        db.collection("Users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -96,6 +105,11 @@ public class DatabaseAdapter extends Activity {
                 }
             }
         });
+    }
+
+    public void setCorreo(TextView textView){
+        String correo = mAuth.getCurrentUser().getEmail();
+        textView.setText(correo);
     }
 
     public void setLogInStatus (boolean b){

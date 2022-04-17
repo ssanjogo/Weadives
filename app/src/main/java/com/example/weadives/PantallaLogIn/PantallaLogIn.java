@@ -67,6 +67,7 @@ public class PantallaLogIn extends AppCompatActivity {
         }else {
             dbA.singout();
             etA_correo.setText(cargarCorreo());
+            etP_contraseña.setText(cargarContraseña());
         }
 
         Intent intent = getIntent();
@@ -95,6 +96,7 @@ public class PantallaLogIn extends AppCompatActivity {
                     dbA.setLogInStatus(true);
                     recordarUser();
                     recordarCorreo(etA_correo.getText().toString());
+                    recordarContraseña(etP_contraseña.getText().toString());
                 }
                 if (login){
                     Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
@@ -130,12 +132,24 @@ public class PantallaLogIn extends AppCompatActivity {
         return preferencias.getString("user","");
     }
 
+    private void recordarContraseña(String contraseña) {
+        SharedPreferences preferencias = getSharedPreferences("contraseña", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("contraseña", contraseña);
+        editor.commit();
+    }
+    private String cargarContraseña() {
+        SharedPreferences preferencias = getSharedPreferences("contraseña",Context.MODE_PRIVATE);
+        return preferencias.getString("contraseña","");
+    }
+
     private void recordarUser() {
         SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferencias.edit();
         editor.putString("recuerda", "true");
         editor.commit();
     }
+
     private String cargarUser() {
         SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
         return preferencias.getString("recuerda","false");

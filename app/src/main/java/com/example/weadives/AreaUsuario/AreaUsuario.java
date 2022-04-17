@@ -83,12 +83,12 @@ public class AreaUsuario extends AppCompatActivity {
 
     private List<UserClass> fillUserList() {//String id, String username, String correo, String urlImg)
         List<UserClass> userList = new ArrayList<>();
-        UserClass Jose = new UserClass("0001","Jose","Jose@gmail.com","https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg");
+        UserClass Jose = new UserClass("0001","Jose","Jose@gmail.com","https://upload.wikimedia.org/wikipedia/commons/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg", "0002, 0003, 0004", "", "");
         Jose.sentSolicitud();
         userList.add(Jose);
-        userList.add(new UserClass("0002","Xx_Pro_xX","Pro@gmail.com","https://static.wikia.nocookie.net/youtubepedia/images/3/33/1_wVf0oHfP9iaU61YodjtAqQ.jpeg/revision/latest?cb=20200823233708&path-prefix=es"));
-        userList.add(new UserClass("0003","Kaladin","BT@gmail.com","https://i.pinimg.com/736x/1e/84/b5/1e84b5b8fe380ca6ee49e2e50db166a2.jpg"));
-        userList.add(new UserClass("0004","Mikol","Mk@gmail.com","https://static.wikia.nocookie.net/ficcion-sin-limites/images/f/f8/SmashSteve.png/revision/latest?cb=20210104203302&path-prefix=es"));
+        userList.add(new UserClass("0002","Xx_Pro_xX","Pro@gmail.com","https://static.wikia.nocookie.net/youtubepedia/images/3/33/1_wVf0oHfP9iaU61YodjtAqQ.jpeg/revision/latest?cb=20200823233708&path-prefix=es", "0001", "", "0004"));
+        userList.add(new UserClass("0003","Kaladin","BT@gmail.com","https://i.pinimg.com/736x/1e/84/b5/1e84b5b8fe380ca6ee49e2e50db166a2.jpg", "0001", "", "0004"));
+        userList.add(new UserClass("0004","Mikol","Mk@gmail.com","https://static.wikia.nocookie.net/ficcion-sin-limites/images/f/f8/SmashSteve.png/revision/latest?cb=20210104203302&path-prefix=es", "0001", "0002, 0003", ""));
         userList.add(new UserClass("0005","NoPNG","NP@gmail.com"));
         return userList;
     }

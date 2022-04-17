@@ -31,7 +31,6 @@ public class AjustesPerfil extends AppCompatActivity {
         txt_correo = findViewById(R.id.txt_correo);
         txt_contraseña3 = findViewById(R.id.txt_contraseña3);
         txt_nombrePerfil2 = findViewById(R.id.txt_nombrePerfil2);
-        txt_codigo2 = findViewById(R.id.txt_codigo2);
         etA_correo3 = findViewById(R.id.etA_correo3);
         etP_contraseña3 = findViewById(R.id.etP_contraseña3);
         etN_nombrepersona2 = findViewById(R.id.etN_nombrepersona2);;
@@ -41,6 +40,8 @@ public class AjustesPerfil extends AppCompatActivity {
 
         dbA = DatabaseAdapter.getInstance();
         dbA.setName(etN_nombrepersona2);
+        dbA.setCorreo(etP_contraseña3);
+
 
         btn_home6.setOnClickListener(new View.OnClickListener(){
             @Override

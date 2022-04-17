@@ -45,18 +45,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.415" />
 
-        <TextView
-            android:id="@+id/txt_codigo2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="#4432"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.517"
-            app:layout_constraintStart_toEndOf="@+id/img_perfil2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.715"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView

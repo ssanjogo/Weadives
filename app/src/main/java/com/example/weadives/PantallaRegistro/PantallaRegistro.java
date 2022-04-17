@@ -43,6 +43,11 @@ public class PantallaRegistro extends AppCompatActivity {
         etP_contraseña2 = findViewById(R.id.etP_contraseña2);
         etN_nombrepersona = findViewById(R.id.etN_nombrepersona);
         btn_home3 = findViewById(R.id.btn_home3);
+        txt_correo2 = findViewById(R.id.txt_correo2);
+        txt_contraseña2 = findViewById(R.id.txt_contraseña2);
+        txt_nombre = findViewById(R.id.txt_nombre);
+        etN_nombrepersona = findViewById(R.id.etN_nombrepersona);
+        btn_confirmar = findViewById(R.id.btn_confirmar);
 
         final Context context;
         final Resources resources;
@@ -51,7 +56,6 @@ public class PantallaRegistro extends AppCompatActivity {
         txt_correo2.setText(resources.getString(R.string.correo));
         txt_contraseña2.setText(resources.getString(R.string.password2));
         txt_nombre.setText(resources.getString(R.string.nombre));
-        etN_nombrepersona.setText(resources.getString(R.string.nombre2));
         btn_confirmar.setText(resources.getString(R.string.confirmar));
 
         Intent intent = getIntent();
@@ -76,14 +80,15 @@ public class PantallaRegistro extends AppCompatActivity {
                     etA_correo2.setError("Email no válido");
                 }
 
-                if (dbA.addUser(nombre, correo, contraseña)){
+                dbA.addUser(nombre, correo, contraseña);
+                        /*
                     Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
                     areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(areaUsuario);
                     finish();
                 } else {
                     etA_correo2.setError("Este email ya ha sido registrado.");
-                }
+                }*/
 
             }
         });
