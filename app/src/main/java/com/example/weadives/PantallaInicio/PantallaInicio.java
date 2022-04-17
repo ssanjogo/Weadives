@@ -48,26 +48,38 @@ public class PantallaInicio extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 guardarPreferencias("en");
+                Toast toast = Toast.makeText(getApplicationContext(), "Language changed into English", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
         btn_es.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 guardarPreferencias("es");
+                Toast toast = Toast.makeText(getApplicationContext(), "Idioma cambiado a Castellano", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
+
+
+
+
+
 
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Viajando a pantalla principal", Toast.LENGTH_SHORT);
-                toast.show();
+
                 try {
+
                     Intent testIntent = new Intent(getApplicationContext(), PantallaPrincipal.class);
                     //testIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(testIntent);
                     //finish();
+
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast toast2 = Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT);
@@ -81,8 +93,7 @@ public class PantallaInicio extends AppCompatActivity {
         btn_invisible.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Viajando a pantalla de mapa", Toast.LENGTH_SHORT);
-                toast.show();
+
                 try {
                     Intent testIntent = new Intent(getApplicationContext(), PantallaMapa.class);
                     startActivity(testIntent);
@@ -136,6 +147,8 @@ public class PantallaInicio extends AppCompatActivity {
         Imagen_superior.setImageBitmap(results);
         return results;
     }
+
+
 
 
 }

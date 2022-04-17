@@ -1,6 +1,5 @@
 package com.example.weadives.PantallaRegistro;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,15 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.weadives.AreaUsuario.AreaUsuario;
-import com.example.weadives.LocaleHelper;
 import com.example.weadives.DatabaseAdapter;
+import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 
@@ -48,14 +43,18 @@ public class PantallaRegistro extends AppCompatActivity {
         txt_nombre = findViewById(R.id.txt_nombre);
         etN_nombrepersona = findViewById(R.id.etN_nombrepersona);
         btn_confirmar = findViewById(R.id.btn_confirmar);
+        txt_registro =findViewById(R.id.txt_registro);
 
         final Context context;
         final Resources resources;
         context = LocaleHelper.setLocale(this, cargarPreferencias());
         resources = context.getResources();
+
+        txt_registro.setText(resources.getString(R.string.registro));
         txt_correo2.setText(resources.getString(R.string.correo));
         txt_contraseña2.setText(resources.getString(R.string.password2));
         txt_nombre.setText(resources.getString(R.string.nombre));
+        etN_nombrepersona.setHint(resources.getString(R.string.nombre2));
         btn_confirmar.setText(resources.getString(R.string.confirmar));
 
         Intent intent = getIntent();

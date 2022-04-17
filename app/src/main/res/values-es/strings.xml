@@ -33,6 +33,7 @@
     <string name="mostrar_en_perfil">Mostrar en perfil</string>
     <string name="gestionar_parametros">Gestionar Parametros</string>
     <string name="confirmar_parametros">Confirmar Parametros</string>
+    <string name="NombreActividad">Nombre actividad</string>
     <string name="viento">viento</string>
     <string name="cerrar_sesión">Cerrar sesión</string>
 </resources>
