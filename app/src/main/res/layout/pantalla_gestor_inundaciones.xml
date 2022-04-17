@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PantallaGestorInundaciones.PantallaGestorInundaciones">
+    tools:context=".PantallaGestorInundaciones.PantallaGestorInundaciones"
+    android:theme = "@style/Theme.AppCompat.Light.Dialog"
+    android:background="@color/fondo">
 
 
     <Spinner
