@@ -23,15 +23,16 @@
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/rv_llistaAjustes3"
-        android:layout_width="307dp"
-        android:layout_height="480dp"
+        android:layout_width="300dp"
+        android:layout_height="450dp"
         android:scrollbars="vertical"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.848" />
+        app:layout_constraintVertical_bias="0.943" />
 
     <ImageView
         android:id="@+id/img_perfil3"
@@ -69,6 +70,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_perfil3"
-        app:layout_constraintVertical_bias="0.481" />
+        app:layout_constraintVertical_bias="0.481"
+        android:background="@drawable/button_rounded"
+        android:textColor="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

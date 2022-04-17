@@ -67,7 +67,7 @@ public class UserClass {
     }
 
     public String getUrlImg() {
-        if (urlImg.equals("NULL")){
+        if (urlImg == null){
             return "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
         } else {
             return urlImg;
@@ -88,9 +88,25 @@ public class UserClass {
         return solicitudes_recibidas;
     }
 
+    public String getStringSolicitudesRecibidas(){
+        return this.solicitudes_recibidas;
+    }
+
+    public void setStringSolicitudesRecibidas(String solR){
+        this.solicitudes_recibidas = solR;
+    }
+
     public List<String> getListaSolicitudesEnviadas(){
         List<String> solicitudes_enviadas = Arrays.asList(this.solicitudes_enviadas.split(","));
         return solicitudes_enviadas;
+    }
+
+    public String getStringSolicitudesEnviadas(){
+        return this.solicitudes_enviadas;
+    }
+
+    public void setStringSolicitudesEnviadas(String solE){
+        this.solicitudes_enviadas = solE;
     }
 
     public void saveUser(){

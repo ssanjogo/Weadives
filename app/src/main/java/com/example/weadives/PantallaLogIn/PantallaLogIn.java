@@ -91,20 +91,28 @@ public class PantallaLogIn extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                login = dbA.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
-                if (chkb_mantenerSession.isChecked()){
-                    dbA.setLogInStatus(true);
-                    recordarUser();
-                    //recordarCorreo(etA_correo.getText().toString());
-                    //recordarContraseña(etP_contraseña.getText().toString());
+                if (etA_correo.getText().toString().equals("") && etP_contraseña.getText().toString().equals("")){
+                    etA_correo.setError("Campo sin rellenar");
+                    etP_contraseña.setError("Campo sin rellenar");
+                } else if (etA_correo.getText().toString().equals("")){
+                    etA_correo.setError("Campo sin rellenar");
+                } else if (etP_contraseña.getText().toString().equals("")){
+                    etP_contraseña.setError("Campo sin rellenar");
+                } else {
+                    login = dbA.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
+                    if (chkb_mantenerSession.isChecked()) {
+                        dbA.setLogInStatus(true);
+                        recordarUser();
+                        recordarCorreo(etA_correo.getText().toString());
+                        recordarContraseña(etP_contraseña.getText().toString());
+                    }
+                    if (login) {
+                        Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                        areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(areaUsuario);
+                        finish();
+                    }
                 }
-                if (login){
-                    Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                    areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(areaUsuario);
-                    finish();
-                }
-
             }
         });
     }

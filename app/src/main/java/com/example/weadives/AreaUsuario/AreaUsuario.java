@@ -38,7 +38,6 @@ public class AreaUsuario extends AppCompatActivity {
         txt_nombrePerfil = findViewById(R.id.txt_nombrePerfil);
         etT_buscarPorCodigo = findViewById(R.id.etT_buscarPorCodigo);
         btn_home4 = findViewById(R.id.btn_home4);
-        btn_añadir = findViewById(R.id.btn_añadir);
         img_perfil = findViewById(R.id.img_perfil);
         rv_llistaUsuarios = findViewById(R.id.rv_llistaUsuarios);
         ConstraintLayout constraintLayout = findViewById(R.id.constraintLayout);

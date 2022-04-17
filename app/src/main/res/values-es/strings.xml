@@ -36,5 +36,6 @@
     <string name="NombreActividad">Nombre actividad</string>
     <string name="viento">viento</string>
     <string name="cerrar_sesión">Cerrar sesión</string>
-    <string name="añadir_amigo">Añadir Amigo</string>
+    <string name="añadir_amigo">Añadir amigo</string>
+    <string name="pendiente">Pendiente</string>
 </resources>

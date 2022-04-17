@@ -1,6 +1,9 @@
 package com.example.weadives.PantallaPerfilAmigo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.DatabaseAdapter;
+import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
@@ -28,6 +34,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<PublicacionClass> publicacionList;
+    private DatabaseAdapter dbA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +57,17 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         mAdapter= new PublicacionesPerfilAdapter(publicacionList, PantallaPerfilAmigo.this);
         recyclerView.setAdapter(mAdapter);
 
-        Intent intent=getIntent();
-        String username=intent.getStringExtra("username");
+        final Context context;
+        final Resources resources;
+        context = LocaleHelper.setLocale(this, cargarPreferencias());
+        resources = context.getResources();
+        btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
+
+        dbA = DatabaseAdapter.getInstance();
+
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+        String idAmigo = intent.getStringExtra("id");
         txt_nombrePerfil.setText(username);
 
         btn_home.setOnClickListener(new View.OnClickListener(){
@@ -59,6 +75,27 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
             public void onClick(View view){
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
+            }
+        });
+
+        btn_añadirAmigo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (btn_añadirAmigo.getText().equals(resources.getString(R.string.añadir_amigo))){
+                    btn_añadirAmigo.setText(resources.getString(R.string.pendiente));
+                    btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded_grey));
+                    btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
+                    //FALTA
+                    //Enviar solicitud
+                    dbA.enviarSolicitudAmistad(idAmigo);
+                } else if (btn_añadirAmigo.getText().equals("Pendiente")){
+                    btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
+                    btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));
+                    btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));
+                    //FALTA
+                    //Eliminar solicitud enviada
+                }
+
             }
         });
 
@@ -102,6 +139,11 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         publicacionList.add(new PublicacionClass(p3,likeList3,comentariosList3));
 
         return publicacionList;
+    }
+
+    private String cargarPreferencias() {
+        SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
+        return preferencias.getString("idioma","en");
     }
 
 

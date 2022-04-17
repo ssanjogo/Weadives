@@ -10,16 +10,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
+import com.example.weadives.AreaUsuario.UserClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -53,21 +61,38 @@ public class DatabaseAdapter extends Activity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     uid = mAuth.getCurrentUser().getUid();
-                    Map<String, String> user = new HashMap<>();
-                    user.put("UID", uid);
-                    user.put("Nombre", nombre);
-                    user.put("Correo", correo);
-                    user.put("Imagen", "");
-                    user.put("Amigos", "");
-                    user.put("Solicitudes recibidas", "");
-                    user.put("Solicitudes enviadas", "");
-
+                    UserClass user = new UserClass(uid, nombre, correo, "", "", "", "");
                     db.collection("Users").document(uid).set(user);
                     funciona = true;
                 }
             }
         });
         return funciona;
+    }
+
+    public UserClass getUser(String uid){
+        final UserClass[] user = new UserClass[1];
+        System.out.println("PASSSSSSSSSSSSSSSSSSSSSSSSSSSAAAAAAAAAAAAAAAAAAAA");
+        db.collection("Users").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    user[0] = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
+
+                    System.out.println("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUSUARIO" + user[0]);
+                    try {
+                        task.wait(150);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("HOLA??????????????????? WTF");
+                }
+            }
+        });
+        System.out.println("POR AQUI TAMBIEN A VER QUE TAL");
+        return user[0];
     }
 
     public boolean logIn(String correo, String contraseña){
@@ -94,12 +119,7 @@ public class DatabaseAdapter extends Activity {
                     if (document.exists()) {
                         final String nombre = document.getString("Nombre");
                         textView.setText(nombre);
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d(TAG, "No such document");
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });
@@ -128,6 +148,27 @@ public class DatabaseAdapter extends Activity {
 
     public boolean currentUser(){
         return (mAuth.getCurrentUser() == null);
+    }
+
+    public void enviarSolicitudAmistad(String idAmigo){
+        String uid = mAuth.getCurrentUser().getUid();
+        UserClass user = getUser(uid);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + user);
+        String SolE = user.getStringSolicitudesEnviadas();
+        SolE += idAmigo;
+        user.setStringSolicitudesEnviadas(SolE);
+        db.collection("Users").document(uid).set(user);
+
+
+        UserClass user2 = getUser(idAmigo);
+
+        String SolR = user.getStringSolicitudesRecibidas();
+        SolR += uid;
+        user.setStringSolicitudesRecibidas(SolR);
+        db.collection("Users").document(uid).set(user2);
+
+        System.out.println("A ver Si cambia");
+
     }
 
 }

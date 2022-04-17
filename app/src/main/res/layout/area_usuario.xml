@@ -25,10 +25,10 @@
             android:layout_height="80dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintHorizontal_bias="0.131"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/imagen_de_perfil"/>
+            app:srcCompat="@drawable/imagen_de_perfil" />
 
         <TextView
             android:id="@+id/txt_nombrePerfil"
@@ -56,16 +56,6 @@
         app:srcCompat="@drawable/boton_home"
         android:contentDescription="@string/todo" />
 
-    <ImageView
-        android:id="@+id/btn_añadir"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/boton_anadir" />
-
     <EditText
         android:id="@+id/etT_buscarPorCodigo"
         android:layout_width="wrap_content"
@@ -76,13 +66,11 @@
         android:hint="@string/code"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textColorHint="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_añadir"
-        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toEndOf="@+id/btn_home4"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        android:textColorHint="@color/grey"/>
+        app:layout_constraintVertical_bias="0.023" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_llistaUsuarios"

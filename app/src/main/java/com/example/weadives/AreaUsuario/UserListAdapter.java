@@ -58,7 +58,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PantallaPerfilAmigo.class);
-                intent.putExtra("username",userClassList.get(position).getUsername());
+                intent.putExtra("username", userClassList.get(position).getUsername());
+                intent.putExtra("id", userClassList.get(position).getId());
                 context.startActivity(intent);
             }
         });
