@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/nomapa3"
+    android:background="@drawable/nomapa4"
     android:gravity="top"
     android:orientation="vertical"
     tools:context=".PantallaInicio.PantallaInicio">
@@ -17,17 +17,18 @@
 
         <ImageView
             android:id="@+id/img_inicio"
-            android:layout_width="429dp"
-            android:layout_height="718dp"
-            android:layout_marginStart="-20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="748dp"
             android:layout_marginTop="-10dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/TODO"
-            android:src="@drawable/mapa2"
+            android:src="@drawable/mapa4"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="1.0"
             tools:ignore="MissingConstraints" />
 
         <Button

@@ -12,7 +12,6 @@ import android.graphics.PorterDuffXfermode;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -122,7 +121,7 @@ public class PantallaInicio extends AppCompatActivity {
     private Bitmap MaskingProcess() {
         try{
             Bitmap test, mask1;
-            test= BitmapFactory.decodeResource(getResources(),R.drawable.mapa2);
+            test= BitmapFactory.decodeResource(getResources(),R.drawable.mapa4);
             mask1 = BitmapFactory.decodeResource(getResources(),R.drawable.mask1);
             if (test != null){
 
