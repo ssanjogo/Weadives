@@ -7,6 +7,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -72,6 +74,10 @@ public class PantallaRegistro extends AppCompatActivity {
         btn_confirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+                btn_confirmar.startAnimation(animation);
+
                 String nombre = etN_nombrepersona.getText().toString();
                 String correo = etA_correo2.getText().toString();
                 String contraseña = etP_contraseña2.getText().toString();

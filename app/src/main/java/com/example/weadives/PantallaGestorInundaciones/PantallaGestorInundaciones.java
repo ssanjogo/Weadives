@@ -1,16 +1,18 @@
 package com.example.weadives.PantallaGestorInundaciones;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
@@ -49,6 +51,9 @@ public class PantallaGestorInundaciones extends AppCompatActivity {
         btn_confirmar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+                btn_confirmar.startAnimation(animation);
+
                 finish();
             }
         });

@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -58,7 +60,8 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_gestorNotificaciones.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
+                Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+                btn_gestorNotificaciones.startAnimation(animation);
                 Intent testIntent = new Intent(getApplicationContext(), PantallaGestorInundaciones.class);
                 startActivity(testIntent);
             }

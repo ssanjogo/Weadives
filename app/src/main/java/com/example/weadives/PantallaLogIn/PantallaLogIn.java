@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,10 +20,8 @@ import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
-import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
-import com.google.android.gms.common.util.ScopeUtil;
 
 public class PantallaLogIn extends AppCompatActivity {
 
@@ -83,6 +83,8 @@ public class PantallaLogIn extends AppCompatActivity {
         btn_registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+                btn_registrarse.startAnimation(animation);
                 Intent register = new Intent(getApplicationContext(), PantallaRegistro.class);
                 startActivity(register);
             }
@@ -91,6 +93,8 @@ public class PantallaLogIn extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+                btn_login.startAnimation(animation);
                 if (etA_correo.getText().toString().equals("") && etP_contraseña.getText().toString().equals("")){
                     etA_correo.setError("Campo sin rellenar");
                     etP_contraseña.setError("Campo sin rellenar");

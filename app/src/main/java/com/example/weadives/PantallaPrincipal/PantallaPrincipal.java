@@ -4,18 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.media.midi.MidiOutputPort;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.ConfiguracionDePreferencias.ConfiguracionDePreferencias;
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
@@ -74,27 +72,41 @@ public class PantallaPrincipal extends AppCompatActivity {
 
 
 
-        btn_gestionarParametros.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent configuracionParametros = new Intent(getApplicationContext(), ConfiguracionDePreferencias.class);
-                startActivity(configuracionParametros);
-            }
-        });
-        btnAñadirNotificacion.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent seleccionDeAjuste = new Intent(getApplicationContext(), SeleccionDeAjuste.class);
-                startActivity(seleccionDeAjuste);
-                Intent pantallaHorarios = new Intent(getApplicationContext(), PantallaDeHorarios.class);
-            }
-        });
+
+
+
 
         btnHorario.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+                btnHorario.startAnimation(animation);
                 Intent pantallaHorarios = new Intent(getApplicationContext(), PantallaDeHorarios.class);
                 startActivity(pantallaHorarios);
+            }
+        });
+
+
+        btnAñadirNotificacion.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Animation animation2= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+                btnAñadirNotificacion.startAnimation(animation2);
+                Intent seleccionDeAjuste = new Intent(getApplicationContext(), SeleccionDeAjuste.class);
+                startActivity(seleccionDeAjuste);
+
+            }
+        });
+
+
+
+        btn_gestionarParametros.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Animation animation3= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+                btn_gestionarParametros.startAnimation(animation3);
+                Intent configuracionParametros = new Intent(getApplicationContext(), ConfiguracionDePreferencias.class);
+                startActivity(configuracionParametros);
             }
         });
 
