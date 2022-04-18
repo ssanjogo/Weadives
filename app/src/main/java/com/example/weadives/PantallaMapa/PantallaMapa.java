@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -28,7 +28,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private PantallaMapaBinding binding;
-    private ImageView btn_home;
+    private ImageButton btn_home;
     private Button btn_gestorNotificaciones;
 
     @Override
@@ -39,24 +39,27 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-        ImageView btn_home=findViewById(R.id.btn_home5);
-        btn_home.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                finish();
-            }
-        });
         Button btn_gestorNotificaciones =findViewById(R.id.btn_gestorNotificaciones);
         final Context context;
         final Resources resources;
         context = LocaleHelper.setLocale(this, cargarPreferencias());
         resources = context.getResources();
         btn_gestorNotificaciones.setText(resources.getString(R.string.gestion_notificaciones));
+
+        btn_home=findViewById(R.id.btn_home5);
+        btn_home.bringToFront();
+
+
+        btn_home.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                finish();
+            }
+        });
+
         btn_gestorNotificaciones.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -67,6 +70,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+
 
     /**
      * Manipulates the map once available.
