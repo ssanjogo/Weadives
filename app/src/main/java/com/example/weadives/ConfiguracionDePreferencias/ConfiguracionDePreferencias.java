@@ -14,12 +14,11 @@ import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
-import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
+import com.example.weadives.ViewModel;
 
 
 public class ConfiguracionDePreferencias extends AppCompatActivity {
@@ -29,7 +28,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     private ImageView btn_añadir2, btn_home8;
     private ScrollView scrollView2;
     private Switch sw_notificaciones, sw_mostrarEnPerfil;
-    private DatabaseAdapter dbA;
+    private ViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +42,8 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         sw_notificaciones = findViewById(R.id.sw_notificaciones);
         sw_mostrarEnPerfil = findViewById(R.id.sw_mostrarEnPerfil);
 
+        viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
-
-        dbA = DatabaseAdapter.getInstance();
 
         final Context context;
         final Resources resources;

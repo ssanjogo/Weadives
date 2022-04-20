@@ -1,6 +1,10 @@
 package com.example.weadives.AjustesPerfil;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,20 +12,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weadives.DatabaseAdapter;
+import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
 import com.example.weadives.R;
+import com.example.weadives.ViewModel;
 
 public class AjustesPerfil extends AppCompatActivity {
+
+    private ViewModel viewModel;
 
     private TextView txt_correo, txt_nombre2, txt_contraseña3, txt_nombrePerfil2, txt_codigo2;
     private EditText etA_correo3, etP_contraseña3, etN_nombrepersona2;
     private ImageView btn_home6, img_perfil, btn_edtitarN, btn_editarC, btn_editarP;
-    private Button btn_guardarCambios;
-    private DatabaseAdapter dbA;
+    private Button btn_guardarCambios, btn_eliminarCuenta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +43,26 @@ public class AjustesPerfil extends AppCompatActivity {
         etN_nombrepersona2 = findViewById(R.id.etN_nombrepersona2);;
         btn_home6 = findViewById(R.id.btn_home6);
         img_perfil = findViewById(R.id.img_perfil);
+        btn_eliminarCuenta = findViewById(R.id.btn_eliminarCuenta);
+
+        final Context context;
+        final Resources resources;
+        context = LocaleHelper.setLocale(this, cargarPreferencias());
+        resources = context.getResources();
+
+        viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
 
-        dbA = DatabaseAdapter.getInstance();
-        dbA.setName(etN_nombrepersona2);
-        dbA.setCorreo(etP_contraseña3);
+        etN_nombrepersona2.setText(viewModel.getCurrentUser().getUsername());
+        etA_correo3.setText(viewModel.getCurrentUser().getCorreo());
 
 
         btn_home6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!dbA.getLogInStatus()){
-                    dbA.singout();
+                if(!viewModel.getLogInStatus()){
+                    viewModel.singOut();
+                    recordarUser("false");
                 }
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
@@ -57,14 +72,55 @@ public class AjustesPerfil extends AppCompatActivity {
         btn_guardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (etA_correo3.getText() != null && etN_nombrepersona2 != null && etP_contraseña3 != null){
-
+                if (etA_correo3.getText() != null && etN_nombrepersona2.getText() != null){
+                    if(!etA_correo3.getText().toString().equals(viewModel.getCurrentUser().getCorreo()) && !etN_nombrepersona2.getText().toString().equals(viewModel.getCurrentUser().getUsername())){
+                        viewModel.cambiarCorreo(etA_correo3.getText().toString());
+                        viewModel.cambiarNombre(etN_nombrepersona2.getText().toString());
+                    }else if(!etA_correo3.getText().toString().equals(viewModel.getCurrentUser().getCorreo())){
+                        viewModel.cambiarCorreo(etA_correo3.getText().toString());
+                    } else if(!etN_nombrepersona2.getText().toString().equals(viewModel.getCurrentUser().getUsername())){
+                        viewModel.cambiarNombre(etN_nombrepersona2.getText().toString());
+                    }
                 }
-                Intent miPerfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);
-                startActivity(miPerfil);
+                finish();
             }
         });
 
+        btn_eliminarCuenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
+                alerta.setMessage(resources.getString(R.string.alertaEliminarCuenta)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        viewModel.deleteAccount();
+                    }
+                }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                AlertDialog titulo = alerta.create();
+                titulo.setTitle(resources.getString(R.string.eliminarCuenta));
+                titulo.show();
 
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
+            }
+        });
     }
+
+    private String cargarPreferencias() {
+        SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
+        return preferencias.getString("idioma","en");
+    }
+
+    private void recordarUser(String s) {
+        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("recuerda", s);
+        editor.commit();
+    }
+
 }

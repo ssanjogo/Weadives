@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 
@@ -16,8 +15,6 @@ public class PantallaDeHorarios extends AppCompatActivity {
 
     private ImageView btn_home10;
     private EditText editTextDate;
-    private DatabaseAdapter dbA;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +24,6 @@ public class PantallaDeHorarios extends AppCompatActivity {
         EditText editTextDate = findViewById(R.id.editTextDate);
 
         Intent intent = getIntent();
-
-        dbA = DatabaseAdapter.getInstance();
 
         btn_home10.setOnClickListener(new View.OnClickListener() {
             @Override

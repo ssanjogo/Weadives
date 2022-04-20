@@ -32,7 +32,6 @@ public class PantallaInicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.pantalla_inicio);
         LinearLayout layout =findViewById(R.id.LinearMainLayout);
         Imagen_superior = findViewById(R.id.img_inicio);
@@ -40,8 +39,6 @@ public class PantallaInicio extends AppCompatActivity {
         Bitmap finalMasking = MaskingProcess();
         btn_en = findViewById(R.id.btn_en);
         btn_es = findViewById(R.id.btn_es);
-
-
 
         btn_en.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +48,7 @@ public class PantallaInicio extends AppCompatActivity {
                 toast.show();
             }
         });
+
         btn_es.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,39 +58,25 @@ public class PantallaInicio extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 try {
-
                     Intent testIntent = new Intent(getApplicationContext(), PantallaPrincipal.class);
                     //testIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(testIntent);
                     //finish();
-
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast toast2 = Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT);
                     toast2.show();
                 }
-
-
             }
         });
 
         btn_invisible.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 try {
                     Intent testIntent = new Intent(getApplicationContext(), PantallaMapa.class);
                     startActivity(testIntent);
@@ -103,7 +87,6 @@ public class PantallaInicio extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void guardarPreferencias(String string) {

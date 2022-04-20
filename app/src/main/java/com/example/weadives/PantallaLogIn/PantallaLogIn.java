@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.DatabaseAdapter;
@@ -22,8 +23,15 @@ import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
+import com.example.weadives.ViewModel;
 
 public class PantallaLogIn extends AppCompatActivity {
+
+    private final String TAG = "MainActivity";
+
+    private Context parentContext;
+    private AppCompatActivity mActivity;
+    private ViewModel viewModel;
 
     private Button btn_registrarse, btn_login;
     private TextView txt_LogIn, txt_Correo, txt_contraseña, txt_nombre, txt_id;
@@ -31,8 +39,7 @@ public class PantallaLogIn extends AppCompatActivity {
     private CheckBox chkb_mantenerSession;
     private ImageView btn_home2;
 
-    private DatabaseAdapter dbA;
-    boolean login = false;
+    boolean chbox = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +64,15 @@ public class PantallaLogIn extends AppCompatActivity {
         chkb_mantenerSession.setText(resources.getString(R.string.mantener_sessi_n_iniciada));
         btn_registrarse.setText(resources.getString(R.string.btn_registrarse));
 
-        dbA = DatabaseAdapter.getInstance();
+        /*if (cargarUser().equals("true")) {
+            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+            startActivity(areaUsuario);
+        } else {
+            viewModel.singOut();
+            etA_correo.setText(cargarCorreo());
+        }*/
 
-        if(!dbA.currentUser()) {
-            if (cargarUser().equals("true")) {
-                Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                startActivity(areaUsuario);
-            }
-        }else {
-            dbA.singout();
-            //etA_correo.setText(cargarCorreo());
-            //etP_contraseña.setText(cargarContraseña());
-        }
-
+        viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
 
         btn_home2.setOnClickListener(new View.OnClickListener(){
@@ -103,30 +106,25 @@ public class PantallaLogIn extends AppCompatActivity {
                 } else if (etP_contraseña.getText().toString().equals("")){
                     etP_contraseña.setError("Campo sin rellenar");
                 } else {
-                    login = dbA.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
                     if (chkb_mantenerSession.isChecked()) {
-                        dbA.setLogInStatus(true);
-                        recordarUser();
+                        chbox = true;
+                        recordarUser("true");
                         recordarCorreo(etA_correo.getText().toString());
-                        recordarContraseña(etP_contraseña.getText().toString());
                     }
-                    if (login) {
+                    viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString(), chbox);
+                    if (!viewModel.correoRepetido(etA_correo.getText().toString())){
+                        etA_correo.setError("Correo no registrado");
+                    } else if (viewModel.getCurrentUser() == null) {
+                        etP_contraseña.setError("Contraseña incorrecta");
+                    } else {
                         Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
                         areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(areaUsuario);
                         finish();
                     }
                 }
-
             }
         });
-    }
-
-    private void guardarPreferencias(String string) {
-        SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("idioma",string);
-        editor.commit();
     }
 
     private String cargarPreferencias() {
@@ -145,21 +143,10 @@ public class PantallaLogIn extends AppCompatActivity {
         return preferencias.getString("user","");
     }
 
-    private void recordarContraseña(String contraseña) {
-        SharedPreferences preferencias = getSharedPreferences("contraseña", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("contraseña", contraseña);
-        editor.commit();
-    }
-    private String cargarContraseña() {
-        SharedPreferences preferencias = getSharedPreferences("contraseña",Context.MODE_PRIVATE);
-        return preferencias.getString("contraseña","");
-    }
-
-    private void recordarUser() {
+    private void recordarUser(String s) {
         SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("recuerda", "true");
+        editor.putString("recuerda", s);
         editor.commit();
     }
 

@@ -3,13 +3,14 @@ package com.example.weadives.AreaUsuario;
 import com.example.weadives.DatabaseAdapter;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserClass {
 
-    private final DatabaseAdapter dbA = DatabaseAdapter.getInstance();
     private String id, username, correo, urlImg, amigos, solicitudes_recibidas, solicitudes_enviadas;
     private int solicitudRecibida = 0;
+    private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
 
 
     public UserClass(String id, String username, String correo, String urlImg, String amigos, String solicitudes_recibidas, String solicitudes_enviadas) {
@@ -78,6 +79,14 @@ public class UserClass {
         this.urlImg = urlImg;
     }
 
+    public String getStringAmigos(){
+        return this.amigos;
+    }
+
+    public void setStringAmigos(String amigos){
+        this.amigos = amigos;
+    }
+
     public List<String> getListaAmigos(){
         List<String> amigos = Arrays.asList(this.amigos.split(","));
         return amigos;
@@ -109,7 +118,28 @@ public class UserClass {
         this.solicitudes_enviadas = solE;
     }
 
-    public void saveUser(){
-        dbA.addUser(this.username, this.correo, "");
+    public UserClass getUser() {
+        // ask database and if true, return audioCard
+        HashMap<String, String> hm = adapter.getUsers();
+        if (hm != null) {
+            UserClass ac = new UserClass(hm.get("UID"), hm.get("Nombre"), hm.get("Correo"), hm.get("Imagen"), hm.get("Amigos"), hm.get("Solicitudesrecibidas"), hm.get("Solicitudes enviadas"));
+            ac.setId(hm.get("UID"));
+            return ac;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "UserClass{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", correo='" + correo + '\'' +
+                ", urlImg='" + urlImg + '\'' +
+                ", amigos='" + amigos + '\'' +
+                ", solicitudes_recibidas='" + solicitudes_recibidas + '\'' +
+                ", solicitudes_enviadas='" + solicitudes_enviadas + '\'' +
+                '}';
     }
 }

@@ -38,4 +38,9 @@
     <string name="cerrar_sesión">Cerrar sesión</string>
     <string name="añadir_amigo">Añadir amigo</string>
     <string name="pendiente">Pendiente</string>
+    <string name="alertaEliminarCuenta">¿Estás seguro de que quieres eliminar esta cuenta?</string>
+    <string name="eliminarCuenta">Eliminar cuenta</string>
+    <string name="afirmativo">Sí</string>
+    <string name="negativo">No</string>
+    <string name="noAmigos">Aún no tienes amigos</string>
 </resources>

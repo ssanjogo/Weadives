@@ -1,27 +1,25 @@
 package com.example.weadives.PantallaMiPerfil;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weadives.AjustesPerfil.AjustesPerfil;
-import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
+import com.example.weadives.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,8 @@ public class PantallaMiPerfil extends AppCompatActivity {
     private TextView txt_nombrePerfil;
     private RecyclerView recyclerView;
     private Button btn_cerrarSesion;
-    private DatabaseAdapter dbA;
+
+    private ViewModel viewModel;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<ParametrosClass> parametrosList;
@@ -61,16 +60,17 @@ public class PantallaMiPerfil extends AppCompatActivity {
         mAdapter= new ParametrosPerfilAdapter(parametrosList,PantallaMiPerfil.this);
         recyclerView.setAdapter(mAdapter);
 
+        viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
 
-        dbA = DatabaseAdapter.getInstance();
-        dbA.setName(txt_nombrePerfil);
+        txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
 
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!dbA.getLogInStatus()){
-                    dbA.singout();
+                if(!viewModel.getLogInStatus()){
+                    viewModel.singOut();
+                    recordarUser("false");
                 }
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
@@ -88,11 +88,18 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbA.singout();
+                //dbA.singout();
                 Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
                 startActivity(pantallaLogIn);
             }
         });
+    }
+
+    private void recordarUser(String s) {
+        SharedPreferences preferencias = getSharedPreferences("recuerda", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("recuerda", s);
+        editor.commit();
     }
 
     private List<ParametrosClass> fillParametrosList() {
