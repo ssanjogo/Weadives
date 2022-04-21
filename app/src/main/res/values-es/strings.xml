@@ -19,7 +19,7 @@
     <string name="registro">REGISTRO</string>
     <string name="nombre">Nombre:</string>
     <string name="nombre2">Nombre</string>
-    <string name="code">burcar por codigo</string>
+    <string name="code">burcar por nombre</string>
     <string name="nombre_de_perfil">Nombre de perfil</string>
     <string name="title_activity_pantalla_mapa">PantallaMapa</string>
     <string name="gestion_notificaciones">Gestion Notificaciones</string>
@@ -38,9 +38,11 @@
     <string name="cerrar_sesión">Cerrar sesión</string>
     <string name="añadir_amigo">Añadir amigo</string>
     <string name="pendiente">Pendiente</string>
+    <string name="añadido">Añadido</string>
     <string name="alertaEliminarCuenta">¿Estás seguro de que quieres eliminar esta cuenta?</string>
+    <string name="alertaDejarDeSeguir">¿Estás seguro de que quieres dejar de seguir a esta persona?</string>
     <string name="eliminarCuenta">Eliminar cuenta</string>
     <string name="afirmativo">Sí</string>
     <string name="negativo">No</string>
-    <string name="noAmigos">Aún no tienes amigos</string>
+    <string name="noAmigos">No tienes amigos agregados</string>
 </resources>

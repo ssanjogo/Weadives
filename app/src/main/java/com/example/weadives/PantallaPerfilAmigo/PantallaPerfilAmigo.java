@@ -1,6 +1,7 @@
 package com.example.weadives.PantallaPerfilAmigo;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -10,10 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.weadives.AjustesPerfil.AjustesPerfil;
+import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.ParametrosClass;
@@ -69,6 +73,16 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         String idAmigo = intent.getStringExtra("id");
         txt_nombrePerfil.setText(username);
 
+        if (viewModel.uidInListaAmigos(idAmigo)){
+            btn_añadirAmigo.setText(resources.getString(R.string.añadido));
+            btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded_grey));
+            btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
+        } else if (viewModel.uidInListaSolicitudesEnviadas(idAmigo)){
+            btn_añadirAmigo.setText(resources.getString(R.string.pendiente));
+            btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded_grey));
+            btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
+        }
+
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -96,6 +110,27 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));
                     //FALTA
                     //Eliminar solicitud enviada
+                } else {
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(PantallaPerfilAmigo.this);
+                    alerta.setMessage(resources.getString(R.string.alertaDejarDeSeguir)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            viewModel.unfollow(idAmigo);
+                            btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
+                            btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));
+                            btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));
+                        }
+                    }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog titulo = alerta.create();
+                    titulo.setTitle(resources.getString(R.string.eliminarCuenta));
+                    titulo.show();
+
+
                 }
 
             }

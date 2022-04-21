@@ -17,20 +17,14 @@ public class UserClass {
         this.id = id;
         this.username = username;
         this.correo = correo;
-        this.urlImg = urlImg;
+        if (urlImg == ""){
+            this.urlImg = "https://www.pngmart.com/files/21/Account-User-PNG-Photo.png";
+        } else {
+            this.urlImg = urlImg;
+        }
         this.amigos = amigos;
         this.solicitudes_recibidas = solicitudes_recibidas;
         this.solicitudes_enviadas = solicitudes_enviadas;
-    }
-
-    public UserClass(String id, String username, String correo) {
-        this.id = id;
-        this.username = username;
-        this.correo = correo;
-        this.urlImg = null;
-        this.amigos = null;
-        this.solicitudes_recibidas = null;
-        this.solicitudes_enviadas = null;
     }
 
     public void sentSolicitud(){

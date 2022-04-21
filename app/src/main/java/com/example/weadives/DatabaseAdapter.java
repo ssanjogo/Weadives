@@ -143,6 +143,10 @@ public class DatabaseAdapter extends Activity {
         db.collection("Users").document(mAuth.getCurrentUser().getUid()).update(user);
     }
 
+    public void unfollow(HashMap<String, Object> user) {
+        db.collection("Users").document(mAuth.getCurrentUser().getUid()).update(user);
+    }
+
     public void singout(){
         mAuth.signOut();
         listener.setStatusLogIn(false);

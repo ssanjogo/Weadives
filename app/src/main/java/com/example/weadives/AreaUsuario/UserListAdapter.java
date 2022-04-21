@@ -38,7 +38,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     @Override
     public void onBindViewHolder(@NonNull UserListViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.txt_friendID.setText("#"+userClassList.get(position).getId());
         holder.txt_friendname.setText(userClassList.get(position).getUsername());
         Glide.with(context).load(userClassList.get(position).getUrlImg()).into(holder.profilepic);
         if(userClassList.get(position).hasSolicitud()==0){
@@ -84,7 +83,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         public UserListViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_friendname=itemView.findViewById(R.id.txt_friendname);
-            txt_friendID=itemView.findViewById(R.id.txt_friendID);
             profilepic=itemView.findViewById(R.id.profilepic);
             btn_accept=itemView.findViewById(R.id.btn_accept);
             btn_deny=itemView.findViewById(R.id.btn_deny);

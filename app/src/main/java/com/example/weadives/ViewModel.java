@@ -4,20 +4,18 @@ import android.app.Application;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.AreaUsuario.UserClass;
-import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmInterface {
 
-    private final MutableLiveData<ArrayList<UserClass>> listaUsuarios;
+    private final MutableLiveData<List<UserClass>> listaUsuarios;
     private final MutableLiveData<UserClass> usuario;
     private boolean statusLogIn = false;
     private DatabaseAdapter dbA;
@@ -44,7 +42,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         dbA.getCollection();
     }
 
-    public ArrayList<UserClass> getListaUsers(){
+    public List<UserClass> getListaUsers(){
         return listaUsuarios.getValue();
     }
 
@@ -133,6 +131,47 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public void deleteAccount(){
         dbA.deleteAccount();
+    }
+
+    public boolean uidInListaSolicitudesEnviadas(String uidAmigo) {
+        for (String uid : getCurrentUser().getListaSolicitudesEnviadas()){
+            if (uidAmigo.equals(uid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean uidInListaAmigos(String uidAmigo) {
+        for (String uid : getCurrentUser().getListaAmigos()){
+            if (uidAmigo.equals(uid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void unfollow(String idAmigo) {
+        String amigos = "";
+        UserClass user = getCurrentUser();
+        for(String uid: getCurrentUser().getListaAmigos()){
+            if (!idAmigo.equals(uid)){
+                amigos += uid;
+            }
+        }
+        user.setStringAmigos(amigos);
+        HashMap<String, Object> usuario = convertUserToHashMap(user);
+        dbA.unfollow(usuario);
+    }
+
+    public List<UserClass> buscarPorNombre(String nombre) {
+        List<UserClass> listaFiltradaPorNombre = new ArrayList<>();
+        for (UserClass usuario : getListaUsers()){
+            if (usuario.getUsername().equals(nombre)){
+                listaFiltradaPorNombre.add(usuario);
+            }
+        }
+        return listaFiltradaPorNombre;
     }
 
     @Override

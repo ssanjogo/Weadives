@@ -30,20 +30,11 @@
         android:layout_width="86dp"
         android:layout_height="31dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:text="Juan"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/profilepic"
         app:layout_constraintTop_toTopOf="@+id/profilepic" />
-
-    <TextView
-        android:id="@+id/txt_friendID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="#0000"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/txt_friendname"
-        app:layout_constraintTop_toBottomOf="@+id/txt_friendname" />
 
     <View
         android:id="@+id/divider4"
