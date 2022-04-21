@@ -2,18 +2,6 @@ package com.example.weadives;
 
 public class DatoGradosClass {
     float valor;
-    enum direction {
-        NORTE,
-        NORDESTE,
-        ESTE,
-        SUDESTE,
-        SUD,
-        SUDOESTE,
-        OESTE,
-        NORDOESTE,
-        NO_DIRECTION
-    }
-
     public DatoGradosClass(float valor) {
         if (valor<360 && valor>=0){
             this.valor = valor;
@@ -30,7 +18,9 @@ public class DatoGradosClass {
     public void setValor(float valor) {
         this.valor = valor%360;
     }
-    public boolean inRange(direction direction){
+
+    public boolean inRange(Directions direction){
+
         switch (direction){
             case NORTE:
                 if (this.valor<=22.5 || this.valor>=337.5){
@@ -64,33 +54,35 @@ public class DatoGradosClass {
                 if (this.valor<=337.5 || this.valor>=292.5){
                     return true;
                 }return false;
+            case NO_DIRECTION:
+                break;
             default:
                 return false;
         }
-
+        return false;
     }
-    public direction getDirection(){
+    public Directions getDirection(){
         switch ((this.valor<=22.5 || this.valor>=337.5) ? 0 :
                 (this.valor<=67.5 || this.valor>=22.5) ? 1 :(this.valor<=112.5|| this.valor>=67.5) ? 2:(this.valor<=157.5 || this.valor>=112.5)?3:(this.valor<=202.5 || this.valor>=157.5)?4:(this.valor<=247.5 || this.valor>=202.5)?5:(this.valor<=292.5 || this.valor>=247.5)?6:(this.valor<=337.5 || this.valor>=292.5)?7:8){
             case 0:
-                return direction.NORTE;
+                return Directions.NORTE;
             case 1:
-                return direction.NORDESTE;
+                return Directions.NORDESTE;
             case 2:
-                return direction.ESTE;
+                return Directions.ESTE;
             case 3:
-                return direction.SUDESTE;
+                return Directions.SUDESTE;
             case 4:
-                return direction.SUD;
+                return Directions.SUD;
             case 5:
-                return direction.SUDOESTE;
+                return Directions.SUDOESTE;
             case 6:
-                return direction.OESTE;
+                return Directions.OESTE;
             case 7:
-                return direction.NORDOESTE;
+                return Directions.NORDOESTE;
             case 8:
-                return direction.NO_DIRECTION;
+                return Directions.NO_DIRECTION;
         }
-        return direction.NO_DIRECTION;
+        return Directions.NO_DIRECTION;
     }
 }

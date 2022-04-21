@@ -1,20 +1,50 @@
 package com.example.weadives;
 
 public class ParametrosClass {
+
+    enum direction {
+        NORTE,
+        NORDESTE,
+        ESTE,
+        SUDESTE,
+        SUD,
+        SUDOESTE,
+        OESTE,
+        NORDOESTE,
+        NO_DIRECTION
+    }
+    /*
+        Presión
+        Temperatura
+        Viento(Valor absoluto)
+        Dirección de viento(grados)
+        Altura Ola
+        Periodo Ola
+        Dirección ola(Grados)
+         */
     private String nombreActividad;
-    private float vientoMax;
-    private float vientoMin;
+    private int userID;
 
     private float presionMax;
     private float presionMin;
 
-    private float alturaOlaMax;
-    private float alturaOlaMin;
-
     private float temperaturaMax;
     private float temperaturaMin;
 
-    private int userID;
+    private float vientoMax;
+    private float vientoMin;
+
+    private DatoGradosClass directionViento;
+
+    private float alturaOlaMax;
+    private float alturaOlaMin;
+
+    private float periodoOlaMax;
+    private float periodoOlaMin;
+
+    private DatoGradosClass directionOlas;
+
+
 
     public ParametrosClass(String nombreActividad,int userID, float vientoMax, float vientoMin, float presionMax, float presionMin, float alturaOlaMax, float alturaOlaMin, float temperaturaMax, float temperaturaMin) {
         this.nombreActividad = nombreActividad;
@@ -29,6 +59,23 @@ public class ParametrosClass {
         this.userID=userID;
     }
 
+    public ParametrosClass(String nombreActividad, int userID, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
+        this.nombreActividad = nombreActividad;
+        this.presionMax = presionMax;
+        this.presionMin = presionMin;
+        this.temperaturaMax = temperaturaMax;
+        this.temperaturaMin = temperaturaMin;
+        this.vientoMax = vientoMax;
+        this.vientoMin = vientoMin;
+        this.directionViento = directionViento;
+        this.alturaOlaMax = alturaOlaMax;
+        this.alturaOlaMin = alturaOlaMin;
+        this.periodoOlaMax = periodoOlaMax;
+        this.periodoOlaMin = periodoOlaMin;
+        this.directionOlas = directionOlas;
+        this.userID = userID;
+    }
+
     public ParametrosClass(String nombreActividad,int userID, float viento, float presion, float alturaOla, float temperatura) {
         this.nombreActividad = nombreActividad;
         this.vientoMax = viento;
@@ -41,26 +88,40 @@ public class ParametrosClass {
         this.temperaturaMin = temperatura;
         this.userID=userID;
     }
+
     @Override
     public String toString() {
         return "ParametrosClass{" +
                 "nombreActividad='" + nombreActividad + '\'' +
-                ", vientoMax=" + vientoMax +
-                ", vientoMin=" + vientoMin +
+                ", userID=" + userID +
                 ", presionMax=" + presionMax +
                 ", presionMin=" + presionMin +
-                ", alturaOlaMax=" + alturaOlaMax +
-                ", alturaOlaMin=" + alturaOlaMin +
                 ", temperaturaMax=" + temperaturaMax +
                 ", temperaturaMin=" + temperaturaMin +
-                ", userID=" + userID +
+                ", vientoMax=" + vientoMax +
+                ", vientoMin=" + vientoMin +
+                ", directionViento=" + directionViento +
+                ", alturaOlaMax=" + alturaOlaMax +
+                ", alturaOlaMin=" + alturaOlaMin +
+                ", periodoOlaMax=" + periodoOlaMax +
+                ", periodoOlaMin=" + periodoOlaMin +
+                ", directionOlas=" + directionOlas +
                 '}';
     }
 
     public float getViento() {
         return (vientoMax+vientoMin)/2;
     }
-
+    public float getPresion() { return (presionMax+presionMin)/2;}
+    public float getTemperatura() {
+        return (temperaturaMax+temperaturaMin)/2;
+    }
+    public float getAlturaOla() {
+        return (alturaOlaMax+alturaOlaMin)/2;
+    }
+    public float getPeriodoOla() {
+        return (periodoOlaMax+periodoOlaMin)/2;
+    }
     public String getNombreActividad() {
         return nombreActividad;
     }
@@ -140,5 +201,36 @@ public class ParametrosClass {
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+    public DatoGradosClass getDirectionViento() {
+        return directionViento;
+    }
+
+    public void setDirectionViento(DatoGradosClass directionViento) {
+        this.directionViento = directionViento;
+    }
+
+    public float getPeriodoOlaMax() {
+        return periodoOlaMax;
+    }
+
+    public void setPeriodoOlaMax(float periodoOlaMax) {
+        this.periodoOlaMax = periodoOlaMax;
+    }
+
+    public float getPeriodoOlaMin() {
+        return periodoOlaMin;
+    }
+
+    public void setPeriodoOlaMin(float periodoOlaMin) {
+        this.periodoOlaMin = periodoOlaMin;
+    }
+
+    public DatoGradosClass getDirectionOlas() {
+        return directionOlas;
+    }
+
+    public void setDirectionOlas(DatoGradosClass directionOlas) {
+        this.directionOlas = directionOlas;
     }
 }

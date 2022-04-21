@@ -1,5 +1,6 @@
 package com.example.weadives.PantallaMiPerfil;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class ParametrosPerfilAdapter extends RecyclerView.Adapter<ParametrosPerf
         return new ParametrosPerfilViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ParametrosPerfilViewHolder holder, int position) {
         //final Context contextPref;

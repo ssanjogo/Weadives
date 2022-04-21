@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weadives.AreaUsuario.UserClass;
 import com.example.weadives.DatabaseAdapter;
+import com.example.weadives.DatoGradosClass;
+import com.example.weadives.Directions;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.ParametrosClass;
@@ -103,7 +105,8 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
 
     private List<PublicacionClass> fillPublicacionList() {
         List<PublicacionClass> publicacionList= new ArrayList<PublicacionClass>();
-        ParametrosClass p1= new ParametrosClass("Surf", 0, 0.1f,0.2f,0.3f,0.4f);
+        //String nombreActividad, int userID, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas
+        ParametrosClass p1= new ParametrosClass("SurfLoco", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(20),3.f,2.f,4.f,4.f,new DatoGradosClass(0));
         HashMap<String, Integer> likeList1=new HashMap<>();
         likeList1.put("0000",1);
         likeList1.put("0001",1);
