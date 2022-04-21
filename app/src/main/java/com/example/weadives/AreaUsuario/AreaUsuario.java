@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,11 +15,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
@@ -29,7 +33,7 @@ import java.util.List;
 
 public class AreaUsuario extends AppCompatActivity {
 
-    private ImageView img_perfil, btn_home4, btn_buscar;
+    private ImageView img_perfil, btn_home4;
     private TextView txt_nombrePerfil, txt_noAmigos;
     private EditText etT_buscarPorNombre;
     private RecyclerView rv_llistaUsuarios;
@@ -48,7 +52,6 @@ public class AreaUsuario extends AppCompatActivity {
         txt_noAmigos = findViewById(R.id.txt_noAmigos);
         etT_buscarPorNombre = findViewById(R.id.etT_buscarPorNombre);
         btn_home4 = findViewById(R.id.btn_home4);
-        btn_buscar = findViewById(R.id.btn_buscar);
         img_perfil = findViewById(R.id.img_perfil);
         rv_llistaUsuarios = findViewById(R.id.rv_llistaUsuarios);
         constraintLayout = findViewById(R.id.constraintLayout);
@@ -61,10 +64,13 @@ public class AreaUsuario extends AppCompatActivity {
         context = LocaleHelper.setLocale(this, cargarPreferencias());
         resources = context.getResources();
         txt_noAmigos.setText(resources.getString(R.string.noAmigos));
-        txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
 
-        userList = fillUserList();
-        System.out.println(userList);
+        txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
+        Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
+
+        viewModel.fillUserList();
+        userList = viewModel.getListaRecyclerView().getValue();
+        setLiveDataObservers();
 
         if (!userList.isEmpty()){
             txt_noAmigos.setVisibility(View.INVISIBLE);
@@ -92,12 +98,24 @@ public class AreaUsuario extends AppCompatActivity {
             }
         });
 
-        btn_buscar.setOnClickListener(new View.OnClickListener() {
+        etT_buscarPorNombre.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!etT_buscarPorNombre.getText().toString().equals("")){
-                    userList = viewModel.buscarPorNombre(etT_buscarPorNombre.getText().toString());
+                    viewModel.buscarPorNombre(etT_buscarPorNombre.getText().toString());
+                    userList = viewModel.getListaRecyclerView().getValue();
+                } else {
+                    System.out.println("AREA USUARIO" + viewModel.getCurrentUser());
+                    viewModel.fillUserList();
+                    userList = viewModel.getListaRecyclerView().getValue();
                 }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
             }
         });
 
@@ -111,28 +129,20 @@ public class AreaUsuario extends AppCompatActivity {
         });
     }
 
-    private List<UserClass> fillUserList() {//String id, String username, String correo, String urlImg)
-        UserClass user;
-        List<UserClass> listaUsers = new ArrayList<>();
+    public void setLiveDataObservers() {
+        //Subscribe the activity to the observable
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
 
-        if (viewModel.getCurrentUser().getListaSolicitudesRecibidas().size() > 0) {
-            for (String uid : viewModel.getCurrentUser().getListaSolicitudesRecibidas()) {
-                user = viewModel.getUserByUID(uid);
-                if (user != null) {
-                    listaUsers.add(user);
-                }
+        final Observer<List<UserClass>> observer = new Observer<List<UserClass>>() {
+            @Override
+            public void onChanged(List<UserClass> ac) {
+                UserListAdapter newAdapter = new UserListAdapter(viewModel.getListaRecyclerView().getValue(),AreaUsuario.this);
+                rv_llistaUsuarios.swapAdapter(newAdapter, false);
+                newAdapter.notifyDataSetChanged();
             }
-        }
+        };
 
-        if (viewModel.getCurrentUser().getListaAmigos().size() > 0) {
-            for (String uid : viewModel.getCurrentUser().getListaAmigos()) {
-                user = viewModel.getUserByUID(uid);
-                if (user != null) {
-                    listaUsers.add(user);
-                }
-            }
-        }
-        return listaUsers;
+        viewModel.getListaRecyclerView().observe(this, observer);
     }
 
     private void recordarUser(String s) {

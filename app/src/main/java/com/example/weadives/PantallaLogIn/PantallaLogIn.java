@@ -114,7 +114,7 @@ public class PantallaLogIn extends AppCompatActivity {
                     viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString(), chbox);
                     if (!viewModel.correoRepetido(etA_correo.getText().toString())){
                         etA_correo.setError("Correo no registrado");
-                    } else if (viewModel.getCurrentUser() == null) {
+                    } else if (viewModel.getCurrentUserUID() == null) {
                         etP_contraseña.setError("Contraseña incorrecta");
                     } else {
                         Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);

@@ -1,11 +1,15 @@
 package com.example.weadives;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -100,7 +104,7 @@ public class DatabaseAdapter extends Activity {
         user.put("Nombre", nombre);
         user.put("Correo", correo);
         user.put("UID", uid);
-        user.put("Imagen", "");
+        user.put("Imagen", ""); //Cambiar
         user.put("Amigos", "");
         user.put("Solicitudes recibidas", "");
         user.put("Solicitudes enviadas", "");

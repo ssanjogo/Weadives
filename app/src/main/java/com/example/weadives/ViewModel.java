@@ -1,9 +1,11 @@
 package com.example.weadives;
 
+import android.app.Activity;
 import android.app.Application;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,6 +18,7 @@ import java.util.List;
 public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmInterface {
 
     private final MutableLiveData<List<UserClass>> listaUsuarios;
+    private final MutableLiveData<List<UserClass>> listaRecyclerView;
     private final MutableLiveData<UserClass> usuario;
     private boolean statusLogIn = false;
     private DatabaseAdapter dbA;
@@ -37,13 +40,18 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         super(application);
 
         listaUsuarios = new MutableLiveData<>();
+        listaRecyclerView = new MutableLiveData<>();
         usuario = new MutableLiveData<>();
         dbA = new DatabaseAdapter(this);
         dbA.getCollection();
     }
 
-    public List<UserClass> getListaUsers(){
-        return listaUsuarios.getValue();
+    public LiveData<List<UserClass>> getListaUsers(){
+        return listaUsuarios;
+    }
+
+    public LiveData<List<UserClass>> getListaRecyclerView(){
+        return this.listaRecyclerView;
     }
 
     public UserClass getUserByUID(String uid){
@@ -56,7 +64,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public UserClass getCurrentUser(){
-        return usuario.getValue();
+        return this.usuario.getValue();
     }
 
     public String getCurrentUserUID(){
@@ -71,13 +79,13 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             listaUsuarios.getValue().add(u);
             // Inform observer.
             listaUsuarios.setValue(listaUsuarios.getValue());
-            usuario.setValue(u);
+            this.usuario.setValue(u);
         }
     }
 
     public void logIn(String correo, String contraseña, boolean login){
         dbA.logIn(correo, contraseña);
-        usuario.setValue(getUserByUID(getCurrentUserUID()));
+        this.usuario.setValue(getUserByUID(getCurrentUserUID()));
         setLogInStatus(login);
     }
 
@@ -152,26 +160,58 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public void unfollow(String idAmigo) {
+        int i = 0;
         String amigos = "";
         UserClass user = getCurrentUser();
         for(String uid: getCurrentUser().getListaAmigos()){
             if (!idAmigo.equals(uid)){
-                amigos += uid;
+                if (i == 0){
+                    amigos += uid;
+                } else {
+                    amigos += ("," + uid);
+                }
+                i++;
             }
         }
         user.setStringAmigos(amigos);
         HashMap<String, Object> usuario = convertUserToHashMap(user);
         dbA.unfollow(usuario);
+        fillUserList();
     }
 
-    public List<UserClass> buscarPorNombre(String nombre) {
+    public void buscarPorNombre(String nombre) {
         List<UserClass> listaFiltradaPorNombre = new ArrayList<>();
-        for (UserClass usuario : getListaUsers()){
-            if (usuario.getUsername().equals(nombre)){
+        for (UserClass usuario : getListaUsers().getValue()){
+            if (usuario.getUsername().contains(nombre)){
                 listaFiltradaPorNombre.add(usuario);
             }
         }
-        return listaFiltradaPorNombre;
+        this.listaRecyclerView.setValue(listaFiltradaPorNombre);
+    }
+
+    public void fillUserList() {
+        UserClass user;
+        List<UserClass> listaUsers = new ArrayList<>();
+        System.out.println(getCurrentUser());
+        if (!getCurrentUser().getStringSolicitudesRecibidas().equals("")) {
+            for (String uid : getCurrentUser().getListaSolicitudesRecibidas()) {
+                user = getUserByUID(uid);
+                if (user != null) {
+                    listaUsers.add(user);
+                }
+            }
+        }
+
+        if (!getCurrentUser().getStringAmigos().equals("")) {
+            for (String uid : getCurrentUser().getListaAmigos()) {
+                user = getUserByUID(uid);
+                if (user != null) {
+                    listaUsers.add(user);
+                }
+            }
+        }
+        System.out.println("METODO fillUserList" + listaUsers);
+        this.listaRecyclerView.setValue(listaUsers);
     }
 
     @Override

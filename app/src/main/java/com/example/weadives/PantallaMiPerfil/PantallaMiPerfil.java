@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
@@ -64,6 +65,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         Intent intent = getIntent();
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
+        Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override

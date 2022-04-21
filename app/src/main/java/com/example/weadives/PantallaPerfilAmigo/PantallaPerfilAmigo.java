@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -135,7 +136,14 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
 
             }
         });
+    }
 
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == event.KEYCODE_BACK){
+            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+            startActivity(areaUsuario);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void recordarUser(String s) {

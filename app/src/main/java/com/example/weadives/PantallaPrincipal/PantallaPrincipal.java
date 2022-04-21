@@ -70,12 +70,6 @@ public class PantallaPrincipal extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
         btnHorario.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -97,8 +91,6 @@ public class PantallaPrincipal extends AppCompatActivity {
 
             }
         });
-
-
 
         btn_gestionarParametros.setOnClickListener(new View.OnClickListener(){
             @Override
