@@ -43,4 +43,5 @@
     <string name="afirmativo">Yes</string>
     <string name="negativo">No</string>
     <string name="noAmigos">You do not have friends added</string>
+    <string name="contraseña_incorrecta">Wrong password</string>
 </resources>

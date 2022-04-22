@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.LocaleHelper;
@@ -72,7 +73,10 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
 
         String username = intent.getStringExtra("username");
         String idAmigo = intent.getStringExtra("id");
+        String imagen = intent.getStringExtra("Imagen");
+
         txt_nombrePerfil.setText(username);
+        Glide.with(this).load(imagen).into(img_perfil);
 
         if (viewModel.uidInListaAmigos(idAmigo)){
             btn_añadirAmigo.setText(resources.getString(R.string.añadido));
@@ -89,7 +93,6 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
             public void onClick(View view){
                 if(!viewModel.getLogInStatus()){
                     viewModel.singOut();
-                    recordarUser("false");
                 }
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
@@ -105,12 +108,15 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
                     //FALTA
                     //Enviar solicitud
+                    viewModel.enviarsolicitud(idAmigo);
                 } else if (btn_añadirAmigo.getText().equals("Pendiente")){
+                    System.out.println("pasa");
                     btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));
                     //FALTA
                     //Eliminar solicitud enviada
+                    viewModel.cancelarEvioSolicitud(idAmigo);
                 } else {
                     AlertDialog.Builder alerta = new AlertDialog.Builder(PantallaPerfilAmigo.this);
                     alerta.setMessage(resources.getString(R.string.alertaDejarDeSeguir)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
@@ -130,10 +136,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     AlertDialog titulo = alerta.create();
                     titulo.setTitle(resources.getString(R.string.eliminarCuenta));
                     titulo.show();
-
-
                 }
-
             }
         });
     }
@@ -144,13 +147,6 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
             startActivity(areaUsuario);
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    private void recordarUser(String s) {
-        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("recuerda", s);
-        editor.commit();
     }
 
     private List<PublicacionClass> fillPublicacionList() {

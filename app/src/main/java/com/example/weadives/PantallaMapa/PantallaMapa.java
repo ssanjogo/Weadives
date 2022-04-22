@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -28,13 +29,13 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private PantallaMapaBinding binding;
-    private ImageButton btn_home;
+    private ImageView btn_home;
     private Button btn_gestorNotificaciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
         binding = PantallaMapaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -48,17 +49,6 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         context = LocaleHelper.setLocale(this, cargarPreferencias());
         resources = context.getResources();
         btn_gestorNotificaciones.setText(resources.getString(R.string.gestion_notificaciones));
-
-        btn_home=findViewById(R.id.btn_home5);
-        btn_home.bringToFront();
-
-
-        btn_home.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                finish();
-            }
-        });
 
         btn_gestorNotificaciones.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -93,6 +93,7 @@ public class PantallaRegistro extends AppCompatActivity {
                     viewModel.register(nombre, correo, contraseña);
                     if (viewModel.getCurrentUser().getCorreo().equals(correo) && viewModel.getCurrentUser().getUsername().equals(nombre)) {
                         recordarUser();
+                        recordarCorreo(viewModel.getCurrentUser().getCorreo());
                         Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
                         areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(areaUsuario);
@@ -103,7 +104,7 @@ public class PantallaRegistro extends AppCompatActivity {
         });
     }
 
-    public boolean validarEmail(String email) {
+    private boolean validarEmail(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
     }
@@ -115,13 +116,9 @@ public class PantallaRegistro extends AppCompatActivity {
 
     private void recordarCorreo(String correo) {
         SharedPreferences preferencias = getSharedPreferences("user", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("user",correo);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("user", correo);
         editor.commit();
-    }
-    private String cargarCorreo() {
-        SharedPreferences preferencias = getSharedPreferences("user",Context.MODE_PRIVATE);
-        return preferencias.getString("user","");
     }
 
     private void recordarUser() {
@@ -129,10 +126,5 @@ public class PantallaRegistro extends AppCompatActivity {
         SharedPreferences.Editor editor=preferencias.edit();
         editor.putString("recuerda", "true");
         editor.commit();
-    }
-
-    private String cargarUser() {
-        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
-        return preferencias.getString("recuerda","false");
     }
 }

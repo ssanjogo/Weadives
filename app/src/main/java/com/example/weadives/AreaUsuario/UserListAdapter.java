@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.weadives.PantallaPerfilAmigo.PantallaPerfilAmigo;
 import com.example.weadives.R;
+import com.example.weadives.ViewModel;
 
 import java.util.List;
 
@@ -24,9 +25,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     private List<UserClass> userClassList;
     private Context context;
+    private int limite;
+
     public UserListAdapter(List<UserClass> userClassList, Context context) {
         this.userClassList = userClassList;
         this.context = context;
+        this.limite = 3;
     }
 
     @NonNull
@@ -40,30 +44,38 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     public void onBindViewHolder(@NonNull UserListViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.txt_friendname.setText(userClassList.get(position).getUsername());
         Glide.with(context).load(userClassList.get(position).getUrlImg()).into(holder.profilepic);
-        if(userClassList.get(position).hasSolicitud()==0){
+        if(position >= limite) {
             holder.btn_accept.setVisibility(View.GONE);
             holder.btn_deny.setVisibility(View.GONE);
-        }else{
-            holder.btn_accept.setOnClickListener(new View.OnClickListener(){
+        } else {
+            holder.btn_accept.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view){
+                public void onClick(View view) {
+
                     userClassList.get(position).acceptSolicitud();
                     holder.btn_accept.setVisibility(View.GONE);
                     holder.btn_deny.setVisibility(View.GONE);
                 }
             });
+            holder.btn_deny.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.btn_accept.setVisibility(View.GONE);
+                    holder.btn_deny.setVisibility(View.GONE);
+                }
+            });
         }
+
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PantallaPerfilAmigo.class);
                 intent.putExtra("username", userClassList.get(position).getUsername());
                 intent.putExtra("id", userClassList.get(position).getId());
+                intent.putExtra("Imagen", userClassList.get(position).getUrlImg());
                 context.startActivity(intent);
             }
         });
-
-
     }
 
     @Override
@@ -73,11 +85,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     public class UserListViewHolder extends RecyclerView.ViewHolder {
         TextView txt_friendname;
-        TextView txt_friendID;
         ImageView profilepic;
         ImageButton btn_accept;
         ImageButton btn_deny;
-
         ConstraintLayout parentLayout;
 
         public UserListViewHolder(@NonNull View itemView) {

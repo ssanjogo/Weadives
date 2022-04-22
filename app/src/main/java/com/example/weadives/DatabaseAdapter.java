@@ -1,8 +1,10 @@
 package com.example.weadives;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -91,8 +94,10 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    listener.setUserId(mAuth.getCurrentUser().getUid());
+                    verificarToken();
+                    listener.setUserId(user.getUid());
                 } else {
+
                     Log.d(TAG, "Error en el log in");
                 }
             }
@@ -139,12 +144,34 @@ public class DatabaseAdapter extends Activity {
         return new HashMap<>();
     }
 
-    public void cambiarCorreo(String nuevoDato, UserClass user){
-        db.collection("Users").document(mAuth.getCurrentUser().getUid()).update((Map<String, Object>) user);
+    public void updateDatos(HashMap<String, Object> user){
+        db.collection("Users").document(user.get("UID").toString()).update(user);
     }
 
-    public void cambiarUsername(String nuevoDato, HashMap<String, Object> user){
-        db.collection("Users").document(mAuth.getCurrentUser().getUid()).update(user);
+    public void cambiarCorreo(String s){
+        mAuth.getCurrentUser().updateEmail(s).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d(TAG, "Correo cambiado correctamente.");
+                } else {
+                    Log.e(TAG, "Error al cambiar el correo");
+                }
+            }
+        });
+    }
+
+    public void cambiarContraseña(String s){
+        mAuth.getCurrentUser().updatePassword(s).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d(TAG, "Contraseña cambiada correctamente.");
+                } else {
+                    Log.e(TAG, "Error al cambiar la contraseña");
+                }
+            }
+        });
     }
 
     public void unfollow(HashMap<String, Object> user) {
@@ -162,5 +189,21 @@ public class DatabaseAdapter extends Activity {
         mAuth.getCurrentUser().delete();
         Log.d(TAG, "Cuenta borrada");
     }
+
+    public void verificarToken(){
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        user.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+            public void onComplete(@NonNull Task<GetTokenResult> task) {
+                if (task.isSuccessful()) {
+                    String idToken = task.getResult().getToken();
+                            // Send token to your backend via HTTPS
+                            // ...
+                } else {
+                            // Handle error -> task.getException();
+                }
+            }
+        });
+    }
+
 
 }

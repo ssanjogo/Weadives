@@ -87,7 +87,9 @@ public class UserClass {
     }
 
     public List<String> getListaSolicitudesRecibidas(){
+        System.out.println(solicitudes_recibidas.split(","));
         List<String> solicitudes_recibidas = Arrays.asList(this.solicitudes_recibidas.split(","));
+        System.out.println(solicitudes_recibidas);
         return solicitudes_recibidas;
     }
 

@@ -45,4 +45,5 @@
     <string name="afirmativo">Sí</string>
     <string name="negativo">No</string>
     <string name="noAmigos">No tienes amigos agregados</string>
+    <string name="contraseña_incorrecta">Contraseña incorrecta</string>
 </resources>

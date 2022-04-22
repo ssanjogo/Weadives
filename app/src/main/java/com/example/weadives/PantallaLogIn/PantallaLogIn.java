@@ -64,13 +64,15 @@ public class PantallaLogIn extends AppCompatActivity {
         chkb_mantenerSession.setText(resources.getString(R.string.mantener_sessi_n_iniciada));
         btn_registrarse.setText(resources.getString(R.string.btn_registrarse));
 
-        /*if (cargarUser().equals("true")) {
+        /*if (viewModel.getLogInStatus()) {
+            viewModel.logIn(cargarCorreo(), cargarContraseña());
             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+            areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(areaUsuario);
-        } else {
-            viewModel.singOut();
-            etA_correo.setText(cargarCorreo());
+            finish();
         }*/
+
+        etA_correo.setText(cargarCorreo());
 
         viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
@@ -80,6 +82,7 @@ public class PantallaLogIn extends AppCompatActivity {
             public void onClick(View view){
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
+                finish();
             }
         });
 
@@ -106,21 +109,26 @@ public class PantallaLogIn extends AppCompatActivity {
                 } else if (etP_contraseña.getText().toString().equals("")){
                     etP_contraseña.setError("Campo sin rellenar");
                 } else {
+
+                    recordarCorreo(etA_correo.getText().toString());
+
                     if (chkb_mantenerSession.isChecked()) {
-                        chbox = true;
-                        recordarUser("true");
-                        recordarCorreo(etA_correo.getText().toString());
+                        recordarUser();
+                        recordarContraseña(etP_contraseña.getText().toString());
+                        viewModel.setLogInStatus(true);
                     }
-                    viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString(), chbox);
+
                     if (!viewModel.correoRepetido(etA_correo.getText().toString())){
                         etA_correo.setError("Correo no registrado");
-                    } else if (viewModel.getCurrentUserUID() == null) {
-                        etP_contraseña.setError("Contraseña incorrecta");
                     } else {
-                        Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                        areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(areaUsuario);
-                        finish();
+                        viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
+                        if (viewModel.getCurrentUserUID() != null) {
+                            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                            areaUsuario.putExtra("Correo", etA_correo.getText().toString());
+                            areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(areaUsuario);
+                            finish();
+                        }
                     }
                 }
             }
@@ -143,10 +151,21 @@ public class PantallaLogIn extends AppCompatActivity {
         return preferencias.getString("user","");
     }
 
-    private void recordarUser(String s) {
+    private void recordarContraseña(String contraseña) {
+        SharedPreferences preferencias = getSharedPreferences("contraseña", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("contraseña", contraseña);
+        editor.commit();
+    }
+    private String cargarContraseña() {
+        SharedPreferences preferencias = getSharedPreferences("contraseña",Context.MODE_PRIVATE);
+        return preferencias.getString("contraseña","");
+    }
+
+    private void recordarUser() {
         SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("recuerda", s);
+        editor.putString("recuerda", "true");
         editor.commit();
     }
 

@@ -72,7 +72,6 @@ public class PantallaMiPerfil extends AppCompatActivity {
             public void onClick(View view){
                 if(!viewModel.getLogInStatus()){
                     viewModel.singOut();
-                    recordarUser("false");
                 }
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
@@ -90,7 +89,8 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //dbA.singout();
+                viewModel.setLogInStatus(false);
+                viewModel.singOut();
                 Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
                 startActivity(pantallaLogIn);
             }

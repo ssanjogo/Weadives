@@ -51,8 +51,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
 
-        System.out.println("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII" + viewModel.getLogInStatus());
-
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){

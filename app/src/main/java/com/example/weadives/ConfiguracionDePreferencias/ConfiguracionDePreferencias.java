@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -41,6 +42,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         scrollView2 = findViewById(R.id.scrollView2);
         sw_notificaciones = findViewById(R.id.sw_notificaciones);
         sw_mostrarEnPerfil = findViewById(R.id.sw_mostrarEnPerfil);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();

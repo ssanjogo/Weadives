@@ -62,7 +62,6 @@ public class AjustesPerfil extends AppCompatActivity {
             public void onClick(View view){
                 if(!viewModel.getLogInStatus()){
                     viewModel.singOut();
-                    recordarUser("false");
                 }
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
