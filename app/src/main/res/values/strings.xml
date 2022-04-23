@@ -36,4 +36,6 @@
     <string name="cerrar_sesión">Sing out</string>
     <string name="añadir_amigo">Add friend</string>
     <string name="pendiente">Pending</string>
+    <string name="selecciona_actividad">Choose an Activity</string>
+
 </resources>

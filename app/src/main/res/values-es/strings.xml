@@ -38,4 +38,5 @@
     <string name="cerrar_sesión">Cerrar sesión</string>
     <string name="añadir_amigo">Añadir amigo</string>
     <string name="pendiente">Pendiente</string>
+    <string name="selecciona_actividad">Selecciona una actividad</string>
 </resources>

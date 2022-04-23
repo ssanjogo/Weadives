@@ -91,6 +91,9 @@ public class ParametrosClass {
 
     @Override
     public String toString() {
+        return this.nombreActividad;
+    }
+    public String toString2() {
         return "ParametrosClass{" +
                 "nombreActividad='" + nombreActividad + '\'' +
                 ", userID=" + userID +
