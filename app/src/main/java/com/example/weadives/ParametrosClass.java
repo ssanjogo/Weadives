@@ -229,8 +229,11 @@ public class ParametrosClass {
         this.periodoOlaMin = periodoOlaMin;
     }
 
-    public DatoGradosClass getDirectionOlas() {
-        return directionOlas;
+    public Directions getDirectionOlas() {
+        if (directionOlas==null){
+            return Directions.NO_DIRECTION;
+        }
+        return directionOlas.getDirection();
     }
 
     public void setDirectionOlas(DatoGradosClass directionOlas) {

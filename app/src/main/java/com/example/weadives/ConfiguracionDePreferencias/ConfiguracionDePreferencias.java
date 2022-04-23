@@ -6,18 +6,23 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.DatabaseAdapter;
+import com.example.weadives.DatoGradosClass;
+import com.example.weadives.Directions;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
@@ -78,8 +83,22 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 startActivity(seleccionDeAjuste);
             }
         });
+
+        //Parte del scroll
+        TextView actName=findViewById(R.id.txt_ActivityNameCP);
+        EditText editName=findViewById(R.id.etx_ActivityNameCP);
+        TextView dirOlas=findViewById(R.id.txt_DireccionOlasCP);
+        Spinner spn_dirOlas=findViewById(R.id.spn_DireccionOlasCP);
+        ArrayAdapter<ParametrosClass> adapterOlas= new ArrayAdapter<>(this, R.layout.one_spinner_list, Directions.NO_DIRECTION.toArrayString());
+        spn_dirOlas.setAdapter(adapterOlas);
+
+
+
+
+        //Spinner superior
         ArrayList<ParametrosClass> test=fillParametrosList();
-        ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,test);
+        ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,test);
+        adapter.setDropDownViewResource(R.layout.one_spinner_list);
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -87,6 +106,8 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 mostrarAjuste((ParametrosClass) spinner.getSelectedItem());
+                editName.setText(((ParametrosClass) spinner.getSelectedItem()).getNombreActividad());
+                spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas()));
 
             }
 
@@ -96,6 +117,9 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
             }
         });
+
+
+
 
 
 
@@ -112,6 +136,8 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     }
     private ArrayList<ParametrosClass> fillParametrosList() {
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
+        ParametrosClass p1= new ParametrosClass("SurfLoco", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(20),3.f,2.f,4.f,4.f,new DatoGradosClass(0));
+        parametrosList.add(p1);
         parametrosList.add(new ParametrosClass("Surf", 0, 0.1f,0.2f,0.3f,0.4f));
         parametrosList.add(new ParametrosClass("Dia de Playa", 11, 3.1f,3.2f,3.3f,3.4f));
         parametrosList.add(new ParametrosClass("Vela",2222, 4.1f,4.2f,4.3f,4.4f));

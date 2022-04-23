@@ -11,6 +11,7 @@ public class DatoGradosClass {
         }
     }
 
+
     public float getValor() {
         return valor;
     }
