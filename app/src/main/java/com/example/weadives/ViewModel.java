@@ -125,12 +125,23 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         return false;
     }
 
-    public void cambiarCorreo(String nuevoDato){
+    public void cambiarCorreo(String correo){
         UserClass user = getCurrentUser();
-        user.setCorreo(nuevoDato);
+        user.setCorreo(correo);
         HashMap<String, Object> usuario = convertUserToHashMap(user);
-        dbA.cambiarCorreo(nuevoDato);
+        dbA.cambiarCorreo(correo);
         dbA.updateDatos(usuario);
+    }
+
+    public void cambiarNombre(String nombre){
+        UserClass user = getCurrentUser();
+        user.setUsername(nombre);
+        HashMap<String, Object> usuario = convertUserToHashMap(user);
+        dbA.updateDatos(usuario);
+    }
+
+    public void cambiarContraseña(String contraseña) {
+        dbA.cambiarContraseña(contraseña);
     }
 
     public int numeroUsuariosSolPen(){
@@ -140,12 +151,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         return list.size();
     }
 
-    public void cambiarNombre(String nuevoDato){
-        UserClass user = getCurrentUser();
-        user.setUsername(nuevoDato);
-        HashMap<String, Object> usuario = convertUserToHashMap(user);
-        dbA.updateDatos(usuario);
-    }
+
 
     private HashMap<String, Object> convertUserToHashMap(UserClass user){
         HashMap<String, Object> usuario = new HashMap<>();
@@ -391,5 +397,4 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void setStatusLogIn(boolean status) {
         this.statusLogIn = status;
     }
-
 }

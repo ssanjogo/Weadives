@@ -44,4 +44,6 @@
     <string name="negativo">No</string>
     <string name="noAmigos">You do not have friends added</string>
     <string name="contraseña_incorrecta">Wrong password</string>
+    <string name="alertaCambiarContraseña">Are you sure you want to change your password?</string>
+    <string name="cambiarContraseña">Change password</string>
 </resources>

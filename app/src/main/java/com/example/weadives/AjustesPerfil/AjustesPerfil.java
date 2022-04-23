@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
+import com.example.weadives.PantallaPerfilAmigo.PantallaPerfilAmigo;
 import com.example.weadives.R;
 import com.example.weadives.ViewModel;
 
@@ -72,13 +73,28 @@ public class AjustesPerfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (etA_correo3.getText() != null && etN_nombrepersona2.getText() != null){
-                    if(!etA_correo3.getText().toString().equals(viewModel.getCurrentUser().getCorreo()) && !etN_nombrepersona2.getText().toString().equals(viewModel.getCurrentUser().getUsername())){
+                    if(!etA_correo3.getText().toString().equals(viewModel.getCurrentUser().getCorreo())){
                         viewModel.cambiarCorreo(etA_correo3.getText().toString());
+                    }
+                    if(!etN_nombrepersona2.getText().toString().equals(viewModel.getCurrentUser().getUsername())){
                         viewModel.cambiarNombre(etN_nombrepersona2.getText().toString());
-                    }else if(!etA_correo3.getText().toString().equals(viewModel.getCurrentUser().getCorreo())){
-                        viewModel.cambiarCorreo(etA_correo3.getText().toString());
-                    } else if(!etN_nombrepersona2.getText().toString().equals(viewModel.getCurrentUser().getUsername())){
-                        viewModel.cambiarNombre(etN_nombrepersona2.getText().toString());
+                    }
+                    if (etP_contraseña3 != null){
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
+                        alerta.setMessage(resources.getString(R.string.alertaCambiarContraseña)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                viewModel.cambiarContraseña(etP_contraseña3.getText().toString());
+                            }
+                        }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                        AlertDialog titulo = alerta.create();
+                        titulo.setTitle(resources.getString(R.string.cambiarContraseña));
+                        titulo.show();
                     }
                 }
                 finish();

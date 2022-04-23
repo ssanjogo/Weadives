@@ -199,7 +199,7 @@ public class DatabaseAdapter extends Activity {
                             // Send token to your backend via HTTPS
                             // ...
                 } else {
-                            // Handle error -> task.getException();
+                    Log.e(TAG, "Error al verificar token");
                 }
             }
         });

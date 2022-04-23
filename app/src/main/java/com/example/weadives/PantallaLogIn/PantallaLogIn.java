@@ -64,17 +64,18 @@ public class PantallaLogIn extends AppCompatActivity {
         chkb_mantenerSession.setText(resources.getString(R.string.mantener_sessi_n_iniciada));
         btn_registrarse.setText(resources.getString(R.string.btn_registrarse));
 
-        /*if (viewModel.getLogInStatus()) {
-            viewModel.logIn(cargarCorreo(), cargarContraseña());
+        viewModel = ViewModel.getInstance(this);
+
+        if (viewModel.getLogInStatus()) {
+            System.out.println("LOG IN STATUS " + viewModel.getLogInStatus());
+            //viewModel.logIn(cargarCorreo(), cargarContraseña());
             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
             areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(areaUsuario);
             finish();
-        }*/
+        }
 
         etA_correo.setText(cargarCorreo());
-
-        viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
 
         btn_home2.setOnClickListener(new View.OnClickListener(){

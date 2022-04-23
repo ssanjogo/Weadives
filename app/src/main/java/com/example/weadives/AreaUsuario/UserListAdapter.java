@@ -80,6 +80,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     @Override
     public int getItemCount() {
+        if (userClassList.size() == 0){
+            return 0;
+        }
         return userClassList.size();
     }
 
