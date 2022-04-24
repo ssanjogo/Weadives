@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -75,22 +76,60 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 startActivity(pantallaInicio);
             }
         });
-
-        btn_guardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent seleccionDeAjuste = new Intent(getApplicationContext(), SeleccionDeAjuste.class);
-                startActivity(seleccionDeAjuste);
-            }
-        });
+        //Para que no se suba cuando escribes
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         //Parte del scroll
         TextView actName=findViewById(R.id.txt_ActivityNameCP);
-        EditText editName=findViewById(R.id.etx_ActivityNameCP);
         TextView dirOlas=findViewById(R.id.txt_DireccionOlasCP);
+        TextView dirViento=findViewById(R.id.txt_DireccionVientoCP);
+        TextView presionMax=findViewById(R.id.txt_presionMaxCP);
+        TextView presionMin=findViewById(R.id.txt_presionMinCP);
+        TextView temperaturaMax=findViewById(R.id.txt_temperaturaMaxCP);
+        TextView temperaturaMin=findViewById(R.id.txt_temperaturaMinCP);
+        TextView vientoMax=findViewById(R.id.txt_vientoMaxCP);
+        TextView vientoMin=findViewById(R.id.txt_vientoMinCP);
+        TextView alturaOlaMax=findViewById(R.id.txt_OlaMaxCP);
+        TextView alturaOlaMin=findViewById(R.id.txt_OlaMinCP);
+        TextView periodoOlaMax=findViewById(R.id.txt_OlaPeriodoMaxCP);
+        TextView periodoOlaMin=findViewById(R.id.txt_OlaPeriodoMinCP);
+
+        actName.setText(resources.getString(R.string.NombreActividad));
+        dirOlas.setText(resources.getString(R.string.dirOlas));
+        dirViento.setText(resources.getString(R.string.dirViento));
+        presionMax.setText(resources.getString(R.string.presion)+" max");
+        presionMin.setText(resources.getString(R.string.presion)+" min");
+        temperaturaMax.setText(resources.getString(R.string.temperatura)+" max");
+        temperaturaMin.setText(resources.getString(R.string.temperatura)+" min");
+        vientoMax.setText(resources.getString(R.string.viento)+" max");
+        vientoMin.setText(resources.getString(R.string.viento)+" min");
+        alturaOlaMax.setText(resources.getString(R.string.alturaOla)+" max");
+        alturaOlaMin.setText(resources.getString(R.string.alturaOla)+" min");
+        periodoOlaMax.setText(resources.getString(R.string.periodoOla)+" max");
+        periodoOlaMin.setText(resources.getString(R.string.periodoOla)+" min");
+
+
+
+        EditText editName=findViewById(R.id.etx_ActivityNameCP);
+        EditText editpmax=findViewById(R.id.etx_presionMaxCP);
+        EditText editpmin=findViewById(R.id.etx_presionMinCP);
+        EditText edittmax=findViewById(R.id.etx_temperaturaMaxCP);
+        EditText edittmin=findViewById(R.id.etx_temperaturaMinCP);
+        EditText editvmax=findViewById(R.id.etx_vientoMaxCP);
+        EditText editvmin=findViewById(R.id.etx_vientoMinCP);
+        EditText editaomax=findViewById(R.id.etx_OlaMaxCP);
+        EditText editaomin=findViewById(R.id.etx_OlaMinCP);
+        EditText editpomax=findViewById(R.id.etx_OlaPeriodoMaxCP);
+        EditText editpomin=findViewById(R.id.etx_OlaPeriodoMinCP);
+
         Spinner spn_dirOlas=findViewById(R.id.spn_DireccionOlasCP);
         ArrayAdapter<ParametrosClass> adapterOlas= new ArrayAdapter<>(this, R.layout.one_spinner_list, Directions.NO_DIRECTION.toArrayString());
         spn_dirOlas.setAdapter(adapterOlas);
+
+        Spinner spn_dirViento=findViewById(R.id.spn_DireccionVientoCP);
+        ArrayAdapter<ParametrosClass> adapterViento= new ArrayAdapter<>(this, R.layout.one_spinner_list, Directions.NO_DIRECTION.toArrayString());
+        spn_dirViento.setAdapter(adapterViento);
+
 
 
 
@@ -106,9 +145,20 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 mostrarAjuste((ParametrosClass) spinner.getSelectedItem());
+                editpmax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPresionMax())));
+                editpmin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPresionMin())));
+                edittmax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getTemperaturaMax())));
+                edittmin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getTemperaturaMin())));
+                editvmax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getVientoMax())));
+                editvmin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getVientoMin())));
+                editaomax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getAlturaOlaMax())));
+                editaomin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getAlturaOlaMin())));
+                editpomax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMax())));
+                editpomin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMin())));
+
                 editName.setText(((ParametrosClass) spinner.getSelectedItem()).getNombreActividad());
                 spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas()));
-
+                spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento()));
             }
 
 
@@ -118,7 +168,13 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             }
         });
 
-
+        btn_guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent seleccionDeAjuste = new Intent(getApplicationContext(), SeleccionDeAjuste.class);
+                startActivity(seleccionDeAjuste);
+            }
+        });
 
 
 

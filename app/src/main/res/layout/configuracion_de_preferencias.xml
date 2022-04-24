@@ -132,6 +132,336 @@
                     android:singleLine="true"
                     android:textColor="@color/black" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_presionMaxCP"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="MaxPreasure"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etx_presionMaxCP"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:hint="MaxPreasure"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_presionMinCP"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="MinPreasure"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etx_presionMinCP"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:hint="MinPreasure"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_temperaturaMaxCP"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="MaxTemperatura"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etx_temperaturaMaxCP"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:hint="MaxTemperatura"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_temperaturaMinCP"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="MinTemperatura"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etx_temperaturaMinCP"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:hint="MinTemperatura"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_vientoMaxCP"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="MaxWind"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etx_vientoMaxCP"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:hint="MaxWind"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_vientoMinCP"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="MinWind"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etx_vientoMinCP"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:hint="MinWind"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_DireccionVientoCP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="Wind Direction"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <Spinner
+                    android:id="@+id/spn_DireccionVientoCP"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:prompt="@string/selecciona_direccion"
+                    android:spinnerMode="dialog" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_OlaMaxCP"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="MaxWaveHeight"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etx_OlaMaxCP"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:hint="MaxWaveHeight"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_OlaMinCP"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="MinWaveHeight"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etx_OlaMinCP"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:hint="MinWaveHeight"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_OlaPeriodoMaxCP"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="MaxWavePeriod"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etx_OlaPeriodoMaxCP"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:hint="MaxWavePeriod"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/txt_OlaPeriodoMinCP"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="10dp"
+                    android:text="MinWavePeriod"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etx_OlaPeriodoMinCP"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.4"
+                    android:hint="MinWavePeriod"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -155,7 +485,7 @@
                     android:id="@+id/spn_DireccionOlasCP"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
-                    android:prompt="@string/selecciona_actividad"
+                    android:prompt="@string/selecciona_direccion"
                     android:spinnerMode="dialog" />
 
 

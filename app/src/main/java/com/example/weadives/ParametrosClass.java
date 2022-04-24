@@ -205,8 +205,11 @@ public class ParametrosClass {
     public void setUserID(int userID) {
         this.userID = userID;
     }
-    public DatoGradosClass getDirectionViento() {
-        return directionViento;
+    public Directions getDirectionViento() {
+        if (directionViento==null){
+            return Directions.NO_DIRECTION;
+        }
+        return directionViento.getDirection();
     }
 
     public void setDirectionViento(DatoGradosClass directionViento) {

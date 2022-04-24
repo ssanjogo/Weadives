@@ -37,5 +37,14 @@
     <string name="añadir_amigo">Add friend</string>
     <string name="pendiente">Pending</string>
     <string name="selecciona_actividad">Choose an Activity</string>
+    <string name="selecciona_direccion">Choose a Direction</string>
+    <string name="presion">preassure</string>
+    <string name="temperatura">temperature</string>
+    <string name="dirViento">wind direction</string>
+    <string name="dirOlas">wave direction</string>
+    <string name="alturaOla">wave height</string>
+    <string name="periodoOla">wave period</string>
+
+
 
 </resources>

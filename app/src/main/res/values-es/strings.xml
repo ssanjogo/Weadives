@@ -39,4 +39,12 @@
     <string name="añadir_amigo">Añadir amigo</string>
     <string name="pendiente">Pendiente</string>
     <string name="selecciona_actividad">Selecciona una actividad</string>
+    <string name="selecciona_direccion">Selecciona Direccion</string>
+    <string name="presion">presión</string>
+    <string name="temperatura">temperatura</string>
+    <string name="dirViento">Dirección de viento</string>
+    <string name="dirOlas">Dirección olas</string>
+    <string name="alturaOla">altura olas</string>
+    <string name="periodoOla">periodo olas</string>
+
 </resources>
