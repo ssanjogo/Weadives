@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transparent"
     android:orientation="vertical">
 
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map"
+        android:id="@+id/mapa"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".PantallaMapa.PantallaMapa"
-        tools:layout_editor_absoluteX="-206dp"
-        tools:layout_editor_absoluteY="-132dp" />
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <LinearLayout
         android:id="@+id/LinearLayoutMapa"
@@ -64,6 +65,20 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_home20"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/TODO"
+        android:scaleType="fitCenter"
+        android:src="@drawable/boton_home"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/transparent"
+        tools:ignore="DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

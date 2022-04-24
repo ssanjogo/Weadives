@@ -10,12 +10,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaGestorInundaciones.PantallaGestorInundaciones;
+import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 import com.example.weadives.databinding.PantallaMapaBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,21 +29,22 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private PantallaMapaBinding binding;
-    private ImageView btn_home;
+    private ImageButton btn_home20;
     private Button btn_gestorNotificaciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
+        setContentView(R.layout.pantalla_mapa);
+        Button btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
+        ImageButton btn_home20 = findViewById(R.id.btn_home20);
         binding = PantallaMapaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapa);
         mapFragment.getMapAsync(this);
 
-        Button btn_gestorNotificaciones =findViewById(R.id.btn_gestorNotificaciones);
         final Context context;
         final Resources resources;
         context = LocaleHelper.setLocale(this, cargarPreferencias());
@@ -57,6 +58,14 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 btn_gestorNotificaciones.startAnimation(animation);
                 Intent testIntent = new Intent(getApplicationContext(), PantallaGestorInundaciones.class);
                 startActivity(testIntent);
+            }
+        });
+
+        btn_home20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
             }
         });
     }
