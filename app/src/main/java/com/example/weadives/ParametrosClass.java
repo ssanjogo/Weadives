@@ -212,8 +212,8 @@ public class ParametrosClass {
         return directionViento.getDirection();
     }
 
-    public void setDirectionViento(DatoGradosClass directionViento) {
-        this.directionViento = directionViento;
+    public void setDirectionViento(Directions directionViento) {
+        this.directionViento.setValor(directionViento);
     }
 
     public float getPeriodoOlaMax() {
@@ -239,7 +239,7 @@ public class ParametrosClass {
         return directionOlas.getDirection();
     }
 
-    public void setDirectionOlas(DatoGradosClass directionOlas) {
-        this.directionOlas = directionOlas;
+    public void setDirectionOlas(Directions directionOlas) {
+        this.directionOlas.setValor(directionOlas);
     }
 }

@@ -2,6 +2,7 @@ package com.example.weadives;
 
 public class DatoGradosClass {
     float valor;
+
     public DatoGradosClass(float valor) {
         if (valor<360 && valor>=0){
             this.valor = valor;
@@ -19,9 +20,31 @@ public class DatoGradosClass {
     public void setValor(float valor) {
         this.valor = valor%360;
     }
+    public void setValor(Directions direction){
+        switch (direction){
+            case NORTE:
+                this.valor=0;
+            case NORDESTE:
+                this.valor=45;
+            case ESTE:
+              this.valor=90;
+            case SUDESTE:
+                this.valor=135;
+            case SUD:
+               this.valor=180;
+            case SUDOESTE:
+                this.valor= 225;
+            case OESTE:
+                this.valor=270;
+            case NORDOESTE:
+               this.valor=315;
+            case NO_DIRECTION:
+                System.out.println("ERROR NO DIRECCION");
+        }
+
+    }
 
     public boolean inRange(Directions direction){
-
         switch (direction){
             case NORTE:
                 if (this.valor<=22.5 || this.valor>=337.5){

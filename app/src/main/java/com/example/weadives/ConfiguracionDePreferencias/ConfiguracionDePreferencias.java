@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Adapter;
@@ -111,16 +112,27 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
 
         EditText editName=findViewById(R.id.etx_ActivityNameCP);
+
         EditText editpmax=findViewById(R.id.etx_presionMaxCP);
+        editpmax.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL);
         EditText editpmin=findViewById(R.id.etx_presionMinCP);
+        editpmin.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL);
         EditText edittmax=findViewById(R.id.etx_temperaturaMaxCP);
+        edittmax.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL);
         EditText edittmin=findViewById(R.id.etx_temperaturaMinCP);
+        edittmin.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL);
         EditText editvmax=findViewById(R.id.etx_vientoMaxCP);
+        editvmax.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL);
         EditText editvmin=findViewById(R.id.etx_vientoMinCP);
+        editvmin.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL);
         EditText editaomax=findViewById(R.id.etx_OlaMaxCP);
+        editaomax.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL);
         EditText editaomin=findViewById(R.id.etx_OlaMinCP);
+        editaomin.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL);
         EditText editpomax=findViewById(R.id.etx_OlaPeriodoMaxCP);
+        editpomax.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL);
         EditText editpomin=findViewById(R.id.etx_OlaPeriodoMinCP);
+        editpomin.setInputType(InputType.TYPE_CLASS_NUMBER + InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
         Spinner spn_dirOlas=findViewById(R.id.spn_DireccionOlasCP);
         ArrayAdapter<ParametrosClass> adapterOlas= new ArrayAdapter<>(this, R.layout.one_spinner_list, Directions.NO_DIRECTION.toArrayString());
@@ -171,8 +183,28 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent seleccionDeAjuste = new Intent(getApplicationContext(), SeleccionDeAjuste.class);
-                startActivity(seleccionDeAjuste);
+                ParametrosClass change = ((ParametrosClass) spinner.getSelectedItem());
+                try {
+                    change.setNombreActividad(String.valueOf(editName.getText()));
+                    change.setPresionMax(Float.valueOf(String.valueOf(editpmax.getText())));
+                    change.setPresionMin(Float.valueOf(String.valueOf(editpmin.getText())));
+                    change.setTemperaturaMax(Float.valueOf(String.valueOf(edittmax.getText())));
+                    change.setTemperaturaMin(Float.valueOf(String.valueOf(edittmin.getText())));
+                    change.setVientoMax(Float.valueOf(String.valueOf(editvmax.getText())));
+                    change.setVientoMin(Float.valueOf(String.valueOf(editvmin.getText())));
+                    change.setDirectionViento(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento());
+                    change.setAlturaOlaMax(Float.valueOf(String.valueOf(editaomax.getText())));
+                    change.setAlturaOlaMin(Float.valueOf(String.valueOf(editaomin.getText())));
+                    change.setPeriodoOlaMax(Float.valueOf(String.valueOf(editpomax.getText())));
+                    change.setPeriodoOlaMin(Float.valueOf(String.valueOf(editpomin.getText())));
+                    change.setDirectionOlas(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
+
+                }catch (Exception e){
+
+                }
+
+                //Intent seleccionDeAjuste = new Intent(getApplicationContext(), SeleccionDeAjuste.class);
+                //startActivity(seleccionDeAjuste);
             }
         });
 
