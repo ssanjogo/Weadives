@@ -114,18 +114,6 @@ public class UserClass {
         this.solicitudes_enviadas = solE;
     }
 
-    public UserClass getUser() {
-        // ask database and if true, return audioCard
-        HashMap<String, String> hm = adapter.getUsers();
-        if (hm != null) {
-            UserClass ac = new UserClass(hm.get("UID"), hm.get("Nombre"), hm.get("Correo"), hm.get("Imagen"), hm.get("Amigos"), hm.get("Solicitudesrecibidas"), hm.get("Solicitudes enviadas"));
-            ac.setId(hm.get("UID"));
-            return ac;
-        } else {
-            return null;
-        }
-    }
-
     @Override
     public String toString() {
         return "UserClass{" +

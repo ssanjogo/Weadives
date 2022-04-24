@@ -27,8 +27,6 @@ import java.util.regex.Pattern;
 
 public class PantallaRegistro extends AppCompatActivity {
 
-    private Context parentContext;
-    private AppCompatActivity mActivity;
     private ViewModel viewModel;
 
     private TextView txt_correo2, txt_nombre, txt_contraseña2, txt_registro;
@@ -91,14 +89,13 @@ public class PantallaRegistro extends AppCompatActivity {
                     etA_correo2.setError("Correo existente");
                 } else {
                     viewModel.register(nombre, correo, contraseña);
-                    if (viewModel.getCurrentUser().getCorreo().equals(correo) && viewModel.getCurrentUser().getUsername().equals(nombre)) {
+                    //if (viewModel.getCurrentUser().getCorreo().equals(correo) && viewModel.getCurrentUser().getUsername().equals(nombre)) {
                         recordarUser();
-                        recordarCorreo(viewModel.getCurrentUser().getCorreo());
+                        recordarCorreo(correo);
                         Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
                         areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(areaUsuario);
-                        finish();
-                    }
+                    //}
                 }
             }
         });

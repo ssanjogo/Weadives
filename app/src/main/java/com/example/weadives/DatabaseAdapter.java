@@ -1,33 +1,21 @@
 package com.example.weadives;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
-
-import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +28,7 @@ public class DatabaseAdapter extends Activity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
 
     public static vmInterface listener;
@@ -48,16 +37,33 @@ public class DatabaseAdapter extends Activity {
     public DatabaseAdapter(vmInterface listener){
         this.listener = listener;
         databaseAdapter = this;
+        listeners();
+        mAuth.addAuthStateListener(mAuthListener);
         FirebaseFirestore.setLoggingEnabled(true);
     }
 
     public interface vmInterface{
         void setCollection(ArrayList<UserClass> listaUsuarios);
         void setStatusLogIn(boolean status);
-        void setUser(UserClass u);
+        void setUserID(String id);
     }
 
-    public void getCollection(){
+    private void listeners(){
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                System.out.println("PAsa");
+                user = firebaseAuth.getCurrentUser();
+                if (user == null){
+                    listener.setUserID("null");
+                } else {
+                    listener.setUserID(user.getUid());
+                }
+            }
+        };
+    }
+
+    public void getAllUsers(){
         Log.d(TAG,"updateUsers");
         db.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -77,26 +83,17 @@ public class DatabaseAdapter extends Activity {
         });
     }
 
-    public void getUser(){
-        db.collection("Users").document(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot document = task.getResult();
-                if (task.isSuccessful()) {
-                    UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
-                    listener.setUser(u);
-                }
-            }
-        });
-
-    }
-
     public void register (String nombre, String correo, String contraseña){
         mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    saveUser(nombre, correo, mAuth.getCurrentUser().getUid());
+                    String id = mAuth.getCurrentUser().getUid();
+                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + id);
+                    listener.setUserID(user.getUid());
+                    saveUser(nombre, correo, user.getUid());
+                } else {
+                    Log.w(TAG, "Error register");
                 }
             }
         });
@@ -108,8 +105,9 @@ public class DatabaseAdapter extends Activity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     verificarToken();
+                    listener.setUserID(mAuth.getCurrentUser().getUid());
                 } else {
-                    Log.d(TAG, "Error en el log in");
+                    Log.e(TAG, "Error en el log in");
                 }
             }
         });
@@ -120,43 +118,31 @@ public class DatabaseAdapter extends Activity {
         user.put("Nombre", nombre);
         user.put("Correo", correo);
         user.put("UID", uid);
-        user.put("Imagen", ""); //Cambiar
+        user.put("Imagen", "https://www.pngmart.com/files/21/Account-User-PNG-Photo.png"); //Cambiar
         user.put("Amigos", "");
         user.put("Solicitudes recibidas", "");
         user.put("Solicitudes enviadas", "");
 
-        Log.d(TAG, "saveUser");
-        db.collection("Users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        Log.i(TAG, "saveUser");
+        db.collection("Users").document(uid).set(user);/*.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+            public void onSuccess(Void unused) {
+                Log.d(TAG, "DocumentSnapshot added with ID: " + unused.toString());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error adding document", e);
+                Log.e(TAG, "Error adding document", e);
             }
-        });
-    }
-
-    public HashMap<String, String> getUsers () {
-        db.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                    }
-                } else {
-                    Log.w(TAG, "Error getting documents.", task.getException());
-                }
-            }
-        });
-        return new HashMap<>();
+        });*/
     }
 
     public void updateDatos(HashMap<String, Object> user){
         db.collection("Users").document(user.get("UID").toString()).update(user);
+    }
+
+    public void unfollow(HashMap<String, Object> user) {
+        db.collection("Users").document(mAuth.getCurrentUser().getUid()).update(user);
     }
 
     public void cambiarCorreo(String s){
@@ -183,10 +169,6 @@ public class DatabaseAdapter extends Activity {
                 }
             }
         });
-    }
-
-    public void unfollow(HashMap<String, Object> user) {
-        db.collection("Users").document(mAuth.getCurrentUser().getUid()).update(user);
     }
 
     public void singout(){

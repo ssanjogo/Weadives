@@ -1,7 +1,6 @@
 package com.example.weadives;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.AndroidViewModel;
@@ -25,6 +24,8 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     private List<UserClass> listaAmigos;
     private List<UserClass> listaSolicitudesRecibidas;
     private List<UserClass> listaSolicitudesEnviadas;
+
+    private String UID;
     private boolean statusLogIn = false;
     private DatabaseAdapter dbA;
 
@@ -44,7 +45,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         usuario = new MutableLiveData<>();
         statusLogIn = false;
         dbA = new DatabaseAdapter(this);
-        dbA.getCollection();
+        dbA.getAllUsers();
     }
 
     public LiveData<List<UserClass>> getListaUsers(){
@@ -55,11 +56,8 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         return this.listaRecyclerView;
     }
 
-    public int getIntListaSolicitudesRecibidas(String uid){
-        return getUserByUID(uid).getListaSolicitudesRecibidas().size();
-    }
-
     public UserClass getUserByUID(String uid){
+        System.out.println(listaUsuarios.getValue());
         for (int i = 0; i < listaUsuarios.getValue().size(); i++) {
             if (listaUsuarios.getValue().get(i).getId().equals(uid)){
                 return listaUsuarios.getValue().get(i);
@@ -68,34 +66,24 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         return null;
     }
 
-    public UserClass getUserByCorreo(String correo){
-        for (int i = 0; i < listaUsuarios.getValue().size(); i++) {
-            if (listaUsuarios.getValue().get(i).getCorreo().equals(correo)){
-                return listaUsuarios.getValue().get(i);
-            }
-        }
-        return null;
-    }
-
     public UserClass getCurrentUser(){
-        return this.usuario.getValue();
+        return getUserByUID(UID);
     }
 
     public void register(String nombre, String correo, String contraseña){
         dbA.register(nombre, correo, contraseña);
-        String uid = getCurrentUser().getId();
-        UserClass u = new UserClass(uid, nombre, correo, "", "", "", "");
+        UserClass u = new UserClass(UID, nombre, correo, "https://www.pngmart.com/files/21/Account-User-PNG-Photo.png", "", "", "");
         if (u != null) {
             listaUsuarios.getValue().add(u);
             // Inform observer.
             listaUsuarios.setValue(listaUsuarios.getValue());
-            dbA.getUser();
+
         }
     }
 
     public void logIn(String correo, String contraseña){
         dbA.logIn(correo, contraseña);
-        dbA.getUser();
+
     }
 
     public void setLogInStatus (boolean b){
@@ -381,7 +369,8 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     @Override
-    public void setUser(UserClass u) {
-        this.usuario.setValue(u);
+    public void setUserID(String id) {
+        this.UID = id;
+        //this.usuario.setValue(getUserByUID(id));
     }
 }
