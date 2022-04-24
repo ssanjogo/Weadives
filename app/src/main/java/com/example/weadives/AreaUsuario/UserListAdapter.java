@@ -25,12 +25,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     private List<UserClass> userClassList;
     private Context context;
+    private ViewModel vm;
     private int limite;
 
-    public UserListAdapter(List<UserClass> userClassList, Context context) {
+    public UserListAdapter(List<UserClass> userClassList, Context context, ViewModel vm, int limite) {
         this.userClassList = userClassList;
         this.context = context;
-        this.limite = 3;
+        this.vm = vm;
+        this.limite = limite;
     }
 
     @NonNull
@@ -51,7 +53,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             holder.btn_accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    vm.aceptarSolicitud(userClassList.get(position));
                     userClassList.get(position).acceptSolicitud();
                     holder.btn_accept.setVisibility(View.GONE);
                     holder.btn_deny.setVisibility(View.GONE);
@@ -60,6 +62,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             holder.btn_deny.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    vm.rechazarSolicitud(userClassList.get(position));
                     holder.btn_accept.setVisibility(View.GONE);
                     holder.btn_deny.setVisibility(View.GONE);
                 }
@@ -80,7 +83,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     @Override
     public int getItemCount() {
-        if (userClassList.size() == 0){
+        if (userClassList == null){
             return 0;
         }
         return userClassList.size();

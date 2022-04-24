@@ -122,7 +122,9 @@ public class PantallaLogIn extends AppCompatActivity {
                     if (!viewModel.correoRepetido(etA_correo.getText().toString())){
                         etA_correo.setError("Correo no registrado");
                     } else {
+                        System.out.println("ANTES DEL LOG IN" + viewModel.getCurrentUser());
                         viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
+                        System.out.println("DESPUES DEL LOG IN" + viewModel.getCurrentUser());
                         if (viewModel.getCurrentUser() != null) {
                             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
                             areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

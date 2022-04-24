@@ -12,6 +12,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -46,6 +47,7 @@ public class DatabaseAdapter extends Activity {
         void setCollection(ArrayList<UserClass> listaUsuarios);
         void setStatusLogIn(boolean status);
         void setUserID(String id);
+        void setUser(UserClass u);
     }
 
     private void listeners(){
@@ -56,11 +58,26 @@ public class DatabaseAdapter extends Activity {
                 user = firebaseAuth.getCurrentUser();
                 if (user == null){
                     listener.setUserID("null");
+                    listener.setUser(null);
                 } else {
                     listener.setUserID(user.getUid());
+                    getUser();
                 }
             }
         };
+    }
+
+    public void getUser(){
+        db.collection("Users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
+                    listener.setUser(u);
+                }
+            }
+        });
     }
 
     public void getAllUsers(){
@@ -88,9 +105,6 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    String id = mAuth.getCurrentUser().getUid();
-                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + id);
-                    listener.setUserID(user.getUid());
                     saveUser(nombre, correo, user.getUid());
                 } else {
                     Log.w(TAG, "Error register");
@@ -105,7 +119,6 @@ public class DatabaseAdapter extends Activity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     verificarToken();
-                    listener.setUserID(mAuth.getCurrentUser().getUid());
                 } else {
                     Log.e(TAG, "Error en el log in");
                 }
@@ -173,6 +186,7 @@ public class DatabaseAdapter extends Activity {
 
     public void singout(){
         mAuth.signOut();
+        getUser();
         listener.setStatusLogIn(false);
     }
 

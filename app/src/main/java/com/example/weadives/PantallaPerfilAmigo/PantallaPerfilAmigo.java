@@ -109,7 +109,8 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     //FALTA
                     //Enviar solicitud
                     viewModel.enviarsolicitud(idAmigo);
-                } else if (btn_añadirAmigo.getText().equals("Pendiente")){
+                } else if (btn_añadirAmigo.getText().equals(resources.getString(R.string.pendiente))){
+                    System.out.println(btn_añadirAmigo.getText());
                     System.out.println("pasa");
                     btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));

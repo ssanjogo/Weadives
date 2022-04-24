@@ -39,6 +39,7 @@ public class AreaUsuario extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ConstraintLayout constraintLayout;
     private String correo;
+    private int limite;
 
     private List<UserClass> userList;
     private ViewModel viewModel;
@@ -67,11 +68,12 @@ public class AreaUsuario extends AppCompatActivity {
         resources = context.getResources();
         txt_noAmigos.setText(resources.getString(R.string.noAmigos));
 
+        System.out.println(viewModel.getCurrentUser());
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
         correo = viewModel.getCurrentUser().getCorreo();
-        viewModel.fillUserList(correo);
+        limite = viewModel.fillUserList();
         userList = viewModel.getListaRecyclerView().getValue();
         setLiveDataObservers();
 
@@ -83,7 +85,7 @@ public class AreaUsuario extends AppCompatActivity {
         rv_llistaUsuarios.setLayoutManager(layoutManager);
 
         if (!userList.isEmpty()){
-            mAdapter= new UserListAdapter(userList,AreaUsuario.this);
+            mAdapter = new UserListAdapter(userList,AreaUsuario.this, viewModel, limite);
             rv_llistaUsuarios.setAdapter(mAdapter);
         } else {
             txt_noAmigos.setVisibility(View.VISIBLE);
@@ -143,7 +145,7 @@ public class AreaUsuario extends AppCompatActivity {
                     i = 1;
                 }
                 if(i == 0){
-                    viewModel.fillUserList(correo);
+                    viewModel.fillUserList();
                     if (viewModel.getListaRecyclerView().getValue().isEmpty()){
                         txt_noAmigos.setVisibility(View.VISIBLE);
                     }
@@ -159,7 +161,7 @@ public class AreaUsuario extends AppCompatActivity {
         final Observer<List<UserClass>> observer = new Observer<List<UserClass>>() {
             @Override
             public void onChanged(List<UserClass> ac) {
-                UserListAdapter newAdapter = new UserListAdapter(viewModel.getListaRecyclerView().getValue(),AreaUsuario.this);
+                UserListAdapter newAdapter = new UserListAdapter(viewModel.getListaRecyclerView().getValue(),AreaUsuario.this, viewModel, limite);
                 rv_llistaUsuarios.swapAdapter(newAdapter, true);
                 newAdapter.notifyDataSetChanged();
             }
