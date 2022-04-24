@@ -44,10 +44,7 @@ public class PantallaInicio extends AppCompatActivity {
 
 
 
-        Intent testIntent = new Intent(getApplicationContext(), ConfiguracionDePreferencias.class);
-        //testIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(testIntent);
-        //finish();
+
 
 
         btn_en.setOnClickListener(new View.OnClickListener() {
