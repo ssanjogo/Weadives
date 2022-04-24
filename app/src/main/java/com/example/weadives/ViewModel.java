@@ -294,10 +294,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public int fillUserList() {
+        UserClass currentUser = getUserByUID(UID);
+        this.usuario.setValue(currentUser);
         UserClass user;
         List<UserClass> listaUsers = new ArrayList<>();
         System.out.println(getCurrentUser());
-        if (!getCurrentUser().getStringSolicitudesRecibidas().equals("")) {
+        if (!currentUser.getStringSolicitudesRecibidas().equals("")) {
             for (String uid : getCurrentUser().getListaSolicitudesRecibidas()) {
                 user = getUserByUID(uid);
                 if (user != null) {
@@ -306,7 +308,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             }
         }
 
-        if (!getCurrentUser().getStringAmigos().equals("")) {
+        if (!currentUser.getStringAmigos().equals("")) {
             for (String uid : getCurrentUser().getListaAmigos()) {
                 user = getUserByUID(uid);
                 if (user != null) {
@@ -315,7 +317,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             }
         }
         this.listaRecyclerView.setValue(listaUsers);
-        return getCurrentUser().getListaSolicitudesRecibidas().size();
+        return usuario.getValue().getListaSolicitudesRecibidas().size();
     }
 
     public boolean correoRepetido(String correo) {

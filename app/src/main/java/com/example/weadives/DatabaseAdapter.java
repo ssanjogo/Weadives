@@ -119,6 +119,7 @@ public class DatabaseAdapter extends Activity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     verificarToken();
+                    getUser();
                 } else {
                     Log.e(TAG, "Error en el log in");
                 }
@@ -137,17 +138,7 @@ public class DatabaseAdapter extends Activity {
         user.put("Solicitudes enviadas", "");
 
         Log.i(TAG, "saveUser");
-        db.collection("Users").document(uid).set(user);/*.addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d(TAG, "DocumentSnapshot added with ID: " + unused.toString());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "Error adding document", e);
-            }
-        });*/
+        db.collection("Users").document(uid).set(user);
     }
 
     public void updateDatos(HashMap<String, Object> user){
