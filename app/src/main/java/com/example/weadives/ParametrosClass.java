@@ -45,6 +45,10 @@ public class ParametrosClass {
     private DatoGradosClass directionOlas;
 
 
+    public ParametrosClass() {
+        this.nombreActividad = "New";
+
+    }
 
     public ParametrosClass(String nombreActividad,int userID, float vientoMax, float vientoMin, float presionMax, float presionMin, float alturaOlaMax, float alturaOlaMin, float temperaturaMax, float temperaturaMin) {
         this.nombreActividad = nombreActividad;

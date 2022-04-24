@@ -152,6 +152,8 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         adapter.setDropDownViewResource(R.layout.one_spinner_list);
         spinner.setAdapter(adapter);
 
+
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -198,6 +200,8 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     change.setPeriodoOlaMax(Float.valueOf(String.valueOf(editpomax.getText())));
                     change.setPeriodoOlaMin(Float.valueOf(String.valueOf(editpomin.getText())));
                     change.setDirectionOlas(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
+                    spinner.setAdapter(updateAdapter(test));
+
 
                 }catch (Exception e){
 
@@ -208,7 +212,27 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             }
         });
 
+        btn_añadir2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editName.setText("");
+                editpmax.setText("");
+                editpmin.setText("");
+                edittmax.setText("");
+                edittmin.setText("");
+                editvmax.setText("");
+                editvmin.setText("");
+                editaomax.setText("");
+                editaomin.setText("");
+                editpomax.setText("");
+                editpomin.setText("");
+                spn_dirOlas.setSelection(0);
+                spn_dirViento.setSelection(0);
+                ParametrosClass newParametro=new ParametrosClass();
 
+
+            }
+        });
 
 
     }
@@ -237,4 +261,12 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         return parametrosList;
     }
 
+
+    private ArrayAdapter updateAdapter(ArrayList<ParametrosClass> list){
+        ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,list);
+        adapter.setDropDownViewResource(R.layout.one_spinner_list);
+        return adapter;
+
+
+    }
 }
