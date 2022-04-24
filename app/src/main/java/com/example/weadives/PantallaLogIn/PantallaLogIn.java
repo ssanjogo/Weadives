@@ -123,7 +123,7 @@ public class PantallaLogIn extends AppCompatActivity {
                         etA_correo.setError("Correo no registrado");
                     } else {
                         viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
-                        if (viewModel.getCurrentUserUID() != null) {
+                        if (viewModel.getCurrentUser() != null) {
                             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
                             areaUsuario.putExtra("Correo", etA_correo.getText().toString());
                             areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

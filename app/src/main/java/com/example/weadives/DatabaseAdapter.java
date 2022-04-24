@@ -53,8 +53,8 @@ public class DatabaseAdapter extends Activity {
 
     public interface vmInterface{
         void setCollection(ArrayList<UserClass> listaUsuarios);
-        void setUserId(String id);
         void setStatusLogIn(boolean status);
+        void setUser(UserClass u);
     }
 
     public void getCollection(){
@@ -77,12 +77,25 @@ public class DatabaseAdapter extends Activity {
         });
     }
 
+    public void getUser(){
+        db.collection("Users").document(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                if (task.isSuccessful()) {
+                    UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
+                    listener.setUser(u);
+                }
+            }
+        });
+
+    }
+
     public void register (String nombre, String correo, String contraseña){
         mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    listener.setUserId(mAuth.getCurrentUser().getUid());
                     saveUser(nombre, correo, mAuth.getCurrentUser().getUid());
                 }
             }
@@ -95,9 +108,7 @@ public class DatabaseAdapter extends Activity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     verificarToken();
-                    listener.setUserId(user.getUid());
                 } else {
-
                     Log.d(TAG, "Error en el log in");
                 }
             }
@@ -181,7 +192,6 @@ public class DatabaseAdapter extends Activity {
     public void singout(){
         mAuth.signOut();
         listener.setStatusLogIn(false);
-        listener.setUserId(null);
     }
 
     public void deleteAccount(){

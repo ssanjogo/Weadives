@@ -26,9 +26,9 @@ public class AjustesPerfil extends AppCompatActivity {
 
     private ViewModel viewModel;
 
-    private TextView txt_correo, txt_nombre2, txt_contraseña3, txt_nombrePerfil2, txt_codigo2;
+    private TextView txt_correo, txt_nombre2, txt_contraseña3;
     private EditText etA_correo3, etP_contraseña3, etN_nombrepersona2;
-    private ImageView btn_home6, img_perfil, btn_edtitarN, btn_editarC, btn_editarP;
+    private ImageView btn_home6, img_perfil;
     private Button btn_guardarCambios, btn_eliminarCuenta;
 
     @Override
@@ -36,20 +36,25 @@ public class AjustesPerfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ajustes_perfil);
         btn_guardarCambios = findViewById(R.id.btn_guardarCambios);
+        btn_eliminarCuenta = findViewById(R.id.btn_eliminarCuenta);
         txt_correo = findViewById(R.id.txt_correo);
         txt_contraseña3 = findViewById(R.id.txt_contraseña3);
-        txt_nombrePerfil2 = findViewById(R.id.txt_nombrePerfil2);
+        txt_nombre2 = findViewById(R.id.txt_nombre2);
         etA_correo3 = findViewById(R.id.etA_correo3);
         etP_contraseña3 = findViewById(R.id.etP_contraseña3);
         etN_nombrepersona2 = findViewById(R.id.etN_nombrepersona2);;
         btn_home6 = findViewById(R.id.btn_home6);
         img_perfil = findViewById(R.id.img_perfil);
-        btn_eliminarCuenta = findViewById(R.id.btn_eliminarCuenta);
 
         final Context context;
         final Resources resources;
         context = LocaleHelper.setLocale(this, cargarPreferencias());
         resources = context.getResources();
+        txt_nombre2.setText(resources.getString(R.string.nombre));
+        txt_contraseña3.setText(resources.getString(R.string.password2));
+        txt_correo.setText(resources.getString(R.string.correo));
+        btn_guardarCambios.setText(resources.getString(R.string.guardar_cambios));
+        btn_eliminarCuenta.setText(resources.getString(R.string.eliminarCuenta));
 
         viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
@@ -79,12 +84,14 @@ public class AjustesPerfil extends AppCompatActivity {
                     if(!etN_nombrepersona2.getText().toString().equals(viewModel.getCurrentUser().getUsername())){
                         viewModel.cambiarNombre(etN_nombrepersona2.getText().toString());
                     }
-                    if (etP_contraseña3 != null){
+                    if (etP_contraseña3.getText().toString() != null){
+                        System.out.println(etP_contraseña3.getText().toString());
                         AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
                         alerta.setMessage(resources.getString(R.string.alertaCambiarContraseña)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 viewModel.cambiarContraseña(etP_contraseña3.getText().toString());
+                                finish();
                             }
                         }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
                             @Override
@@ -97,7 +104,7 @@ public class AjustesPerfil extends AppCompatActivity {
                         titulo.show();
                     }
                 }
-                finish();
+
             }
         });
 

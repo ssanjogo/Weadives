@@ -17,17 +17,18 @@ import java.util.List;
 
 public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmInterface {
 
+    public static final String TAG = "ViewModel";
+
     private final MutableLiveData<List<UserClass>> listaUsuarios;
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
     private final MutableLiveData<UserClass> usuario;
+    private List<UserClass> listaAmigos;
+    private List<UserClass> listaSolicitudesRecibidas;
+    private List<UserClass> listaSolicitudesEnviadas;
     private boolean statusLogIn = false;
     private DatabaseAdapter dbA;
 
-    private String UID;
-
-    public static final String TAG = "ViewModel";
-
-    static ViewModel vm;
+    private static ViewModel vm;
 
     public static ViewModel getInstance(AppCompatActivity application){
         if (vm == null){
@@ -38,7 +39,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public ViewModel(Application application) {
         super(application);
-
         listaUsuarios = new MutableLiveData<>();
         listaRecyclerView = new MutableLiveData<>();
         usuario = new MutableLiveData<>();
@@ -81,25 +81,21 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         return this.usuario.getValue();
     }
 
-    public String getCurrentUserUID(){
-        return UID;
-    }
-
     public void register(String nombre, String correo, String contraseña){
         dbA.register(nombre, correo, contraseña);
-        String uid = getCurrentUserUID();
+        String uid = getCurrentUser().getId();
         UserClass u = new UserClass(uid, nombre, correo, "", "", "", "");
         if (u != null) {
             listaUsuarios.getValue().add(u);
             // Inform observer.
             listaUsuarios.setValue(listaUsuarios.getValue());
-            this.usuario.setValue(u);
+            dbA.getUser();
         }
     }
 
     public void logIn(String correo, String contraseña){
         dbA.logIn(correo, contraseña);
-        this.usuario.setValue(getUserByCorreo(correo));
+        dbA.getUser();
     }
 
     public void setLogInStatus (boolean b){
@@ -116,13 +112,8 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         this.usuario.setValue(null);
     }
 
-    public boolean correoRepetido(String correo) {
-        for (int i = 0; i < listaUsuarios.getValue().size(); i++) {
-            if (listaUsuarios.getValue().get(i).getCorreo().equals(correo)){
-                return true;
-            }
-        }
-        return false;
+    public void deleteAccount(){
+        dbA.deleteAccount();
     }
 
     public void cambiarCorreo(String correo){
@@ -142,50 +133,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public void cambiarContraseña(String contraseña) {
         dbA.cambiarContraseña(contraseña);
-    }
-
-    public int numeroUsuariosSolPen(){
-        UserClass user = getCurrentUser();
-        System.out.println("USUARIOOOOOOOOOOOOOOOOOOOOOOOO" + user.toString());
-        List<String> list = user.getListaSolicitudesRecibidas();
-        return list.size();
-    }
-
-
-
-    private HashMap<String, Object> convertUserToHashMap(UserClass user){
-        HashMap<String, Object> usuario = new HashMap<>();
-        usuario.put("Nombre", user.getUsername());
-        usuario.put("Correo", user.getCorreo());
-        usuario.put("UID", user.getId());
-        usuario.put("Imagen", user.getUrlImg());
-        usuario.put("Amigos", user.getStringAmigos());
-        usuario.put("Solicitudes recibidas", user.getStringSolicitudesRecibidas());
-        usuario.put("Solicitudes enviadas", user.getStringSolicitudesEnviadas());
-
-        return usuario;
-    }
-
-    public void deleteAccount(){
-        dbA.deleteAccount();
-    }
-
-    public boolean uidInListaSolicitudesEnviadas(String uidAmigo) {
-        for (String uid : getCurrentUser().getListaSolicitudesEnviadas()){
-            if (uidAmigo.equals(uid)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean uidInListaAmigos(String uidAmigo) {
-        for (String uid : getCurrentUser().getListaAmigos()){
-            if (uidAmigo.equals(uid)){
-                return true;
-            }
-        }
-        return false;
     }
 
     public void unfollow(String idAmigo) {
@@ -350,7 +297,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void buscarPorNombre(String nombre) {
         List<UserClass> listaFiltradaPorNombre = new ArrayList<>();
         for (UserClass usuario : getListaUsers().getValue()){
-            if (usuario.getUsername().contains(nombre)){
+            if (usuario.getUsername().contains(nombre) && !usuario.equals(this.usuario)){
                 listaFiltradaPorNombre.add(usuario);
             }
         }
@@ -383,18 +330,58 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         this.listaRecyclerView.setValue(listaUsers);
     }
 
+    public boolean correoRepetido(String correo) {
+        for (int i = 0; i < listaUsuarios.getValue().size(); i++) {
+            if (listaUsuarios.getValue().get(i).getCorreo().equals(correo)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private HashMap<String, Object> convertUserToHashMap(UserClass user){
+        HashMap<String, Object> usuario = new HashMap<>();
+        usuario.put("Nombre", user.getUsername());
+        usuario.put("Correo", user.getCorreo());
+        usuario.put("UID", user.getId());
+        usuario.put("Imagen", user.getUrlImg());
+        usuario.put("Amigos", user.getStringAmigos());
+        usuario.put("Solicitudes recibidas", user.getStringSolicitudesRecibidas());
+        usuario.put("Solicitudes enviadas", user.getStringSolicitudesEnviadas());
+
+        return usuario;
+    }
+
+    public boolean uidInListaSolicitudesEnviadas(String uidAmigo) {
+        for (String uid : getCurrentUser().getListaSolicitudesEnviadas()){
+            if (uidAmigo.equals(uid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean uidInListaAmigos(String uidAmigo) {
+        for (String uid : getCurrentUser().getListaAmigos()){
+            if (uidAmigo.equals(uid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void setCollection(ArrayList<UserClass> listaUsuarios) {
         this.listaUsuarios.setValue(listaUsuarios);
     }
 
     @Override
-    public void setUserId(String id) {
-        this.UID = id;
+    public void setStatusLogIn(boolean status) {
+        this.statusLogIn = status;
     }
 
     @Override
-    public void setStatusLogIn(boolean status) {
-        this.statusLogIn = status;
+    public void setUser(UserClass u) {
+        this.usuario.setValue(u);
     }
 }
