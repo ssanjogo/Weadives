@@ -50,18 +50,7 @@ public class ParametrosClass {
 
     }
 
-    public ParametrosClass(String nombreActividad,int userID, float vientoMax, float vientoMin, float presionMax, float presionMin, float alturaOlaMax, float alturaOlaMin, float temperaturaMax, float temperaturaMin) {
-        this.nombreActividad = nombreActividad;
-        this.vientoMax = vientoMax;
-        this.vientoMin = vientoMin;
-        this.presionMax = presionMax;
-        this.presionMin = presionMin;
-        this.alturaOlaMax = alturaOlaMax;
-        this.alturaOlaMin = alturaOlaMin;
-        this.temperaturaMax = temperaturaMax;
-        this.temperaturaMin = temperaturaMin;
-        this.userID=userID;
-    }
+
 
     public ParametrosClass(String nombreActividad, int userID, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
         this.nombreActividad = nombreActividad;
@@ -80,18 +69,7 @@ public class ParametrosClass {
         this.userID = userID;
     }
 
-    public ParametrosClass(String nombreActividad,int userID, float viento, float presion, float alturaOla, float temperatura) {
-        this.nombreActividad = nombreActividad;
-        this.vientoMax = viento;
-        this.vientoMin = viento;
-        this.presionMax = presion;
-        this.presionMin = presion;
-        this.alturaOlaMax = alturaOla;
-        this.alturaOlaMin = alturaOla;
-        this.temperaturaMax = temperatura;
-        this.temperaturaMin = temperatura;
-        this.userID=userID;
-    }
+
 
     @Override
     public String toString() {
@@ -114,6 +92,22 @@ public class ParametrosClass {
                 ", periodoOlaMin=" + periodoOlaMin +
                 ", directionOlas=" + directionOlas +
                 '}';
+    }
+    public String toSaveString() {
+        return nombreActividad +
+                ',' + userID +
+                "," + presionMax +
+                "," + presionMin +
+                "," + temperaturaMax +
+                "," + temperaturaMin +
+                "," + vientoMax +
+                "," + vientoMin +
+                "," + directionViento.getDir() +
+                "," + alturaOlaMax +
+                "," + alturaOlaMin +
+                "," + periodoOlaMax +
+                "," + periodoOlaMin +
+                "," + directionOlas.getDir();
     }
 
     public float getViento() {
@@ -213,11 +207,11 @@ public class ParametrosClass {
         if (directionViento==null){
             return Directions.NO_DIRECTION;
         }
-        return directionViento.getDirection();
+        return directionViento.getDir();
     }
 
     public void setDirectionViento(Directions directionViento) {
-        this.directionViento.setValor(directionViento);
+        this.directionViento.setDir(directionViento);
     }
 
     public float getPeriodoOlaMax() {
@@ -240,10 +234,10 @@ public class ParametrosClass {
         if (directionOlas==null){
             return Directions.NO_DIRECTION;
         }
-        return directionOlas.getDirection();
+        return directionOlas.getDir();
     }
 
     public void setDirectionOlas(Directions directionOlas) {
-        this.directionOlas.setValor(directionOlas);
+        this.directionOlas.setDir(directionOlas);
     }
 }

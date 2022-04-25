@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.DatabaseAdapter;
+import com.example.weadives.DatoGradosClass;
+import com.example.weadives.Directions;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.ParametrosClass;
@@ -95,16 +97,18 @@ public class PantallaMiPerfil extends AppCompatActivity {
         });
     }
 
-    private List<ParametrosClass> fillParametrosList() {
-        List<ParametrosClass> parametrosList = new ArrayList<>();
-        parametrosList.add(new ParametrosClass("Surf", 0, 0.1f,0.2f,0.3f,0.4f));
-        parametrosList.add(new ParametrosClass("Dia de Playa", 11, 3.1f,3.2f,3.3f,3.4f));
-        parametrosList.add(new ParametrosClass("Vela",2222, 4.1f,4.2f,4.3f,4.4f));
-        parametrosList.add(new ParametrosClass("Kayak",3333, 5.1f,5.2f,5.3f,5.4f));
-        parametrosList.add(new ParametrosClass("LOL",6546, 5.1f,5.2f,5.3f,5.4f));
-        parametrosList.add(new ParametrosClass("COD",1231, 5.1f,5.2f,5.3f,5.4f));
-        parametrosList.add(new ParametrosClass("Pilota",2331, 5.1f,5.2f,5.3f,5.4f));
-        parametrosList.add(new ParametrosClass("ORIND",9996, 5.1f,5.2f,5.3f,5.4f));
+    private ArrayList<ParametrosClass> fillParametrosList() {
+        ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
+        ParametrosClass p1= new ParametrosClass("SurfLoco", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
+        parametrosList.add(p1);
+        parametrosList.add(new ParametrosClass("Surf", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("Playa", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("Vela", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("Kayak", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("LioLegends", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("CallDuty", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("BalonPie", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("DokkanBattle", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
         return parametrosList;
     }
 }

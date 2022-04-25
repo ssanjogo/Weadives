@@ -147,7 +147,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
 
         //Spinner superior
-        ArrayList<ParametrosClass> test=fillParametrosList();
+        ArrayList<ParametrosClass> test=descomprimirArray(cargarPreferenciasParametros());
         ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,test);
         adapter.setDropDownViewResource(R.layout.one_spinner_list);
         spinner.setAdapter(adapter);
@@ -236,6 +236,44 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
 
     }
+    private String comprimirArray(ArrayList<ParametrosClass> l){
+        String str="";
+        for(int i=0; i<l.size();i++){
+            str=str+l.get(i).toSaveString()+"¿";
+        }
+        return str;
+    }
+    private ArrayList<ParametrosClass> descomprimirArray(String l){
+        System.out.println(l);
+        String[] parametrosStringList = l.split("¿");
+        int count = l.length() - l.replace("¿", "").length();
+        System.out.println(count);
+        ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
+        String[] fixedParam;
+        for (String i : parametrosStringList) {
+            System.out.println(i);
+            fixedParam=i.split(",");
+            for (String x : fixedParam) {
+                System.out.println(x);
+            }
+
+            parametrosList.add(new ParametrosClass(fixedParam[0], Integer.parseInt(fixedParam[1]), Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]),Float.parseFloat(fixedParam[7]), new DatoGradosClass(Directions.valueOf(fixedParam[8])),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),Float.parseFloat(fixedParam[12]),new DatoGradosClass(Directions.valueOf(fixedParam[13]))));
+        }
+
+        return parametrosList;
+    }
+
+    private void guardarPreferenciasParametros(String string) {
+        SharedPreferences preferencias = getSharedPreferences("parametros",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("parametros",string);
+        editor.commit();
+    }
+
+    private String cargarPreferenciasParametros() {
+        SharedPreferences preferencias = getSharedPreferences("parametros",Context.MODE_PRIVATE);
+        return preferencias.getString("parametros",comprimirArray(fillParametrosList()));
+    }
 
     private void mostrarAjuste(ParametrosClass parametro) {
         Toast.makeText(this,parametro.getNombreActividad(),Toast.LENGTH_SHORT).show();
@@ -248,16 +286,16 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     }
     private ArrayList<ParametrosClass> fillParametrosList() {
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
-        ParametrosClass p1= new ParametrosClass("SurfLoco", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(20),3.f,2.f,4.f,4.f,new DatoGradosClass(0));
+        ParametrosClass p1= new ParametrosClass("SurfLoco", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
         parametrosList.add(p1);
-        parametrosList.add(new ParametrosClass("Surf", 0, 0.1f,0.2f,0.3f,0.4f));
-        parametrosList.add(new ParametrosClass("Dia de Playa", 11, 3.1f,3.2f,3.3f,3.4f));
-        parametrosList.add(new ParametrosClass("Vela",2222, 4.1f,4.2f,4.3f,4.4f));
-        parametrosList.add(new ParametrosClass("Kayak",3333, 5.1f,5.2f,5.3f,5.4f));
-        parametrosList.add(new ParametrosClass("LOL",6546, 5.1f,5.2f,5.3f,5.4f));
-        parametrosList.add(new ParametrosClass("COD",1231, 5.1f,5.2f,5.3f,5.4f));
-        parametrosList.add(new ParametrosClass("Pilota",2331, 5.1f,5.2f,5.3f,5.4f));
-        parametrosList.add(new ParametrosClass("ORIND",9996, 5.1f,5.2f,5.3f,5.4f));
+        parametrosList.add(new ParametrosClass("Surf", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("Playa", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("Vela", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("Kayak", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("LioLegends", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("CallDuty", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("BalonPie", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("DokkanBattle", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
         return parametrosList;
     }
 
@@ -265,6 +303,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     private ArrayAdapter updateAdapter(ArrayList<ParametrosClass> list){
         ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,list);
         adapter.setDropDownViewResource(R.layout.one_spinner_list);
+        guardarPreferenciasParametros(comprimirArray(list));
         return adapter;
 
 
