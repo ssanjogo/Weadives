@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.ConfiguracionDePreferencias.ConfiguracionDePreferencias;
+import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaMapa.PantallaMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
@@ -43,7 +45,7 @@ public class PantallaInicio extends AppCompatActivity {
         btn_es = findViewById(R.id.btn_es);
 
 
-        Intent testIntent = new Intent(getApplicationContext(), ConfiguracionDePreferencias.class);
+        Intent testIntent = new Intent(getApplicationContext(), PantallaLogIn.class);
         //testIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(testIntent);
         //finish();

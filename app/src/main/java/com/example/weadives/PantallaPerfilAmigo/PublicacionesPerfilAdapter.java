@@ -44,10 +44,28 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
 
     @Override
     public void onBindViewHolder(@NonNull PublicacionesPerfilViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.txt_viento.setText("Wind :");
+
+        //Falta aplicar el ingles
         holder.txt_activityName.setText("Activity Name :");
-        holder.txt_vientoOutput.setText(Float.toString(publicacionClassList.get(position).getParametros().getViento()));
+        holder.txt_presion.setText("Pressure : ");
+        holder.txt_temperatura.setText("Temperature : ");
+        holder.txt_dirviento.setText("Wind Direction : ");
+        holder.txt_alturaOla.setText("Wave Height : ");
+        holder.txt_periodoOla.setText("Wave Period : ");
+        holder.txt_dirOla.setText("Wave Direction : ");
+
+
+
         holder.txt_activityNameOutput.setText(publicacionClassList.get(position).getParametros().getNombreActividad());
+        holder.txt_vientoOutput.setText(Float.toString(publicacionClassList.get(position).getParametros().getViento())+" kt");
+        holder.txt_presionOutput.setText(Float.toString(publicacionClassList.get(position).getParametros().getPresion())+" P");
+        holder.txt_temperaturaOutput.setText(Float.toString(publicacionClassList.get(position).getParametros().getTemperatura())+" Cº");
+        holder.txt_dirvientoOutput.setText((publicacionClassList.get(position).getParametros().getDirectionViento().toString()));
+        holder.txt_alturaOlaOutput.setText(Float.toString(publicacionClassList.get(position).getParametros().getAlturaOla())+" m");
+        holder.txt_periodoOutput.setText(Float.toString(publicacionClassList.get(position).getParametros().getPeriodoOla())+" s");
+
+        holder.txt_dirOlaOutput.setText((publicacionClassList.get(position).getParametros().getDirectionOlas().toString()));
+
         holder.txt_numlikes.setText(Integer.toString(publicacionClassList.get(position).getNumLikes()));
         holder.txt_numlikes2.setText(Integer.toString(publicacionClassList.get(position).getNumDislikes()));
         holder.txt_numlikes3.setText(Integer.toString(publicacionClassList.get(position).getNumComments()));
@@ -89,8 +107,25 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
         TextView txt_activityName;
         TextView txt_activityNameOutput;
 
+
+        TextView txt_presion;
+        TextView txt_presionOutput;
+        TextView txt_temperatura;
+        TextView txt_temperaturaOutput;
         TextView txt_viento;
         TextView txt_vientoOutput;
+        TextView txt_dirviento;
+        TextView txt_dirvientoOutput;
+        TextView txt_alturaOla;
+        TextView txt_alturaOlaOutput;
+        TextView txt_periodoOla;
+        TextView txt_periodoOutput;
+        TextView txt_dirOla;
+        TextView txt_dirOlaOutput;
+
+
+
+
         TextView txt_numlikes;
         TextView txt_numlikes2;
         TextView txt_numlikes3;
@@ -119,6 +154,22 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             txt_activityNameOutput=itemView.findViewById(R.id.txt_activityNameOutput1);
             txt_viento=itemView.findViewById(R.id.txt_viento1);
             txt_vientoOutput=itemView.findViewById(R.id.txt_vientoOutput1);
+      txt_presion=itemView.findViewById(R.id.txt_pression1);
+        txt_presionOutput=itemView.findViewById(R.id.txt_pressionOutput1);
+         txt_temperatura=itemView.findViewById(R.id.txt_temperatura1);
+       txt_temperaturaOutput=itemView.findViewById(R.id.txt_temperaturaOutput1);
+          txt_dirviento=itemView.findViewById(R.id.txt_dirViento1);
+         txt_dirvientoOutput=itemView.findViewById(R.id.txt_dirVientoOutput1);
+          txt_alturaOla=itemView.findViewById(R.id.txt_alturaOla1);
+             txt_alturaOlaOutput=itemView.findViewById(R.id.txt_alturaOlaOutput1);
+             txt_periodoOla=itemView.findViewById(R.id.txt_periodoOla1);
+            txt_periodoOutput=itemView.findViewById(R.id.txt_periodoOlaOutput1);
+           txt_dirOla=itemView.findViewById(R.id.txt_dirOla1);
+          txt_dirOlaOutput=itemView.findViewById(R.id.txt_dirOlaOutput1);
+
+
+
+
             txt_numlikes=itemView.findViewById(R.id.txt_numLikes);
             txt_numlikes2=itemView.findViewById(R.id.txt_numLikes2);
             txt_numlikes3=itemView.findViewById(R.id.txt_numLikes3);
