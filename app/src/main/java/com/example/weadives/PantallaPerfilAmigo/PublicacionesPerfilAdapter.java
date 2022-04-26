@@ -47,6 +47,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
 
         //Falta aplicar el ingles
         holder.txt_activityName.setText("Activity Name :");
+        holder.txt_viento.setText("Wind : ");
         holder.txt_presion.setText("Pressure : ");
         holder.txt_temperatura.setText("Temperature : ");
         holder.txt_dirviento.setText("Wind Direction : ");
