@@ -257,7 +257,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 System.out.println(x);
             }
 
-            parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]),Float.parseFloat(fixedParam[7]), new DatoGradosClass(Directions.valueOf(fixedParam[8])),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),Float.parseFloat(fixedParam[12]),new DatoGradosClass(Directions.valueOf(fixedParam[13]))));
+            parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));
         }
 
         return parametrosList;
