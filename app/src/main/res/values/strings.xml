@@ -36,4 +36,7 @@
     <string name="cerrar_sesión">Sing out</string>
     <string name="añadir_amigo">Add friend</string>
     <string name="pendiente">Pending</string>
+    <string name="eliminar">Delete</string>
+    <string name="cancelar">Cancel</string>
+    <string name="nombre_marcador">Marker name: </string>
 </resources>

@@ -38,4 +38,7 @@
     <string name="cerrar_sesión">Cerrar sesión</string>
     <string name="añadir_amigo">Añadir amigo</string>
     <string name="pendiente">Pendiente</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="nombre_marcador">Nombre del marcador: </string>
 </resources>

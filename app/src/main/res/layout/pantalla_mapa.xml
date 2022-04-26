@@ -64,14 +64,94 @@
 
     <ImageButton
         android:id="@+id/btn_home5"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="43dp"
+        android:layout_height="44dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:background="@color/cardview_shadow_end_color"
         android:contentDescription="@string/TODO"
-        app:srcCompat="@drawable/boton_home"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/boton_home" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutMarcador"
+        android:layout_width="334dp"
+        android:layout_height="121dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="@+id/map"
+        app:layout_constraintStart_toStartOf="@+id/map"
+        app:layout_constraintTop_toTopOf="@+id/map"
+        tools:visibility="invisible">
+
+        <EditText
+            android:id="@+id/txt_nombreMarcador"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/nombre_marcador"
+            android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutMarcadorBotones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_aceptar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/confirmar" />
+
+            <Button
+                android:id="@+id/btn_cancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cancelar" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutEliminarMarcador"
+        android:layout_width="334dp"
+        android:layout_height="122dp"
+        android:background="@color/cardview_shadow_end_color"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="@+id/map"
+        app:layout_constraintStart_toStartOf="@+id/map"
+        app:layout_constraintTop_toTopOf="@+id/map">
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutEliminarMarcadorBotones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_eliminar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/eliminar" />
+
+            <Button
+                android:id="@+id/btn_cancelarEliminar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cancelar" />
+        </LinearLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
