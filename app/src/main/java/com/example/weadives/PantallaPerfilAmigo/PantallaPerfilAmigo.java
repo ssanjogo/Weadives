@@ -106,7 +106,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
     private List<PublicacionClass> fillPublicacionList() {
         List<PublicacionClass> publicacionList= new ArrayList<PublicacionClass>();
         //String nombreActividad, int userID, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas
-        ParametrosClass p1= new ParametrosClass("SurfLoco", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.NORTE),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.SUD));
+        ParametrosClass p1= new ParametrosClass("SurfLoco",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.NORTE),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.SUD));
         HashMap<String, Integer> likeList1=new HashMap<>();
         likeList1.put("0000",1);
         likeList1.put("0001",1);
@@ -121,7 +121,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         comentariosList1.put("Matt","Has visto como entrenar a tu dragon?");
         comentariosList1.put("Septimus","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         publicacionList.add(new PublicacionClass(p1,likeList1,comentariosList1));
-        ParametrosClass p2= new ParametrosClass("Surf", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
+        ParametrosClass p2= new ParametrosClass("Surf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
         HashMap<String, Integer> likeList2=new HashMap<>();
         likeList2.put("0000",0);
         likeList2.put("0001",0);
@@ -131,7 +131,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         comentariosList2.put("0021","---");
         comentariosList2.put("0031","---");
         publicacionList.add(new PublicacionClass(p2,likeList2,comentariosList2));
-        ParametrosClass p3= new ParametrosClass("DokkanBattle", 0123, 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
+        ParametrosClass p3= new ParametrosClass("DokkanBattle", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
         HashMap<String, Integer> likeList3=new HashMap<>();
         likeList3.put("0000",1);
         likeList3.put("0001",1);

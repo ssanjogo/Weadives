@@ -48,9 +48,6 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
         holder.txt_activityName.setText("Activity Name :");
         holder.txt_vientoOutput.setText(Float.toString(publicacionClassList.get(position).getParametros().getViento()));
         holder.txt_activityNameOutput.setText(publicacionClassList.get(position).getParametros().getNombreActividad());
-        holder.txt_userId.setText("ID");
-        holder.txt_userIdOutput.setText(Integer.toString(publicacionClassList.get(position).getParametros().getUserID()));
-        System.out.println(Integer.toString(publicacionClassList.get(position).getParametros().getUserID()));
         holder.txt_numlikes.setText(Integer.toString(publicacionClassList.get(position).getNumLikes()));
         holder.txt_numlikes2.setText(Integer.toString(publicacionClassList.get(position).getNumDislikes()));
         holder.txt_numlikes3.setText(Integer.toString(publicacionClassList.get(position).getNumComments()));
@@ -91,8 +88,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
     public class PublicacionesPerfilViewHolder extends RecyclerView.ViewHolder {
         TextView txt_activityName;
         TextView txt_activityNameOutput;
-        TextView txt_userId;
-        TextView txt_userIdOutput;
+
         TextView txt_viento;
         TextView txt_vientoOutput;
         TextView txt_numlikes;
@@ -121,8 +117,6 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             super(itemView);
             txt_activityName=itemView.findViewById(R.id.txt_activityName1);
             txt_activityNameOutput=itemView.findViewById(R.id.txt_activityNameOutput1);
-            txt_userId=itemView.findViewById(R.id.txt_userId1);
-            txt_userIdOutput=itemView.findViewById(R.id.txt_userIdOutput1);
             txt_viento=itemView.findViewById(R.id.txt_viento1);
             txt_vientoOutput=itemView.findViewById(R.id.txt_vientoOutput1);
             txt_numlikes=itemView.findViewById(R.id.txt_numLikes);

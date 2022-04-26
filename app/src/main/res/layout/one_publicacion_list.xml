@@ -43,26 +43,6 @@
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <TextView
-        android:id="@+id/txt_userIdOutput1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:text="9999"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    <TextView
-        android:id="@+id/txt_userId1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:text="User:"
-        app:layout_constraintEnd_toStartOf="@+id/txt_userIdOutput1"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    <TextView
         android:id="@+id/txt_viento1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

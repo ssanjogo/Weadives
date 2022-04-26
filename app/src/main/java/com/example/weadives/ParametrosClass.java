@@ -23,8 +23,6 @@ public class ParametrosClass {
         Dirección ola(Grados)
          */
     private String nombreActividad;
-    private int userID;
-
     private float presionMax;
     private float presionMin;
 
@@ -52,7 +50,7 @@ public class ParametrosClass {
 
 
 
-    public ParametrosClass(String nombreActividad, int userID, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
+    public ParametrosClass(String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
         this.nombreActividad = nombreActividad;
         this.presionMax = presionMax;
         this.presionMin = presionMin;
@@ -66,7 +64,6 @@ public class ParametrosClass {
         this.periodoOlaMax = periodoOlaMax;
         this.periodoOlaMin = periodoOlaMin;
         this.directionOlas = directionOlas;
-        this.userID = userID;
     }
 
 
@@ -78,7 +75,6 @@ public class ParametrosClass {
     public String toString2() {
         return "ParametrosClass{" +
                 "nombreActividad='" + nombreActividad + '\'' +
-                ", userID=" + userID +
                 ", presionMax=" + presionMax +
                 ", presionMin=" + presionMin +
                 ", temperaturaMax=" + temperaturaMax +
@@ -95,7 +91,6 @@ public class ParametrosClass {
     }
     public String toSaveString() {
         return nombreActividad +
-                ',' + userID +
                 "," + presionMax +
                 "," + presionMin +
                 "," + temperaturaMax +
@@ -196,13 +191,6 @@ public class ParametrosClass {
         this.temperaturaMin = temperaturaMin;
     }
 
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
     public Directions getDirectionViento() {
         if (directionViento==null){
             return Directions.NO_DIRECTION;

@@ -45,11 +45,9 @@ public class ParametrosPerfilAdapter extends RecyclerView.Adapter<ParametrosPerf
         //holder.txt_viento.setText(resources.getString(R.string.viento)+ " : ");
         //holder.txt_activityName.setText(resources.getString(R.string.NombreActividad) + " : ");
         holder.txt_viento.setText("Wind :");
-        holder.txt_userIdOutput.setText(Integer.toString(parametrosClassList.get(position).getUserID()));
         holder.txt_activityName.setText("Activity Name :");
         holder.txt_vientoOutput.setText(Float.toString(parametrosClassList.get(position).getViento()));
         holder.txt_activityNameOutput.setText(parametrosClassList.get(position).getNombreActividad());
-        holder.txt_userId.setText("ID");
     }
 
     @Override
@@ -60,8 +58,6 @@ public class ParametrosPerfilAdapter extends RecyclerView.Adapter<ParametrosPerf
     public class ParametrosPerfilViewHolder extends RecyclerView.ViewHolder {
         TextView txt_activityName;
         TextView txt_activityNameOutput;
-        TextView txt_userId;
-        TextView txt_userIdOutput;
         TextView txt_viento;
         TextView txt_vientoOutput;
 
@@ -70,8 +66,6 @@ public class ParametrosPerfilAdapter extends RecyclerView.Adapter<ParametrosPerf
             super(itemView);
             txt_activityName=itemView.findViewById(R.id.txt_activityName);
             txt_activityNameOutput=itemView.findViewById(R.id.txt_activityNameOutput);
-            txt_userId=itemView.findViewById(R.id.txt_userId);
-            txt_userIdOutput=itemView.findViewById(R.id.txt_userIdOutput);
             txt_viento=itemView.findViewById(R.id.txt_viento);
             txt_vientoOutput=itemView.findViewById(R.id.txt_vientoOutput);
         }
