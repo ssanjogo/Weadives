@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private Button btn_eliminar;
     private Button btn_cancelarEliminar;
     private TextView txt_nombreMarcadorEliminar;
+    private SeekBar skb_seleccionarHora;
     // Maps
     private LatLng coordsMarcador;
     private Marker tempMarcador;
@@ -91,6 +93,13 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_eliminar = findViewById(R.id.btn_eliminar);
         btn_cancelarEliminar = findViewById(R.id.btn_cancelarEliminar);
         lay_layoutMarcadorEliminar.setVisibility(View.INVISIBLE);
+
+        skb_seleccionarHora = findViewById(R.id.skb_seleccionarHora);
+        skb_seleccionarHora.setProgress(0);
+
+
+
+
 
         //Pasar a modelo
         marcadorList = new ArrayList<>();
@@ -145,6 +154,23 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        skb_seleccionarHora.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                cargarImagenClima(getImagenClima(i));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
 
 
 
@@ -177,7 +203,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         // Actualizamos marcadores
         mMap.getUiSettings().setMapToolbarEnabled(false);
         actualizarMarcadores();
-        cargarImagenClima();
+        cargarImagenClima(getImagenClima(skb_seleccionarHora.getProgress()));
 
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -198,14 +224,25 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    private int getImagenClima(int tipo){
+        switch(tipo){
+            case 0: return R.drawable.imagen_clima0;
+            case 1: return R.drawable.imagen_clima1;
+            default: return R.drawable.imagen_clima0;
+        }
+    }
+    private void cargarImagenClima(int resourceId){
+        if (imagenClima == null){
+            LatLngBounds maldivesBounds = new LatLngBounds( new LatLng(-5.467415, 65.490845), new LatLng(10.97052, 79.48093));
+            GroundOverlayOptions imagen = new GroundOverlayOptions()
+                    .image(BitmapDescriptorFactory.fromResource(resourceId))
+                    .positionFromBounds(maldivesBounds)
+                    .transparency(0.5f);
+            imagenClima = mMap.addGroundOverlay(imagen);
+        } else {
+            imagenClima.setImage(BitmapDescriptorFactory.fromResource(resourceId));
+        }
 
-    private void cargarImagenClima(){
-        LatLngBounds maldivesBounds = new LatLngBounds( new LatLng(-5.467415, 65.490845), new LatLng(10.97052, 79.48093));
-        GroundOverlayOptions imagen = new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.imagen_clima))
-                .positionFromBounds(maldivesBounds)
-                .transparency(0.5f);
-        imagenClima = mMap.addGroundOverlay(imagen);
     }
 
     //Sacar método pal modelo
