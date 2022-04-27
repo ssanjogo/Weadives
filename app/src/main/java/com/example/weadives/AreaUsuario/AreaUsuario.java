@@ -115,6 +115,7 @@ public class AreaUsuario extends AppCompatActivity {
                 txt_noAmigos.setVisibility(View.INVISIBLE);
                 Intent pantallaMiperfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);
                 startActivity(pantallaMiperfil);
+                finish();
             }
         });
 
@@ -124,9 +125,13 @@ public class AreaUsuario extends AppCompatActivity {
                 if(!viewModel.getLogInStatus()){
                     System.out.println("HACE SING OUT");
                     viewModel.singOut();
+                    Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                    startActivity(pantallaInicio);
+                    finish();
+                } else {
+                    Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                    startActivity(pantallaInicio);
                 }
-                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
-                startActivity(pantallaInicio);
             }
         });
 

@@ -125,9 +125,12 @@ public class PantallaLogIn extends AppCompatActivity {
                         System.out.println("ANTES DEL LOG IN" + viewModel.getCurrentUser());
                         viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
                         System.out.println("DESPUES DEL LOG IN" + viewModel.getCurrentUser());
+                        System.out.println("PANTALLA LOG IN VALOR CURRENT USER " + viewModel.getCurrentUser());
                         if (viewModel.getCurrentUser() != null) {
+                            System.out.println("Pasaaaaaaaa a ver si hace el Intent");
                             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                            areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            //areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            System.out.println("ANTES DE HACER EL INTENT");
                             startActivity(areaUsuario);
                             finish();
                         }

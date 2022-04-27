@@ -20,17 +20,17 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     private final MutableLiveData<List<UserClass>> listaUsuarios;
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
-    private final MutableLiveData<UserClass> usuario;
+    private UserClass usuario;
 
     private String UID;
     private boolean statusLogIn = false;
-    private DatabaseAdapter dbA;
+    private final DatabaseAdapter dbA;
 
     private static ViewModel vm;
 
     public static ViewModel getInstance(AppCompatActivity application){
         if (vm == null){
-            vm = new ViewModelProvider(application).get(ViewModel.class);;
+            vm = new ViewModelProvider(application).get(ViewModel.class);
         }
         return vm;
     }
@@ -39,7 +39,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         super(application);
         listaUsuarios = new MutableLiveData<>();
         listaRecyclerView = new MutableLiveData<>();
-        usuario = new MutableLiveData<>();
         statusLogIn = false;
         dbA = new DatabaseAdapter(this);
         dbA.getAllUsers();
@@ -64,7 +63,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public UserClass getCurrentUser(){
-        return this.usuario.getValue();
+        return this.usuario;
     }
 
     public void register(String nombre, String correo, String contraseña){
@@ -80,7 +79,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public void logIn(String correo, String contraseña){
         dbA.logIn(correo, contraseña);
-
+        System.out.println("CURRENT USER VIEW MODEL " + getCurrentUser());
     }
 
     public void setLogInStatus (boolean b){
@@ -94,7 +93,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void singOut(){
         dbA.singout();
         listaRecyclerView.setValue(null);
-        this.usuario.setValue(null);
+        this.usuario = null;
     }
 
     public void deleteAccount(){
@@ -137,12 +136,14 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         user.setStringAmigos(amigos);
         HashMap<String, Object> usuario = convertUserToHashMap(user);
         dbA.unfollow(usuario);
+
+        reload();
         fillUserList();
     }
     //DvELOjMzXIfa1vnwU9CqVgvkv3p1,mEisP2TzCHMD7THo8GqUNITTET03
 
     public void enviarsolicitud(String idAmigo) {
-        UserClass currentUser = usuario.getValue();
+        UserClass currentUser = usuario;
         UserClass futuroAmigo = getUserByUID(idAmigo);
 
         String solE = "";
@@ -163,6 +164,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         HashMap<String, Object> hmFuturoAmigo = convertUserToHashMap(futuroAmigo);
         dbA.updateDatos(hmFuturoAmigo);
 
+        reload();
         fillUserList();
     }
 
@@ -186,7 +188,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
         i = 0;
         String solE = "";
-        UserClass currentUser = usuario.getValue();
+        UserClass currentUser = usuario;
         for(String uid: currentUser.getListaSolicitudesEnviadas()){
             if (!currentUser.getId().equals(uid)){
                 if (i == 0){
@@ -200,11 +202,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         currentUser.setStringSolicitudesEnviadas(solE);
         HashMap<String, Object> hmCurrentUser = convertUserToHashMap(currentUser);
         dbA.updateDatos(hmCurrentUser);
+        reload();
         fillUserList();
     }
 
     public void aceptarSolicitud(UserClass usuarioSolicita){
-        UserClass currentUser = usuario.getValue();
+        UserClass currentUser = usuario;
 
         int i = 0;
         String solR = "";
@@ -221,7 +224,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             }
         }
         currentUser.setStringSolicitudesRecibidas(solR);
-        this.usuario.setValue(currentUser);
+        this.usuario = currentUser;
         HashMap<String, Object> hmCurrentUser = convertUserToHashMap(currentUser);
         dbA.updateDatos(hmCurrentUser);
 
@@ -242,11 +245,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         usuarioSolicita.setStringAmigos(amigos);
         HashMap<String, Object> hmUsuarioSolicita = convertUserToHashMap(usuarioSolicita);
         dbA.updateDatos(hmUsuarioSolicita);
+        reload();
         fillUserList();
     }
 
     public void rechazarSolicitud(UserClass usuarioSolicita){
-        UserClass currentUser = usuario.getValue();
+        UserClass currentUser = usuario;
         String solR = "", solE = "";
         int i = 0;
 
@@ -261,7 +265,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             }
         }
         currentUser.setStringSolicitudesRecibidas(solR);
-        this.usuario.setValue(currentUser);
+        this.usuario = currentUser;
         HashMap<String, Object> hmCurrentUser = convertUserToHashMap(currentUser);
         dbA.updateDatos(hmCurrentUser);
 
@@ -280,6 +284,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         usuarioSolicita.setStringSolicitudesEnviadas(solE);
         HashMap<String, Object> hmUsuarioSolicita = convertUserToHashMap(usuarioSolicita);
         dbA.updateDatos(hmUsuarioSolicita);
+        reload();
         fillUserList();
     }
 
@@ -295,7 +300,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public int fillUserList() {
         UserClass currentUser = getUserByUID(UID);
-        this.usuario.setValue(currentUser);
+        this.usuario = currentUser;
         UserClass user;
         List<UserClass> listaUsers = new ArrayList<>();
         System.out.println(getCurrentUser());
@@ -317,7 +322,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             }
         }
         this.listaRecyclerView.setValue(listaUsers);
-        return usuario.getValue().getListaSolicitudesRecibidas().size();
+        return usuario.getListaSolicitudesRecibidas().size();
     }
 
     public boolean correoRepetido(String correo) {
@@ -364,8 +369,13 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         if (getCurrentUser().getStringSolicitudesEnviadas().equals("")){
             return 0;
         } else {
-            return this.usuario.getValue().getListaSolicitudesRecibidas().size();
+            return this.usuario.getListaSolicitudesRecibidas().size();
         }
+    }
+
+    private void reload(){
+        dbA.getAllUsers();
+        dbA.getUser(usuario.getId());
     }
 
     @Override
@@ -381,11 +391,13 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     @Override
     public void setUserID(String id) {
         this.UID = id;
-        //this.usuario.setValue(getUserByUID(id));
     }
 
     @Override
     public void setUser(UserClass u) {
-        this.usuario.setValue(u);
+        this.usuario = u;
+        System.out.println("METODO SET USER");
+        System.out.println("PRINT U (PASADO POR PARAMETRO) " + u.toString());
+        System.out.println("PRINT usuario (CLASE VIEWMODEL) " + this.usuario.toString());
     }
 }

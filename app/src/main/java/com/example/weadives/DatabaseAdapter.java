@@ -2,6 +2,7 @@ package com.example.weadives;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.core.FirestoreClient;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class DatabaseAdapter extends Activity {
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseAuth.IdTokenListener mAuthIDTokenListener;
     private FirebaseUser user;
 
     public static vmInterface listener;
@@ -38,8 +41,9 @@ public class DatabaseAdapter extends Activity {
     public DatabaseAdapter(vmInterface listener){
         this.listener = listener;
         databaseAdapter = this;
-        listeners();
+        listenermAuth();
         mAuth.addAuthStateListener(mAuthListener);
+        mAuth.addIdTokenListener(mAuthIDTokenListener);
         FirebaseFirestore.setLoggingEnabled(true);
     }
 
@@ -50,34 +54,97 @@ public class DatabaseAdapter extends Activity {
         void setUser(UserClass u);
     }
 
-    private void listeners(){
+    private void listenermAuth(){
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                System.out.println("PAsa");
+                System.out.println("Pasa por el listener de mAuth");
                 user = firebaseAuth.getCurrentUser();
-                if (user == null){
-                    listener.setUserID("null");
-                    listener.setUser(null);
-                } else {
+                if (user != null){
                     listener.setUserID(user.getUid());
-                    getUser();
+                }
+            }
+        };
+        mAuthIDTokenListener = new FirebaseAuth.IdTokenListener() {
+            @Override
+            public void onIdTokenChanged(@NonNull FirebaseAuth firebaseAuth) {
+                System.out.println("Pasa por el listener de mAuth TOKEEEEN");
+                user = firebaseAuth.getCurrentUser();
+                if (user != null){
+                    listener.setUserID(user.getUid());
                 }
             }
         };
     }
 
-    public void getUser(){
-        db.collection("Users").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+    public void register (String nombre, String correo, String contraseña){
+        mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    verificarToken();
+                    saveUser(nombre, correo, task.getResult().getUser().getUid());
+                } else {
+                    Log.w(TAG, "Error register");
+                }
+            }
+        });
+    }
+
+    public void logIn(String correo, String contraseña){
+        mAuth.signInWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    verificarToken();
+
+
+                    System.out.println("LOG INNNNNNNNNNN CORREO "+ user.getEmail());
+                    System.out.println("LOG INNNNNNNNNNN UID "+ user.getUid());
+                    getUser(user.getUid());
+                    listener.setUserID(user.getUid());
+                } else {
+                    Log.e(TAG, "Error en el log in " + task.getResult());
+                }
+            }
+        });
+    }
+
+    public void getUser(String id){
+        db.collection("Users").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
                     listener.setUser(u);
+                    System.out.println("SEEEEEEEEEEEEEEEEET USER");
                 }
             }
         });
+    }
+
+    public void saveUser (String nombre, String correo, String uid) {
+        Map<String, String> user = new HashMap<>();
+        user.put("Nombre", nombre);
+        user.put("Correo", correo);
+        user.put("UID", uid);
+        user.put("Imagen", "https://www.pngmart.com/files/21/Account-User-PNG-Photo.png"); //Cambiar
+        user.put("Amigos", "");
+        user.put("Solicitudes recibidas", "");
+        user.put("Solicitudes enviadas", "");
+
+        Log.i(TAG, "saveUser");
+        db.collection("Users").document(uid).set(user);
+        getUser(uid);
+    }
+
+    public void updateDatos(HashMap<String, Object> user){
+        db.collection("Users").document(user.get("UID").toString()).update(user);
+    }
+
+    public void unfollow(HashMap<String, Object> user) {
+        db.collection("Users").document(mAuth.getCurrentUser().getUid()).update(user);
     }
 
     public void getAllUsers(){
@@ -98,55 +165,6 @@ public class DatabaseAdapter extends Activity {
                 }
             }
         });
-    }
-
-    public void register (String nombre, String correo, String contraseña){
-        mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    saveUser(nombre, correo, user.getUid());
-                } else {
-                    Log.w(TAG, "Error register");
-                }
-            }
-        });
-    }
-
-    public void logIn(String correo, String contraseña){
-        mAuth.signInWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    verificarToken();
-                    getUser();
-                } else {
-                    Log.e(TAG, "Error en el log in");
-                }
-            }
-        });
-    }
-
-    public void saveUser (String nombre, String correo, String uid) {
-        Map<String, String> user = new HashMap<>();
-        user.put("Nombre", nombre);
-        user.put("Correo", correo);
-        user.put("UID", uid);
-        user.put("Imagen", "https://www.pngmart.com/files/21/Account-User-PNG-Photo.png"); //Cambiar
-        user.put("Amigos", "");
-        user.put("Solicitudes recibidas", "");
-        user.put("Solicitudes enviadas", "");
-
-        Log.i(TAG, "saveUser");
-        db.collection("Users").document(uid).set(user);
-    }
-
-    public void updateDatos(HashMap<String, Object> user){
-        db.collection("Users").document(user.get("UID").toString()).update(user);
-    }
-
-    public void unfollow(HashMap<String, Object> user) {
-        db.collection("Users").document(mAuth.getCurrentUser().getUid()).update(user);
     }
 
     public void cambiarCorreo(String s){
@@ -177,7 +195,9 @@ public class DatabaseAdapter extends Activity {
 
     public void singout(){
         mAuth.signOut();
-        getUser();
+        user = null;
+        listener.setUserID(null);
+        listener.setUser(null);
         listener.setStatusLogIn(false);
     }
 
@@ -193,14 +213,12 @@ public class DatabaseAdapter extends Activity {
             public void onComplete(@NonNull Task<GetTokenResult> task) {
                 if (task.isSuccessful()) {
                     String idToken = task.getResult().getToken();
-                            // Send token to your backend via HTTPS
-                            // ...
+                    // Send token to your backend via HTTPS
+                    // ...
                 } else {
                     Log.e(TAG, "Error al verificar token");
                 }
             }
         });
     }
-
-
 }

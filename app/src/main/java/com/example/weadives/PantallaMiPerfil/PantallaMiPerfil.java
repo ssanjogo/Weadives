@@ -74,9 +74,13 @@ public class PantallaMiPerfil extends AppCompatActivity {
             public void onClick(View view){
                 if(!viewModel.getLogInStatus()){
                     viewModel.singOut();
+                    Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                    startActivity(pantallaInicio);
+                    finish();
+                } else {
+                    Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                    startActivity(pantallaInicio);
                 }
-                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
-                startActivity(pantallaInicio);
             }
         });
 
@@ -95,6 +99,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
                 viewModel.singOut();
                 Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
                 startActivity(pantallaLogIn);
+                finish();
             }
         });
     }
