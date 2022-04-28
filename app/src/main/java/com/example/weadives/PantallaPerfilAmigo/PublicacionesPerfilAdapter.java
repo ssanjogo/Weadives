@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 
 import java.util.List;
 //Si no se pone el exetend correctamente, el onbind peta
@@ -46,16 +48,16 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
 
     @Override
     public void onBindViewHolder(@NonNull PublicacionesPerfilViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
-        //Falta aplicar el ingles
-        holder.txt_activityName.setText("Activity Name :");
-        holder.txt_viento.setText("Wind : ");
-        holder.txt_presion.setText("Pressure : ");
-        holder.txt_temperatura.setText("Temperature : ");
-        holder.txt_dirviento.setText("Wind Direction : ");
-        holder.txt_alturaOla.setText("Wave Height : ");
-        holder.txt_periodoOla.setText("Wave Period : ");
-        holder.txt_dirOla.setText("Wave Direction : ");
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
+        holder.txt_activityName.setText(resources.getString(R.string.NombreActividad)+" : ");
+        holder.txt_viento.setText(resources.getString(R.string.viento)+" : ");
+        holder.txt_presion.setText(resources.getString(R.string.presion)+" : ");
+        holder.txt_temperatura.setText(resources.getString(R.string.temperatura)+" :");
+        holder.txt_dirviento.setText(resources.getString(R.string.dirViento)+" : ");
+        holder.txt_alturaOla.setText(resources.getString(R.string.alturaOla)+" : ");
+        holder.txt_periodoOla.setText(resources.getString(R.string.periodoOla)+" : ");
+        holder.txt_dirOla.setText(resources.getString(R.string.dirOlas)+" : ");
 
 
 
@@ -175,6 +177,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
 
         public PublicacionesPerfilViewHolder(@NonNull View itemView) {
             super(itemView);
+
             txt_activityName=itemView.findViewById(R.id.txt_activityName1);
             txt_activityNameOutput=itemView.findViewById(R.id.txt_activityNameOutput1);
             txt_viento=itemView.findViewById(R.id.txt_viento1);
@@ -212,8 +215,14 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             View popupView=Linflater.inflate(R.layout.popup_listacomentarios,null);
 //___
 
+            SingletonIdioma s= SingletonIdioma.getInstance();
+            Resources resources=s.getResources();
+
+
             //Definicion de los items
             btn_test=popupView.findViewById(R.id.btn_test);
+            btn_test.setText(resources.getString(R.string.añadircomment));
+
             rv_commentList=popupView.findViewById(R.id.rv_commentList);
             //mejorar performance
             rv_commentList.hasFixedSize();
@@ -265,8 +274,14 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             dialogBuilder2 = new AlertDialog.Builder(context);
             View popupView2=Linflater.inflate(R.layout.popup_addcomment,null);
 
+
+            SingletonIdioma s= SingletonIdioma.getInstance();
+            Resources resources=s.getResources();
+
+
             //Definicion de los items
             btn_addcomment=popupView2.findViewById(R.id.btn_addcomment);
+            btn_addcomment.setText(resources.getString(R.string.añadircomment));
             comment=popupView2.findViewById(R.id.txt_comment);
             //Hacemos aparecer la ventana
             dialogBuilder2.setView(popupView2);

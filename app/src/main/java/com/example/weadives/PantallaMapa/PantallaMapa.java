@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaGestorInundaciones.PantallaGestorInundaciones;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 import com.example.weadives.databinding.PantallaMapaBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,9 +45,10 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
 
         Button btn_gestorNotificaciones =findViewById(R.id.btn_gestorNotificaciones);
         final Context context;
-        final Resources resources;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
         context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+
         btn_gestorNotificaciones.setText(resources.getString(R.string.gestion_notificaciones));
 
         btn_home=findViewById(R.id.btn_home5);

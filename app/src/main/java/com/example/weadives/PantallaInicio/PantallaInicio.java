@@ -3,6 +3,7 @@ package com.example.weadives.PantallaInicio;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -20,10 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.ConfiguracionDePreferencias.ConfiguracionDePreferencias;
+import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaMapa.PantallaMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 
 public class PantallaInicio extends AppCompatActivity {
 
@@ -44,6 +47,13 @@ public class PantallaInicio extends AppCompatActivity {
         btn_en = findViewById(R.id.btn_en);
         btn_es = findViewById(R.id.btn_es);
 
+        final Context context;
+        final Resources resources2;
+        context = LocaleHelper.setLocale(this, cargarPreferencias());
+        resources2 = context.getResources();
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        s.setResources(resources2);
+
 
 
 
@@ -52,6 +62,7 @@ public class PantallaInicio extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 guardarPreferencias("en");
+                s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Language changed into English", Toast.LENGTH_SHORT);
                 toast.show();
             }
@@ -60,6 +71,7 @@ public class PantallaInicio extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 guardarPreferencias("es");
+                s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Idioma cambiado a Castellano", Toast.LENGTH_SHORT);
                 toast.show();
             }

@@ -31,19 +31,20 @@
     <string name="mostrar_en_perfil">Show Profile</string>
     <string name="gestionar_parametros">Modify Parameters</string>
     <string name="confirmar_parametros">Confirm Parameters</string>
-    <string name="viento">wind</string>
+    <string name="viento">Wind</string>
     <string name="NombreActividad">Activity Name</string>
     <string name="cerrar_sesión">Sing out</string>
     <string name="añadir_amigo">Add friend</string>
     <string name="pendiente">Pending</string>
     <string name="selecciona_actividad">Choose an Activity</string>
     <string name="selecciona_direccion">Choose a Direction</string>
-    <string name="presion">preassure</string>
-    <string name="temperatura">temperature</string>
-    <string name="dirViento">wind direction</string>
-    <string name="dirOlas">wave direction</string>
-    <string name="alturaOla">wave height</string>
-    <string name="periodoOla">wave period</string>
+    <string name="presion">Preassure</string>
+    <string name="temperatura">Temperature</string>
+    <string name="dirViento">Wind direction</string>
+    <string name="dirOlas">Wave direction</string>
+    <string name="alturaOla">Wave height</string>
+    <string name="periodoOla">Wave period</string>
+    <string name="añadircomment">Add comment</string>
 
 
 

@@ -34,17 +34,18 @@
     <string name="gestionar_parametros">Gestionar Parametros</string>
     <string name="confirmar_parametros">Confirmar Parametros</string>
     <string name="NombreActividad">Nombre actividad</string>
-    <string name="viento">viento</string>
+    <string name="viento">Viento</string>
     <string name="cerrar_sesión">Cerrar sesión</string>
     <string name="añadir_amigo">Añadir amigo</string>
     <string name="pendiente">Pendiente</string>
     <string name="selecciona_actividad">Selecciona una actividad</string>
     <string name="selecciona_direccion">Selecciona Direccion</string>
-    <string name="presion">presión</string>
-    <string name="temperatura">temperatura</string>
+    <string name="presion">Presión</string>
+    <string name="temperatura">Temperatura</string>
     <string name="dirViento">Dirección de viento</string>
     <string name="dirOlas">Dirección olas</string>
-    <string name="alturaOla">altura olas</string>
-    <string name="periodoOla">periodo olas</string>
+    <string name="alturaOla">Altura de olas</string>
+    <string name="periodoOla">Periodo de olas</string>
+    <string name="añadircomment">Añadir comentario</string>
 
 </resources>

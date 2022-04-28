@@ -22,6 +22,7 @@ import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 
 public class PantallaLogIn extends AppCompatActivity {
 
@@ -48,10 +49,10 @@ public class PantallaLogIn extends AppCompatActivity {
         chkb_mantenerSession = findViewById(R.id.chkb_mantenerSession);
         btn_home2 = findViewById(R.id.btn_home2);
 
-        final Context context;
-        final Resources resources;
-        context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+        final Context context=this;
+        //context = LocaleHelper.setLocale(this, cargarPreferencias());
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
         txt_Correo.setText(resources.getString(R.string.correo));
         txt_contraseña.setText(resources.getString(R.string.password2));
         chkb_mantenerSession.setText(resources.getString(R.string.mantener_sessi_n_iniciada));

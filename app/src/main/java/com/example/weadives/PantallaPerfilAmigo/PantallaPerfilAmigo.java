@@ -22,6 +22,7 @@ import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,9 +61,8 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         final Context context;
-        final Resources resources;
-        context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
         btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
 
         dbA = DatabaseAdapter.getInstance();

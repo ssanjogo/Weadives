@@ -21,6 +21,7 @@ import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 
 import java.util.regex.Pattern;
 
@@ -49,9 +50,10 @@ public class PantallaRegistro extends AppCompatActivity {
         txt_registro =findViewById(R.id.txt_registro);
 
         final Context context;
-        final Resources resources;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
         context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+
 
         txt_registro.setText(resources.getString(R.string.registro));
         txt_correo2.setText(resources.getString(R.string.correo));

@@ -21,6 +21,7 @@ import com.example.weadives.PantallaDeHorarios.PantallaDeHorarios;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.R;
 import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
+import com.example.weadives.SingletonIdioma;
 
 public class PantallaPrincipal extends AppCompatActivity {
 
@@ -42,9 +43,10 @@ public class PantallaPrincipal extends AppCompatActivity {
         DesplegableMarcadores = findViewById(R.id.spn_desplegableMarcadores);
 
         final Context context;
-        final Resources resources;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
         context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+
         btnHorario.setText(resources.getString(R.string.horarios));
         btnAñadirNotificacion.setText((resources.getString(R.string.AñadirNotificacion)));
         btn_gestionarParametros.setText((resources.getString(R.string.gestionar_parametros)));
