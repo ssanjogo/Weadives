@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaGestorInundaciones.PantallaGestorInundaciones;
+import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.databinding.PantallaMapaBinding;
@@ -29,38 +30,28 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private PantallaMapaBinding binding;
-    private ImageButton btn_home;
+    private ImageButton btn_home20;
     private Button btn_gestorNotificaciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.pantalla_mapa);
+        Button btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
+        ImageButton btn_home20 = findViewById(R.id.btn_home20);
         binding = PantallaMapaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapa);
         mapFragment.getMapAsync(this);
 
-        Button btn_gestorNotificaciones =findViewById(R.id.btn_gestorNotificaciones);
         final Context context;
         SingletonIdioma s= SingletonIdioma.getInstance();
         Resources resources=s.getResources();
         context = LocaleHelper.setLocale(this, cargarPreferencias());
 
         btn_gestorNotificaciones.setText(resources.getString(R.string.gestion_notificaciones));
-
-        btn_home=findViewById(R.id.btn_home5);
-        btn_home.bringToFront();
-
-
-        btn_home.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                finish();
-            }
-        });
 
         btn_gestorNotificaciones.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -69,6 +60,14 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 btn_gestorNotificaciones.startAnimation(animation);
                 Intent testIntent = new Intent(getApplicationContext(), PantallaGestorInundaciones.class);
                 startActivity(testIntent);
+            }
+        });
+
+        btn_home20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
             }
         });
     }

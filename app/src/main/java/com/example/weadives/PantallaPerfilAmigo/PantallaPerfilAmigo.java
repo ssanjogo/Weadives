@@ -1,19 +1,25 @@
 package com.example.weadives.PantallaPerfilAmigo;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.weadives.AjustesPerfil.AjustesPerfil;
+import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.AreaUsuario.UserClass;
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.DatoGradosClass;
@@ -23,6 +29,7 @@ import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
+import com.example.weadives.ViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +44,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<PublicacionClass> publicacionList;
-    private DatabaseAdapter dbA;
+    private ViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +72,32 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         Resources resources=s.getResources();
         btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
 
-        dbA = DatabaseAdapter.getInstance();
-
+        viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
+
         String username = intent.getStringExtra("username");
         String idAmigo = intent.getStringExtra("id");
+        String imagen = intent.getStringExtra("Imagen");
+
         txt_nombrePerfil.setText(username);
+        Glide.with(this).load(imagen).into(img_perfil);
+
+        if (viewModel.uidInListaAmigos(idAmigo)){
+            btn_añadirAmigo.setText(resources.getString(R.string.añadido));
+            btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded_grey));
+            btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
+        } else if (viewModel.uidInListaSolicitudesEnviadas(idAmigo)){
+            btn_añadirAmigo.setText(resources.getString(R.string.pendiente));
+            btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded_grey));
+            btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
+        }
 
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                if(!viewModel.getLogInStatus()){
+                    viewModel.singOut();
+                }
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
             }
@@ -89,18 +112,46 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
                     //FALTA
                     //Enviar solicitud
-                    dbA.enviarSolicitudAmistad(idAmigo);
-                } else if (btn_añadirAmigo.getText().equals("Pendiente")){
+                    viewModel.enviarsolicitud(idAmigo);
+                } else if (btn_añadirAmigo.getText().equals(resources.getString(R.string.pendiente))){
+                    System.out.println(btn_añadirAmigo.getText());
+                    System.out.println("pasa");
                     btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));
                     //FALTA
                     //Eliminar solicitud enviada
+                    viewModel.cancelarEvioSolicitud(idAmigo);
+                } else {
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(PantallaPerfilAmigo.this);
+                    alerta.setMessage(resources.getString(R.string.alertaDejarDeSeguir)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            viewModel.unfollow(idAmigo);
+                            btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
+                            btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));
+                            btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));
+                        }
+                    }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog titulo = alerta.create();
+                    titulo.setTitle(resources.getString(R.string.eliminarCuenta));
+                    titulo.show();
                 }
-
             }
         });
+    }
 
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == event.KEYCODE_BACK){
+            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+            startActivity(areaUsuario);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private List<PublicacionClass> fillPublicacionList() {

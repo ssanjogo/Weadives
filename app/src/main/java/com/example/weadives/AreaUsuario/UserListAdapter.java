@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.weadives.PantallaPerfilAmigo.PantallaPerfilAmigo;
 import com.example.weadives.R;
+import com.example.weadives.ViewModel;
 
 import java.util.List;
 
@@ -24,9 +25,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     private List<UserClass> userClassList;
     private Context context;
-    public UserListAdapter(List<UserClass> userClassList, Context context) {
+    private ViewModel vm;
+    private int limite;
+
+    public UserListAdapter(List<UserClass> userClassList, Context context, ViewModel vm, int limite) {
         this.userClassList = userClassList;
         this.context = context;
+        this.vm = vm;
+        this.limite = limite;
     }
 
     @NonNull
@@ -38,53 +44,61 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     @Override
     public void onBindViewHolder(@NonNull UserListViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.txt_friendID.setText("#"+userClassList.get(position).getId());
         holder.txt_friendname.setText(userClassList.get(position).getUsername());
         Glide.with(context).load(userClassList.get(position).getUrlImg()).into(holder.profilepic);
-        if(userClassList.get(position).hasSolicitud()==0){
+        if(position >= limite) {
             holder.btn_accept.setVisibility(View.GONE);
             holder.btn_deny.setVisibility(View.GONE);
-        }else{
-            holder.btn_accept.setOnClickListener(new View.OnClickListener(){
+        } else {
+            holder.btn_accept.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view){
+                public void onClick(View view) {
+                    vm.aceptarSolicitud(userClassList.get(position));
                     userClassList.get(position).acceptSolicitud();
                     holder.btn_accept.setVisibility(View.GONE);
                     holder.btn_deny.setVisibility(View.GONE);
                 }
             });
+            holder.btn_deny.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    vm.rechazarSolicitud(userClassList.get(position));
+                    holder.btn_accept.setVisibility(View.GONE);
+                    holder.btn_deny.setVisibility(View.GONE);
+                }
+            });
         }
+
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PantallaPerfilAmigo.class);
                 intent.putExtra("username", userClassList.get(position).getUsername());
                 intent.putExtra("id", userClassList.get(position).getId());
+                intent.putExtra("Imagen", userClassList.get(position).getUrlImg());
                 context.startActivity(intent);
             }
         });
-
-
     }
 
     @Override
     public int getItemCount() {
+        if (userClassList == null){
+            return 0;
+        }
         return userClassList.size();
     }
 
     public class UserListViewHolder extends RecyclerView.ViewHolder {
         TextView txt_friendname;
-        TextView txt_friendID;
         ImageView profilepic;
         ImageButton btn_accept;
         ImageButton btn_deny;
-
         ConstraintLayout parentLayout;
 
         public UserListViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_friendname=itemView.findViewById(R.id.txt_friendname);
-            txt_friendID=itemView.findViewById(R.id.txt_friendID);
             profilepic=itemView.findViewById(R.id.profilepic);
             btn_accept=itemView.findViewById(R.id.btn_accept);
             btn_deny=itemView.findViewById(R.id.btn_deny);

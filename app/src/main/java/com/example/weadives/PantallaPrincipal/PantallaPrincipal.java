@@ -21,15 +21,13 @@ import com.example.weadives.PantallaDeHorarios.PantallaDeHorarios;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.R;
 import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
-import com.example.weadives.SingletonIdioma;
 
 public class PantallaPrincipal extends AppCompatActivity {
 
     private Button btnHorario, btnAñadirNotificacion, btn_gestionarParametros;
     private ImageView btn_home, btn_social;
     private Spinner DesplegableMarcadores;
-
-    private DatabaseAdapter dbA;
+    private ViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +49,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         btnAñadirNotificacion.setText((resources.getString(R.string.AñadirNotificacion)));
         btn_gestionarParametros.setText((resources.getString(R.string.gestionar_parametros)));
 
-        dbA = DatabaseAdapter.getInstance();
-
+        viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
 
         btn_home.setOnClickListener(new View.OnClickListener(){
@@ -71,12 +68,6 @@ public class PantallaPrincipal extends AppCompatActivity {
                 //finish();
             }
         });
-
-
-
-
-
-
 
         btnHorario.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -99,8 +90,6 @@ public class PantallaPrincipal extends AppCompatActivity {
 
             }
         });
-
-
 
         btn_gestionarParametros.setOnClickListener(new View.OnClickListener(){
             @Override

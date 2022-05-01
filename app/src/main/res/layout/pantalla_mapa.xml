@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent"
     android:orientation="vertical">
 
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map"
+        android:id="@+id/mapa"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".PantallaMapa.PantallaMapa"
-        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <LinearLayout
         android:id="@+id/LinearLayoutMapa"
-        android:layout_width="58dp"
-        android:layout_height="187dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="28dp"
+        android:layout_width="45dp"
+        android:layout_height="195dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/button_rounded_black"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,21 +34,24 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/TODO"
             android:src="@android:drawable/ic_dialog_map"
-            tools:ignore="DuplicateSpeakableTextCheck" />
+            tools:ignore="DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
 
         <ImageButton
             android:id="@+id/btn_temperatura"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/TODO"
-            android:src="@android:drawable/ic_menu_compass" />
+            android:src="@android:drawable/ic_menu_compass"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <ImageButton
             android:id="@+id/btn_oleaje"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/TODO"
-            android:src="@android:drawable/ic_menu_mapmode" />
+            android:src="@android:drawable/ic_menu_mapmode"
+            tools:ignore="TouchTargetSizeCheck" />
+
     </LinearLayout>
 
     <Button
@@ -63,15 +67,18 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/btn_home5"
+        android:id="@+id/btn_home20"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:contentDescription="@string/TODO"
-        app:srcCompat="@drawable/boton_home"
+        android:scaleType="fitCenter"
+        android:src="@drawable/boton_home"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/transparent"
+        tools:ignore="DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

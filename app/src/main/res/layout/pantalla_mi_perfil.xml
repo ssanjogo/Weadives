@@ -11,15 +11,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="289dp"
-        android:layout_height="107dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:background="@drawable/layout_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.132">
+        app:layout_constraintVertical_bias="0.139">
 
         <ImageView
             android:id="@+id/img_perfil2"
@@ -42,8 +42,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_perfil2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.415" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -69,20 +68,20 @@
         app:srcCompat="@drawable/boton_ajustes" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_llistaAjustes"
+        android:layout_width="300dp"
+        android:layout_height="480dp"
         android:divider="@drawable/mydivider"
         android:dividerPadding="22dp"
-        android:showDividers="middle"
-        android:id="@+id/rv_llistaAjustes"
-        android:layout_width="312dp"
-        android:layout_height="445dp"
         android:scrollbars="vertical"
+        android:showDividers="middle"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.484" />
+        app:layout_constraintVertical_bias="0.444" />
 
     <Button
         android:id="@+id/btn_cerrarSession"

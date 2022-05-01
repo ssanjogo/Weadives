@@ -4,31 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.bumptech.glide.Glide;
 import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.DatabaseAdapter;
-import com.example.weadives.DatoGradosClass;
-import com.example.weadives.Directions;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
-import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
-import com.example.weadives.PantallaPerfilAmigo.PublicacionesPerfilAdapter;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class PantallaMiPerfil extends AppCompatActivity {
@@ -37,10 +32,11 @@ public class PantallaMiPerfil extends AppCompatActivity {
     private TextView txt_nombrePerfil;
     private RecyclerView recyclerView;
     private Button btn_cerrarSesion;
-    private DatabaseAdapter dbA;
+
+    private ViewModel viewModel;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    //private List<ParametrosClass> parametrosList;
+    private List<ParametrosClass> parametrosList;
 
 
     @Override
@@ -54,8 +50,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_config = findViewById(R.id.btn_config);
         btn_cerrarSesion = findViewById(R.id.btn_cerrarSession);
 
-        //parametrosList = fillParametrosList();
-        List<PublicacionClass> publicacionesList= fillPublicacionList();
+        parametrosList = fillParametrosList();
 
         recyclerView = findViewById(R.id.rv_llistaAjustes);
         //mejorar performance
@@ -64,22 +59,22 @@ public class PantallaMiPerfil extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         //especificar adapter
-        mAdapter= new PublicacionesPerfilAdapter(publicacionesList,PantallaMiPerfil.this);
+        mAdapter= new ParametrosPerfilAdapter(parametrosList,PantallaMiPerfil.this);
         recyclerView.setAdapter(mAdapter);
 
+        viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
 
-        dbA = DatabaseAdapter.getInstance();
-        dbA.setName(txt_nombrePerfil);
+        txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
+        Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!dbA.getLogInStatus()){
-                    dbA.singout();
+                if(!viewModel.getLogInStatus()){
+                    viewModel.singOut();
                 }
-                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
-                startActivity(pantallaInicio);
+                finish();
             }
         });
 
@@ -94,11 +89,19 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbA.singout();
-                Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
-                startActivity(pantallaLogIn);
+                viewModel.setLogInStatus(false);
+                viewModel.singOut();
+                finish();
             }
         });
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == event.KEYCODE_BACK){
+            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+            startActivity(areaUsuario);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private ArrayList<ParametrosClass> fillParametrosList() {

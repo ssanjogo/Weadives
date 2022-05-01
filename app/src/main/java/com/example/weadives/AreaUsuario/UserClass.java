@@ -3,11 +3,11 @@ package com.example.weadives.AreaUsuario;
 import com.example.weadives.DatabaseAdapter;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserClass {
 
-    private final DatabaseAdapter dbA = DatabaseAdapter.getInstance();
     private String id, username, correo, urlImg, amigos, solicitudes_recibidas, solicitudes_enviadas;
     private int solicitudRecibida = 0;
 
@@ -16,20 +16,14 @@ public class UserClass {
         this.id = id;
         this.username = username;
         this.correo = correo;
-        this.urlImg = urlImg;
+        if (urlImg == ""){
+            this.urlImg = "https://www.pngmart.com/files/21/Account-User-PNG-Photo.png";
+        } else {
+            this.urlImg = urlImg;
+        }
         this.amigos = amigos;
         this.solicitudes_recibidas = solicitudes_recibidas;
         this.solicitudes_enviadas = solicitudes_enviadas;
-    }
-
-    public UserClass(String id, String username, String correo) {
-        this.id = id;
-        this.username = username;
-        this.correo = correo;
-        this.urlImg = null;
-        this.amigos = null;
-        this.solicitudes_recibidas = null;
-        this.solicitudes_enviadas = null;
     }
 
     public void sentSolicitud(){
@@ -78,6 +72,14 @@ public class UserClass {
         this.urlImg = urlImg;
     }
 
+    public String getStringAmigos(){
+        return this.amigos;
+    }
+
+    public void setStringAmigos(String amigos){
+        this.amigos = amigos;
+    }
+
     public List<String> getListaAmigos(){
         List<String> amigos = Arrays.asList(this.amigos.split(","));
         return amigos;
@@ -85,6 +87,7 @@ public class UserClass {
 
     public List<String> getListaSolicitudesRecibidas(){
         List<String> solicitudes_recibidas = Arrays.asList(this.solicitudes_recibidas.split(","));
+        System.out.println(solicitudes_recibidas);
         return solicitudes_recibidas;
     }
 
@@ -109,7 +112,16 @@ public class UserClass {
         this.solicitudes_enviadas = solE;
     }
 
-    public void saveUser(){
-        dbA.addUser(this.username, this.correo, "");
+    @Override
+    public String toString() {
+        return "UserClass{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", correo='" + correo + '\'' +
+                ", urlImg='" + urlImg + '\'' +
+                ", amigos='" + amigos + '\'' +
+                ", solicitudes_recibidas='" + solicitudes_recibidas + '\'' +
+                ", solicitudes_enviadas='" + solicitudes_enviadas + '\'' +
+                '}';
     }
 }

@@ -4,7 +4,6 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/drawable-v24/button_rounded_black.xml" value="0.2265" />
-        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/drawable/customborderlayout.xml" value="0.132" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2985" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/drawable/mydivider.xml" value="0.2505" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/activity_main.xml" value="0.18" />
@@ -12,13 +11,12 @@
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/activity_pantalla_mapa.xml" value="0.21979166666666666" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/ajustes_perfil.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/area_usuario.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/configuracion_de_preferencias.xml" value="0.33" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/configuracion_de_preferencias.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/list_item_ajuste.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_comment_list.xml" value="0.75" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_frienduser_list.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_parameter_list.xml" value="0.358695652173913" />
-        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_publicacion_list.xml" value="0.5295566502463054" />
-        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_spinner_list.xml" value="0.23007246376811594" />
+        <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_publicacion_list.xml" value="0.75" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_gestor_inundaciones.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_horarios.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_inicio.xml" value="0.25" />
