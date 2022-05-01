@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.DatabaseAdapter;
@@ -25,12 +24,11 @@ import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
 import com.example.weadives.ViewModel;
 
-public class PantallaLogIn extends AppCompatActivity {
+public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.intentInterface {
 
     private final String TAG = "MainActivity";
 
-    private Context parentContext;
-    private AppCompatActivity mActivity;
+    private DatabaseAdapter dbA;
     private ViewModel viewModel;
 
     private Button btn_registrarse, btn_login;
@@ -64,11 +62,10 @@ public class PantallaLogIn extends AppCompatActivity {
         chkb_mantenerSession.setText(resources.getString(R.string.mantener_sessi_n_iniciada));
         btn_registrarse.setText(resources.getString(R.string.btn_registrarse));
 
+        dbA = new DatabaseAdapter(this);
         viewModel = ViewModel.getInstance(this);
 
         if (viewModel.getLogInStatus()) {
-            System.out.println("LOG IN STATUS " + viewModel.getLogInStatus());
-            //viewModel.logIn(cargarCorreo(), cargarContraseña());
             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
             areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(areaUsuario);
@@ -114,26 +111,13 @@ public class PantallaLogIn extends AppCompatActivity {
                     recordarCorreo(etA_correo.getText().toString());
 
                     if (chkb_mantenerSession.isChecked()) {
-                        recordarUser();
-                        recordarContraseña(etP_contraseña.getText().toString());
                         viewModel.setLogInStatus(true);
                     }
 
                     if (!viewModel.correoRepetido(etA_correo.getText().toString())){
                         etA_correo.setError("Correo no registrado");
                     } else {
-                        System.out.println("ANTES DEL LOG IN" + viewModel.getCurrentUser());
                         viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
-                        System.out.println("DESPUES DEL LOG IN" + viewModel.getCurrentUser());
-                        System.out.println("PANTALLA LOG IN VALOR CURRENT USER " + viewModel.getCurrentUser());
-                        if (viewModel.getCurrentUser() != null) {
-                            System.out.println("Pasaaaaaaaa a ver si hace el Intent");
-                            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                            //areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            System.out.println("ANTES DE HACER EL INTENT");
-                            startActivity(areaUsuario);
-                            finish();
-                        }
                     }
                 }
             }
@@ -156,26 +140,11 @@ public class PantallaLogIn extends AppCompatActivity {
         return preferencias.getString("user","");
     }
 
-    private void recordarContraseña(String contraseña) {
-        SharedPreferences preferencias = getSharedPreferences("contraseña", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("contraseña", contraseña);
-        editor.commit();
-    }
-    private String cargarContraseña() {
-        SharedPreferences preferencias = getSharedPreferences("contraseña",Context.MODE_PRIVATE);
-        return preferencias.getString("contraseña","");
-    }
-
-    private void recordarUser() {
-        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("recuerda", "true");
-        editor.commit();
-    }
-
-    private String cargarUser() {
-        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
-        return preferencias.getString("recuerda","false");
+    @Override
+    public void intent() {
+        Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+        areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(areaUsuario);
+        finish();
     }
 }

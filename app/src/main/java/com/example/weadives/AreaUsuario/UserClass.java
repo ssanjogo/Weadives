@@ -10,7 +10,6 @@ public class UserClass {
 
     private String id, username, correo, urlImg, amigos, solicitudes_recibidas, solicitudes_enviadas;
     private int solicitudRecibida = 0;
-    private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
 
 
     public UserClass(String id, String username, String correo, String urlImg, String amigos, String solicitudes_recibidas, String solicitudes_enviadas) {

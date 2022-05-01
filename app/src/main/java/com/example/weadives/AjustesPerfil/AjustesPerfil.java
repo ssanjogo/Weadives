@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
@@ -71,6 +72,7 @@ public class AjustesPerfil extends AppCompatActivity {
                 }
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
+                finish();
             }
         });
 
@@ -104,7 +106,6 @@ public class AjustesPerfil extends AppCompatActivity {
                         titulo.show();
                     }
                 }
-
             }
         });
 
@@ -137,12 +138,4 @@ public class AjustesPerfil extends AppCompatActivity {
         SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
     }
-
-    private void recordarUser(String s) {
-        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("recuerda", s);
-        editor.commit();
-    }
-
 }

@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
+import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
@@ -88,14 +89,8 @@ public class PantallaRegistro extends AppCompatActivity {
                 if(viewModel.correoRepetido(correo)){
                     etA_correo2.setError("Correo existente");
                 } else {
+                    recordarCorreo(correo);
                     viewModel.register(nombre, correo, contraseña);
-                    //if (viewModel.getCurrentUser().getCorreo().equals(correo) && viewModel.getCurrentUser().getUsername().equals(nombre)) {
-                        recordarUser();
-                        recordarCorreo(correo);
-                        Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                        areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(areaUsuario);
-                    //}
                 }
             }
         });
@@ -115,13 +110,6 @@ public class PantallaRegistro extends AppCompatActivity {
         SharedPreferences preferencias = getSharedPreferences("user", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString("user", correo);
-        editor.commit();
-    }
-
-    private void recordarUser() {
-        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("recuerda", "true");
         editor.commit();
     }
 }

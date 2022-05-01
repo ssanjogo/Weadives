@@ -20,6 +20,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     private final MutableLiveData<List<UserClass>> listaUsuarios;
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
+    private final MutableLiveData<String> mToast;
     private UserClass usuario;
 
     private String UID;
@@ -39,6 +40,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         super(application);
         listaUsuarios = new MutableLiveData<>();
         listaRecyclerView = new MutableLiveData<>();
+        mToast = new MutableLiveData<>();
         statusLogIn = false;
         dbA = new DatabaseAdapter(this);
         dbA.getAllUsers();
@@ -50,6 +52,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public LiveData<List<UserClass>> getListaRecyclerView(){
         return this.listaRecyclerView;
+    }
+
+    public LiveData<String> getToast(){
+        return mToast;
     }
 
     public UserClass getUserByUID(String uid){
@@ -68,18 +74,20 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public void register(String nombre, String correo, String contraseña){
         dbA.register(nombre, correo, contraseña);
-        UserClass u = new UserClass(UID, nombre, correo, "https://www.pngmart.com/files/21/Account-User-PNG-Photo.png", "", "", "");
-        if (u != null) {
-            listaUsuarios.getValue().add(u);
+        if (usuario != null) {
+            listaUsuarios.getValue().add(usuario);
             // Inform observer.
             listaUsuarios.setValue(listaUsuarios.getValue());
-
+            reload();
         }
+    }
+
+    public String getNom(){
+        return usuario.getUsername();
     }
 
     public void logIn(String correo, String contraseña){
         dbA.logIn(correo, contraseña);
-        System.out.println("CURRENT USER VIEW MODEL " + getCurrentUser());
     }
 
     public void setLogInStatus (boolean b){
@@ -91,9 +99,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public void singOut(){
-        dbA.singout();
+        setLogInStatus(false);
         listaRecyclerView.setValue(null);
         this.usuario = null;
+        dbA.singout();
     }
 
     public void deleteAccount(){
@@ -122,8 +131,8 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void unfollow(String idAmigo) {
         int i = 0;
         String amigos = "";
-        UserClass user = getCurrentUser();
-        for(String uid: getCurrentUser().getListaAmigos()){
+        UserClass user = usuario;
+        for(String uid: user.getListaAmigos()){
             if (!idAmigo.equals(uid)){
                 if (i == 0){
                     amigos += uid;
@@ -140,7 +149,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         reload();
         fillUserList();
     }
-    //DvELOjMzXIfa1vnwU9CqVgvkv3p1,mEisP2TzCHMD7THo8GqUNITTET03
 
     public void enviarsolicitud(String idAmigo) {
         UserClass currentUser = usuario;
@@ -298,9 +306,8 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         this.listaRecyclerView.setValue(listaFiltradaPorNombre);
     }
 
-    public int fillUserList() {
-        UserClass currentUser = getUserByUID(UID);
-        this.usuario = currentUser;
+    public void fillUserList() {
+        UserClass currentUser = this.usuario;
         UserClass user;
         List<UserClass> listaUsers = new ArrayList<>();
         System.out.println(getCurrentUser());
@@ -322,6 +329,9 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             }
         }
         this.listaRecyclerView.setValue(listaUsers);
+    }
+
+    public int sizelista(){
         return usuario.getListaSolicitudesRecibidas().size();
     }
 
@@ -365,17 +375,9 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         return false;
     }
 
-    public int sizeListaSolPendientes(){
-        if (getCurrentUser().getStringSolicitudesEnviadas().equals("")){
-            return 0;
-        } else {
-            return this.usuario.getListaSolicitudesRecibidas().size();
-        }
-    }
-
     private void reload(){
         dbA.getAllUsers();
-        dbA.getUser(usuario.getId());
+        dbA.getUser();
     }
 
     @Override
@@ -396,8 +398,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     @Override
     public void setUser(UserClass u) {
         this.usuario = u;
-        System.out.println("METODO SET USER");
-        System.out.println("PRINT U (PASADO POR PARAMETRO) " + u.toString());
-        System.out.println("PRINT usuario (CLASE VIEWMODEL) " + this.usuario.toString());
+    }
+
+    @Override
+    public void setToast(String s) {
+            mToast.setValue(s);
     }
 }

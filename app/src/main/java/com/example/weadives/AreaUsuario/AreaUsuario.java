@@ -68,12 +68,13 @@ public class AreaUsuario extends AppCompatActivity {
         resources = context.getResources();
         txt_noAmigos.setText(resources.getString(R.string.noAmigos));
 
-        System.out.println(viewModel.getCurrentUser());
+
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
         correo = viewModel.getCurrentUser().getCorreo();
-        limite = viewModel.fillUserList();
+        limite = viewModel.sizelista();
+        viewModel.fillUserList();
         userList = viewModel.getListaRecyclerView().getValue();
         setLiveDataObservers();
 
@@ -91,24 +92,6 @@ public class AreaUsuario extends AppCompatActivity {
             txt_noAmigos.setVisibility(View.VISIBLE);
         }
 
-        etT_buscarPorNombre.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                txt_noAmigos.setVisibility(View.INVISIBLE);
-                if (!etT_buscarPorNombre.getText().toString().equals("")) {
-                    viewModel.buscarPorNombre(etT_buscarPorNombre.getText().toString());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-
         constraintLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -123,7 +106,6 @@ public class AreaUsuario extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 if(!viewModel.getLogInStatus()){
-                    System.out.println("HACE SING OUT");
                     viewModel.singOut();
                     Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                     startActivity(pantallaInicio);
@@ -157,6 +139,22 @@ public class AreaUsuario extends AppCompatActivity {
                 }
             }
         });
+
+        etT_buscarPorNombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                txt_noAmigos.setVisibility(View.INVISIBLE);
+                if (!etT_buscarPorNombre.getText().toString().equals("")) {
+                    viewModel.buscarPorNombre(etT_buscarPorNombre.getText().toString());
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
     }
 
     public void setLiveDataObservers() {
@@ -171,15 +169,7 @@ public class AreaUsuario extends AppCompatActivity {
                 newAdapter.notifyDataSetChanged();
             }
         };
-
         viewModel.getListaRecyclerView().observe(this, observer);
-    }
-
-    private void recordarUser(String s) {
-        SharedPreferences preferencias = getSharedPreferences("recuerda", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("recuerda", s);
-        editor.commit();
     }
 
     private String cargarPreferencias() {

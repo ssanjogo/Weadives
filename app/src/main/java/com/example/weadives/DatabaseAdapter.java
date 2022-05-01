@@ -2,7 +2,6 @@ package com.example.weadives;
 
 import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -17,7 +16,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.core.FirestoreClient;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
@@ -36,45 +34,32 @@ public class DatabaseAdapter extends Activity {
     private FirebaseUser user;
 
     public static vmInterface listener;
+    public static intentInterface listenerIntent;
     public static DatabaseAdapter databaseAdapter;
 
     public DatabaseAdapter(vmInterface listener){
         this.listener = listener;
         databaseAdapter = this;
-        listenermAuth();
-        mAuth.addAuthStateListener(mAuthListener);
-        mAuth.addIdTokenListener(mAuthIDTokenListener);
         FirebaseFirestore.setLoggingEnabled(true);
     }
+
+    public DatabaseAdapter(intentInterface listenerLogIn){
+        this.listenerIntent = listenerLogIn;
+        databaseAdapter = this;
+        FirebaseFirestore.setLoggingEnabled(true);
+    }
+
 
     public interface vmInterface{
         void setCollection(ArrayList<UserClass> listaUsuarios);
         void setStatusLogIn(boolean status);
         void setUserID(String id);
         void setUser(UserClass u);
+        void setToast(String s);
     }
 
-    private void listenermAuth(){
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                System.out.println("Pasa por el listener de mAuth");
-                user = firebaseAuth.getCurrentUser();
-                if (user != null){
-                    listener.setUserID(user.getUid());
-                }
-            }
-        };
-        mAuthIDTokenListener = new FirebaseAuth.IdTokenListener() {
-            @Override
-            public void onIdTokenChanged(@NonNull FirebaseAuth firebaseAuth) {
-                System.out.println("Pasa por el listener de mAuth TOKEEEEN");
-                user = firebaseAuth.getCurrentUser();
-                if (user != null){
-                    listener.setUserID(user.getUid());
-                }
-            }
-        };
+    public interface intentInterface {
+        void intent();
     }
 
     public void register (String nombre, String correo, String contraseña){
@@ -82,7 +67,7 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    verificarToken();
+                    listener.setUserID(task.getResult().getUser().getUid());
                     saveUser(nombre, correo, task.getResult().getUser().getUid());
                 } else {
                     Log.w(TAG, "Error register");
@@ -96,29 +81,24 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    verificarToken();
-
-
-                    System.out.println("LOG INNNNNNNNNNN CORREO "+ user.getEmail());
-                    System.out.println("LOG INNNNNNNNNNN UID "+ user.getUid());
-                    getUser(user.getUid());
-                    listener.setUserID(user.getUid());
+                    listener.setUserID(task.getResult().getUser().getUid());
+                    getUser();
                 } else {
-                    Log.e(TAG, "Error en el log in " + task.getResult());
+                    Log.e(TAG, "Error en el log in");
                 }
             }
         });
     }
 
-    public void getUser(String id){
-        db.collection("Users").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+    public void getUser(){
+        db.collection("Users").document(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
                     listener.setUser(u);
-                    System.out.println("SEEEEEEEEEEEEEEEEET USER");
+                    listenerIntent.intent();
                 }
             }
         });
@@ -135,8 +115,14 @@ public class DatabaseAdapter extends Activity {
         user.put("Solicitudes enviadas", "");
 
         Log.i(TAG, "saveUser");
-        db.collection("Users").document(uid).set(user);
-        getUser(uid);
+        db.collection("Users").document(uid).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    getUser();
+                }
+            }
+        });
     }
 
     public void updateDatos(HashMap<String, Object> user){
@@ -159,7 +145,7 @@ public class DatabaseAdapter extends Activity {
                         retrieved_users.add(new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas")));
                     }
                     listener.setCollection(retrieved_users);
-
+                    Log.i(TAG, "Usuarios añadidos al ViewModel");
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
@@ -196,8 +182,6 @@ public class DatabaseAdapter extends Activity {
     public void singout(){
         mAuth.signOut();
         user = null;
-        listener.setUserID(null);
-        listener.setUser(null);
         listener.setStatusLogIn(false);
     }
 
@@ -205,20 +189,5 @@ public class DatabaseAdapter extends Activity {
         db.collection("Users").document(mAuth.getCurrentUser().getUid()).delete();
         mAuth.getCurrentUser().delete();
         Log.d(TAG, "Cuenta borrada");
-    }
-
-    public void verificarToken(){
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        user.getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-            public void onComplete(@NonNull Task<GetTokenResult> task) {
-                if (task.isSuccessful()) {
-                    String idToken = task.getResult().getToken();
-                    // Send token to your backend via HTTPS
-                    // ...
-                } else {
-                    Log.e(TAG, "Error al verificar token");
-                }
-            }
-        });
     }
 }
