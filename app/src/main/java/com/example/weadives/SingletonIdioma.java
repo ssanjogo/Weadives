@@ -59,13 +59,16 @@ public final class SingletonIdioma extends AppCompatActivity {
         }
         return instance;
     }
-    public String getValue()
-    {return value.toString().toLowerCase(Locale.ROOT);
+
+    public String getValue() {
+        return value.toString().toLowerCase(Locale.ROOT);
     }
-    public void setValue(Traducciones value)
-    {this.value=value;
+
+    public void setValue(Traducciones value) {
+        this.value=value;
         guardarPreferencias(value.toString());
     }
+
     private void guardarPreferencias(String string) {
         SharedPreferences preferencias = getSharedPreferences("idioma", MODE_PRIVATE);
         SharedPreferences.Editor editor=preferencias.edit();

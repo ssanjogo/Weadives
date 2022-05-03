@@ -59,8 +59,6 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        dbA = DatabaseAdapter.getInstance();
-
         final Context context;
         final Resources resources;
         context = LocaleHelper.setLocale(this, cargarPreferencias());

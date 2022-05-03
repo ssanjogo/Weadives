@@ -155,7 +155,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         UserClass futuroAmigo = getUserByUID(idAmigo);
 
         String solE = "";
-        if (currentUser.getStringSolicitudesEnviadas().length() > 0){
+        if (currentUser.getListaSolicitudesEnviadas().size() > 0){
             solE += currentUser.getStringSolicitudesEnviadas() + "," + idAmigo;
         }
         solE += currentUser.getStringSolicitudesEnviadas() + idAmigo;
@@ -164,7 +164,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         dbA.updateDatos(hmCurrentUser);
 
         String solR = "";
-        if (futuroAmigo.getStringSolicitudesRecibidas().length() > 0){
+        if (futuroAmigo.getListaSolicitudesRecibidas().size() > 0){
             solR += futuroAmigo.getStringSolicitudesRecibidas() + "," + currentUser.getId();
         }
         solR = futuroAmigo.getStringSolicitudesRecibidas() + currentUser.getId();
@@ -237,7 +237,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         dbA.updateDatos(hmCurrentUser);
 
         i = 0;
-
         for(String uid: usuarioSolicita.getListaSolicitudesEnviadas()){
             if (!currentUser.getId().equals(uid)){
                 if (i == 0){

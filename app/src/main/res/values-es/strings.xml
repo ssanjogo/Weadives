@@ -57,4 +57,6 @@
     <string name="contraseña_incorrecta">Contraseña incorrecta</string>
     <string name="alertaCambiarContraseña">¿Estas seguro de que quieres cambiar la contraseña?</string>
     <string name="cambiarContraseña">Cambiar contraseña</string>
+    <string name="seleccionarFotoGaleria">Elegir una foto de la galeria</string>
+    <string name="hacerFoto">Sacar una foto</string>
 </resources>

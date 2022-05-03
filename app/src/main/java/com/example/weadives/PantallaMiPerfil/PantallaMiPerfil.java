@@ -1,29 +1,31 @@
 package com.example.weadives.PantallaMiPerfil;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.weadives.AjustesPerfil.AjustesPerfil;
-import com.example.weadives.DatabaseAdapter;
-import com.example.weadives.PantallaInicio.PantallaInicio;
+import com.example.weadives.AreaUsuario.AreaUsuario;
+import com.example.weadives.DatoGradosClass;
+import com.example.weadives.Directions;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
+import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
+import com.example.weadives.PantallaPerfilAmigo.PublicacionesPerfilAdapter;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
+import com.example.weadives.ViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PantallaMiPerfil extends AppCompatActivity {
@@ -50,7 +52,8 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_config = findViewById(R.id.btn_config);
         btn_cerrarSesion = findViewById(R.id.btn_cerrarSession);
 
-        parametrosList = fillParametrosList();
+        //parametrosList = fillParametrosList();
+        List<PublicacionClass> publicacionesList= fillPublicacionList();
 
         recyclerView = findViewById(R.id.rv_llistaAjustes);
         //mejorar performance
@@ -59,7 +62,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         //especificar adapter
-        mAdapter= new ParametrosPerfilAdapter(parametrosList,PantallaMiPerfil.this);
+        mAdapter= new PublicacionesPerfilAdapter(publicacionesList,PantallaMiPerfil.this);
         recyclerView.setAdapter(mAdapter);
 
         viewModel = ViewModel.getInstance(this);
@@ -92,6 +95,15 @@ public class PantallaMiPerfil extends AppCompatActivity {
                 viewModel.setLogInStatus(false);
                 viewModel.singOut();
                 finish();
+            }
+        });
+
+        btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.singOut();
+                Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
+                startActivity(pantallaLogIn);
             }
         });
     }
@@ -131,7 +143,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         comentariosList1.put("Oscaroca","Esta guay para disfrutar del restaurante que hay al lado.");
         comentariosList1.put("Mi pana miguel","Viva er beti");
         comentariosList1.put("Racsor","Fumas?");
-        comentariosList1.put("Mikol","Jo parlo catalá");
+        comentariosList1.put("Mikol","Jo parlo catalÃ¡");
         comentariosList1.put("Sara","Totorooooo");
         comentariosList1.put("Matt","Has visto como entrenar a tu dragon?");
         comentariosList1.put("Septimus","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");

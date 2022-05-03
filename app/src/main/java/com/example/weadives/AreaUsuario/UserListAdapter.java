@@ -54,7 +54,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                 @Override
                 public void onClick(View view) {
                     vm.aceptarSolicitud(userClassList.get(position));
-                    userClassList.get(position).acceptSolicitud();
                     holder.btn_accept.setVisibility(View.GONE);
                     holder.btn_deny.setVisibility(View.GONE);
                 }
