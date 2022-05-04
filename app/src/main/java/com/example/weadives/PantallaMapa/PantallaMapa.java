@@ -60,7 +60,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private GroundOverlay imagenClima;
 
     //Mover Modelo
-    private ArrayList<MarcadorClass> marcadorList;
+    private MarcadorList marcadorList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +97,9 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         skb_seleccionarHora = findViewById(R.id.skb_seleccionarHora);
         skb_seleccionarHora.setProgress(0);
 
+        marcadorList = new MarcadorList();
 
 
-
-
-        //Pasar a modelo
-        marcadorList = new ArrayList<>();
 
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -131,7 +128,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                guardarMarcador(txt_nombreMarcador.getText().toString(), coordsMarcador);
+                marcadorList.guardarMarcador(txt_nombreMarcador.getText().toString(), coordsMarcador);
                 mMap.addMarker(new MarkerOptions().title(txt_nombreMarcador.getText().toString()).position(coordsMarcador));
                 lay_layoutMarcador.setVisibility(View.INVISIBLE);
                 txt_nombreMarcador.setText("");
@@ -141,7 +138,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                eliminarMarcador(tempMarcador.getTitle(), tempMarcador.getPosition());
+                marcadorList.eliminarMarcador(tempMarcador.getTitle(), tempMarcador.getPosition());
                 tempMarcador.remove();
                 lay_layoutMarcadorEliminar.setVisibility(View.INVISIBLE);
             }
@@ -245,44 +242,13 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    //Sacar método pal modelo
-    private void guardarMarcador(String nombre, LatLng latLng){
-        marcadorList.add(new MarcadorClass(nombre, latLng));
-    }
-
-    // Pal modelo TODO: buscar marcador y eliminar
-    private void eliminarMarcador(String nombre, LatLng latLng){
-        marcadorList.remove(new MarcadorClass(nombre, latLng));
-    }
-
-    //Esto no modelo
     private void actualizarMarcadores(){
-        /* Forma cutre
-        for(MarcadorClass marcador : marcadorList){
-            mMap.addMarker(new MarkerOptions().position(marcador.getLatLng()).title(marcador.getName()));
-        }*/
-        /*HashMap<String, LatLng> marcadorHashMap = getMarcadorList();
-        for(Map.Entry<String, LatLng> marcador : marcadorHashMap.entrySet()){
-            mMap.addMarker(new MarkerOptions().position(marcador.getValue()).title(marcador.getKey()));
-        }*/
-        ArrayList<MarkerOptions> markerList = getMarcadorList();
+        ArrayList<MarkerOptions> markerList = marcadorList.getMarkerOptionsList();
         for(MarkerOptions marker : markerList){
             mMap.addMarker(marker);
         }
     }
-    // Modelo
-    private ArrayList<MarkerOptions> getMarcadorList() {
-        /*HashMap<String, LatLng> marcadorHashMap = new HashMap<>();
-        for(MarcadorClass marcador : marcadorList){
-            marcadorHashMap.put(marcador.getName(), marcador.getLatLng());
-        }
-        return marcadorHashMap;*/
-        ArrayList<MarkerOptions> markerList = new ArrayList<>();
-        for (MarcadorClass marker : marcadorList) {
-            markerList.add(new MarkerOptions().title(marker.getName()).position(marker.getLatLng()));
-        }
-        return markerList;
-    }
+
 
 
     private String cargarPreferencias() {
