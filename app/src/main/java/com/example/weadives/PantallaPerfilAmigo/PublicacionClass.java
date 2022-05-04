@@ -25,14 +25,18 @@ public class PublicacionClass {
         this.likeList = likeList;
         this.comentariosList = comentariosList;
     }
-    private void like(String id, int votacion){
+    public boolean like(String id, int votacion){
+        if(likeList.containsKey(id)){return false;}
         likeList.put(id,votacion);
+        return true;
     }
-    private void removeLike(String id){
+    public boolean removeLike(String id){
+        if(!likeList.containsKey(id)){return false;}
         likeList.remove(id);
+        return true;
     }
 
-    private void addComment(String id, String comment){
+    public void addComment(String id, String comment){
         comentariosList.put(id,comment);
 
     }

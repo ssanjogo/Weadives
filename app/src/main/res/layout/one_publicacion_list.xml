@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:divider="@drawable/mydivider"
 
@@ -23,108 +23,271 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="-1dp" />
 
-    <TextView
-        android:id="@+id/txt_activityName1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="ActivityName:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    <TextView
-        android:id="@+id/txt_activityNameOutput1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:text="Actividad"
-        app:layout_constraintStart_toEndOf="@+id/txt_activityName1"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    <TextView
-        android:id="@+id/txt_userIdOutput1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:text="9999"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    <TextView
-        android:id="@+id/txt_userId1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:text="User:"
-        app:layout_constraintEnd_toStartOf="@+id/txt_userIdOutput1"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    <TextView
-        android:id="@+id/txt_viento1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Viento:"
-        app:layout_constraintEnd_toEndOf="@+id/txt_activityName1"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/divider"
-        app:layout_constraintTop_toBottomOf="@+id/txt_activityName1" />
-
-    <TextView
-        android:id="@+id/txt_vientoOutput1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="0.00"
-        app:layout_constraintStart_toStartOf="@+id/txt_activityNameOutput1"
-        app:layout_constraintTop_toBottomOf="@+id/txt_activityNameOutput1" />
 
     <View
         android:id="@+id/divider2"
         android:layout_width="409dp"
         android:layout_height="3dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="16dp"
         android:background="@color/blueLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_vientoOutput1" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
-    <ImageView
-        android:id="@+id/imageView2"
+
+    <LinearLayout
+        android:id="@+id/layoutAreaUsuarios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/customborderlayout"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_vientoOutput1"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_activityName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="ActivityName:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <TextView
+                android:id="@+id/txt_activityNameOutput1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:text="Actividad"
+                app:layout_constraintStart_toEndOf="@+id/txt_activityName1"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_pression1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Presion: "
+                app:layout_constraintEnd_toEndOf="@+id/txt_activityName1"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityName1" />
+
+            <TextView
+                android:id="@+id/txt_pressionOutput1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="0.00 P" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_temperatura1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Temperatura:"
+                app:layout_constraintEnd_toEndOf="@+id/txt_activityName1"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityName1" />
+
+            <TextView
+                android:id="@+id/txt_temperaturaOutput1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="0.00 Cº"
+                app:layout_constraintStart_toStartOf="@+id/txt_activityNameOutput1"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityNameOutput1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_viento1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Viento:"
+                app:layout_constraintEnd_toEndOf="@+id/txt_activityName1"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityName1" />
+
+            <TextView
+                android:id="@+id/txt_vientoOutput1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="0.00 kt"
+                app:layout_constraintStart_toStartOf="@+id/txt_activityNameOutput1"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityNameOutput1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_dirViento1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Direcion viento:"
+                app:layout_constraintEnd_toEndOf="@+id/txt_activityName1"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityName1" />
+
+            <TextView
+                android:id="@+id/txt_dirVientoOutput1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="NORTE"
+                app:layout_constraintStart_toStartOf="@+id/txt_activityNameOutput1"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityNameOutput1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_alturaOla1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Altura Ola:"
+                app:layout_constraintEnd_toEndOf="@+id/txt_activityName1"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityName1" />
+
+            <TextView
+                android:id="@+id/txt_alturaOlaOutput1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="0.00 m"
+                app:layout_constraintStart_toStartOf="@+id/txt_activityNameOutput1"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityNameOutput1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_periodoOla1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Periodo Ola:"
+                app:layout_constraintEnd_toEndOf="@+id/txt_activityName1"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityName1" />
+
+            <TextView
+                android:id="@+id/txt_periodoOlaOutput1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="0.00 sc"
+                app:layout_constraintStart_toStartOf="@+id/txt_activityNameOutput1"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityNameOutput1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_dirOla1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Direccion: "
+                app:layout_constraintEnd_toEndOf="@+id/txt_activityName1"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityName1" />
+
+            <TextView
+                android:id="@+id/txt_dirOlaOutput1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="NORTE"
+                app:layout_constraintStart_toStartOf="@+id/txt_activityNameOutput1"
+                app:layout_constraintTop_toBottomOf="@+id/txt_activityNameOutput1" />
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toStartOf="@+id/txt_numLikes"
-        app:layout_constraintTop_toBottomOf="@+id/txt_vientoOutput1"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
         app:srcCompat="@android:drawable/ic_delete" />
 
     <TextView
         android:id="@+id/txt_numLikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="12dp"
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/divider2"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2" />
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.111" />
 
     <TextView
         android:id="@+id/txt_numLikes2"
@@ -134,27 +297,39 @@
         android:layout_marginBottom="12dp"
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/divider2"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3" />
+        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/txt_numLikes"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txt_numLikes3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="20dp"
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/divider2"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4" />
+        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/txt_numLikes2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="33dp"
         android:layout_height="33dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toStartOf="@+id/txt_numLikes2"
-        app:layout_constraintTop_toBottomOf="@+id/txt_vientoOutput1"
-        app:layout_constraintVertical_bias="0.955"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
         app:srcCompat="@drawable/boton_editar" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutAreaUsuarios"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

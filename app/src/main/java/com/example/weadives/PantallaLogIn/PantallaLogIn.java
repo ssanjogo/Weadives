@@ -18,12 +18,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.DatabaseAdapter;
-import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
+import com.example.weadives.ViewModel;
 
-public class PantallaLogIn extends AppCompatActivity {
+public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.intentInterface {
+
+
+    private final String TAG = "MainActivity";
+
+    private DatabaseAdapter dbA;
+    private ViewModel viewModel;
 
     private Button btn_registrarse, btn_login;
     private TextView txt_LogIn, txt_Correo, txt_contraseña, txt_nombre, txt_id;
@@ -31,8 +38,7 @@ public class PantallaLogIn extends AppCompatActivity {
     private CheckBox chkb_mantenerSession;
     private ImageView btn_home2;
 
-    private DatabaseAdapter dbA;
-    boolean login = false;
+    boolean chbox = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,26 +54,23 @@ public class PantallaLogIn extends AppCompatActivity {
         chkb_mantenerSession = findViewById(R.id.chkb_mantenerSession);
         btn_home2 = findViewById(R.id.btn_home2);
 
-        final Context context;
-        final Resources resources;
-        context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+        final Context context=this;
+        //context = LocaleHelper.setLocale(this, cargarPreferencias());
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
         txt_Correo.setText(resources.getString(R.string.correo));
         txt_contraseña.setText(resources.getString(R.string.password2));
         chkb_mantenerSession.setText(resources.getString(R.string.mantener_sessi_n_iniciada));
         btn_registrarse.setText(resources.getString(R.string.btn_registrarse));
 
-        dbA = DatabaseAdapter.getInstance();
+        dbA = new DatabaseAdapter(this);
+        viewModel = ViewModel.getInstance(this);
 
-        if(!dbA.currentUser()) {
-            if (cargarUser().equals("true")) {
-                Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                startActivity(areaUsuario);
-            }
-        }else {
-            dbA.singout();
-            //etA_correo.setText(cargarCorreo());
-            //etP_contraseña.setText(cargarContraseña());
+        if (viewModel.getLogInStatus()) {
+            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+            areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(areaUsuario);
+            finish();
         }
 
         Intent intent = getIntent();
@@ -103,30 +106,21 @@ public class PantallaLogIn extends AppCompatActivity {
                 } else if (etP_contraseña.getText().toString().equals("")){
                     etP_contraseña.setError("Campo sin rellenar");
                 } else {
-                    login = dbA.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
+
+                    recordarCorreo(etA_correo.getText().toString());
+
                     if (chkb_mantenerSession.isChecked()) {
-                        dbA.setLogInStatus(true);
-                        recordarUser();
-                        recordarCorreo(etA_correo.getText().toString());
-                        recordarContraseña(etP_contraseña.getText().toString());
+                        viewModel.setLogInStatus(true);
                     }
-                    if (login) {
-                        Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                        areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(areaUsuario);
-                        finish();
+
+                    if (!viewModel.correoRepetido(etA_correo.getText().toString())){
+                        etA_correo.setError("Correo no registrado");
+                    } else {
+                        viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
                     }
                 }
-
             }
         });
-    }
-
-    private void guardarPreferencias(String string) {
-        SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("idioma",string);
-        editor.commit();
     }
 
     private String cargarPreferencias() {
@@ -145,26 +139,11 @@ public class PantallaLogIn extends AppCompatActivity {
         return preferencias.getString("user","");
     }
 
-    private void recordarContraseña(String contraseña) {
-        SharedPreferences preferencias = getSharedPreferences("contraseña", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("contraseña", contraseña);
-        editor.commit();
-    }
-    private String cargarContraseña() {
-        SharedPreferences preferencias = getSharedPreferences("contraseña",Context.MODE_PRIVATE);
-        return preferencias.getString("contraseña","");
-    }
-
-    private void recordarUser() {
-        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("recuerda", "true");
-        editor.commit();
-    }
-
-    private String cargarUser() {
-        SharedPreferences preferencias = getSharedPreferences("recuerda",Context.MODE_PRIVATE);
-        return preferencias.getString("recuerda","false");
+    @Override
+    public void intent() {
+        Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+        areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(areaUsuario);
+        finish();
     }
 }

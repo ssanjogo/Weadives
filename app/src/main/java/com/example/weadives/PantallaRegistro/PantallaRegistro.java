@@ -15,22 +15,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
+import com.example.weadives.ViewModel;
 
 import java.util.regex.Pattern;
 
 public class PantallaRegistro extends AppCompatActivity {
 
+    private ViewModel viewModel;
+
     private TextView txt_correo2, txt_nombre, txt_contraseña2, txt_registro;
     private EditText etA_correo2, etP_contraseña2, etN_nombrepersona;
     private ImageView btn_home3;
     private Button btn_confirmar;
-    private DatabaseAdapter dbA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +53,10 @@ public class PantallaRegistro extends AppCompatActivity {
         txt_registro =findViewById(R.id.txt_registro);
 
         final Context context;
-        final Resources resources;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
         context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+
 
         txt_registro.setText(resources.getString(R.string.registro));
         txt_correo2.setText(resources.getString(R.string.correo));
@@ -60,8 +65,8 @@ public class PantallaRegistro extends AppCompatActivity {
         etN_nombrepersona.setHint(resources.getString(R.string.nombre2));
         btn_confirmar.setText(resources.getString(R.string.confirmar));
 
+        viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
-        dbA = DatabaseAdapter.getInstance();
 
         btn_home3.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -74,7 +79,6 @@ public class PantallaRegistro extends AppCompatActivity {
         btn_confirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
                 btn_confirmar.startAnimation(animation);
 
@@ -85,26 +89,31 @@ public class PantallaRegistro extends AppCompatActivity {
                 if (!validarEmail(correo)){
                     etA_correo2.setError("Email no válido");
                 }
-
-                if (dbA.addUser(nombre, correo, contraseña)){
-                    Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-                    areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(areaUsuario);
-                    finish();
+                if(viewModel.correoRepetido(correo)){
+                    etA_correo2.setError("Correo existente");
                 } else {
-                    etA_correo2.setError("Este email ya ha sido registrado.");
+                    recordarCorreo(correo);
+                    viewModel.register(nombre, correo, contraseña);
                 }
 
             }
         });
     }
 
-    public boolean validarEmail(String email) {
+    private boolean validarEmail(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
     }
+
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
+    }
+
+    private void recordarCorreo(String correo) {
+        SharedPreferences preferencias = getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("user", correo);
+        editor.commit();
     }
 }

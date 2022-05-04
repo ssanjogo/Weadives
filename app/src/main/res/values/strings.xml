@@ -39,4 +39,25 @@
     <string name="eliminar">Delete</string>
     <string name="cancelar">Cancel</string>
     <string name="nombre_marcador">Marker name: </string>
+    <string name="selecciona_actividad">Choose an Activity</string>
+    <string name="selecciona_direccion">Choose a Direction</string>
+    <string name="presion">Preassure</string>
+    <string name="temperatura">Temperature</string>
+    <string name="dirViento">Wind direction</string>
+    <string name="dirOlas">Wave direction</string>
+    <string name="alturaOla">Wave height</string>
+    <string name="periodoOla">Wave period</string>
+    <string name="añadircomment">Add comment</string>
+    <string name="añadido">Added</string>
+    <string name="alertaEliminarCuenta">Are you sure you want to delete this account?</string>
+    <string name="alertaDejarDeSeguir">Are you sure you want to unfollow this person?</string>
+    <string name="eliminarCuenta">Delete account</string>
+    <string name="afirmativo">Yes</string>
+    <string name="negativo">No</string>
+    <string name="noAmigos">You do not have friends added</string>
+    <string name="contraseña_incorrecta">Wrong password</string>
+    <string name="alertaCambiarContraseña">Are you sure you want to change your password?</string>
+    <string name="cambiarContraseña">Change password</string>
+    <string name="seleccionarFotoGaleria">Choose photo from gallery</string>
+    <string name="hacerFoto">Take picture</string>
 </resources>

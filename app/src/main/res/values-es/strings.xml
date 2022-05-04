@@ -41,4 +41,25 @@
     <string name="eliminar">Eliminar</string>
     <string name="cancelar">Cancelar</string>
     <string name="nombre_marcador">Nombre del marcador: </string>
+    <string name="selecciona_actividad">Selecciona una actividad</string>
+    <string name="selecciona_direccion">Selecciona Direccion</string>
+    <string name="presion">Presión</string>
+    <string name="temperatura">Temperatura</string>
+    <string name="dirViento">Dirección de viento</string>
+    <string name="dirOlas">Dirección olas</string>
+    <string name="alturaOla">Altura de olas</string>
+    <string name="periodoOla">Periodo de olas</string>
+    <string name="añadircomment">Añadir comentario</string>
+    <string name="añadido">Añadido</string>
+    <string name="alertaEliminarCuenta">¿Estás seguro de que quieres eliminar esta cuenta?</string>
+    <string name="alertaDejarDeSeguir">¿Estás seguro de que quieres dejar de seguir a esta persona?</string>
+    <string name="eliminarCuenta">Eliminar cuenta</string>
+    <string name="afirmativo">Sí</string>
+    <string name="negativo">No</string>
+    <string name="noAmigos">No tienes amigos agregados</string>
+    <string name="contraseña_incorrecta">Contraseña incorrecta</string>
+    <string name="alertaCambiarContraseña">¿Estas seguro de que quieres cambiar la contraseña?</string>
+    <string name="cambiarContraseña">Cambiar contraseña</string>
+    <string name="seleccionarFotoGaleria">Elegir una foto de la galeria</string>
+    <string name="hacerFoto">Sacar una foto</string>
 </resources>
