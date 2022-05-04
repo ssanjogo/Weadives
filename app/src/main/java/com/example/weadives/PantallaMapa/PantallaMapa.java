@@ -26,9 +26,9 @@ import com.example.weadives.SingletonIdioma;
 import com.example.weadives.databinding.PantallaMapaBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
@@ -38,8 +38,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback {
 
@@ -69,15 +67,16 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_mapa);
         Button btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
-        ImageButton btn_home20 = findViewById(R.id.btn_home20);
+        ImageButton btn_home20;
         binding = PantallaMapaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapa);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        MapsInitializer.initialize(this);
         mapFragment.getMapAsync(this);
 
-        btn_gestorNotificaciones =findViewById(R.id.btn_gestorNotificaciones);
         final Context context;
         SingletonIdioma s= SingletonIdioma.getInstance();
         Resources resources=s.getResources();
@@ -175,8 +174,6 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-
-
     }
 
 
@@ -191,6 +188,12 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        System.out.println("ESTAMOS READY");
+        if(googleMap == null){
+            System.out.println("Es nulo");
+        }else{
+            System.out.println("No es");
+        }
         mMap = googleMap;
 
         // Limites
