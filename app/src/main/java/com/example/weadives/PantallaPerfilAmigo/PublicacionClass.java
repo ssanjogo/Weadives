@@ -8,6 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 public class PublicacionClass {
+
+
+    private ParametrosClass parametros;
+    private HashMap<String, Integer> likeList;
+    private HashMap<String, String> comentariosList;
+    private String id;
+
     public ParametrosClass getParametros() {
         return parametros;
     }
@@ -16,14 +23,11 @@ public class PublicacionClass {
         this.parametros = parametros;
     }
 
-    private ParametrosClass parametros;
-    private HashMap<String, Integer> likeList;
-    private HashMap<String, String> comentariosList;
-
-    public PublicacionClass(ParametrosClass parametros, HashMap<String, Integer> likeList, HashMap<String, String> comentariosList) {
+    public PublicacionClass(String id,ParametrosClass parametros, HashMap<String, Integer> likeList, HashMap<String, String> comentariosList) {
         this.parametros = parametros;
         this.likeList = likeList;
         this.comentariosList = comentariosList;
+        this.id=id;
     }
     public boolean like(String id, int votacion){
         if(likeList.containsKey(id)){return false;}

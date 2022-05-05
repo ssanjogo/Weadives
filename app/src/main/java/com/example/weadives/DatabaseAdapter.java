@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -103,6 +104,22 @@ public class DatabaseAdapter extends Activity {
             }
         });
     }
+    /*
+    public void getPublicationsUsuario(String idUsuario,UserClass u){
+        db.collection("Publicaciones").whereEqualTo("idUsuario", idUsuario).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    String user = (String) document.get(idUsuario);
+                    String parametros=
+
+                    listener.setUser(u);
+                    listenerIntent.intent();
+                }
+            }
+        });
+    }*/
 
     public void saveUser (String nombre, String correo, String uid) {
         Map<String, String> user = new HashMap<>();

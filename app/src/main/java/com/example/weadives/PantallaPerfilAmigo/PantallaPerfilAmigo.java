@@ -171,7 +171,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         comentariosList1.put("Sara","Totorooooo");
         comentariosList1.put("Matt","Has visto como entrenar a tu dragon?");
         comentariosList1.put("Septimus","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        publicacionList.add(new PublicacionClass(p1,likeList1,comentariosList1));
+        publicacionList.add(new PublicacionClass("12awq22",p1,likeList1,comentariosList1));
         ParametrosClass p2= new ParametrosClass("Surf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
         HashMap<String, Integer> likeList2=new HashMap<>();
         likeList2.put("0000",0);
@@ -181,7 +181,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         comentariosList2.put("0001","---");
         comentariosList2.put("0021","---");
         comentariosList2.put("0031","---");
-        publicacionList.add(new PublicacionClass(p2,likeList2,comentariosList2));
+        publicacionList.add(new PublicacionClass("AWQW",p2,likeList2,comentariosList2));
         ParametrosClass p3= new ParametrosClass("DokkanBattle", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
         HashMap<String, Integer> likeList3=new HashMap<>();
         likeList3.put("0000",1);
@@ -190,7 +190,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         HashMap<String, String> comentariosList3=new HashMap<>();
         comentariosList3.put("0001","---");
         comentariosList3.put("0021","---");
-        publicacionList.add(new PublicacionClass(p3,likeList3,comentariosList3));
+        publicacionList.add(new PublicacionClass("asdqdw",p3,likeList3,comentariosList3));
 
         return publicacionList;
     }
