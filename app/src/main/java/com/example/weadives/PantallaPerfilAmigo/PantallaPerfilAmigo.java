@@ -38,7 +38,7 @@ import java.util.List;
 public class PantallaPerfilAmigo extends AppCompatActivity {
 
     private ImageView img_perfil, btn_home;
-    private TextView txt_nombrePerfil, txt_codigo;
+    private TextView txt_nombrePerfil, txt_codigo,emptyView;
     private RecyclerView recyclerView;
     private Button btn_añadirAmigo;
     private RecyclerView.Adapter mAdapter;
@@ -54,10 +54,15 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         btn_home = findViewById(R.id.btn_home11);
         txt_nombrePerfil = findViewById(R.id.txt_nombrePerfil3);
         btn_añadirAmigo = findViewById(R.id.btn_añadirAmigo);
-
-        publicacionList = fillPublicacionList();
-
+        emptyView= findViewById(R.id.empty_view);
         RecyclerView recyclerView = findViewById(R.id.rv_llistaAjustes3);
+
+        //publicacionList = fillPublicacionList();
+
+        publicacionList= new ArrayList<PublicacionClass>();
+
+
+
         //mejorar performance
         recyclerView.hasFixedSize();
         //lineal layout
@@ -90,6 +95,22 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
             btn_añadirAmigo.setText(resources.getString(R.string.pendiente));
             btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded_grey));
             btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
+        }
+
+        //CASO NO FRIEND
+        if (!btn_añadirAmigo.getText().equals(resources.getString(R.string.añadido))){
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setText(resources.getString(R.string.no_friend));
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else if (publicacionList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setText(resources.getString(R.string.no_public_available));
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
         }
 
         btn_home.setOnClickListener(new View.OnClickListener(){

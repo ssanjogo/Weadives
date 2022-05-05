@@ -62,4 +62,6 @@
     <string name="cambiarContraseña">Cambiar contraseña</string>
     <string name="seleccionarFotoGaleria">Elegir una foto de la galeria</string>
     <string name="hacerFoto">Sacar una foto</string>
+    <string name="no_public_available">No hay publicaciones</string>
+    <string name="no_friend">Debes ser amigo de este usuario para ver sus publicaciones</string>
 </resources>

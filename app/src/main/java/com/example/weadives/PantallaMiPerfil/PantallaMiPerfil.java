@@ -1,6 +1,8 @@
 package com.example.weadives.PantallaMiPerfil;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,6 +24,7 @@ import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionesPerfilAdapter;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
 
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ import java.util.List;
 public class PantallaMiPerfil extends AppCompatActivity {
 
     private ImageView img_perfil, btn_home, btn_config;
-    private TextView txt_nombrePerfil;
+    private TextView txt_nombrePerfil,emptyView;
     private RecyclerView recyclerView;
     private Button btn_cerrarSesion;
 
@@ -51,10 +54,11 @@ public class PantallaMiPerfil extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv_llistaAjustes);
         btn_config = findViewById(R.id.btn_config);
         btn_cerrarSesion = findViewById(R.id.btn_cerrarSession);
+        emptyView  = findViewById(R.id.empty_view);
 
         //parametrosList = fillParametrosList();
-        List<PublicacionClass> publicacionesList= fillPublicacionList();
-
+        //List<PublicacionClass> publicacionList= fillPublicacionList();
+        List<PublicacionClass> publicacionList= new ArrayList<>();
         recyclerView = findViewById(R.id.rv_llistaAjustes);
         //mejorar performance
         recyclerView.hasFixedSize();
@@ -62,7 +66,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         //especificar adapter
-        mAdapter= new PublicacionesPerfilAdapter(publicacionesList,PantallaMiPerfil.this);
+        mAdapter= new PublicacionesPerfilAdapter(publicacionList,PantallaMiPerfil.this);
         recyclerView.setAdapter(mAdapter);
 
         viewModel = ViewModel.getInstance(this);
@@ -70,6 +74,20 @@ public class PantallaMiPerfil extends AppCompatActivity {
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
+
+        final Context context;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
+
+        if (publicacionList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setText(resources.getString(R.string.no_public_available));
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
 
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
