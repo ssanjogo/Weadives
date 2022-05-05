@@ -65,23 +65,22 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pantalla_mapa);
-        Button btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
+
         ImageButton btn_home20;
         binding = PantallaMapaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        MapsInitializer.initialize(this);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         final Context context;
+        final Resources resources;
         SingletonIdioma s= SingletonIdioma.getInstance();
-        Resources resources=s.getResources();
+        resources=s.getResources();
         context = LocaleHelper.setLocale(this, cargarPreferencias());
 
+        btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
         btn_gestorNotificaciones.setText(resources.getString(R.string.gestion_notificaciones));
 
         btn_home20=findViewById(R.id.btn_home20);
@@ -188,12 +187,6 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        System.out.println("ESTAMOS READY");
-        if(googleMap == null){
-            System.out.println("Es nulo");
-        }else{
-            System.out.println("No es");
-        }
         mMap = googleMap;
 
         // Limites
