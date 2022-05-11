@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -104,22 +105,27 @@ public class DatabaseAdapter extends Activity {
             }
         });
     }
-    /*
-    public void getPublicationsUsuario(String idUsuario,UserClass u){
-        db.collection("Publicaciones").whereEqualTo("idUsuario", idUsuario).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    DocumentSnapshot document = task.getResult();
-                    String user = (String) document.get(idUsuario);
-                    String parametros=
 
-                    listener.setUser(u);
-                    listenerIntent.intent();
+    public void getPublicationsUsuario(String idUsuario) {
+        db.collection("Publicaciones").whereEqualTo("idUsuario", "47BvJYXvXqOHFns2oshxbjzoMdi1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        ParametrosClass p = ParametrosClass.descomprimir(document.getString("Parametros")).get(0);
+                        Object likes = document.get("Map Likes");
+                        Object comentarios = document.get("Map comentarios");
+                        HashMap<String, Integer> hMlikes = new HashMap<String, Integer>((Map<? extends String, ? extends Integer>) likes);
+                        HashMap<String, String> hMcomentarios = new HashMap<String, String>((Map<? extends String, ? extends String>) comentarios);
+                        System.out.println("HOLAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+                        System.out.println(hMcomentarios.keySet());
+                        System.out.println(hMcomentarios.get("DvELOjMzXIfa1vnwU9CqVgvkv3p1"));
+                        PublicacionClass pc = new PublicacionClass("1", p, hMlikes, hMcomentarios);
+                    }
                 }
             }
         });
-    }*/
+    }
 
     public void saveUser (String nombre, String correo, String uid) {
         Map<String, String> user = new HashMap<>();

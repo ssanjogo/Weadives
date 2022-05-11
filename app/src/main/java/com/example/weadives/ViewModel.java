@@ -19,6 +19,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public static final String TAG = "ViewModel";
 
     private final MutableLiveData<List<UserClass>> listaUsuarios;
+    private final MutableLiveData<List<UserClass>> listaAmigos;
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
     private final MutableLiveData<String> mToast;
     private UserClass usuario;
@@ -40,6 +41,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         super(application);
         listaUsuarios = new MutableLiveData<>();
         listaRecyclerView = new MutableLiveData<>();
+        listaAmigos = new MutableLiveData<>();
         mToast = new MutableLiveData<>();
         statusLogIn = false;
         dbA = new DatabaseAdapter(this);
@@ -293,6 +295,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         dbA.updateDatos(hmUsuarioSolicita);
         reload();
         fillUserList();
+    }
+
+    public void getPublicaciones(){
+        dbA.getPublicationsUsuario(this.UID);
     }
 
     public void buscarPorNombre(String nombre) {

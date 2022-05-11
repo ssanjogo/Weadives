@@ -92,6 +92,8 @@ public class AreaUsuario extends AppCompatActivity {
             txt_noAmigos.setVisibility(View.VISIBLE);
         }
 
+        //viewModel.getPublicaciones();
+
         constraintLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){

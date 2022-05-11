@@ -30,7 +30,6 @@ import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
-import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
 
 import java.util.ArrayList;
 import java.util.List;

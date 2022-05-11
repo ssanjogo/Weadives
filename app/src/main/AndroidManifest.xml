@@ -36,9 +36,9 @@
         <!
 
             -->
-        <meta-data
+        <!--meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}"/>
+            android:value="${MAPS_API_KEY}"/> -->
         <activity
             android:name=".PantallaMapa.PantallaMapa"
             android:exported="false"
@@ -70,9 +70,6 @@
             android:exported="false" />
         <activity
             android:name=".ConfiguracionDePreferencias.ConfiguracionDePreferencias"
-            android:exported="false" />
-        <activity
-            android:name=".SeleccionDeAjuste.SeleccionDeAjuste"
             android:exported="false" />
         <activity
             android:name=".PantallaDeHorarios.PantallaDeHorarios"
