@@ -11,12 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.AreaUsuario.AreaUsuario;
+import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.AreaUsuario.UserListAdapter;
 import com.example.weadives.DatoGradosClass;
 import com.example.weadives.Directions;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
@@ -41,7 +45,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
     private ViewModel viewModel;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private List<ParametrosClass> parametrosList;
+    private List<PublicacionClass> publicacionList;
 
 
     @Override
@@ -56,9 +60,12 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_cerrarSesion = findViewById(R.id.btn_cerrarSession);
         emptyView  = findViewById(R.id.empty_view);
 
+        viewModel = ViewModel.getInstance(this);
+        publicacionList = viewModel.getListaPublicaciones().getValue();
+
         //parametrosList = fillParametrosList();
         //List<PublicacionClass> publicacionList= fillPublicacionList();
-        List<PublicacionClass> publicacionList= new ArrayList<>();
+        publicacionList= new ArrayList<>();
         recyclerView = findViewById(R.id.rv_llistaAjustes);
         //mejorar performance
         recyclerView.hasFixedSize();
@@ -69,7 +76,6 @@ public class PantallaMiPerfil extends AppCompatActivity {
         mAdapter= new PublicacionesPerfilAdapter(publicacionList,PantallaMiPerfil.this);
         recyclerView.setAdapter(mAdapter);
 
-        viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
@@ -132,6 +138,21 @@ public class PantallaMiPerfil extends AppCompatActivity {
             startActivity(areaUsuario);
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void setLiveDataObservers() {
+        //Subscribe the activity to the observable
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+
+        final Observer<List<UserClass>> observer = new Observer<List<UserClass>>() {
+            @Override
+            public void onChanged(List<UserClass> ac) {
+                PublicacionesPerfilAdapter newAdapter = new PublicacionesPerfilAdapter(viewModel.getListaPublicaciones().getValue(),PantallaMiPerfil.this);
+                recyclerView.swapAdapter(newAdapter, true);
+                newAdapter.notifyDataSetChanged();
+            }
+        };
+        viewModel.getListaRecyclerView().observe(this, observer);
     }
 
     private ArrayList<ParametrosClass> fillParametrosList() {

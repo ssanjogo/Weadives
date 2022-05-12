@@ -1,6 +1,7 @@
 package com.example.weadives;
 
 import android.app.Application;
+import android.net.Uri;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.AndroidViewModel;
@@ -9,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,10 +21,11 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public static final String TAG = "ViewModel";
 
     private final MutableLiveData<List<UserClass>> listaUsuarios;
-    private final MutableLiveData<List<UserClass>> listaAmigos;
+    private final MutableLiveData<List<PublicacionClass>> listaPublicaciones;
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
     private final MutableLiveData<String> mToast;
     private UserClass usuario;
+
 
     private String UID;
     private boolean statusLogIn = false;
@@ -41,7 +44,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         super(application);
         listaUsuarios = new MutableLiveData<>();
         listaRecyclerView = new MutableLiveData<>();
-        listaAmigos = new MutableLiveData<>();
+        listaPublicaciones = new MutableLiveData<>();
         mToast = new MutableLiveData<>();
         statusLogIn = false;
         dbA = new DatabaseAdapter(this);
@@ -50,6 +53,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public LiveData<List<UserClass>> getListaUsers(){
         return listaUsuarios;
+    }
+
+    public LiveData<List<PublicacionClass>> getListaPublicaciones(){
+        return listaPublicaciones;
     }
 
     public LiveData<List<UserClass>> getListaRecyclerView(){
@@ -117,6 +124,11 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         HashMap<String, Object> usuario = convertUserToHashMap(user);
         dbA.cambiarCorreo(correo);
         dbA.updateDatos(usuario);
+        this.usuario = user;
+    }
+
+    public void cambiarContraseña(String contraseña) {
+        dbA.cambiarContraseña(contraseña);
     }
 
     public void cambiarNombre(String nombre){
@@ -124,10 +136,15 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         user.setUsername(nombre);
         HashMap<String, Object> usuario = convertUserToHashMap(user);
         dbA.updateDatos(usuario);
+        this.usuario = user;
     }
 
-    public void cambiarContraseña(String contraseña) {
-        dbA.cambiarContraseña(contraseña);
+    public void cambiarImagen(Uri imageUri) {
+        UserClass user = getCurrentUser();
+        user.setUrlImg(String.valueOf(imageUri));
+        HashMap<String, Object> usuario = convertUserToHashMap(user);
+        dbA.updateDatos(usuario);
+        this.usuario = user;
     }
 
     public void unfollow(String idAmigo) {
@@ -403,6 +420,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     @Override
     public void setUser(UserClass u) {
         this.usuario = u;
+    }
+
+    @Override
+    public void setPublicion(PublicacionClass p) {
+        listaPublicaciones.getValue().add(p);
+        listaPublicaciones.setValue(listaPublicaciones.getValue());
     }
 
     @Override

@@ -232,17 +232,17 @@ public class ParametrosClass {
     }
 
     static ArrayList<ParametrosClass> descomprimir(String l){
-        System.out.println(l);
+        //System.out.println(l);
         String[] parametrosStringList = l.split("¿");
         int count = l.length() - l.replace("¿", "").length();
-        System.out.println(count);
+        //System.out.println(count);
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
         String[] fixedParam;
         for (String i : parametrosStringList) {
-            System.out.println(i);
+            //System.out.println(i);
             fixedParam=i.split(",");
             for (String x : fixedParam) {
-                System.out.println(x);
+                //System.out.println(x);
             }
 
             parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));

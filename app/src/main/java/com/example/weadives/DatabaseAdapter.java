@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +58,7 @@ public class DatabaseAdapter extends Activity {
         void setStatusLogIn(boolean status);
         void setUserID(String id);
         void setUser(UserClass u);
+        void setPublicion(PublicacionClass p);
         void setToast(String s);
     }
 
@@ -113,18 +115,45 @@ public class DatabaseAdapter extends Activity {
                 if (task.isSuccessful()){
                     for(QueryDocumentSnapshot document : task.getResult()){
                         ParametrosClass p = ParametrosClass.descomprimir(document.getString("Parametros")).get(0);
-                        Object likes = document.get("Map Likes");
-                        Object comentarios = document.get("Map comentarios");
-                        HashMap<String, Integer> hMlikes = new HashMap<String, Integer>((Map<? extends String, ? extends Integer>) likes);
-                        HashMap<String, String> hMcomentarios = new HashMap<String, String>((Map<? extends String, ? extends String>) comentarios);
-                        System.out.println("HOLAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-                        System.out.println(hMcomentarios.keySet());
-                        System.out.println(hMcomentarios.get("DvELOjMzXIfa1vnwU9CqVgvkv3p1"));
-                        PublicacionClass pc = new PublicacionClass("1", p, hMlikes, hMcomentarios);
+
+                        System.out.println(document.getData());
+
+
+
+                        HashMap<String, Integer> likes = convertStringToHashMap1(document.getData().get("Map likes").toString());
+                        HashMap<String, String> comentarios = convertStringToHashMap2(document.getData().get("Map comentarios").toString());
+
+                        PublicacionClass pc = new PublicacionClass(document.getString("idPublicacion"), p, likes, comentarios);
                     }
                 }
             }
         });
+    }
+
+    private HashMap<String, Integer> convertStringToHashMap1(String value){
+        value = value.substring(1, value.length()-1);//remove curly brackets
+        String[] keyValuePairs = value.split(",");//split the string to creat key-value pairs
+        HashMap<String, Integer> map = new HashMap<>();
+
+        for(String pair : keyValuePairs){
+            String[] entry = pair.split("=");                   //split the pairs to get key and value
+            map.put(entry[0].trim(), Integer.valueOf(entry[1].trim()));          //add them to the hashmap and trim whitespaces
+        }
+
+        return map;
+    }
+
+    private HashMap<String, String> convertStringToHashMap2(String value){
+        value = value.substring(1, value.length()-1);//remove curly brackets
+        String[] keyValuePairs = value.split(",");//split the string to creat key-value pairs
+        HashMap<String, String> map = new HashMap<>();
+
+        for(String pair : keyValuePairs){
+            String[] entry = pair.split("=");                   //split the pairs to get key and value
+            map.put(entry[0].trim(), entry[1].trim());          //add them to the hashmap and trim whitespaces
+        }
+
+        return map;
     }
 
     public void saveUser (String nombre, String correo, String uid) {

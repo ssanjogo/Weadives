@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
@@ -30,6 +31,8 @@ import com.example.weadives.ViewModel;
 public class AjustesPerfil extends AppCompatActivity {
 
     private ViewModel viewModel;
+    private static final int PICK_IMAGE = 100;
+    private Uri imageUri;
 
     private TextView txt_correo, txt_nombre2, txt_contraseña3;
     private EditText etA_correo3, etP_contraseña3, etN_nombrepersona2;
@@ -66,7 +69,7 @@ public class AjustesPerfil extends AppCompatActivity {
 
         etN_nombrepersona2.setText(viewModel.getCurrentUser().getUsername());
         etA_correo3.setText(viewModel.getCurrentUser().getCorreo());
-
+        Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
         btn_home6.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -83,32 +86,33 @@ public class AjustesPerfil extends AppCompatActivity {
         btn_guardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (etA_correo3.getText() != null && etN_nombrepersona2.getText() != null){
-                    if(!etA_correo3.getText().toString().equals(viewModel.getCurrentUser().getCorreo())){
+                System.out.println(etP_contraseña3.getText().toString());
+                if (etA_correo3.getText() != null && etN_nombrepersona2.getText() != null) {
+                    if (!etA_correo3.getText().toString().equals(viewModel.getCurrentUser().getCorreo())) {
                         viewModel.cambiarCorreo(etA_correo3.getText().toString());
                     }
-                    if(!etN_nombrepersona2.getText().toString().equals(viewModel.getCurrentUser().getUsername())){
+                    if (!etN_nombrepersona2.getText().toString().equals(viewModel.getCurrentUser().getUsername())) {
                         viewModel.cambiarNombre(etN_nombrepersona2.getText().toString());
                     }
-                    if (etP_contraseña3.getText().toString() != null){
-                        System.out.println(etP_contraseña3.getText().toString());
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
-                        alerta.setMessage(resources.getString(R.string.alertaCambiarContraseña)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                viewModel.cambiarContraseña(etP_contraseña3.getText().toString());
-                                finish();
-                            }
-                        }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
-                        AlertDialog titulo = alerta.create();
-                        titulo.setTitle(resources.getString(R.string.cambiarContraseña));
-                        titulo.show();
-                    }
+                }
+                if (etP_contraseña3.getText().toString() != "***********") {
+                    System.out.println(etP_contraseña3.getText().toString());
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
+                    alerta.setMessage(resources.getString(R.string.alertaCambiarContraseña)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            viewModel.cambiarContraseña(etP_contraseña3.getText().toString());
+                            finish();
+                        }
+                    }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog titulo = alerta.create();
+                    titulo.setTitle(resources.getString(R.string.cambiarContraseña));
+                    titulo.show();
                 }
             }
         });
@@ -140,26 +144,38 @@ public class AjustesPerfil extends AppCompatActivity {
         img_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent imagenPerfil = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                imagenPerfil.setType("image");
-                imagenPerfil.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(imagenPerfil, "Seleccionar apliccación"), 10);
-
+                openGallery();
             }
         });
     }
+
+    private void openGallery(){
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+            imageUri = data.getData();
+            img_perfil.setImageURI(imageUri);
+            viewModel.cambiarImagen(imageUri);
+        }
+    }
+
 
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK){
             Uri path = data.getData();
             img_perfil.setImageURI(path);
         }
-    }
+    }*/
 }
