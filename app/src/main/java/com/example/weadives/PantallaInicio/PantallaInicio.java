@@ -27,6 +27,8 @@ import com.example.weadives.PantallaMapa.PantallaMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
+import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelParametros;
 
 public class PantallaInicio extends AppCompatActivity {
 
@@ -53,6 +55,8 @@ public class PantallaInicio extends AppCompatActivity {
         resources2 = context.getResources();
         SingletonIdioma s= SingletonIdioma.getInstance();
         s.setResources(resources2);
+        ViewModelParametros p= ViewModelParametros.getSingletonInstance(resources2,this);
+        System.out.println(p.getLista());
 
 
 

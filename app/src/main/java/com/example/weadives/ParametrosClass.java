@@ -43,7 +43,15 @@ public class ParametrosClass {
     private float periodoOlaMin;
 
     private DatoGradosClass directionOlas;
+    private String idPublicacion;
 
+    public String getIdPublicacion() {
+        return idPublicacion;
+    }
+
+    public void setIdPublicacion(String idPublicacion) {
+        this.idPublicacion = idPublicacion;
+    }
 
     public ParametrosClass() {
         this.nombreActividad = "New";
@@ -66,6 +74,24 @@ public class ParametrosClass {
         this.periodoOlaMax = periodoOlaMax;
         this.periodoOlaMin = periodoOlaMin;
         this.directionOlas = directionOlas;
+        this.idPublicacion="0";
+    }
+
+    public ParametrosClass(String idPublicacion,String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
+        this.nombreActividad = nombreActividad;
+        this.presionMax = presionMax;
+        this.presionMin = presionMin;
+        this.temperaturaMax = temperaturaMax;
+        this.temperaturaMin = temperaturaMin;
+        this.vientoMax = vientoMax;
+        this.vientoMin = vientoMin;
+        this.directionViento = directionViento;
+        this.alturaOlaMax = alturaOlaMax;
+        this.alturaOlaMin = alturaOlaMin;
+        this.periodoOlaMax = periodoOlaMax;
+        this.periodoOlaMin = periodoOlaMin;
+        this.directionOlas = directionOlas;
+        this.idPublicacion=idPublicacion;
     }
 
 
@@ -232,22 +258,23 @@ public class ParametrosClass {
     }
 
     static ArrayList<ParametrosClass> descomprimir(String l){
-        System.out.println(l);
-        String[] parametrosStringList = l.split("¿");
-        int count = l.length() - l.replace("¿", "").length();
-        System.out.println(count);
-        ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
-        String[] fixedParam;
-        for (String i : parametrosStringList) {
-            System.out.println(i);
-            fixedParam=i.split(",");
-            for (String x : fixedParam) {
-                System.out.println(x);
+            System.out.println(l);
+            String[] parametrosStringList = l.split("¿");
+            int count = l.length() - l.replace("¿", "").length();
+            System.out.println(count);
+            ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
+            String[] fixedParam;
+            for (String i : parametrosStringList) {
+                System.out.println(i);
+                fixedParam=i.split(",");
+                for (String x : fixedParam) {
+                    System.out.println(x);
+                }
+
+                parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));
             }
 
-            parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));
+            return parametrosList;
         }
 
-        return parametrosList;
-    }
 }

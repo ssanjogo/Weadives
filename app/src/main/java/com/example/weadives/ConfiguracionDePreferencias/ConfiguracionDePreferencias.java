@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.DatoGradosClass;
@@ -30,6 +34,7 @@ import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
+import com.example.weadives.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,10 +149,27 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
 
         //Spinner superior
-        ArrayList<ParametrosClass> test=descomprimirArray(cargarPreferenciasParametros());
+        //ArrayList<ParametrosClass> test=descomprimirArray(cargarPreferenciasParametros());
+        ArrayList<ParametrosClass> test= ViewModelParametros.getSingletonInstance().getLista();
+        if(test.size()==0){
+            test.add(new ParametrosClass());
+        }
         ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,test);
         adapter.setDropDownViewResource(R.layout.one_spinner_list);
         spinner.setAdapter(adapter);
+        /*
+        final Observer<ArrayList<ParametrosClass>> listObserver = new Observer<ArrayList<ParametrosClass>>() {
+            @Override
+            public void onChanged(ArrayList<ParametrosClass> parametrosClasses) {
+                ArrayList<ParametrosClass> test= parametrosClasses;
+                if(test.size()==0){
+                    test.add(new ParametrosClass());
+                }
+                ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,test);
+                adapter.setDropDownViewResource(R.layout.one_spinner_list);
+                spinner.setAdapter(adapter);
+            }
+        };*/
 
 
 
@@ -182,6 +204,8 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+                btn_guardar.startAnimation(animation);
                 ParametrosClass change = ((ParametrosClass) spinner.getSelectedItem());
                 try {
                     change.setNombreActividad(String.valueOf(editName.getText()));
@@ -253,7 +277,6 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             for (String x : fixedParam) {
                 System.out.println(x);
             }
-
             parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));
         }
 
