@@ -1,6 +1,7 @@
 package com.example.weadives;
 
 import android.app.Application;
+import android.net.Uri;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.AndroidViewModel;
@@ -127,6 +128,15 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void cambiarContraseña(String contraseña) {
         dbA.cambiarContraseña(contraseña);
     }
+
+    public void cambiarImagen(Uri imageUri) {
+        UserClass user = getCurrentUser();
+        user.setUrlImg(String.valueOf(imageUri));
+        HashMap<String, Object> usuario = convertUserToHashMap(user);
+        dbA.updateDatos(usuario);
+        this.usuario = user;
+    }
+
 
     public void unfollow(String idAmigo) {
         int i = 0;

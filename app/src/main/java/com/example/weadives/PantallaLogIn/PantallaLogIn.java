@@ -62,6 +62,7 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
         txt_contraseña.setText(resources.getString(R.string.password2));
         chkb_mantenerSession.setText(resources.getString(R.string.mantener_sessi_n_iniciada));
         btn_registrarse.setText(resources.getString(R.string.btn_registrarse));
+        etA_correo.setText(cargarCorreo());
 
         dbA = new DatabaseAdapter(this);
         viewModel = ViewModel.getInstance(this);
