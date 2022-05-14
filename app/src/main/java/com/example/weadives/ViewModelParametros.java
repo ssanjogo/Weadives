@@ -13,11 +13,21 @@ import java.util.ArrayList;
 
 public final class ViewModelParametros {
     private static ViewModelParametros SINGLETON_INSTANCE;
+    private  MutableLiveData<ArrayList<ParametrosClass>> mutableList;
     public Context c;
     public Resources r;
-    private MutableLiveData<ArrayList<ParametrosClass>> mutableList;
+    //private MutableLiveData<ArrayList<ParametrosClass>> mutableList;
 
     private ArrayList<ParametrosClass> lista;
+
+    public  MutableLiveData<ArrayList<ParametrosClass>> getMutable() {
+        if (mutableList == null) {
+            mutableList = new MutableLiveData<ArrayList<ParametrosClass>>();
+        }
+        mutableList.setValue(lista);
+        return mutableList;
+    }
+
 
 
     private ViewModelParametros() {
@@ -37,8 +47,45 @@ public final class ViewModelParametros {
         System.out.println(lista);
     }
     public void addParametro(ParametrosClass p){
+        System.out.println(lista);
+        System.out.println(mutableList);
         lista.add(p);
+        System.out.println(lista);
+        System.out.println(mutableList);
         guardarPersistencia();
+        //mutableList.setValue(lista);
+    }
+    public void modifyParametro(ParametrosClass p,ParametrosClass b){
+
+        System.out.println(lista);
+        System.out.println(mutableList);
+        lista.remove(b);
+        lista.add(p);
+        System.out.println(lista);
+        System.out.println(mutableList);
+        guardarPersistencia();
+        //mutableList.setValue(lista);
+    }
+
+    public void deleteParametro(ParametrosClass p){
+        System.out.println(lista);
+        System.out.println(mutableList);
+        try{lista.remove(p);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+        System.out.println(lista);
+        System.out.println(mutableList);
+        guardarPersistencia();
+    }
+    public void deleteALL(){
+        guardarPreferenciasParametros("");
+        lista=new ArrayList<>();
+        lista.add(new ParametrosClass());
+        System.out.println(lista);
+        mutableList = new MutableLiveData<ArrayList<ParametrosClass>>();
+        mutableList.setValue(lista);
     }
 
     private void guardarPersistencia() {
@@ -84,7 +131,7 @@ public final class ViewModelParametros {
 
     private String cargarPreferenciasParametros() {
         SharedPreferences preferencias = c.getSharedPreferences("parametros",MODE_PRIVATE);
-        return preferencias.getString("parametros","");
+        return preferencias.getString("parametros",comprimirArray(fillParametrosList()));
         //return preferencias.getString("parametros",comprimirArray(fillParametrosList()));
     }
     private ArrayList<ParametrosClass> fillParametrosList() {

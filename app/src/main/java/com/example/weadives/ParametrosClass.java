@@ -55,6 +55,19 @@ public class ParametrosClass {
 
     public ParametrosClass() {
         this.nombreActividad = "New";
+        this.presionMax = 0;
+        this.presionMin = 0;
+        this.temperaturaMax = 0;
+        this.temperaturaMin = 0;
+        this.vientoMax = 0;
+        this.vientoMin = 0;
+        this.directionViento = new DatoGradosClass(Directions.NO_DIRECTION);
+        this.alturaOlaMax = 0;
+        this.alturaOlaMin = 0;
+        this.periodoOlaMax = 0;
+        this.periodoOlaMin = 0;
+        this.directionOlas = new DatoGradosClass(Directions.NO_DIRECTION);
+        this.idPublicacion="0";
 
     }
 

@@ -22,6 +22,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,6 +35,7 @@ import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModelParametros;
 
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
     private Spinner spinner;
     private Button btn_guardar;
-    private ImageView btn_añadir2, btn_home8;
+    private ImageView btn_añadir2, btn_home8,btn_basura;
     private ScrollView scrollView2;
     private Switch sw_notificaciones, sw_mostrarEnPerfil;
     private DatabaseAdapter dbA;
@@ -60,13 +62,12 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         scrollView2 = findViewById(R.id.scrollView2);
         sw_notificaciones = findViewById(R.id.sw_notificaciones);
         sw_mostrarEnPerfil = findViewById(R.id.sw_mostrarEnPerfil);
-
+        btn_basura=findViewById(R.id.btn_basura);
         Intent intent = getIntent();
 
-        final Context context;
-        final Resources resources;
-        context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+        final Context context=this;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
         btn_guardar.setText(resources.getString(R.string.guardar));
         sw_notificaciones.setText(resources.getString(R.string.notificaciones));
         sw_mostrarEnPerfil.setText(resources.getString(R.string.mostrar_en_perfil));
@@ -197,6 +198,29 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                editpmax.setText("");
+                editpmin.setText("");
+                edittmax.setText("");
+                edittmin.setText("");
+                editvmax.setText("");
+                editvmin.setText("");
+                editaomax.setText("");
+                editaomin.setText("");
+                editpomax.setText("");
+                editpomin.setText("");
+
+                editName.setText("");
+                spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
+                spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
+            }
+        });
+
+        btn_basura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ViewModelParametros.getSingletonInstance().deleteParametro((ParametrosClass) spinner.getSelectedItem());
+                spinner.setSelection(0);
 
             }
         });
@@ -221,7 +245,9 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     change.setPeriodoOlaMax(Float.valueOf(String.valueOf(editpomax.getText())));
                     change.setPeriodoOlaMin(Float.valueOf(String.valueOf(editpomin.getText())));
                     change.setDirectionOlas(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
-                    spinner.setAdapter(updateAdapter(test));
+                    //spinner.setAdapter(updateAdapter(test));
+
+                    ViewModelParametros.getSingletonInstance().modifyParametro(change, (ParametrosClass) spinner.getSelectedItem());
 
 
                 }catch (Exception e){
@@ -250,82 +276,36 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 spn_dirOlas.setSelection(0);
                 spn_dirViento.setSelection(0);
                 ParametrosClass newParametro=new ParametrosClass();
-
-
+                ViewModelParametros.getSingletonInstance().addParametro(newParametro);
+                spinner.setSelection(-1);
             }
         });
 
 
-    }
-    private String comprimirArray(ArrayList<ParametrosClass> l){
-        String str="";
-        for(int i=0; i<l.size();i++){
-            str=str+l.get(i).toSaveString()+"¿";
-        }
-        return str;
-    }
-    private ArrayList<ParametrosClass> descomprimirArray(String l){
-        System.out.println(l);
-        String[] parametrosStringList = l.split("¿");
-        int count = l.length() - l.replace("¿", "").length();
-        System.out.println(count);
-        ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
-        String[] fixedParam;
-        for (String i : parametrosStringList) {
-            System.out.println(i);
-            fixedParam=i.split(",");
-            for (String x : fixedParam) {
-                System.out.println(x);
+
+        // Create the observer which updates the UI.
+        final Observer<ArrayList<ParametrosClass>> nameObserver = new Observer<ArrayList<ParametrosClass>>() {
+            @Override
+            public void onChanged(@Nullable final ArrayList<ParametrosClass> list) {
+                // Update the UI, in this case, a TextView.
+                System.out.println("OBSERVEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEER\n");
+                System.out.println(list);
+                ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<ParametrosClass>(context, R.layout.one_spinner_list,list);
+                adapter.setDropDownViewResource(R.layout.one_spinner_list);
+                spinner.setAdapter(adapter);
             }
-            parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));
-        }
+        };
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        ViewModelParametros.getSingletonInstance().getMutable().observe(this, nameObserver);
 
-        return parametrosList;
+
+
     }
 
-    private void guardarPreferenciasParametros(String string) {
-        SharedPreferences preferencias = getSharedPreferences("parametros",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("parametros",string);
-        editor.commit();
-    }
-
-    private String cargarPreferenciasParametros() {
-        SharedPreferences preferencias = getSharedPreferences("parametros",Context.MODE_PRIVATE);
-        return preferencias.getString("parametros",comprimirArray(fillParametrosList()));
-    }
 
     private void mostrarAjuste(ParametrosClass parametro) {
         Toast.makeText(this,parametro.getNombreActividad(),Toast.LENGTH_SHORT).show();
     }
 
 
-    private String cargarPreferencias() {
-        SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
-        return preferencias.getString("idioma","en");
-    }
-    private ArrayList<ParametrosClass> fillParametrosList() {
-        ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
-        ParametrosClass p1= new ParametrosClass("SurfLoco", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
-        parametrosList.add(p1);
-        parametrosList.add(new ParametrosClass("Surf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("Playa",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("Vela",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("Kayak",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("LioLegends",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("CallDuty",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("BalonPie",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("DokkanBattle", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        return parametrosList;
-    }
-
-
-    private ArrayAdapter updateAdapter(ArrayList<ParametrosClass> list){
-        ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,list);
-        adapter.setDropDownViewResource(R.layout.one_spinner_list);
-        guardarPreferenciasParametros(comprimirArray(list));
-        return adapter;
-
-
-    }
 }

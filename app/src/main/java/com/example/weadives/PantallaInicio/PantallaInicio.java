@@ -58,7 +58,7 @@ public class PantallaInicio extends AppCompatActivity {
         ViewModelParametros p= ViewModelParametros.getSingletonInstance(resources2,this);
         System.out.println(p.getLista());
 
-
+        //p.delete();
 
 
 
