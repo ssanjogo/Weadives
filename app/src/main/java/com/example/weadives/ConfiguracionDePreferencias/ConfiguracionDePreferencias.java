@@ -14,6 +14,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -146,6 +147,19 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         spn_dirViento.setAdapter(adapterViento);
 
 
+        sw_mostrarEnPerfil.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
+
+        sw_notificaciones.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
 
 
 
@@ -190,6 +204,11 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 editpomax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMax())));
                 editpomin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMin())));
 
+                if(((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion().equals("0")){
+                    sw_mostrarEnPerfil.setChecked(false);
+                }else{
+                    sw_mostrarEnPerfil.setChecked(true);
+                }
                 editName.setText(((ParametrosClass) spinner.getSelectedItem()).getNombreActividad());
                 spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas()));
                 spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento()));
