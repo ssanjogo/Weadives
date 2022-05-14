@@ -74,7 +74,7 @@ public class ParametrosClass {
 
 
     public ParametrosClass(String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
-        this.nombreActividad = nombreActividad;
+        this.nombreActividad = nombreActividad.replaceAll("[^A-Za-z0-9 ]","");
         this.presionMax = presionMax;
         this.presionMin = presionMin;
         this.temperaturaMax = temperaturaMax;
@@ -91,7 +91,7 @@ public class ParametrosClass {
     }
 
     public ParametrosClass(String idPublicacion,String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
-        this.nombreActividad = nombreActividad;
+        this.nombreActividad = nombreActividad.replaceAll("[^A-Za-z0-9 ]","");
         this.presionMax = presionMax;
         this.presionMin = presionMin;
         this.temperaturaMax = temperaturaMax;
@@ -164,6 +164,7 @@ public class ParametrosClass {
     }
 
     public void setNombreActividad(String nombreActividad) {
+        nombreActividad.replaceAll("[^A-Za-z0-9 ]","");
         this.nombreActividad = nombreActividad;
     }
 

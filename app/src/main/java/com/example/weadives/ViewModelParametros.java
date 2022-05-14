@@ -39,6 +39,7 @@ public final class ViewModelParametros {
         this.c=c;
         System.out.println("AQUI LLEGA\n");
         String test=cargarPreferenciasParametros();
+        //String test="";
         System.out.println(test);
         if(test.length()!=0){lista=descomprimirArray(test);}else{
             lista=new ArrayList<>();

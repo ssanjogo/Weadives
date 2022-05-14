@@ -232,7 +232,11 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 btn_guardar.startAnimation(animation);
                 ParametrosClass change = ((ParametrosClass) spinner.getSelectedItem());
                 try {
-                    change.setNombreActividad(String.valueOf(editName.getText()));
+
+                    change.setNombreActividad(String.valueOf(editName.getText()).replaceAll("[^A-Za-z0-9 ]",""));
+                    if(!change.getNombreActividad().equals(editName.getText())){
+                        editName.setText(change.getNombreActividad());
+                    }
                     change.setPresionMax(Float.valueOf(String.valueOf(editpmax.getText())));
                     change.setPresionMin(Float.valueOf(String.valueOf(editpmin.getText())));
                     change.setTemperaturaMax(Float.valueOf(String.valueOf(edittmax.getText())));
