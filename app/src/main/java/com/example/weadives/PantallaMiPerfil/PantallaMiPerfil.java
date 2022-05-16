@@ -26,6 +26,7 @@ import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +60,10 @@ public class PantallaMiPerfil extends AppCompatActivity {
         //parametrosList = fillParametrosList();
         //List<PublicacionClass> publicacionList= fillPublicacionList();
         List<PublicacionClass> publicacionList= new ArrayList<>();
+
+        publicacionList=ViewModelParametros.getSingletonInstance().getPublications();
+
+
         recyclerView = findViewById(R.id.rv_llistaAjustes);
         //mejorar performance
         recyclerView.hasFixedSize();
@@ -66,6 +71,10 @@ public class PantallaMiPerfil extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         //especificar adapter
+        if(publicacionList==null){
+            publicacionList=new ArrayList<>();
+        }
+        System.out.println(publicacionList);
         mAdapter= new PublicacionesPerfilAdapter(publicacionList,PantallaMiPerfil.this);
         recyclerView.setAdapter(mAdapter);
 
@@ -116,14 +125,6 @@ public class PantallaMiPerfil extends AppCompatActivity {
             }
         });
 
-        btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.singOut();
-                Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
-                startActivity(pantallaLogIn);
-            }
-        });
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event){

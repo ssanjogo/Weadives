@@ -58,6 +58,7 @@ public class DatabaseAdapter extends Activity {
         void setUserID(String id);
         void setUser(UserClass u);
         void setToast(String s);
+        void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses);
     }
 
     public interface intentInterface {
@@ -85,6 +86,8 @@ public class DatabaseAdapter extends Activity {
                 if (task.isSuccessful()){
                     listener.setUserID(task.getResult().getUser().getUid());
                     getUser();
+                    System.out.println("LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    getPublicationsUsuario(task.getResult().getUser().getUid());
                 } else {
                     Log.e(TAG, "Error en el log in");
                 }
@@ -112,7 +115,7 @@ public class DatabaseAdapter extends Activity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
                     for(QueryDocumentSnapshot document : task.getResult()){
-                        ParametrosClass p = ParametrosClass.descomprimir(document.getString("Parametros")).get(0);
+                        /*ParametrosClass p = ParametrosClass.descomprimir(document.getString("Parametros")).get(0);
                         Object likes = document.get("Map Likes");
                         Object comentarios = document.get("Map comentarios");
                         HashMap<String, Integer> hMlikes = new HashMap<String, Integer>((Map<? extends String, ? extends Integer>) likes);
@@ -121,6 +124,9 @@ public class DatabaseAdapter extends Activity {
                         System.out.println(hMcomentarios.keySet());
                         System.out.println(hMcomentarios.get("DvELOjMzXIfa1vnwU9CqVgvkv3p1"));
                         PublicacionClass pc = new PublicacionClass("1", p, hMlikes, hMcomentarios);
+                        */
+                        System.out.println("PEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+                        listener.setListaPublicacion(new ArrayList<PublicacionClass>());
                     }
                 }
             }
@@ -205,6 +211,7 @@ public class DatabaseAdapter extends Activity {
     public void singout(){
         mAuth.signOut();
         user = null;
+        listener.setUser(null);
         listener.setStatusLogIn(false);
     }
 

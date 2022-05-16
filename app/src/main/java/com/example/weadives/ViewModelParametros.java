@@ -9,13 +9,19 @@ import android.content.res.Resources;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
+import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 
-public final class ViewModelParametros {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public final class ViewModelParametros implements DatabaseAdapter.vmInterface {
     private static ViewModelParametros SINGLETON_INSTANCE;
     private  MutableLiveData<ArrayList<ParametrosClass>> mutableList;
     public Context c;
     public Resources r;
+    private UserClass currentUser;
     //private MutableLiveData<ArrayList<ParametrosClass>> mutableList;
 
     private ArrayList<ParametrosClass> lista;
@@ -175,4 +181,125 @@ public final class ViewModelParametros {
 
         return parametrosList;
     }
+
+
+    public List<PublicacionClass> getPublications(){
+        List<PublicacionClass> publicaciones = new ArrayList<>();
+        if(currentUser!=null){
+            System.out.println("USUARIO LOGEADOOOO");
+            //DatabaseAdapter.getPublications;
+            publicaciones=fillPublicacionList();
+            update(publicaciones);
+        }
+        return publicaciones;
+    }
+    public void setPublications(List<PublicacionClass> l){
+        for (PublicacionClass i : l) {
+            lista.add(i.getParametros());
+        }
+    }
+    public void update(List<PublicacionClass> l){
+
+        List<PublicacionClass> l2=new ArrayList<>();
+        for (PublicacionClass i : l) {
+            for (ParametrosClass k : lista) {
+                if(i.getId().equals(k.getIdPublicacion())){
+                    i.setParametros(k);
+                    l2.add(i);
+                }
+            }
+        }
+        l=l2;
+    }
+
+    @Override
+    public void setCollection(ArrayList<UserClass> listaUsuarios) {
+
+    }
+
+    @Override
+    public void setStatusLogIn(boolean status) {
+
+    }
+
+    @Override
+    public void setUserID(String id) {
+
+    }
+
+    @Override
+    public void setUser(UserClass u) {
+        currentUser = u;
+        if(u==null){
+            ArrayList<ParametrosClass> temp=new ArrayList<>();
+            for (ParametrosClass k : lista) {
+                if(!k.getIdPublicacion().equals("0")){
+                    temp.add(k);
+                }
+            }
+            for (ParametrosClass k : temp) {
+                lista.remove(k);
+            }
+        }
+    }
+
+    @Override
+    public void setToast(String s) {
+
+    }
+
+    @Override
+    public void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses) {
+        System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
+        publicacionClasses= (ArrayList<PublicacionClass>) fillPublicacionList();
+        System.out.println(lista.size());
+        for (PublicacionClass i : publicacionClasses) {
+            lista.add(i.getParametros());
+        }
+        System.out.println(lista.size());
+    }
+
+
+    private List<PublicacionClass> fillPublicacionList() {
+        List<PublicacionClass> publicacionList= new ArrayList<PublicacionClass>();
+        //String nombreActividad, int userID, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas
+        ParametrosClass p1= new ParametrosClass("1","SurfLoco",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.NORTE),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.SUD));
+        HashMap<String, Integer> likeList1=new HashMap<>();
+        likeList1.put("0000",1);
+        likeList1.put("0001",1);
+        likeList1.put("0002",0);
+        HashMap<String, String> comentariosList1=new HashMap<>();
+        comentariosList1.put("Carlos Chun","Oye, ta guapo etooo");
+        comentariosList1.put("Oscaroca","Esta guay para disfrutar del restaurante que hay al lado.");
+        comentariosList1.put("Mi pana miguel","Viva er beti");
+        comentariosList1.put("Racsor","Fumas?");
+        comentariosList1.put("Mikol","Jo parlo catalÃ¡");
+        comentariosList1.put("Sara","Totorooooo");
+        comentariosList1.put("Matt","Has visto como entrenar a tu dragon?");
+        comentariosList1.put("Septimus","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        publicacionList.add(new PublicacionClass("1",p1,likeList1,comentariosList1));
+        ParametrosClass p2= new ParametrosClass("2","Surf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
+        HashMap<String, Integer> likeList2=new HashMap<>();
+        likeList2.put("0000",0);
+        likeList2.put("0001",0);
+        likeList2.put("0002",0);
+        HashMap<String, String> comentariosList2=new HashMap<>();
+        comentariosList2.put("0001","---");
+        comentariosList2.put("0021","---");
+        comentariosList2.put("0031","---");
+        publicacionList.add(new PublicacionClass("2",p2,likeList2,comentariosList2));
+        ParametrosClass p3= new ParametrosClass("3","DokkanBattle", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
+        HashMap<String, Integer> likeList3=new HashMap<>();
+        likeList3.put("0000",1);
+        likeList3.put("0001",1);
+        likeList3.put("0002",1);
+        HashMap<String, String> comentariosList3=new HashMap<>();
+        comentariosList3.put("0001","---");
+        comentariosList3.put("0021","---");
+        publicacionList.add(new PublicacionClass("3",p3,likeList3,comentariosList3));
+
+        return publicacionList;
+    }
 }
+
+

@@ -23,6 +23,9 @@ import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelParametros;
+
+import java.util.ArrayList;
 
 public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.intentInterface {
 
@@ -117,6 +120,7 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
                     if (!viewModel.correoRepetido(etA_correo.getText().toString())){
                         etA_correo.setError("Correo no registrado");
                     } else {
+
                         viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
                     }
                 }

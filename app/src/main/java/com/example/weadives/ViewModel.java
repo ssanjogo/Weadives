@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -403,10 +404,16 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     @Override
     public void setUser(UserClass u) {
         this.usuario = u;
+        ViewModelParametros.getSingletonInstance().setUser(u);
     }
 
     @Override
     public void setToast(String s) {
             mToast.setValue(s);
+    }
+
+    @Override
+    public void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses) {
+       ViewModelParametros.getSingletonInstance().setListaPublicacion(publicacionClasses);
     }
 }

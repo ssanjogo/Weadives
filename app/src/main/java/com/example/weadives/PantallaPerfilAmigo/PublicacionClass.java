@@ -40,6 +40,14 @@ public class PublicacionClass {
         return true;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void addComment(String id, String comment){
         comentariosList.put(id,comment);
 
