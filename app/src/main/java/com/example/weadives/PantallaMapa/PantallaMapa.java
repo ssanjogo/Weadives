@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.weadives.LocaleHelper;
@@ -23,6 +24,7 @@ import com.example.weadives.PantallaGestorInundaciones.PantallaGestorInundacione
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
+import com.example.weadives.ViewModel;
 import com.example.weadives.databinding.PantallaMapaBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,7 +39,12 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback {
 
@@ -58,13 +65,14 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private LatLng coordsMarcador;
     private Marker tempMarcador;
     private GroundOverlay imagenClima;
+    //ViewModel
+    MapaViewModel mapaViewModel;
 
-    //Mover Modelo
-    private MarcadorList marcadorList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mapaViewModel = MapaViewModel.getInstance(this);
 
         ImageButton btn_home20;
         binding = PantallaMapaBinding.inflate(getLayoutInflater());
@@ -100,7 +108,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         skb_seleccionarHora = findViewById(R.id.skb_seleccionarHora);
         skb_seleccionarHora.setProgress(0);
 
-        marcadorList = new MarcadorList();
+
 
 
 
@@ -132,7 +140,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                marcadorList.guardarMarcador(txt_nombreMarcador.getText().toString(), coordsMarcador);
+                mapaViewModel.guardarMarcador(txt_nombreMarcador.getText().toString(), coordsMarcador);
                 mMap.addMarker(new MarkerOptions().title(txt_nombreMarcador.getText().toString()).position(coordsMarcador));
                 lay_layoutMarcador.setVisibility(View.INVISIBLE);
                 txt_nombreMarcador.setText("");
@@ -142,7 +150,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                marcadorList.eliminarMarcador(tempMarcador.getTitle(), tempMarcador.getPosition());
+                mapaViewModel.eliminarMarcador(tempMarcador.getTitle(), tempMarcador.getPosition());
                 tempMarcador.remove();
                 lay_layoutMarcadorEliminar.setVisibility(View.INVISIBLE);
             }
@@ -245,7 +253,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void actualizarMarcadores(){
-        ArrayList<MarkerOptions> markerList = marcadorList.getMarkerOptionsList();
+        ArrayList<MarkerOptions> markerList = mapaViewModel.getMarkerOptionsList();
         for(MarkerOptions marker : markerList){
             mMap.addMarker(marker);
         }

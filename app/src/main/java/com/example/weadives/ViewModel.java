@@ -13,6 +13,7 @@ import com.example.weadives.AreaUsuario.UserClass;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmInterface {
 
@@ -22,7 +23,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
     private final MutableLiveData<String> mToast;
     private UserClass usuario;
-
     private String UID;
     private boolean statusLogIn = false;
     private final DatabaseAdapter dbA;
@@ -403,4 +403,5 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void setToast(String s) {
             mToast.setValue(s);
     }
+
 }

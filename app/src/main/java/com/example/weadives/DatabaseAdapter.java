@@ -34,6 +34,7 @@ public class DatabaseAdapter extends Activity {
     private FirebaseUser user;
 
     public static vmInterface listener;
+    public static mapaInterface listenerMapa;
     public static intentInterface listenerIntent;
     public static DatabaseAdapter databaseAdapter;
 
@@ -49,6 +50,12 @@ public class DatabaseAdapter extends Activity {
         FirebaseFirestore.setLoggingEnabled(true);
     }
 
+    public DatabaseAdapter(mapaInterface mapaInterface){
+        this.listenerMapa = mapaInterface;
+        databaseAdapter = this;
+        FirebaseFirestore.setLoggingEnabled(true);
+    }
+
 
     public interface vmInterface{
         void setCollection(ArrayList<UserClass> listaUsuarios);
@@ -57,6 +64,13 @@ public class DatabaseAdapter extends Activity {
         void setUser(UserClass u);
         void setToast(String s);
     }
+
+    public interface mapaInterface{
+        void setLatLng(ArrayList<Double> lat, ArrayList<Double> lon);
+    }
+
+    //Mapa
+
 
     public interface intentInterface {
         void intent();
@@ -189,5 +203,19 @@ public class DatabaseAdapter extends Activity {
         db.collection("Users").document(mAuth.getCurrentUser().getUid()).delete();
         mAuth.getCurrentUser().delete();
         Log.d(TAG, "Cuenta borrada");
+    }
+
+    public void getLatLng(){
+        db.collection("Data").document("Coord_base").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    ArrayList<Double> Lat = (ArrayList<Double>) document.get("Lat");
+                    ArrayList<Double> Lon = (ArrayList<Double>) document.get("Lon");
+                    listenerMapa.setLatLng(Lat, Lon);
+                }
+            }
+        });
     }
 }
