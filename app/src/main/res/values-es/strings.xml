@@ -64,4 +64,5 @@
     <string name="hacerFoto">Sacar una foto</string>
     <string name="no_public_available">No hay publicaciones</string>
     <string name="no_friend">Debes ser amigo de este usuario para ver sus publicaciones</string>
+    <string name="AlreadyLike">Ya has dado tu opinion de esta publicacion</string>
 </resources>

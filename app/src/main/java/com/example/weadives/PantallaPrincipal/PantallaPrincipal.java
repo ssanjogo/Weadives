@@ -30,6 +30,19 @@ public class PantallaPrincipal extends AppCompatActivity {
     private ViewModel viewModel;
 
     @Override
+    public void onResume(){
+        super.onResume();
+        final Context context;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
+        context = LocaleHelper.setLocale(this, cargarPreferencias());
+
+        btnHorario.setText(resources.getString(R.string.horarios));
+        btn_gestionarParametros.setText((resources.getString(R.string.gestionar_parametros)));
+
+
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_principal);
@@ -49,6 +62,14 @@ public class PantallaPrincipal extends AppCompatActivity {
 
         viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
+
+       /* @Override
+        public void onBackPressed()
+        {
+            super.onBackPressed();
+            finish();
+            startActivity(getIntent());
+        }*/
 
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override

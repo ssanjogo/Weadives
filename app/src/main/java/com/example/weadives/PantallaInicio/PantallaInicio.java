@@ -37,6 +37,13 @@ public class PantallaInicio extends AppCompatActivity {
     private Button btn_invisible;
 
     @Override
+    public void onResume(){
+        super.onResume();
+        //here...
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -55,11 +62,12 @@ public class PantallaInicio extends AppCompatActivity {
         resources2 = context.getResources();
         SingletonIdioma s= SingletonIdioma.getInstance();
         s.setResources(resources2);
+
         ViewModelParametros p= ViewModelParametros.getSingletonInstance(resources2,this);
         System.out.println(p.getLista());
 
         //p.deleteALL();
-
+        overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 
 
         btn_en.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +77,8 @@ public class PantallaInicio extends AppCompatActivity {
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Language changed into English", Toast.LENGTH_SHORT);
                 toast.show();
+                finishAffinity();
+                startActivity(getIntent());
             }
         });
         btn_es.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +88,8 @@ public class PantallaInicio extends AppCompatActivity {
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Idioma cambiado a Castellano", Toast.LENGTH_SHORT);
                 toast.show();
+                finishAffinity();
+                startActivity(getIntent());
             }
         });
 
