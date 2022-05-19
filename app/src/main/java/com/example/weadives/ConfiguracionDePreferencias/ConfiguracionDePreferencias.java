@@ -228,7 +228,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 editpomax.setText("");
                 editpomin.setText("");
 
-                editName.setText("");
+                editName.setText("Nothing selected");
                 spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
                 spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
             }
@@ -239,7 +239,13 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             public void onClick(View view) {
 
                 ViewModelParametros.getSingletonInstance().deleteParametro((ParametrosClass) spinner.getSelectedItem());
+                if(ViewModelParametros.getSingletonInstance().getLista().size()==0){
+                    ParametrosClass newParametro=new ParametrosClass();
+                    ViewModelParametros.getSingletonInstance().addParametro(newParametro);
+                    spinner.setSelection(adapter.getPosition(newParametro));
+                }
                 spinner.setSelection(0);
+
 
             }
         });
@@ -273,6 +279,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     ViewModelParametros.getSingletonInstance().modifyParametro(change, (ParametrosClass) spinner.getSelectedItem());
 
 
+                    spinner.setSelection(adapter.getPosition(change));
                 }catch (Exception e){
 
                 }
@@ -285,7 +292,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_añadir2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editName.setText("");
+                /*editName.setText("");
                 editpmax.setText("");
                 editpmin.setText("");
                 edittmax.setText("");
@@ -297,10 +304,10 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 editpomax.setText("");
                 editpomin.setText("");
                 spn_dirOlas.setSelection(0);
-                spn_dirViento.setSelection(0);
+                spn_dirViento.setSelection(0);*/
                 ParametrosClass newParametro=new ParametrosClass();
                 ViewModelParametros.getSingletonInstance().addParametro(newParametro);
-                spinner.setSelection(-1);
+                spinner.setSelection(adapter.getPosition(newParametro));
             }
         });
 
@@ -316,6 +323,9 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<ParametrosClass>(context, R.layout.one_spinner_list,list);
                 adapter.setDropDownViewResource(R.layout.one_spinner_list);
                 spinner.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+
             }
         };
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.

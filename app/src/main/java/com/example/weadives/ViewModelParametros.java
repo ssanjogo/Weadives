@@ -60,18 +60,18 @@ public final class ViewModelParametros implements DatabaseAdapter.vmInterface {
         System.out.println(lista);
         System.out.println(mutableList);
         guardarPersistencia();
-        //mutableList.setValue(lista);
+        mutableList.setValue(lista);
     }
     public void modifyParametro(ParametrosClass p,ParametrosClass b){
 
         System.out.println(lista);
-        System.out.println(mutableList);
+        System.out.println(mutableList.toString());
         lista.remove(b);
         lista.add(p);
         System.out.println(lista);
-        System.out.println(mutableList);
+        System.out.println(mutableList.toString());
         guardarPersistencia();
-        //mutableList.setValue(lista);
+        mutableList.setValue(lista);
     }
 
     public void deleteParametro(ParametrosClass p){
@@ -85,6 +85,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmInterface {
         System.out.println(lista);
         System.out.println(mutableList);
         guardarPersistencia();
+        mutableList.setValue(lista);
     }
     public void deleteALL(){
         guardarPreferenciasParametros("");
