@@ -104,7 +104,9 @@ public class PantallaMiPerfil extends AppCompatActivity {
                 if(!viewModel.getLogInStatus()){
                     viewModel.singOut();
                 }
+
                 finish();
+                System.out.println("TESTING LIMITS");
             }
         });
 
@@ -120,6 +122,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 viewModel.setLogInStatus(false);
+
                 viewModel.singOut();
                 finish();
             }

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.weadives.AreaUsuario.UserClass;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public final class ViewModelParametros implements DatabaseAdapter.vmInterface {
+public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
     private static ViewModelParametros SINGLETON_INSTANCE;
     private  MutableLiveData<ArrayList<ParametrosClass>> mutableList;
     public Context c;
@@ -25,6 +24,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmInterface {
     //private MutableLiveData<ArrayList<ParametrosClass>> mutableList;
 
     private ArrayList<ParametrosClass> lista;
+    private ArrayList<PublicacionClass> listaPublic;
 
     public  MutableLiveData<ArrayList<ParametrosClass>> getMutable() {
         if (mutableList == null) {
@@ -189,8 +189,10 @@ public final class ViewModelParametros implements DatabaseAdapter.vmInterface {
         if(currentUser!=null){
             System.out.println("USUARIO LOGEADOOOO");
             //DatabaseAdapter.getPublications;
-            publicaciones=fillPublicacionList();
+            //publicaciones=fillPublicacionList();
+
             update(publicaciones);
+            return listaPublic;
         }
         return publicaciones;
     }
@@ -204,7 +206,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmInterface {
         List<PublicacionClass> l2=new ArrayList<>();
         for (PublicacionClass i : l) {
             for (ParametrosClass k : lista) {
-                if(i.getId().equals(k.getIdPublicacion())){
+                if(i.getIdPublicacion().equals(k.getIdPublicacion())){
                     i.setParametros(k);
                     l2.add(i);
                 }
@@ -213,10 +215,6 @@ public final class ViewModelParametros implements DatabaseAdapter.vmInterface {
         l=l2;
     }
 
-    @Override
-    public void setCollection(ArrayList<UserClass> listaUsuarios) {
-
-    }
 
     @Override
     public void setStatusLogIn(boolean status) {
@@ -244,15 +242,12 @@ public final class ViewModelParametros implements DatabaseAdapter.vmInterface {
         }
     }
 
-    @Override
-    public void setToast(String s) {
 
-    }
 
     @Override
     public void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses) {
-        System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
-        publicacionClasses= (ArrayList<PublicacionClass>) fillPublicacionList();
+        System.out.println("PUBLICACIONES RELLENADAS\n");
+        this.listaPublic= (ArrayList<PublicacionClass>) publicacionClasses;
         System.out.println(lista.size());
         for (PublicacionClass i : publicacionClasses) {
             lista.add(i.getParametros());

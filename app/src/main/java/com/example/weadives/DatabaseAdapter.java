@@ -59,6 +59,14 @@ public class DatabaseAdapter extends Activity {
         void setUser(UserClass u);
         void setToast(String s);
         void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses);
+
+
+    }
+    public interface vmpInterface{
+        void setStatusLogIn(boolean status);
+        void setUserID(String id);
+        void setUser(UserClass u);
+        void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses);
     }
 
     public interface intentInterface {
@@ -114,21 +122,20 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
-                    for(QueryDocumentSnapshot document : task.getResult()){
-                        /*ParametrosClass p = ParametrosClass.descomprimir(document.getString("Parametros")).get(0);
-                        Object likes = document.get("Map Likes");
-                        Object comentarios = document.get("Map comentarios");
-                        HashMap<String, Integer> hMlikes = new HashMap<String, Integer>((Map<? extends String, ? extends Integer>) likes);
-                        HashMap<String, String> hMcomentarios = new HashMap<String, String>((Map<? extends String, ? extends String>) comentarios);
-                        System.out.println("HOLAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-                        System.out.println(hMcomentarios.keySet());
-                        System.out.println(hMcomentarios.get("DvELOjMzXIfa1vnwU9CqVgvkv3p1"));
-                        PublicacionClass pc = new PublicacionClass("1", p, hMlikes, hMcomentarios);
-                        */
-                        System.out.println("PEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-                        listener.setListaPublicacion(new ArrayList<PublicacionClass>());
+                    ArrayList<PublicacionClass> lista= new ArrayList<>();
+                    for(DocumentSnapshot document : task.getResult()){
+                        Map<String, Object> publi = document.getData();
+                        ParametrosClass p = ParametrosClass.descomprimir(document.getString("Parametros")).get(0);
+                        System.out.println("PUBLICACIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO\n");
+                        System.out.println((String)publi.get("idPublicacion"));
+                        PublicacionClass pc = new PublicacionClass((HashMap<String, String>) publi.get("Map comentarios"), (HashMap<String, String>) publi.get("Map likes"), p, (String)publi.get("idPublicacion"), (String)publi.get("idUsuario"));
+                        lista.add(pc);
                     }
+
+                    listener.setListaPublicacion(lista);
+
                 }
+
             }
         });
     }

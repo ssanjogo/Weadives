@@ -203,10 +203,13 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 editaomin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getAlturaOlaMin())));
                 editpomax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMax())));
                 editpomin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMin())));
-
+                System.out.println((ParametrosClass) spinner.getSelectedItem());
+                System.out.println(((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion());
                 if(((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion().equals("0")){
+                    System.out.println("Desactivado");
                     sw_mostrarEnPerfil.setChecked(false);
                 }else{
+                    System.out.println("Activado");
                     sw_mostrarEnPerfil.setChecked(true);
                 }
                 editName.setText(((ParametrosClass) spinner.getSelectedItem()).getNombreActividad());
