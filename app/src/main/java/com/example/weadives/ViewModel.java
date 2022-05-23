@@ -2,6 +2,7 @@ package com.example.weadives;
 
 import android.app.Application;
 import android.net.Uri;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.AndroidViewModel;
@@ -23,8 +24,8 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
     private final MutableLiveData<String> mToast;
     private UserClass usuario;
+    private Uri uri;
 
-    private String UID;
     private boolean statusLogIn = false;
     private final DatabaseAdapter dbA;
 
@@ -60,7 +61,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public UserClass getUserByUID(String uid){
-        System.out.println(listaUsuarios.getValue());
         for (int i = 0; i < listaUsuarios.getValue().size(); i++) {
             if (listaUsuarios.getValue().get(i).getId().equals(uid)){
                 return listaUsuarios.getValue().get(i);
@@ -71,6 +71,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public UserClass getCurrentUser(){
         return this.usuario;
+    }
+
+    public Uri getUri(){
+        return this.uri;
     }
 
     public void register(String nombre, String correo, String contraseña){
@@ -129,12 +133,19 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         dbA.cambiarContraseña(contraseña);
     }
 
-    public void cambiarImagen(Uri imageUri) {
+    public void cambiarImagen(Uri uri) {
+        this.uri = uri;
         UserClass user = getCurrentUser();
-        user.setUrlImg(String.valueOf(imageUri));
+        System.out.println("ASI DEBERIA SER LA URI: " + uri);
+        user.setUrlImg(uri.toString());
         HashMap<String, Object> usuario = convertUserToHashMap(user);
         dbA.updateDatos(usuario);
         this.usuario = user;
+    }
+
+    public void subirImagen(Uri imageUri){
+        dbA.subirImagen(imageUri, getCurrentUser().getId());
+        cambiarImagen(imageUri);
     }
 
 
@@ -319,7 +330,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         UserClass currentUser = this.usuario;
         UserClass user;
         List<UserClass> listaUsers = new ArrayList<>();
-        System.out.println(getCurrentUser());
         if (!currentUser.getStringSolicitudesRecibidas().equals("")) {
             for (String uid : getCurrentUser().getListaSolicitudesRecibidas()) {
                 user = getUserByUID(uid);
@@ -400,17 +410,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     @Override
-    public void setUserID(String id) {
-        this.UID = id;
-    }
-
-    @Override
     public void setUser(UserClass u) {
         this.usuario = u;
     }
 
     @Override
     public void setToast(String s) {
-            mToast.setValue(s);
+        mToast.setValue(s);
     }
 }

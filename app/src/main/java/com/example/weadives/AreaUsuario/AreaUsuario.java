@@ -27,6 +27,7 @@ import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
 import com.example.weadives.R;
 import com.example.weadives.ViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -71,7 +72,10 @@ public class AreaUsuario extends AppCompatActivity {
 
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
+        //Picasso.get().load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
+
+
 
         correo = viewModel.getCurrentUser().getCorreo();
         limite = viewModel.sizelista();
@@ -98,6 +102,7 @@ public class AreaUsuario extends AppCompatActivity {
             public void onClick(View view){
                 txt_noAmigos.setVisibility(View.INVISIBLE);
                 Intent pantallaMiperfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);
+                pantallaMiperfil.setAction(Intent.ACTION_OPEN_DOCUMENT);
                 startActivity(pantallaMiperfil);
                 finish();
             }

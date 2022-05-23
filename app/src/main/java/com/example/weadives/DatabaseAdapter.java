@@ -7,21 +7,26 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.weadives.AreaUsuario.UserClass;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class DatabaseAdapter extends Activity {
 
@@ -29,9 +34,8 @@ public class DatabaseAdapter extends Activity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
+    private final StorageReference storageRef = storage.getReference();
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseAuth.IdTokenListener mAuthIDTokenListener;
     private FirebaseUser user;
 
     public static vmInterface listener;
@@ -54,7 +58,6 @@ public class DatabaseAdapter extends Activity {
     public interface vmInterface{
         void setCollection(ArrayList<UserClass> listaUsuarios);
         void setStatusLogIn(boolean status);
-        void setUserID(String id);
         void setUser(UserClass u);
         void setToast(String s);
     }
@@ -68,7 +71,7 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    listener.setUserID(task.getResult().getUser().getUid());
+                    //listener.setUserID(task.getResult().getUser().getUid());
                     saveUser(nombre, correo, task.getResult().getUser().getUid());
                 } else {
                     Log.w(TAG, "Error register");
@@ -82,7 +85,7 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    listener.setUserID(task.getResult().getUser().getUid());
+                    //listener.setUserID(task.getResult().getUser().getUid());
                     getUser();
                 } else {
                     Log.e(TAG, "Error en el log in");
@@ -179,6 +182,78 @@ public class DatabaseAdapter extends Activity {
             }
         });
     }
+
+    public void subirImagen(Uri file, String userId) {
+        StorageReference userRef = storageRef.child("Imagenes_Perfil/" + userId);
+        UploadTask uploadTask = userRef.putFile(file);
+
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw Objects.requireNonNull(task.getException());
+                }
+                return userRef.getDownloadUrl(); //RETORNO LA  URL DE DESCARGA DE LA FOTO
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(task.isSuccessful()){
+                    Uri uri = task.getResult();  //AQUI YA TENGO LA RUTA DE LA FOTO LISTA PARA INSERTRLA EN DATABASE
+                    assert uri != null;
+                }
+            }
+        });
+
+
+        /*uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.i(TAG, "La imagen no se ha subido");
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                while (!uriTask.isSuccessful());
+                Log.i(TAG, "Imagen subida");
+            }
+        });*/
+    }
+
+    /*
+
+
+     public void addImage(Uri uri){
+    //referencia hacia el nodo padre de Storage (NO EXISTE NINGUNA CARPETA), nombre de la foto -->prueba.jpg
+    final StorageReference reference = FirebaseStorage.getInstance().getReference().child("prueba"+".jpg");
+    UploadTask uploadTask = reference.putFile(uri);// insertas la foto en Storage.
+
+    //continuo con la operación para obtener la ruta de Storage
+    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+        @Override
+        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+            if (!task.isSuccessful()) {
+                throw Objects.requireNonNull(task.getException());
+            }
+            return reference.getDownloadUrl(); //RETORNO LA  URL DE DESCARGA DE LA FOTO
+        }
+    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+        @Override
+        public void onComplete(@NonNull Task<Uri> task) {
+            if(task.isSuccessful()){
+                Uri uri = task.getResult();  //AQUI YA TENGO LA RUTA DE LA FOTO LISTA PARA INSERTRLA EN DATABASE
+                assert uri != null;
+                addImagetodDatabase(uri);  //método para insertar url de la foto en Database
+
+            }
+        }
+    });
+}
+
+
+
+     */
 
     public void singout(){
         mAuth.signOut();

@@ -143,6 +143,7 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
     @Override
     public void intent() {
         Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+        areaUsuario.setAction(Intent.ACTION_OPEN_DOCUMENT);
         areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(areaUsuario);
         finish();

@@ -61,11 +61,7 @@ public class UserClass {
     }
 
     public String getUrlImg() {
-        if (urlImg == null){
-            return "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
-        } else {
-            return urlImg;
-        }
+        return urlImg;
     }
 
     public void setUrlImg(String urlImg) {

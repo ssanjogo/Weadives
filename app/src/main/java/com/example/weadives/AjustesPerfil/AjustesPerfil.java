@@ -1,11 +1,14 @@
 package com.example.weadives.AjustesPerfil;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -16,8 +19,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.weadives.DatabaseAdapter;
@@ -38,6 +43,7 @@ public class AjustesPerfil extends AppCompatActivity {
     private Button btn_guardarCambios, btn_eliminarCuenta;
 
     private Uri imageUri;
+    private static final int REQUEST_CODE = 200;
     private static final int PICK_IMAGE = 100;
 
     @Override
@@ -70,6 +76,7 @@ public class AjustesPerfil extends AppCompatActivity {
 
         etN_nombrepersona2.setText(viewModel.getCurrentUser().getUsername());
         etA_correo3.setText(viewModel.getCurrentUser().getCorreo());
+        Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
 
         btn_home6.setOnClickListener(new View.OnClickListener(){
@@ -87,7 +94,6 @@ public class AjustesPerfil extends AppCompatActivity {
         btn_guardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII" + etP_contraseña3.getText().toString());
                 if (etA_correo3.getText() != null && etN_nombrepersona2.getText() != null) {
                     if (!etA_correo3.getText().toString().equals(viewModel.getCurrentUser().getCorreo())) {
                         viewModel.cambiarCorreo(etA_correo3.getText().toString());
@@ -116,6 +122,9 @@ public class AjustesPerfil extends AppCompatActivity {
                     titulo.setTitle(resources.getString(R.string.cambiarContraseña));
                     titulo.show();
                 } else {
+                    Intent pantallaMiperfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);
+                    pantallaMiperfil.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                    startActivity(pantallaMiperfil);
                     finish();
                 }
             }
@@ -146,9 +155,10 @@ public class AjustesPerfil extends AppCompatActivity {
         });
 
         img_perfil.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
-                openGallery();
+                verificarPermisos();
             }
         });
     }
@@ -164,10 +174,20 @@ public class AjustesPerfil extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
             img_perfil.setImageURI(imageUri);
-            viewModel.cambiarImagen(imageUri);
+            viewModel.subirImagen(imageUri);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void verificarPermisos(){
+        int permisoGallery = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (permisoGallery == PackageManager.PERMISSION_GRANTED){
+            openGallery();
+        } else {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
+        }
+    }
 
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
