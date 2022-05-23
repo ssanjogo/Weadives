@@ -1,6 +1,9 @@
 package com.example.weadives;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.util.Log;
 
@@ -35,7 +38,7 @@ public class DatabaseAdapter extends Activity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
     private final StorageReference storageRef = storage.getReference();
-    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser user;
 
     public static vmInterface listener;
@@ -66,6 +69,10 @@ public class DatabaseAdapter extends Activity {
         void intent();
     }
 
+    public String tokenAccount(){
+        return String.valueOf(mAuth.getAccessToken(true));
+    }
+
     public void register (String nombre, String correo, String contraseña){
         mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -85,7 +92,19 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    //listener.setUserID(task.getResult().getUser().getUid());
+                    getUser();
+                } else {
+                    Log.e(TAG, "Error en el log in");
+                }
+            }
+        });
+    }
+
+    public void logInToken(String token){
+        mAuth.signInWithCustomToken(token).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
                     getUser();
                 } else {
                     Log.e(TAG, "Error en el log in");
@@ -204,56 +223,7 @@ public class DatabaseAdapter extends Activity {
                 }
             }
         });
-
-
-        /*uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.i(TAG, "La imagen no se ha subido");
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isSuccessful());
-                Log.i(TAG, "Imagen subida");
-            }
-        });*/
     }
-
-    /*
-
-
-     public void addImage(Uri uri){
-    //referencia hacia el nodo padre de Storage (NO EXISTE NINGUNA CARPETA), nombre de la foto -->prueba.jpg
-    final StorageReference reference = FirebaseStorage.getInstance().getReference().child("prueba"+".jpg");
-    UploadTask uploadTask = reference.putFile(uri);// insertas la foto en Storage.
-
-    //continuo con la operación para obtener la ruta de Storage
-    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-        @Override
-        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-            if (!task.isSuccessful()) {
-                throw Objects.requireNonNull(task.getException());
-            }
-            return reference.getDownloadUrl(); //RETORNO LA  URL DE DESCARGA DE LA FOTO
-        }
-    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-        @Override
-        public void onComplete(@NonNull Task<Uri> task) {
-            if(task.isSuccessful()){
-                Uri uri = task.getResult();  //AQUI YA TENGO LA RUTA DE LA FOTO LISTA PARA INSERTRLA EN DATABASE
-                assert uri != null;
-                addImagetodDatabase(uri);  //método para insertar url de la foto en Database
-
-            }
-        }
-    });
-}
-
-
-
-     */
 
     public void singout(){
         mAuth.signOut();
@@ -261,7 +231,7 @@ public class DatabaseAdapter extends Activity {
         listener.setStatusLogIn(false);
     }
 
-    public void deleteAccount(){
+    public void deleteAccount() {
         db.collection("Users").document(mAuth.getCurrentUser().getUid()).delete();
         mAuth.getCurrentUser().delete();
         Log.d(TAG, "Cuenta borrada");

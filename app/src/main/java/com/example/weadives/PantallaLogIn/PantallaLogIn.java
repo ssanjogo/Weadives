@@ -67,7 +67,8 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
         dbA = new DatabaseAdapter(this);
         viewModel = ViewModel.getInstance(this);
 
-        if (viewModel.getLogInStatus()) {
+        if (recuperarToken() != "") {
+            viewModel.logInToken(recuperarToken());
             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
             areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(areaUsuario);
@@ -109,9 +110,10 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
                 } else {
 
                     recordarCorreo(etA_correo.getText().toString());
+                    viewModel.setLogInStatus(true);
 
                     if (chkb_mantenerSession.isChecked()) {
-                        viewModel.setLogInStatus(true);
+                        guardarToken(viewModel.tokenAccount());
                     }
 
                     if (!viewModel.correoRepetido(etA_correo.getText().toString())){
@@ -138,6 +140,18 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
     private String cargarCorreo() {
         SharedPreferences preferencias = getSharedPreferences("user",Context.MODE_PRIVATE);
         return preferencias.getString("user","");
+    }
+
+    private void guardarToken(String token) {
+        SharedPreferences preferencias = getSharedPreferences("token", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("token", token);
+        editor.commit();
+    }
+
+    private String recuperarToken() {
+        SharedPreferences preferencias = getSharedPreferences("token",Context.MODE_PRIVATE);
+        return preferencias.getString("token","");
     }
 
     @Override

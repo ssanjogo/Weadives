@@ -119,6 +119,7 @@ public class AreaUsuario extends AppCompatActivity {
                 } else {
                     Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                     startActivity(pantallaInicio);
+                    finish();
                 }
             }
         });

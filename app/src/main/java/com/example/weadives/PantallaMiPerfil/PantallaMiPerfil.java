@@ -86,6 +86,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
             public void onClick(View view){
                 Intent ajustePerfil = new Intent(getApplicationContext(), AjustesPerfil.class);
                 startActivity(ajustePerfil);
+                finish();
             }
         });
 
@@ -104,6 +105,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
                 viewModel.singOut();
                 Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
                 startActivity(pantallaLogIn);
+                finish();
             }
         });
     }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Locale;
 
 public final class SingletonIdioma extends AppCompatActivity {
+
     private static SingletonIdioma instance;
     public Traducciones value;
     public Context c;

@@ -24,7 +24,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
     private final MutableLiveData<String> mToast;
     private UserClass usuario;
-    private Uri uri;
 
     private boolean statusLogIn = false;
     private final DatabaseAdapter dbA;
@@ -73,26 +72,28 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         return this.usuario;
     }
 
-    public Uri getUri(){
-        return this.uri;
-    }
-
     public void register(String nombre, String correo, String contraseña){
+        setLogInStatus(true);
         dbA.register(nombre, correo, contraseña);
         if (usuario != null) {
             listaUsuarios.getValue().add(usuario);
-            // Inform observer.
             listaUsuarios.setValue(listaUsuarios.getValue());
             reload();
         }
     }
 
-    public String getNom(){
-        return usuario.getUsername();
+    public String tokenAccount(){
+        return dbA.tokenAccount();
     }
 
     public void logIn(String correo, String contraseña){
+        setLogInStatus(true);
         dbA.logIn(correo, contraseña);
+    }
+
+    public void logInToken(String token){
+        setLogInStatus(true);
+        dbA.logInToken(token);
     }
 
     public void setLogInStatus (boolean b){
@@ -134,7 +135,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public void cambiarImagen(Uri uri) {
-        this.uri = uri;
         UserClass user = getCurrentUser();
         System.out.println("ASI DEBERIA SER LA URI: " + uri);
         user.setUrlImg(uri.toString());
