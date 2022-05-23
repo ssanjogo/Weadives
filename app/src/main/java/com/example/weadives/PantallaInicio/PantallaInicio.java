@@ -27,12 +27,21 @@ import com.example.weadives.PantallaMapa.PantallaMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
+import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelParametros;
 
 public class PantallaInicio extends AppCompatActivity {
 
     private ImageView Imagen_superior, btn_en, btn_es;
     private Bitmap results, maskbitmap;
     private Button btn_invisible;
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //here...
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +63,11 @@ public class PantallaInicio extends AppCompatActivity {
         SingletonIdioma s= SingletonIdioma.getInstance();
         s.setResources(resources2);
 
+        ViewModelParametros p= ViewModelParametros.getSingletonInstance(resources2,this);
+        System.out.println(p.getLista());
 
-
+        //p.deleteALL();
+        overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 
 
         btn_en.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +77,8 @@ public class PantallaInicio extends AppCompatActivity {
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Language changed into English", Toast.LENGTH_SHORT);
                 toast.show();
+                finishAffinity();
+                startActivity(getIntent());
             }
         });
         btn_es.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +88,8 @@ public class PantallaInicio extends AppCompatActivity {
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Idioma cambiado a Castellano", Toast.LENGTH_SHORT);
                 toast.show();
+                finishAffinity();
+                startActivity(getIntent());
             }
         });
 

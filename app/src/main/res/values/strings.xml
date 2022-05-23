@@ -60,4 +60,7 @@
     <string name="cambiarContraseña">Change password</string>
     <string name="seleccionarFotoGaleria">Choose photo from gallery</string>
     <string name="hacerFoto">Take picture</string>
+    <string name="no_public_available">No publications available</string>
+    <string name="no_friend">You have to be friend with this user to see his/her publications</string>
+    <string name="AlreadyLike">You already Like/Disliked this</string>
 </resources>

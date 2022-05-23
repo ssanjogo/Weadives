@@ -108,7 +108,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
                     toast.show();
                     loadSocial(holder, position);
                 }else{
-                    Toast toast = Toast.makeText(context, "You already Like/Disliked this", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(context, (resources.getString(R.string.AlreadyLike)), Toast.LENGTH_SHORT);
                     toast.show();
                 }
 
@@ -296,7 +296,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
                     toast.show();
                     System.out.println(comment.getText().toString());
                     System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-                    publicacionClassList.get(position).addComment("ANDORRANOXD",comment.getText().toString());
+                    publicacionClassList.get(position).addComment("ANDORRANOXD",comment.getText().toString().replaceAll("[^A-Za-z0-9 ]",""));
                     updateComments(holder,position);
                     dialog2.dismiss();
 

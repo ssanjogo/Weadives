@@ -142,6 +142,7 @@ public class AjustesPerfil extends AppCompatActivity {
             public void onClick(View view) {
                 Intent imagenPerfil = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 imagenPerfil.setType("image");
+                imagenPerfil.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(imagenPerfil, "Seleccionar apliccación"), 10);
 
             }

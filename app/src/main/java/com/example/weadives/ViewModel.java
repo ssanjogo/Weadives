@@ -1,5 +1,7 @@
 package com.example.weadives;
 
+import static java.lang.System.exit;
+
 import android.app.Application;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +22,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public static final String TAG = "ViewModel";
 
     private final MutableLiveData<List<UserClass>> listaUsuarios;
+    private final MutableLiveData<List<UserClass>> listaAmigos;
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
     private final MutableLiveData<String> mToast;
     private UserClass usuario;
@@ -35,11 +39,18 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         }
         return vm;
     }
+    public static ViewModel getInstance(){
+        if (vm == null){
+            exit(-1);
+        }
+        return vm;
+    }
 
     public ViewModel(Application application) {
         super(application);
         listaUsuarios = new MutableLiveData<>();
         listaRecyclerView = new MutableLiveData<>();
+        listaAmigos = new MutableLiveData<>();
         mToast = new MutableLiveData<>();
         statusLogIn = false;
         dbA = new DatabaseAdapter(this);
@@ -295,6 +306,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         fillUserList();
     }
 
+    public void getPublicaciones(){
+        dbA.getPublicationsUsuario(this.UID);
+    }
+
     public void buscarPorNombre(String nombre) {
         List<UserClass> listaFiltradaPorNombre = new ArrayList<>();
         for (UserClass usuario : getListaUsers().getValue()){
@@ -378,6 +393,15 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         dbA.getAllUsers();
         dbA.getUser();
     }
+    public void subirPublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
+        dbA.savePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
+    }
+    public void updatePublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
+        dbA.updatePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
+    }
+    public void deletePublicacion(String idPublicacion){
+        dbA.deletePublicacion(idPublicacion);
+    }
 
     @Override
     public void setCollection(ArrayList<UserClass> listaUsuarios) {
@@ -397,10 +421,21 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     @Override
     public void setUser(UserClass u) {
         this.usuario = u;
+        ViewModelParametros.getSingletonInstance().setUser(u);
     }
 
     @Override
     public void setToast(String s) {
             mToast.setValue(s);
+    }
+
+    @Override
+    public void notifyId(String id) {
+        ViewModelParametros.getSingletonInstance().notifyId(id);
+    }
+
+    @Override
+    public void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses) {
+       ViewModelParametros.getSingletonInstance().setListaPublicacion(publicacionClasses);
     }
 }

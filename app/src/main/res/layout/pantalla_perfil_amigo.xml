@@ -74,4 +74,14 @@
         android:background="@drawable/button_rounded"
         android:textColor="@color/white"/>
 
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="@string/no_public_available"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/btn_añadirAmigo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
