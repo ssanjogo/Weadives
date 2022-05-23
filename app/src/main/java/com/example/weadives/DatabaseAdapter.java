@@ -13,6 +13,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -58,10 +59,10 @@ public class DatabaseAdapter extends Activity {
         void setUserID(String id);
         void setUser(UserClass u);
         void setToast(String s);
+        void notifyId(String id);
         void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses);
-
-
     }
+
     public interface vmpInterface{
         void setStatusLogIn(boolean status);
         void setUserID(String id);
@@ -138,6 +139,42 @@ public class DatabaseAdapter extends Activity {
 
             }
         });
+    }
+    public void updatePublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
+        Map<String, Object> publicacion = new HashMap<>();
+        publicacion.put("Map comentarios", coments);
+        publicacion.put("Map likes", likes);
+        publicacion.put("Parametros", parametros);
+        publicacion.put("idPublicacion", idPublicacion);
+        publicacion.put("idUsuario", idUsuario);
+        Log.i(TAG, "updatePublicacion");
+        db.collection("Publicaciones").document(idPublicacion).update(publicacion);
+    }
+    public void savePublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
+        DocumentReference dr=db.collection("Publicaciones").document();
+        Map<String, Object> publicacion = new HashMap<>();
+        publicacion.put("Map comentarios", coments);
+        publicacion.put("Map likes", likes);
+        publicacion.put("Parametros", parametros);
+        publicacion.put("idPublicacion", dr.getId());
+        publicacion.put("idUsuario", idUsuario);
+
+        Log.i(TAG, "savePublicacion");
+
+
+        db.collection("Publicaciones").document(dr.getId()).set(publicacion).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                   listener.notifyId(dr.getId());
+                }
+            }
+        });
+    }
+    public void deletePublicacion(String idPublicacion){
+        Log.i(TAG, "deletePublicacion");
+        db.collection("Publicaciones").document(idPublicacion).delete();
+
     }
 
     public void saveUser (String nombre, String correo, String uid) {

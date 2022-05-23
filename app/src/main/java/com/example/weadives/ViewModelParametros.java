@@ -62,16 +62,70 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
         guardarPersistencia();
         mutableList.setValue(lista);
     }
-    public void modifyParametro(ParametrosClass p,ParametrosClass b){
+    public void modifyParametro(ParametrosClass p,ParametrosClass b,boolean publicar){
 
         System.out.println(lista);
         System.out.println(mutableList.toString());
         lista.remove(b);
         lista.add(p);
+        if(!p.getIdPublicacion().equals("0") && publicar){
+            System.out.println("UPDATEEE");
+            updatePreferencia(p);
+        }else if(p.getIdPublicacion().equals("0") && publicar){
+            System.out.println("PUBLICAR");
+            subirPreferencia(p);
+        }else if(!p.getIdPublicacion().equals("0") && !publicar){
+            System.out.println("DELETE");
+            ViewModel.getInstance().deletePublicacion(p.getIdPublicacion());
+            PublicacionClass pub;
+            for (PublicacionClass i : listaPublic) {
+                if(i.getIdPublicacion().equals(p.getIdPublicacion())){
+                    p.setIdPublicacion("0");
+                    listaPublic.remove(i);
+                }
+            }
+
+        }
         System.out.println(lista);
         System.out.println(mutableList.toString());
         guardarPersistencia();
         mutableList.setValue(lista);
+    }
+    public void subirPreferencia(ParametrosClass par){
+        if (currentUser!=null){
+            PublicacionClass p;
+            HashMap<String, String> coments=new HashMap<>();
+            HashMap<String,String> likes = new HashMap<>();
+            String parametros=par.toSaveString();
+            String idPublicacion="-1";
+            String idUsuario=currentUser.getId();
+            ViewModel.getInstance().subirPublicacion(coments,likes,parametros,idPublicacion,idUsuario);
+            p=new PublicacionClass(coments,likes,par,idPublicacion,idUsuario);
+            listaPublic.add(p);
+        }
+    }
+    public void updatePreferencia(ParametrosClass par){
+        PublicacionClass p=null;
+        for(int i=0; i<listaPublic.size();i++){
+            if(listaPublic.get(i).getIdPublicacion().equals(par.getIdPublicacion())){
+                p =listaPublic.get(i);
+                break;
+            }
+        }
+        if (currentUser!=null && p!= null){
+            HashMap<String, String> coments=p.getComentariosList();
+            HashMap<String,String> likes = new HashMap<>();
+            for (HashMap.Entry<String, Integer> entry : p.getLikeList().entrySet()) {
+                likes.put(entry.getKey(), entry.getValue().toString() );
+            }
+            String parametros=p.getParametros().toSaveString();
+            String idPublicacion=p.getIdPublicacion();
+            if(idPublicacion.equals("0")){
+                System.out.println("CREAR NUEVA PUBLICACION - ERROR");
+            }
+            String idUsuario=p.getIdUsuario();
+            ViewModel.getInstance().updatePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
+        }
     }
 
     public void deleteParametro(ParametrosClass p){
@@ -242,6 +296,14 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
         }
     }
 
+    public void notifyId(String id) {
+        for (PublicacionClass k : listaPublic){
+            if (k.getIdPublicacion().equals("-1")){
+                k.setIdPublicacion(id);
+                k.getParametros().setIdPublicacion(id);
+            }
+        }
+    }
 
 
     @Override

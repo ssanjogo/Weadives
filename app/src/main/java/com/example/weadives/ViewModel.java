@@ -1,5 +1,7 @@
 package com.example.weadives;
 
+import static java.lang.System.exit;
+
 import android.app.Application;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +36,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public static ViewModel getInstance(AppCompatActivity application){
         if (vm == null){
             vm = new ViewModelProvider(application).get(ViewModel.class);
+        }
+        return vm;
+    }
+    public static ViewModel getInstance(){
+        if (vm == null){
+            exit(-1);
         }
         return vm;
     }
@@ -385,6 +393,15 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         dbA.getAllUsers();
         dbA.getUser();
     }
+    public void subirPublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
+        dbA.savePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
+    }
+    public void updatePublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
+        dbA.updatePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
+    }
+    public void deletePublicacion(String idPublicacion){
+        dbA.deletePublicacion(idPublicacion);
+    }
 
     @Override
     public void setCollection(ArrayList<UserClass> listaUsuarios) {
@@ -410,6 +427,11 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     @Override
     public void setToast(String s) {
             mToast.setValue(s);
+    }
+
+    @Override
+    public void notifyId(String id) {
+        ViewModelParametros.getSingletonInstance().notifyId(id);
     }
 
     @Override

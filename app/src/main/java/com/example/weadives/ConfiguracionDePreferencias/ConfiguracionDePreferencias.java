@@ -279,7 +279,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     change.setDirectionOlas(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
                     //spinner.setAdapter(updateAdapter(test));
 
-                    ViewModelParametros.getSingletonInstance().modifyParametro(change, (ParametrosClass) spinner.getSelectedItem());
+                    ViewModelParametros.getSingletonInstance().modifyParametro(change, (ParametrosClass) spinner.getSelectedItem(),sw_mostrarEnPerfil.isChecked());
 
 
                     spinner.setSelection(adapter.getPosition(change));
