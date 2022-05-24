@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -69,10 +70,6 @@ public class DatabaseAdapter extends Activity {
         void intent();
     }
 
-    public String tokenAccount(){
-        return String.valueOf(mAuth.getAccessToken(true));
-    }
-
     public void register (String nombre, String correo, String contraseña){
         mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -89,19 +86,6 @@ public class DatabaseAdapter extends Activity {
 
     public void logIn(String correo, String contraseña){
         mAuth.signInWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    getUser();
-                } else {
-                    Log.e(TAG, "Error en el log in");
-                }
-            }
-        });
-    }
-
-    public void logInToken(String token){
-        mAuth.signInWithCustomToken(token).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
@@ -132,7 +116,7 @@ public class DatabaseAdapter extends Activity {
         user.put("Nombre", nombre);
         user.put("Correo", correo);
         user.put("UID", uid);
-        user.put("Imagen", "https://www.pngmart.com/files/21/Account-User-PNG-Photo.png"); //Cambiar
+        user.put("Imagen", "https://firebasestorage.googleapis.com/v0/b/weadives.appspot.com/o/Imagenes_Perfil%2FprofillePicBase.png?alt=media&token=544d8b5c-11de-4acb-9bdd-54bb5f5297af"); //Cambiar
         user.put("Amigos", "");
         user.put("Solicitudes recibidas", "");
         user.put("Solicitudes enviadas", "");

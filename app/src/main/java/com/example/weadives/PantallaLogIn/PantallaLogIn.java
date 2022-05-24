@@ -38,8 +38,6 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
     private CheckBox chkb_mantenerSession;
     private ImageView btn_home2;
 
-    boolean chbox = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +65,13 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
         dbA = new DatabaseAdapter(this);
         viewModel = ViewModel.getInstance(this);
 
-        if (recuperarToken() != "") {
-            viewModel.logInToken(recuperarToken());
+        /*System.out.println("CORREO: " + cargarCorreo());
+        System.out.println("CONTRASEÑA: " + cargarContraseña());
+
+        if (cargarContraseña() != "") {
+            viewModel.logIn(cargarCorreo(), cargarContraseña());
+        }*/
+        if (viewModel.getLogInStatus()){
             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
             areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(areaUsuario);
@@ -112,15 +115,17 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
                     recordarCorreo(etA_correo.getText().toString());
                     viewModel.setLogInStatus(true);
 
-                    if (chkb_mantenerSession.isChecked()) {
-                        guardarToken(viewModel.tokenAccount());
-                    }
+                    /*if (cargarContraseña() != etP_contraseña.getText().toString()){
+                        recordarContraseña("");
+                    }*/
 
                     if (!viewModel.correoRepetido(etA_correo.getText().toString())){
                         etA_correo.setError("Correo no registrado");
-                    } else {
-                        viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
                     }
+                    if (chkb_mantenerSession.isChecked()) {
+                        //recordarContraseña(etP_contraseña.getText().toString());
+                    }
+                    viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
                 }
             }
         });
@@ -132,27 +137,26 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
     }
 
     private void recordarCorreo(String correo) {
-        SharedPreferences preferencias = getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences preferencias = getSharedPreferences("correo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("user",correo);
+        editor.putString("correo",correo);
         editor.commit();
     }
     private String cargarCorreo() {
-        SharedPreferences preferencias = getSharedPreferences("user",Context.MODE_PRIVATE);
-        return preferencias.getString("user","");
+        SharedPreferences preferencias = getSharedPreferences("correo",Context.MODE_PRIVATE);
+        return preferencias.getString("correo","");
     }
 
-    private void guardarToken(String token) {
-        SharedPreferences preferencias = getSharedPreferences("token", Context.MODE_PRIVATE);
+    /*private void recordarContraseña(String contraseña) {
+        SharedPreferences preferencias = getSharedPreferences("contraseña", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("token", token);
+        editor.putString("contraseña", contraseña);
         editor.commit();
     }
-
-    private String recuperarToken() {
-        SharedPreferences preferencias = getSharedPreferences("token",Context.MODE_PRIVATE);
-        return preferencias.getString("token","");
-    }
+    private String cargarContraseña() {
+        SharedPreferences preferencias = getSharedPreferences("contraseña",Context.MODE_PRIVATE);
+        return preferencias.getString("contraseña","");
+    }*/
 
     @Override
     public void intent() {

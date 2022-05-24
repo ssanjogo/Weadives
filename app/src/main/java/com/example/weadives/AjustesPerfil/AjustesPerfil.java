@@ -78,7 +78,6 @@ public class AjustesPerfil extends AppCompatActivity {
         etA_correo3.setText(viewModel.getCurrentUser().getCorreo());
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
-
         btn_home6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){

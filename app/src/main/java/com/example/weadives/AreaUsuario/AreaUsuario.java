@@ -72,10 +72,9 @@ public class AreaUsuario extends AppCompatActivity {
 
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
-        //Picasso.get().load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
-
+        System.out.println("TOKEEEEEEEEEEEEEEEEEEEEN " + recuperarToken());
 
         correo = viewModel.getCurrentUser().getCorreo();
         limite = viewModel.sizelista();
@@ -182,5 +181,10 @@ public class AreaUsuario extends AppCompatActivity {
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
+    }
+
+    private String recuperarToken() {
+        SharedPreferences preferencias = getSharedPreferences("token",Context.MODE_PRIVATE);
+        return preferencias.getString("token","");
     }
 }

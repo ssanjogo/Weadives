@@ -1,6 +1,8 @@
 package com.example.weadives.PantallaMiPerfil;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -103,6 +105,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 viewModel.singOut();
+                recordarContraseña("");
                 Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
                 startActivity(pantallaLogIn);
                 finish();
@@ -171,5 +174,12 @@ public class PantallaMiPerfil extends AppCompatActivity {
         publicacionList.add(new PublicacionClass(p3,likeList3,comentariosList3));
 
         return publicacionList;
+    }
+
+    private void recordarContraseña(String contraseña) {
+        SharedPreferences preferencias = getSharedPreferences("contraseña", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("contraseña", contraseña);
+        editor.commit();
     }
 }

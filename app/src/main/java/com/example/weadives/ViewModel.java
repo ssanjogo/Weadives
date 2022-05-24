@@ -82,18 +82,9 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         }
     }
 
-    public String tokenAccount(){
-        return dbA.tokenAccount();
-    }
-
     public void logIn(String correo, String contraseña){
         setLogInStatus(true);
         dbA.logIn(correo, contraseña);
-    }
-
-    public void logInToken(String token){
-        setLogInStatus(true);
-        dbA.logInToken(token);
     }
 
     public void setLogInStatus (boolean b){
@@ -330,7 +321,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         UserClass currentUser = this.usuario;
         UserClass user;
         List<UserClass> listaUsers = new ArrayList<>();
-        if (!currentUser.getStringSolicitudesRecibidas().equals("")) {
+        if (currentUser != null && !currentUser.getStringSolicitudesRecibidas().equals("")) {
             for (String uid : getCurrentUser().getListaSolicitudesRecibidas()) {
                 user = getUserByUID(uid);
                 if (user != null) {
@@ -339,7 +330,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             }
         }
 
-        if (!currentUser.getStringAmigos().equals("")) {
+        if (currentUser != null && !currentUser.getStringAmigos().equals("")) {
             for (String uid : getCurrentUser().getListaAmigos()) {
                 user = getUserByUID(uid);
                 if (user != null) {

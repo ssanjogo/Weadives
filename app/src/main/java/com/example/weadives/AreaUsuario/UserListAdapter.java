@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.weadives.PantallaPerfilAmigo.PantallaPerfilAmigo;
 import com.example.weadives.R;
 import com.example.weadives.ViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -45,7 +46,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     @Override
     public void onBindViewHolder(@NonNull UserListViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.txt_friendname.setText(userClassList.get(position).getUsername());
-        Glide.with(context).load(userClassList.get(position).getUrlImg()).into(holder.profilepic);
+        //Glide.with(context).load(userClassList.get(position).getUrlImg()).into(holder.profilepic);
+        Picasso.get().load(userClassList.get(position).getUrlImg()).into(holder.profilepic);
         if(position >= limite) {
             holder.btn_accept.setVisibility(View.GONE);
             holder.btn_deny.setVisibility(View.GONE);
