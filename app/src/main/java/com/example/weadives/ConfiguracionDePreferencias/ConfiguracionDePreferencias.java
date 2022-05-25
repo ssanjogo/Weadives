@@ -1,6 +1,9 @@
 package com.example.weadives.ConfiguracionDePreferencias;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -25,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -47,7 +51,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
     private Spinner spinner;
     private Button btn_guardar;
-    private ImageView btn_añadir2, btn_home8,btn_basura;
+    private ImageView btn_añadir2, btn_home8,btn_basura,btn_Interrogante;
     private ScrollView scrollView2;
     private Switch sw_notificaciones, sw_mostrarEnPerfil;
     private DatabaseAdapter dbA;
@@ -64,6 +68,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         sw_notificaciones = findViewById(R.id.sw_notificaciones);
         sw_mostrarEnPerfil = findViewById(R.id.sw_mostrarEnPerfil);
         btn_basura=findViewById(R.id.btn_basura);
+        btn_Interrogante=findViewById(R.id.btn_Interrogante);
         Intent intent = getIntent();
 
         final Context context=this;
@@ -72,13 +77,27 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_guardar.setText(resources.getString(R.string.guardar));
         sw_notificaciones.setText(resources.getString(R.string.notificaciones));
         sw_mostrarEnPerfil.setText(resources.getString(R.string.mostrar_en_perfil));
+        Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+        btn_Interrogante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                btn_Interrogante.startAnimation(animation);
+                AlertDialog dialogBuilder= new AlertDialog.Builder(context)
+                        .setTitle(resources.getString(R.string.ayuda))
+                        .setMessage(resources.getString(R.string.ayudapreferencias))
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
 
         btn_home8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
+                btn_home8.startAnimation(animation);
+
             }
         });
         //Para que no se suba cuando escribes
@@ -263,7 +282,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_basura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                btn_basura.startAnimation(animation);
                 ViewModelParametros.getSingletonInstance().deleteParametro((ParametrosClass) spinner.getSelectedItem());
                 spinner.setSelection(0);
                 if(ViewModelParametros.getSingletonInstance().getLista().size()==0){
@@ -289,6 +308,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
                 btn_guardar.startAnimation(animation);
                 ParametrosClass change = ((ParametrosClass) spinner.getSelectedItem());
@@ -328,6 +348,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_añadir2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn_añadir2.startAnimation(animation);
                 scrollView2.setVisibility(View.VISIBLE);
                 /*editName.setText("");
                 editpmax.setText("");
@@ -384,6 +405,20 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     private void mostrarAjuste(ParametrosClass parametro) {
         Toast.makeText(this,parametro.getNombreActividad(),Toast.LENGTH_SHORT).show();
     }
+
+    public class StartGameDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.ayudapreferencias);
+
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
+    }
+
+
 
 
 }

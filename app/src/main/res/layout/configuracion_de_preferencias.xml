@@ -78,7 +78,7 @@
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/spn_desplegableMarcadores2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toEndOf="@+id/spn_desplegableMarcadores2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.894"
@@ -505,5 +505,16 @@
         app:layout_constraintTop_toTopOf="@+id/sw_notificaciones"
         app:layout_constraintVertical_bias="0.511"
         app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <ImageView
+        android:id="@+id/btn_Interrogante"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_home8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_home8"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/interrogante" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
