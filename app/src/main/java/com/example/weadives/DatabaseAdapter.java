@@ -61,6 +61,7 @@ public class DatabaseAdapter extends Activity {
         void setToast(String s);
         void notifyId(String id);
         void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses);
+        void setListaPublicacionTemp(ArrayList<PublicacionClass> lista);
     }
 
     public interface vmpInterface{
@@ -119,7 +120,7 @@ public class DatabaseAdapter extends Activity {
     }
 
     public void getPublicationsUsuario(String idUsuario) {
-        db.collection("Publicaciones").whereEqualTo("idUsuario", "47BvJYXvXqOHFns2oshxbjzoMdi1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("Publicaciones").whereEqualTo("idUsuario", idUsuario).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
@@ -127,16 +128,30 @@ public class DatabaseAdapter extends Activity {
                     for(DocumentSnapshot document : task.getResult()){
                         Map<String, Object> publi = document.getData();
                         ParametrosClass p = ParametrosClass.descomprimir(document.getString("Parametros")).get(0);
-                        System.out.println("PUBLICACIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO\n");
-                        System.out.println((String)publi.get("idPublicacion"));
                         PublicacionClass pc = new PublicacionClass((HashMap<String, String>) publi.get("Map comentarios"), (HashMap<String, String>) publi.get("Map likes"), p, (String)publi.get("idPublicacion"), (String)publi.get("idUsuario"));
                         lista.add(pc);
                     }
-
                     listener.setListaPublicacion(lista);
-
                 }
-
+            }
+        });
+    }
+    public void getPublicationsFromUsuario(String idUsuario) {
+        db.collection("Publicaciones").whereEqualTo("idUsuario", idUsuario).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    ArrayList<PublicacionClass> lista= new ArrayList<>();
+                    for(DocumentSnapshot document : task.getResult()){
+                        Map<String, Object> publi = document.getData();
+                        ParametrosClass p = ParametrosClass.descomprimir(document.getString("Parametros")).get(0);
+                        PublicacionClass pc = new PublicacionClass((HashMap<String, String>) publi.get("Map comentarios"), (HashMap<String, String>) publi.get("Map likes"), p, (String)publi.get("idPublicacion"), (String)publi.get("idUsuario"));
+                        lista.add(pc);
+                    }
+                    System.out.println("SOY EL DATABASE");
+                    System.out.println(lista);
+                    listener.setListaPublicacionTemp(lista);
+                }
             }
         });
     }

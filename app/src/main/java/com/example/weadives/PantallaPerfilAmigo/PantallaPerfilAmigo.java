@@ -1,5 +1,6 @@
 package com.example.weadives.PantallaPerfilAmigo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,12 +9,15 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +34,7 @@ import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,16 +62,25 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         emptyView= findViewById(R.id.empty_view);
         RecyclerView recyclerView = findViewById(R.id.rv_llistaAjustes3);
 
-        //publicacionList = fillPublicacionList();
 
-        publicacionList= new ArrayList<PublicacionClass>();
+        Intent intent = getIntent();
+
+        String username = intent.getStringExtra("username");
+        String idAmigo = intent.getStringExtra("id");
+        String imagen = intent.getStringExtra("Imagen");
+
+        //publicacionList = fillPublicacionList();
+        publicacionList= ViewModel.getInstance().getPublicationsFrom();
+        //publicacionList= new ArrayList<>();
+        ViewModel.getInstance().setGetPublicationsFrom(idAmigo);
+
 
 
 
         //mejorar performance
-        recyclerView.hasFixedSize();
+        //recyclerView.hasFixedSize();
         //lineal layout
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         //especificar adapter
         mAdapter= new PublicacionesPerfilAdapter(publicacionList, PantallaPerfilAmigo.this);
@@ -76,16 +90,76 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         SingletonIdioma s= SingletonIdioma.getInstance();
         Resources resources=s.getResources();
         btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
+        String no_friend=resources.getString(R.string.no_friend);
+        String no_publications=resources.getString(R.string.no_public_available);
 
         viewModel = ViewModel.getInstance(this);
-        Intent intent = getIntent();
 
-        String username = intent.getStringExtra("username");
-        String idAmigo = intent.getStringExtra("id");
-        String imagen = intent.getStringExtra("Imagen");
 
         txt_nombrePerfil.setText(username);
         Glide.with(this).load(imagen).into(img_perfil);
+        System.out.println("Sett");
+        /*
+        while(!ViewModel.getInstance().getAcces()){
+            System.out.println("Waiting for access");
+        }*/
+
+
+        final Observer<ArrayList<PublicacionClass>> nameObserver = new Observer<ArrayList<PublicacionClass>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onChanged(@Nullable final ArrayList<PublicacionClass> list) {
+
+
+
+                // Update the UI, in this case, a TextView.
+                System.out.println("UPDATE");
+                System.out.println(list);
+                publicacionList.clear();
+                publicacionList.addAll(list);
+                recyclerView.getAdapter().notifyDataSetChanged();
+                System.out.println("Set");
+                System.out.println(recyclerView.getAdapter().getItemCount());
+                recyclerView.getAdapter().notifyDataSetChanged();
+                //recyclerView.setAdapter(new PublicacionesPerfilAdapter(publicacionList, PantallaPerfilAmigo.this));
+                System.out.println("post set");
+
+                if (!btn_añadirAmigo.getText().equals(resources.getString(R.string.añadido))){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setText(R.string.no_friend);
+                    emptyView.setVisibility(View.VISIBLE);
+                }
+                else if (publicacionList.isEmpty()) {
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setText(resources.getString(R.string.no_public_available));
+                    emptyView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);
+                }
+                /*
+
+                publicacionList.clear();
+                publicacionList.addAll(list);
+                mAdapter.notifyDataSetChanged();
+                System.out.println(publicacionList);
+                //mAdapter= new PublicacionesPerfilAdapter(publicacionList, PantallaPerfilAmigo.this);
+                //recyclerView.setAdapter(mAdapter);
+                System.out.println("Notify");
+                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
+                //mAdapter.notify();
+                //mAdapter.notifyAll();
+*/
+
+            }
+        };
+        ViewModel.getInstance().getMutable().observe(this, nameObserver);
+
+
+
+        System.out.println(publicacionList);
 
         if (viewModel.uidInListaAmigos(idAmigo)){
             btn_añadirAmigo.setText(resources.getString(R.string.añadido));
@@ -98,14 +172,15 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         }
 
         //CASO NO FRIEND
+
         if (!btn_añadirAmigo.getText().equals(resources.getString(R.string.añadido))){
             recyclerView.setVisibility(View.GONE);
-            emptyView.setText(resources.getString(R.string.no_friend));
+            emptyView.setText(R.string.no_friend);
             emptyView.setVisibility(View.VISIBLE);
         }
         else if (publicacionList.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
-            emptyView.setText(resources.getString(R.string.no_public_available));
+            emptyView.setText(R.string.no_public_available);
             emptyView.setVisibility(View.VISIBLE);
         }
         else {
@@ -135,8 +210,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     //Enviar solicitud
                     viewModel.enviarsolicitud(idAmigo);
                 } else if (btn_añadirAmigo.getText().equals(resources.getString(R.string.pendiente))){
-                    System.out.println(btn_añadirAmigo.getText());
-                    System.out.println("pasa");
+
                     btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));

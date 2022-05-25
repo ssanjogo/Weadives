@@ -38,6 +38,11 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
         this.publicacionClassList = publicacionClassList;
         this.context = context;
     }
+    public void updateData2(final ArrayList<PublicacionClass> stationArrivalPOJO ) {
+        publicacionClassList= new ArrayList<>();
+        publicacionClassList.addAll(stationArrivalPOJO);
+    }
+
 
     @NonNull
     @Override
@@ -315,4 +320,6 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
     private void updatePublications(PublicacionClass publicacionClass) {
         ViewModelParametros.getSingletonInstance().updatePublicacion(publicacionClass);
     }
+
+
 }
