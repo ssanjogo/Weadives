@@ -127,6 +127,29 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
             ViewModel.getInstance().updatePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
         }
     }
+    public void updatePublicacion(PublicacionClass p){
+        for(int i=0; i<listaPublic.size();i++){
+            if(listaPublic.get(i).getIdPublicacion().equals(p.getIdPublicacion())){
+                listaPublic.get(i).setLikeList(p.getLikeList());
+                listaPublic.get(i).setComentariosList(p.getComentariosList());
+                break;
+            }
+        }
+        if (currentUser!=null && p!= null){
+            HashMap<String, String> coments=p.getComentariosList();
+            HashMap<String,String> likes = new HashMap<>();
+            for (HashMap.Entry<String, Integer> entry : p.getLikeList().entrySet()) {
+                likes.put(entry.getKey(), entry.getValue().toString() );
+            }
+            String parametros=p.getParametros().toSaveString();
+            String idPublicacion=p.getIdPublicacion();
+            if(idPublicacion.equals("0")){
+                System.out.println("CREAR NUEVA PUBLICACION - ERROR");
+            }
+            String idUsuario=p.getIdUsuario();
+            ViewModel.getInstance().updatePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
+        }
+    }
 
     public void deleteParametro(ParametrosClass p){
         System.out.println(lista);
@@ -198,16 +221,14 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
     }
     private ArrayList<ParametrosClass> fillParametrosList() {
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
-        ParametrosClass p1= new ParametrosClass("SurfLoco", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
-        parametrosList.add(p1);
         parametrosList.add(new ParametrosClass("Surf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
         parametrosList.add(new ParametrosClass("Playa",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("Vela",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("Vela ligera",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
         parametrosList.add(new ParametrosClass("Kayak",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("LioLegends",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("CallDuty",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("BalonPie",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("DokkanBattle", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("KiteSurf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("WindSurf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("Buceo",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
+        parametrosList.add(new ParametrosClass("Volley Playa", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
         return parametrosList;
     }
     private String comprimirArray(ArrayList<ParametrosClass> l){

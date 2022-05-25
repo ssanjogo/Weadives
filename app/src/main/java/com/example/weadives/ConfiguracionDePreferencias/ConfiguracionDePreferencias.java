@@ -192,7 +192,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                mostrarAjuste((ParametrosClass) spinner.getSelectedItem());
+                //mostrarAjuste((ParametrosClass) spinner.getSelectedItem());
                 editpmax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPresionMax())));
                 editpmin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPresionMin())));
                 edittmax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getTemperaturaMax())));
@@ -203,8 +203,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 editaomin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getAlturaOlaMin())));
                 editpomax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMax())));
                 editpomin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMin())));
-                System.out.println((ParametrosClass) spinner.getSelectedItem());
-                System.out.println(((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion());
+
                 if(((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion().equals("0")){
                     System.out.println("Desactivado");
                     sw_mostrarEnPerfil.setChecked(false);

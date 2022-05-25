@@ -96,6 +96,9 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public String getNom(){
         return usuario.getUsername();
     }
+    public String getUserId(){
+        return usuario.getId();
+    }
 
     public void logIn(String correo, String contraseña){
         dbA.logIn(correo, contraseña);
@@ -422,6 +425,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void setUser(UserClass u) {
         this.usuario = u;
         ViewModelParametros.getSingletonInstance().setUser(u);
+
     }
 
     @Override

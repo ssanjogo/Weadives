@@ -19,22 +19,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
+import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelParametros;
 
+import java.util.ArrayList;
 import java.util.List;
 //Si no se pone el exetend correctamente, el onbind peta
 public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<PublicacionesPerfilAdapter.PublicacionesPerfilViewHolder> {
     List<PublicacionClass> publicacionClassList;
     Context context;
-
     LayoutInflater Linflater;
 
     public PublicacionesPerfilAdapter(List<PublicacionClass> publicacionClassList, Context context) {
         this.publicacionClassList = publicacionClassList;
         this.context = context;
     }
-
 
     @NonNull
     @Override
@@ -89,12 +92,13 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             @Override
             public void onClick(View view) {
 
-                if(publicacionClassList.get(position).like("9999",1)){
+                if(publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),1)){
                     Toast toast = Toast.makeText(context, "Like", Toast.LENGTH_SHORT);
                     toast.show();
                     loadSocial(holder, position);
+                    updatePublications(publicacionClassList.get(position));
                 }else{
-                    Toast toast = Toast.makeText(context, "You already Like/Disliked this", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(context, resources.getString(R.string.AlreadyLike), Toast.LENGTH_SHORT);
                     toast.show();
                 }
             }
@@ -103,10 +107,11 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             @Override
             public void onClick(View view) {
 
-                if(publicacionClassList.get(position).like("9999",0)){
+                if(publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),0)){
                     Toast toast = Toast.makeText(context, "Dislike", Toast.LENGTH_SHORT);
                     toast.show();
                     loadSocial(holder, position);
+                    updatePublications(publicacionClassList.get(position));
                 }else{
                     Toast toast = Toast.makeText(context, (resources.getString(R.string.AlreadyLike)), Toast.LENGTH_SHORT);
                     toast.show();
@@ -294,14 +299,20 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
                 public void onClick(View view) {
                     Toast toast = Toast.makeText(context, "Se ha añadido el comentario", Toast.LENGTH_SHORT);
                     toast.show();
-                    System.out.println(comment.getText().toString());
-                    System.out.println("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-                    publicacionClassList.get(position).addComment("ANDORRANOXD",comment.getText().toString().replaceAll("[^A-Za-z0-9 ]",""));
+                    publicacionClassList.get(position).addComment(ViewModel.getInstance().getNom(),comment.getText().toString().replaceAll("[^A-Za-z0-9 ]",""));
+                    updatePublications(publicacionClassList.get(position));
                     updateComments(holder,position);
                     dialog2.dismiss();
 
                 }
+
+
             });
+
+
         }
+    }
+    private void updatePublications(PublicacionClass publicacionClass) {
+        ViewModelParametros.getSingletonInstance().updatePublicacion(publicacionClass);
     }
 }
