@@ -89,7 +89,6 @@ public class PantallaMiPerfil extends AppCompatActivity {
             public void onClick(View view){
                 Intent ajustePerfil = new Intent(getApplicationContext(), AjustesPerfil.class);
                 startActivity(ajustePerfil);
-                finish();
             }
         });
 
@@ -119,6 +118,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         if(keyCode == event.KEYCODE_BACK){
             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
             startActivity(areaUsuario);
+            finish();
         }
         return super.onKeyDown(keyCode, event);
     }

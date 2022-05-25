@@ -14,6 +14,7 @@ import com.cleveroad.adaptivetablelayout.AdaptiveTableLayout;
 import com.cleveroad.adaptivetablelayout.LinkedAdaptiveTableAdapter;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
+import com.example.weadives.ViewModel;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class PantallaDeHorarios extends AppCompatActivity {
         Intent intent = getIntent();
         TableDataSource dataSource = null;
         try {
-            dataSource = new TableDataSource(this,"TEST.csv");
+            dataSource = new TableDataSource(this, "TEST.csv");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -53,6 +54,5 @@ public class PantallaDeHorarios extends AppCompatActivity {
                 startActivity(pantallaInicio);
             }
         });
-
     }
 }

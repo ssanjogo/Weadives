@@ -31,6 +31,7 @@ import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
+import com.example.weadives.ViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,6 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     private ImageView btn_añadir2, btn_home8;
     private ScrollView scrollView2;
     private Switch sw_notificaciones, sw_mostrarEnPerfil;
-    private DatabaseAdapter dbA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -303,7 +303,5 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         adapter.setDropDownViewResource(R.layout.one_spinner_list);
         guardarPreferenciasParametros(comprimirArray(list));
         return adapter;
-
-
     }
 }

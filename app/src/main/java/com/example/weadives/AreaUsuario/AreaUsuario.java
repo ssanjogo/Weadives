@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -103,7 +104,6 @@ public class AreaUsuario extends AppCompatActivity {
                 Intent pantallaMiperfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);
                 pantallaMiperfil.setAction(Intent.ACTION_OPEN_DOCUMENT);
                 startActivity(pantallaMiperfil);
-                finish();
             }
         });
 
@@ -179,5 +179,14 @@ public class AreaUsuario extends AppCompatActivity {
     private String recuperarToken() {
         SharedPreferences preferencias = getSharedPreferences("token",Context.MODE_PRIVATE);
         return preferencias.getString("token","");
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == event.KEYCODE_BACK){
+            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+            startActivity(areaUsuario);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
