@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Adapter;
@@ -20,6 +21,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.DatabaseAdapter;
@@ -31,8 +33,12 @@ import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -43,11 +49,13 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     private ImageView btn_añadir2, btn_home8;
     private ScrollView scrollView2;
     private Switch sw_notificaciones, sw_mostrarEnPerfil;
-    private DatabaseAdapter dbA;
+    private PreferenciasViewModel preferenciasViewModel;
+    private String coords = "-0.0541915894_65.4908447266";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferenciasViewModel = PreferenciasViewModel.getInstance(this);
         setContentView(R.layout.configuracion_de_preferencias);
         spinner = findViewById(R.id.spn_desplegableMarcadores2);
         btn_guardar = findViewById(R.id.btn_guardar);
@@ -185,6 +193,35 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             public void onClick(View view) {
                 ParametrosClass change = ((ParametrosClass) spinner.getSelectedItem());
                 try {
+                    HashMap<String, Object> data = new HashMap<>();
+                    data.put("actividad", String.valueOf(editName.getText()));
+                    data.put("coords", coords);
+                    data.put("maxPreasure", Float.valueOf(String.valueOf(editpmax.getText())));
+                    data.put("minPreasure", Float.valueOf(String.valueOf(editpmin.getText())));
+                    data.put("maxTemperatura", Float.valueOf(String.valueOf(edittmax.getText())));
+                    data.put("minTemperatura", Float.valueOf(String.valueOf(edittmin.getText())));
+                    data.put("maxWind", Float.valueOf(String.valueOf(editvmax.getText())));
+                    data.put("minWind", Float.valueOf(String.valueOf(editvmin.getText())));
+                    data.put("windDirection", ((ParametrosClass) spinner.getSelectedItem()).getDirectionViento().toString());
+                    System.out.println("Aqui: " + ((ParametrosClass) spinner.getSelectedItem()).getDirectionViento().toString());
+                    data.put("maxWaveHeight", Float.valueOf(String.valueOf(editaomax.getText())));
+                    data.put("minWaveHeight", Float.valueOf(String.valueOf(editaomin.getText())));
+                    data.put("maxWavePeriod", Float.valueOf(String.valueOf(editpomax.getText())));
+                    data.put("minWavePeriod", Float.valueOf(String.valueOf(editpomin.getText())));
+                    data.put("waveDirection", ((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas().toString());
+                    FirebaseMessaging.getInstance().getToken()
+                            .addOnCompleteListener(new OnCompleteListener<String>() {
+                                @Override
+                                public void onComplete(@NonNull Task<String> task) {
+                                    if (!task.isSuccessful()) {
+                                        return;
+                                    }
+                                    // Get new FCM registration token
+                                    data.put("token", task.getResult());
+                                    preferenciasViewModel.createCoordsNotification(coords, data);
+
+                                }
+                            });
                     change.setNombreActividad(String.valueOf(editName.getText()));
                     change.setPresionMax(Float.valueOf(String.valueOf(editpmax.getText())));
                     change.setPresionMin(Float.valueOf(String.valueOf(editpmin.getText())));
@@ -199,6 +236,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     change.setPeriodoOlaMin(Float.valueOf(String.valueOf(editpomin.getText())));
                     change.setDirectionOlas(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
                     spinner.setAdapter(updateAdapter(test));
+
 
 
                 }catch (Exception e){
