@@ -19,9 +19,11 @@ import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.DatoGradosClass;
 import com.example.weadives.Directions;
+import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionesPerfilAdapter;
+import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.ViewModel;
@@ -76,9 +78,8 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!viewModel.getLogInStatus()){
-                    viewModel.singOut();
-                }
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
                 finish();
             }
         });
@@ -96,6 +97,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 viewModel.setLogInStatus(false);
+                viewModel.keepSession(false);
                 viewModel.singOut();
                 finish();
             }

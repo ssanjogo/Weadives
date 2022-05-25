@@ -25,7 +25,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     private final MutableLiveData<String> mToast;
     private UserClass usuario;
 
-    private boolean statusLogIn = false;
+    private boolean statusLogIn = false, keepSession = false;
     private final DatabaseAdapter dbA;
 
     private static ViewModel vm;
@@ -57,6 +57,22 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public LiveData<String> getToast(){
         return mToast;
+    }
+
+    public boolean accountNotNull(){
+        return dbA.accountNotNull();
+    }
+
+    public boolean iskeepSession() {
+        return this.keepSession;
+    }
+
+    public void keepSession(boolean ks){
+        this.keepSession = ks;
+    }
+
+    public void getUser(){
+        dbA.getUser2();
     }
 
     public UserClass getUserByUID(String uid){
@@ -309,9 +325,9 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public void buscarPorNombre(String nombre) {
         List<UserClass> listaFiltradaPorNombre = new ArrayList<>();
-        for (UserClass usuario : getListaUsers().getValue()){
-            if (usuario.getUsername().contains(nombre) && !usuario.equals(this.usuario)){
-                listaFiltradaPorNombre.add(usuario);
+        for (UserClass user : getListaUsers().getValue()){
+            if (user.getUsername().contains(nombre) && !user.equals(this.usuario)){
+                listaFiltradaPorNombre.add(user);
             }
         }
         this.listaRecyclerView.setValue(listaFiltradaPorNombre);
@@ -319,6 +335,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public void fillUserList() {
         UserClass currentUser = this.usuario;
+        System.out.println("AQUIIIIIIIIIIIIIIIIIIIII" + usuario);
         UserClass user;
         List<UserClass> listaUsers = new ArrayList<>();
         if (currentUser != null && !currentUser.getStringSolicitudesRecibidas().equals("")) {

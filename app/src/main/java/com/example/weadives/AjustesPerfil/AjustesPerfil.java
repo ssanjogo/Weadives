@@ -81,9 +81,6 @@ public class AjustesPerfil extends AppCompatActivity {
         btn_home6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!viewModel.getLogInStatus()){
-                    viewModel.singOut();
-                }
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
                 finish();

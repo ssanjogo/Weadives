@@ -65,17 +65,11 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
         dbA = new DatabaseAdapter(this);
         viewModel = ViewModel.getInstance(this);
 
-        /*System.out.println("CORREO: " + cargarCorreo());
-        System.out.println("CONTRASEÑA: " + cargarContraseña());
-
-        if (cargarContraseña() != "") {
-            viewModel.logIn(cargarCorreo(), cargarContraseña());
-        }*/
-        if (viewModel.getLogInStatus()){
-            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-            areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(areaUsuario);
-            finish();
+        if (viewModel.getLogInStatus() || viewModel.getCurrentUser() != null){
+                Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(areaUsuario);
+                finish();
         }
 
         Intent intent = getIntent();
@@ -85,6 +79,7 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
             public void onClick(View view){
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
+                finish();
             }
         });
 
@@ -115,15 +110,11 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
                     recordarCorreo(etA_correo.getText().toString());
                     viewModel.setLogInStatus(true);
 
-                    /*if (cargarContraseña() != etP_contraseña.getText().toString()){
-                        recordarContraseña("");
-                    }*/
-
                     if (!viewModel.correoRepetido(etA_correo.getText().toString())){
                         etA_correo.setError("Correo no registrado");
                     }
                     if (chkb_mantenerSession.isChecked()) {
-                        //recordarContraseña(etP_contraseña.getText().toString());
+                        viewModel.keepSession(true);
                     }
                     viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
                 }
@@ -146,17 +137,6 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
         SharedPreferences preferencias = getSharedPreferences("correo",Context.MODE_PRIVATE);
         return preferencias.getString("correo","");
     }
-
-    /*private void recordarContraseña(String contraseña) {
-        SharedPreferences preferencias = getSharedPreferences("contraseña", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("contraseña", contraseña);
-        editor.commit();
-    }
-    private String cargarContraseña() {
-        SharedPreferences preferencias = getSharedPreferences("contraseña",Context.MODE_PRIVATE);
-        return preferencias.getString("contraseña","");
-    }*/
 
     @Override
     public void intent() {

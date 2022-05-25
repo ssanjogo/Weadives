@@ -27,6 +27,7 @@ import com.example.weadives.PantallaMapa.PantallaMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
+import com.example.weadives.ViewModel;
 
 public class PantallaInicio extends AppCompatActivity {
 
@@ -34,11 +35,11 @@ public class PantallaInicio extends AppCompatActivity {
     private Bitmap results, maskbitmap;
     private Button btn_invisible;
 
+    private ViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.pantalla_inicio);
         LinearLayout layout =findViewById(R.id.LinearMainLayout);
         Imagen_superior = findViewById(R.id.img_inicio);
@@ -54,9 +55,11 @@ public class PantallaInicio extends AppCompatActivity {
         SingletonIdioma s= SingletonIdioma.getInstance();
         s.setResources(resources2);
 
+        viewModel = ViewModel.getInstance(this);
 
-
-
+        if (viewModel.accountNotNull()){
+            viewModel.getUser();
+        }
 
         btn_en.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,12 +79,6 @@ public class PantallaInicio extends AppCompatActivity {
                 toast.show();
             }
         });
-
-
-
-
-
-
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,7 +161,13 @@ public class PantallaInicio extends AppCompatActivity {
         return results;
     }
 
-
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewModel = ViewModel.getInstance(this);
+        if (!viewModel.iskeepSession()){
+            System.out.println("Cerramos session");
+            viewModel.singOut();
+        }
+    }
 }

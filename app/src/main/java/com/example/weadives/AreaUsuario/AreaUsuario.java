@@ -25,9 +25,9 @@ import com.bumptech.glide.Glide;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
+import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.ViewModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -110,16 +110,9 @@ public class AreaUsuario extends AppCompatActivity {
         btn_home4.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!viewModel.getLogInStatus()){
-                    viewModel.singOut();
-                    Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
-                    startActivity(pantallaInicio);
-                    finish();
-                } else {
-                    Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
-                    startActivity(pantallaInicio);
-                    finish();
-                }
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
+                finish();
             }
         });
 

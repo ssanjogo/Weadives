@@ -58,6 +58,10 @@ public class DatabaseAdapter extends Activity {
         FirebaseFirestore.setLoggingEnabled(true);
     }
 
+    public boolean accountNotNull() {
+        return (this.mAuth.getCurrentUser() != null);
+    }
+
 
     public interface vmInterface{
         void setCollection(ArrayList<UserClass> listaUsuarios);
@@ -106,6 +110,19 @@ public class DatabaseAdapter extends Activity {
                     UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
                     listener.setUser(u);
                     listenerIntent.intent();
+                }
+            }
+        });
+    }
+
+    public void getUser2(){
+        db.collection("Users").document(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
+                    listener.setUser(u);
                 }
             }
         });
