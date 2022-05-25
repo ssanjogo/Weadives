@@ -288,6 +288,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
             }
         }
         l=l2;
+
     }
 
 
@@ -378,6 +379,15 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
         publicacionList.add(new PublicacionClass("3",p3,likeList3,comentariosList3));
 
         return publicacionList;
+    }
+
+    public ParametrosClass getParametroPorId(String s) {
+        for (ParametrosClass i : lista) {
+            if(i.getIdPublicacion().equals(s)){
+                return i;
+            }
+        }
+        return null;
     }
 }
 

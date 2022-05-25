@@ -63,4 +63,6 @@
     <string name="no_public_available">No publications available</string>
     <string name="no_friend">You have to be friend with this user to see his/her publications</string>
     <string name="AlreadyLike">You already Like/Disliked this</string>
+    <string name="no_preferencias">There are no preferences</string>
+    <string name="nuevo_parametro">New Parameter</string>
 </resources>

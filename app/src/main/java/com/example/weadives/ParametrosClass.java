@@ -54,7 +54,7 @@ public class ParametrosClass {
     }
 
     public ParametrosClass() {
-        this.nombreActividad = "New";
+        this.nombreActividad = "New Parameter";
         this.presionMax = 0;
         this.presionMin = 0;
         this.temperaturaMax = 0;

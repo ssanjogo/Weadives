@@ -113,8 +113,6 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         periodoOlaMax.setText(resources.getString(R.string.periodoOla)+" max");
         periodoOlaMin.setText(resources.getString(R.string.periodoOla)+" min");
 
-
-
         EditText editName=findViewById(R.id.etx_ActivityNameCP);
 
         EditText editpmax=findViewById(R.id.etx_presionMaxCP);
@@ -166,8 +164,19 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         //Spinner superior
         //ArrayList<ParametrosClass> test=descomprimirArray(cargarPreferenciasParametros());
         ArrayList<ParametrosClass> test= ViewModelParametros.getSingletonInstance().getLista();
+        System.out.println(test);
         if(test.size()==0){
-            test.add(new ParametrosClass());
+            //test.add(new ParametrosClass());
+            scrollView2.setVisibility(View.GONE);
+            sw_mostrarEnPerfil.setVisibility(View.GONE);
+            sw_notificaciones.setVisibility(View.GONE);
+            btn_guardar.setVisibility(View.GONE);
+            btn_basura.setVisibility(View.GONE);
+            ParametrosClass newParametro=new ParametrosClass();
+            newParametro.setNombreActividad(resources.getString(R.string.no_preferencias));
+            newParametro.setIdPublicacion("-999");
+            ViewModelParametros.getSingletonInstance().addParametro(newParametro);
+            spinner.setSelection(0);
         }
         ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,test);
         adapter.setDropDownViewResource(R.layout.one_spinner_list);
@@ -185,12 +194,22 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 spinner.setAdapter(adapter);
             }
         };*/
-
+        if(((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion().equals("-999")){
+            scrollView2.setVisibility(View.GONE);
+            sw_mostrarEnPerfil.setVisibility(View.GONE);
+            sw_notificaciones.setVisibility(View.GONE);
+            btn_guardar.setVisibility(View.GONE);
+            btn_basura.setVisibility(View.GONE);
+        }
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(!((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion().equals("-999")){
+                    scrollView2.setVisibility(View.VISIBLE);
+                }
+
 
                 //mostrarAjuste((ParametrosClass) spinner.getSelectedItem());
                 editpmax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPresionMax())));
@@ -219,6 +238,11 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                scrollView2.setVisibility(View.GONE);
+
+
+                editName.setText("Nothing selected");
+                /*
                 editpmax.setText("");
                 editpmin.setText("");
                 edittmax.setText("");
@@ -229,10 +253,10 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 editaomin.setText("");
                 editpomax.setText("");
                 editpomin.setText("");
-
-                editName.setText("Nothing selected");
                 spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
                 spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
+
+                 */
             }
         });
 
@@ -241,12 +265,22 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             public void onClick(View view) {
 
                 ViewModelParametros.getSingletonInstance().deleteParametro((ParametrosClass) spinner.getSelectedItem());
+                spinner.setSelection(0);
                 if(ViewModelParametros.getSingletonInstance().getLista().size()==0){
+                    scrollView2.setVisibility(View.GONE);
+                    sw_mostrarEnPerfil.setVisibility(View.GONE);
+                    sw_notificaciones.setVisibility(View.GONE);
+                    btn_guardar.setVisibility(View.GONE);
+                    btn_basura.setVisibility(View.GONE);
                     ParametrosClass newParametro=new ParametrosClass();
+                    newParametro.setNombreActividad(resources.getString(R.string.no_preferencias));
+                    newParametro.setIdPublicacion("-999");
                     ViewModelParametros.getSingletonInstance().addParametro(newParametro);
                     spinner.setSelection(adapter.getPosition(newParametro));
+                    spinner.setSelection(0);
+
                 }
-                spinner.setSelection(0);
+
 
 
             }
@@ -294,6 +328,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_añadir2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                scrollView2.setVisibility(View.VISIBLE);
                 /*editName.setText("");
                 editpmax.setText("");
                 editpmin.setText("");
@@ -308,8 +343,16 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 spn_dirOlas.setSelection(0);
                 spn_dirViento.setSelection(0);*/
                 ParametrosClass newParametro=new ParametrosClass();
+                newParametro.setNombreActividad(resources.getString(R.string.nuevo_parametro));
                 ViewModelParametros.getSingletonInstance().addParametro(newParametro);
+                ParametrosClass newParametro2 =ViewModelParametros.getSingletonInstance().getParametroPorId("-999");
+                ViewModelParametros.getSingletonInstance().deleteParametro(newParametro2);
                 spinner.setSelection(adapter.getPosition(newParametro));
+                scrollView2.setVisibility(View.VISIBLE);
+                sw_mostrarEnPerfil.setVisibility(View.VISIBLE);
+                sw_notificaciones.setVisibility(View.VISIBLE);
+                btn_guardar.setVisibility(View.VISIBLE);
+                btn_basura.setVisibility(View.VISIBLE);
             }
         });
 
