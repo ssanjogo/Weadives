@@ -64,8 +64,6 @@ public class DatabaseAdapter extends Activity {
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
     private final StorageReference storageRef = storage.getReference();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseUser user;
-    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth.IdTokenListener mAuthIDTokenListener;
     private FirebaseUser user = mAuth.getCurrentUser();
