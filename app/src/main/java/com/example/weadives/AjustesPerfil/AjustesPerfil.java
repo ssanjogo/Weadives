@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -79,10 +81,11 @@ public class AjustesPerfil extends AppCompatActivity {
         etN_nombrepersona2.setText(viewModel.getCurrentUser().getUsername());
         etA_correo3.setText(viewModel.getCurrentUser().getCorreo());
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
-
+        Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
         btn_home6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                btn_home6.startAnimation(animation);
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
                 finish();
@@ -92,6 +95,7 @@ public class AjustesPerfil extends AppCompatActivity {
         btn_guardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn_guardarCambios.startAnimation(animation);
                 if (etA_correo3.getText() != null && etN_nombrepersona2.getText() != null) {
                     if (!etA_correo3.getText().toString().equals(viewModel.getCurrentUser().getCorreo())) {
                         viewModel.cambiarCorreo(etA_correo3.getText().toString());
@@ -131,6 +135,7 @@ public class AjustesPerfil extends AppCompatActivity {
         btn_eliminarCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn_eliminarCuenta.startAnimation(animation);
                 AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
                 alerta.setMessage(resources.getString(R.string.alertaEliminarCuenta)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
                     @Override
@@ -156,6 +161,8 @@ public class AjustesPerfil extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
+                img_perfil.startAnimation(animation);
+
                 verificarPermisos();
             }
         });
