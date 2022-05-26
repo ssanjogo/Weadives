@@ -122,12 +122,12 @@ public class ParametrosClass {
                 ", temperaturaMin=" + temperaturaMin +
                 ", vientoMax=" + vientoMax +
                 ", vientoMin=" + vientoMin +
-                ", directionViento=" + directionViento +
+                ", directionViento=" + directionViento.toString2() +
                 ", alturaOlaMax=" + alturaOlaMax +
                 ", alturaOlaMin=" + alturaOlaMin +
                 ", periodoOlaMax=" + periodoOlaMax +
                 ", periodoOlaMin=" + periodoOlaMin +
-                ", directionOlas=" + directionOlas +
+                ", directionOlas=" + directionOlas.toString2() +
                 '}';
     }
     public String toSaveString() {
@@ -270,6 +270,7 @@ public class ParametrosClass {
     public void setDirectionOlas(Directions directionOlas) {
         this.directionOlas.setDir(directionOlas);
     }
+
 
     static ArrayList<ParametrosClass> descomprimir(String l){
             System.out.println(l);

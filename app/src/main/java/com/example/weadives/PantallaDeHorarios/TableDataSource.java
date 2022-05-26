@@ -28,11 +28,18 @@ public class TableDataSource {
     List<String[]> data;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public TableDataSource(Context context, String nameFile) throws IOException {
+    public TableDataSource(Context context, String nameFile) {
         this.context = context;
         this.nameFile = nameFile;
-        System.out.println("Empieza");
-        InputStream in =  context.getAssets().open("TEST.csv");
+        System.out.println("Empieza: " + nameFile);
+        File initialFile = new File (this.nameFile);
+        InputStream in = null;
+        try {
+            in = new FileInputStream(initialFile);
+        } catch (IOException e) {
+            System.out.println("Error opening csv file: " + e.getMessage());
+            e.printStackTrace();
+        }
         System.out.println(in);
         InputStreamReader streamReader = new InputStreamReader(in, StandardCharsets.UTF_8);
         System.out.println(streamReader);

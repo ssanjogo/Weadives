@@ -1,15 +1,30 @@
 package com.example.weadives.PantallaMapa;
 
+
+
 import com.google.android.gms.maps.model.LatLng;
 
-public class MarcadorClass {
+import java.util.ArrayList;
+
+public class MarcadorClass{
 
     private LatLng latLng;
     private String name;
+    private String r_lat, r_lon;
 
-    public MarcadorClass(String name, LatLng latLng) {
+
+    public MarcadorClass(String name, LatLng latLng, String _lat, String _lon) {
         this.name = name;
         this.latLng = latLng;
+        this.r_lat = _lat;
+        this.r_lon = _lon;
+    }
+
+    public MarcadorClass(String name){
+        this.name = name;
+        this.latLng = new LatLng(0,0);
+        this.r_lat = "0";
+        this.r_lon = "0";
     }
 
     public LatLng getLatLng() {
@@ -27,4 +42,14 @@ public class MarcadorClass {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getLocation(){
+        return r_lat + "_" + r_lon;
+    }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
+
 }

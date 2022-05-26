@@ -26,7 +26,6 @@ import com.example.weadives.SingletonIdioma;
 import com.example.weadives.databinding.PantallaMapaBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -58,13 +57,14 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private LatLng coordsMarcador;
     private Marker tempMarcador;
     private GroundOverlay imagenClima;
+    //ViewModel
+    ViewModelMapa viewModelMapa;
 
-    //Mover Modelo
-    private MarcadorList marcadorList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModelMapa = ViewModelMapa.getInstance(this);
 
         ImageButton btn_home20;
         binding = PantallaMapaBinding.inflate(getLayoutInflater());
@@ -100,7 +100,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         skb_seleccionarHora = findViewById(R.id.skb_seleccionarHora);
         skb_seleccionarHora.setProgress(0);
 
-        marcadorList = new MarcadorList();
+
 
 
 
@@ -132,7 +132,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                marcadorList.guardarMarcador(txt_nombreMarcador.getText().toString(), coordsMarcador);
+                viewModelMapa.guardarMarcador(txt_nombreMarcador.getText().toString(), coordsMarcador);
                 mMap.addMarker(new MarkerOptions().title(txt_nombreMarcador.getText().toString()).position(coordsMarcador));
                 lay_layoutMarcador.setVisibility(View.INVISIBLE);
                 txt_nombreMarcador.setText("");
@@ -142,7 +142,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                marcadorList.eliminarMarcador(tempMarcador.getTitle(), tempMarcador.getPosition());
+                viewModelMapa.eliminarMarcador(tempMarcador.getTitle(), tempMarcador.getPosition());
                 tempMarcador.remove();
                 lay_layoutMarcadorEliminar.setVisibility(View.INVISIBLE);
             }
@@ -233,7 +233,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void actualizarMarcadores(){
-        ArrayList<MarkerOptions> markerList = marcadorList.getMarkerOptionsList();
+        ArrayList<MarkerOptions> markerList = viewModelMapa.getMarkerOptionsList();
         for(MarkerOptions marker : markerList){
             mMap.addMarker(marker);
         }

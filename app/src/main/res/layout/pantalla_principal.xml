@@ -39,14 +39,18 @@
         android:id="@+id/spn_desplegableMarcadores"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_logo"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:popupBackground="@color/fondo"
+        android:backgroundTint="@color/fondo"
+        android:textColor="@color/black"/>
+    <!-- android:padding="5dip" -->
+    <!-- Padding Spinner para controlar el espacio que hay entre el borde y la palabra -->
 
     <ImageView
         android:id="@+id/btn_home"

@@ -3,6 +3,7 @@ package com.example.weadives.ConfiguracionDePreferencias;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -250,9 +251,17 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     System.out.println("Activado");
                     sw_mostrarEnPerfil.setChecked(true);
                 }
+
+
                 editName.setText(((ParametrosClass) spinner.getSelectedItem()).getNombreActividad());
+                System.out.println("DIRTESTEODIR2");
+
                 spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas()));
                 spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento()));
+                System.out.println(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
+                System.out.println(spn_dirOlas.getSelectedItemPosition());
+                System.out.println(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento());
+                System.out.println(spn_dirViento.getSelectedItemPosition());
             }
 
 
@@ -280,31 +289,49 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             }
         });
 
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(resources.getString(R.string.deletePar1))
+                .setMessage(resources.getString(R.string.deletepar2))
+                .setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener()
+                {@Override
+                public void onClick(DialogInterface dialog, int which) {
+                    btn_basura.startAnimation(animation);
+                    ViewModelParametros.getSingletonInstance().deleteParametro((ParametrosClass) spinner.getSelectedItem());
+                    spinner.setSelection(0);
+                    if(ViewModelParametros.getSingletonInstance().getLista().size()==0){
+                        scrollView2.setVisibility(View.GONE);
+                        sw_mostrarEnPerfil.setVisibility(View.GONE);
+                        sw_notificaciones.setVisibility(View.GONE);
+                        btn_guardar.setVisibility(View.GONE);
+                        btn_basura.setVisibility(View.GONE);
+                        ParametrosClass newParametro=new ParametrosClass();
+                        newParametro.setNombreActividad(resources.getString(R.string.no_preferencias));
+                        newParametro.setIdPublicacion("-999");
+                        ViewModelParametros.getSingletonInstance().addParametro(newParametro);
+                        spinner.setSelection(adapter.getPosition(newParametro));
+                        spinner.setSelection(0);
+                    }
+                }
+
+                })
+                .setNegativeButton(resources.getString(R.string.negativo), null);
+
         btn_basura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_basura.startAnimation(animation);
-                ViewModelParametros.getSingletonInstance().deleteParametro((ParametrosClass) spinner.getSelectedItem());
-                spinner.setSelection(0);
-                if(ViewModelParametros.getSingletonInstance().getLista().size()==0){
-                    scrollView2.setVisibility(View.GONE);
-                    sw_mostrarEnPerfil.setVisibility(View.GONE);
-                    sw_notificaciones.setVisibility(View.GONE);
-                    btn_guardar.setVisibility(View.GONE);
-                    btn_basura.setVisibility(View.GONE);
-                    ParametrosClass newParametro=new ParametrosClass();
-                    newParametro.setNombreActividad(resources.getString(R.string.no_preferencias));
-                    newParametro.setIdPublicacion("-999");
-                    ViewModelParametros.getSingletonInstance().addParametro(newParametro);
-                    spinner.setSelection(adapter.getPosition(newParametro));
-                    spinner.setSelection(0);
 
-                }
+
+                dialog.show();
 
 
 
             }
         });
+
+
+
+
 
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -325,14 +352,20 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     change.setTemperaturaMin(Float.valueOf(String.valueOf(edittmin.getText())));
                     change.setVientoMax(Float.valueOf(String.valueOf(editvmax.getText())));
                     change.setVientoMin(Float.valueOf(String.valueOf(editvmin.getText())));
-                    change.setDirectionViento(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento());
                     change.setAlturaOlaMax(Float.valueOf(String.valueOf(editaomax.getText())));
                     change.setAlturaOlaMin(Float.valueOf(String.valueOf(editaomin.getText())));
                     change.setPeriodoOlaMax(Float.valueOf(String.valueOf(editpomax.getText())));
                     change.setPeriodoOlaMin(Float.valueOf(String.valueOf(editpomin.getText())));
-                    change.setDirectionOlas(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
-                    //spinner.setAdapter(updateAdapter(test));
 
+                    System.out.println("DIRECTIONTEST");
+                    System.out.println();
+                    change.setDirectionViento(Directions.fromInt(spn_dirViento.getSelectedItemPosition()));
+                    change.setDirectionOlas(Directions.fromInt(spn_dirOlas.getSelectedItemPosition()));
+
+
+                    //spinner.setAdapter(updateAdapter(test));
+                    System.out.println("DIRTESTEODIR");
+                    System.out.println(change.toString2());
                     ViewModelParametros.getSingletonInstance().modifyParametro(change, (ParametrosClass) spinner.getSelectedItem(),sw_mostrarEnPerfil.isChecked());
 
 

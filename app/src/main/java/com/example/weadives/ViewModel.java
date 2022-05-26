@@ -19,6 +19,7 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmInterface {
 
@@ -545,4 +546,5 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public boolean getAcces() {
         return acces;
     }
+
 }

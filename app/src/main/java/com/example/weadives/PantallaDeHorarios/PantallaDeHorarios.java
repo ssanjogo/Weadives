@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cleveroad.adaptivetablelayout.AdaptiveTableLayout;
-import com.cleveroad.adaptivetablelayout.LinkedAdaptiveTableAdapter;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 import com.example.weadives.ViewModel;
@@ -24,6 +23,8 @@ public class PantallaDeHorarios extends AppCompatActivity {
     private ImageView btn_home10;
     private EditText editTextDate;
     private AdaptiveTableLayout tableLayout;
+    private ViewModelHorario viewModelHorario;
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -33,19 +34,17 @@ public class PantallaDeHorarios extends AppCompatActivity {
         btn_home10 = findViewById(R.id.btn_home10);
         editTextDate = findViewById(R.id.editTextDate);
         tableLayout = (AdaptiveTableLayout) findViewById(R.id.tableLayout);
+        viewModelHorario = ViewModelHorario.getInstance(this);
+
+        viewModelHorario.getDataLocation();
+
         Intent intent = getIntent();
-        TableDataSource dataSource = null;
-        try {
-            dataSource = new TableDataSource(this, "TEST.csv");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        TableDataSource dataSource = new TableDataSource(this,viewModelHorario.getCsvRef());
+
+        System.out.println(dataSource == null);
 
         AdapterTablaHorario adapterTablaHorario = new AdapterTablaHorario(this, dataSource);
         tableLayout.setAdapter(adapterTablaHorario);
-
 
         btn_home10.setOnClickListener(new View.OnClickListener() {
             @Override
