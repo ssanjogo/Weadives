@@ -195,7 +195,6 @@ public class PantallaPrincipal extends AppCompatActivity {
 
     }
 
-
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");

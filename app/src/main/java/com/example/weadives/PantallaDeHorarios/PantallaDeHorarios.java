@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cleveroad.adaptivetablelayout.AdaptiveTableLayout;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
+import com.example.weadives.ViewModel;
 
 public class PantallaDeHorarios extends AppCompatActivity {
 
@@ -36,6 +37,13 @@ public class PantallaDeHorarios extends AppCompatActivity {
 
         Intent intent = getIntent();
         TableDataSource dataSource = null;
+        try {
+            dataSource = new TableDataSource(this, "TEST.csv");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         dataSource = new TableDataSource(this,viewModelHorario.getCsvRef());
 
         System.out.println(dataSource == null);
@@ -50,6 +58,5 @@ public class PantallaDeHorarios extends AppCompatActivity {
                 startActivity(pantallaInicio);
             }
         });
-
     }
 }

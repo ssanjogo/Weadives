@@ -41,8 +41,6 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
     private CheckBox chkb_mantenerSession;
     private ImageView btn_home2;
 
-    boolean chbox = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +68,11 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
         dbA = new DatabaseAdapter(this);
         viewModel = ViewModel.getInstance(this);
 
-        if (viewModel.getLogInStatus()) {
-            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
-            areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(areaUsuario);
-            finish();
+        if (viewModel.getLogInStatus() || viewModel.getCurrentUser() != null){
+                Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+                areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(areaUsuario);
+                finish();
         }
 
         Intent intent = getIntent();
@@ -84,6 +82,7 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
             public void onClick(View view){
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
+                finish();
             }
         });
 
@@ -112,17 +111,15 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
                 } else {
 
                     recordarCorreo(etA_correo.getText().toString());
-
-                    if (chkb_mantenerSession.isChecked()) {
-                        viewModel.setLogInStatus(true);
-                    }
+                    viewModel.setLogInStatus(true);
 
                     if (!viewModel.correoRepetido(etA_correo.getText().toString())){
                         etA_correo.setError("Correo no registrado");
-                    } else {
-
-                        viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
                     }
+                    if (chkb_mantenerSession.isChecked()) {
+                        viewModel.keepSession(true);
+                    }
+                    viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
                 }
             }
         });
@@ -134,19 +131,20 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
     }
 
     private void recordarCorreo(String correo) {
-        SharedPreferences preferencias = getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences preferencias = getSharedPreferences("correo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("user",correo);
+        editor.putString("correo",correo);
         editor.commit();
     }
     private String cargarCorreo() {
-        SharedPreferences preferencias = getSharedPreferences("user",Context.MODE_PRIVATE);
-        return preferencias.getString("user","");
+        SharedPreferences preferencias = getSharedPreferences("correo",Context.MODE_PRIVATE);
+        return preferencias.getString("correo","");
     }
 
     @Override
     public void intent() {
         Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+        areaUsuario.setAction(Intent.ACTION_OPEN_DOCUMENT);
         areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(areaUsuario);
         finish();

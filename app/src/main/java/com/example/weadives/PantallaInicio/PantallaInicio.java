@@ -28,6 +28,7 @@ import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModel;
 import com.example.weadives.ViewModelParametros;
 
 public class PantallaInicio extends AppCompatActivity {
@@ -35,6 +36,8 @@ public class PantallaInicio extends AppCompatActivity {
     private ImageView Imagen_superior, btn_en, btn_es;
     private Bitmap results, maskbitmap;
     private Button btn_invisible;
+
+    private ViewModel viewModel;
 
     @Override
     public void onResume(){
@@ -63,6 +66,11 @@ public class PantallaInicio extends AppCompatActivity {
         SingletonIdioma s= SingletonIdioma.getInstance();
         s.setResources(resources2);
 
+        viewModel = ViewModel.getInstance(this);
+
+        if (viewModel.accountNotNull()){
+            viewModel.getUser();
+        }
         ViewModelParametros p= ViewModelParametros.getSingletonInstance(resources2,this);
         System.out.println(p.getLista());
 
@@ -92,12 +100,6 @@ public class PantallaInicio extends AppCompatActivity {
                 startActivity(getIntent());
             }
         });
-
-
-
-
-
-
 
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +182,13 @@ public class PantallaInicio extends AppCompatActivity {
         return results;
     }
 
-
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewModel = ViewModel.getInstance(this);
+        if (!viewModel.iskeepSession()){
+            System.out.println("Cerramos session");
+            viewModel.singOut();
+        }
+    }
 }

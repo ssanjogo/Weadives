@@ -8,13 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
 
-public final class SingletonIdioma {
+public final class SingletonIdioma extends AppCompatActivity {
+
+
+
     private static SingletonIdioma instance;
     public Traducciones value;
     public Context c;
     public Resources r;
 
-
+    @Override
     public Resources getResources() {
         return r;
     }
@@ -59,6 +62,7 @@ public final class SingletonIdioma {
         }
         return instance;
     }
+
 
     public String getValue() {
         return value.toString().toLowerCase(Locale.ROOT);

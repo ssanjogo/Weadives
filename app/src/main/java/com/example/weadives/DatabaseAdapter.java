@@ -7,11 +7,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.weadives.AreaUsuario.UserClass;
+import com.google.android.gms.tasks.Continuation;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Continuation;
@@ -35,6 +40,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StreamDownloadTask;
 
 import java.io.File;
@@ -45,6 +52,7 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import io.grpc.internal.JsonUtil;
 
@@ -54,6 +62,9 @@ public class DatabaseAdapter extends Activity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
+    private final StorageReference storageRef = storage.getReference();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user;
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth.IdTokenListener mAuthIDTokenListener;
@@ -79,6 +90,10 @@ public class DatabaseAdapter extends Activity {
         this.listenerIntent = listenerLogIn;
         databaseAdapter = this;
         FirebaseFirestore.setLoggingEnabled(true);
+    }
+
+    public boolean accountNotNull() {
+        return (this.mAuth.getCurrentUser() != null);
     }
 
     public DatabaseAdapter(mapaInterface mapaInterface){
@@ -136,7 +151,7 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    listener.setUserID(task.getResult().getUser().getUid());
+                    //listener.setUserID(task.getResult().getUser().getUid());
                     saveUser(nombre, correo, task.getResult().getUser().getUid());
                 } else {
                     Log.w(TAG, "Error register");
@@ -170,6 +185,19 @@ public class DatabaseAdapter extends Activity {
                     UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
                     listener.setUser(u);
                     listenerIntent.intent();
+                }
+            }
+        });
+    }
+
+    public void getUser2(){
+        db.collection("Users").document(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
+                    listener.setUser(u);
                 }
             }
         });
@@ -253,7 +281,7 @@ public class DatabaseAdapter extends Activity {
         user.put("Nombre", nombre);
         user.put("Correo", correo);
         user.put("UID", uid);
-        user.put("Imagen", "https://www.pngmart.com/files/21/Account-User-PNG-Photo.png"); //Cambiar
+        user.put("Imagen", "https://firebasestorage.googleapis.com/v0/b/weadives.appspot.com/o/Imagenes_Perfil%2FprofillePicBase.png?alt=media&token=544d8b5c-11de-4acb-9bdd-54bb5f5297af"); //Cambiar
         user.put("Amigos", "");
         user.put("Solicitudes recibidas", "");
         user.put("Solicitudes enviadas", "");
@@ -323,6 +351,29 @@ public class DatabaseAdapter extends Activity {
         });
     }
 
+    public void subirImagen(Uri file, String userId) {
+        StorageReference userRef = storageRef.child("Imagenes_Perfil/" + userId);
+        UploadTask uploadTask = userRef.putFile(file);
+
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw Objects.requireNonNull(task.getException());
+                }
+                return userRef.getDownloadUrl(); //RETORNO LA  URL DE DESCARGA DE LA FOTO
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(task.isSuccessful()){
+                    Uri uri = task.getResult();  //AQUI YA TENGO LA RUTA DE LA FOTO LISTA PARA INSERTRLA EN DATABASE
+                    assert uri != null;
+                }
+            }
+        });
+    }
+
     public void singout(){
         mAuth.signOut();
         user = null;
@@ -330,7 +381,7 @@ public class DatabaseAdapter extends Activity {
         listener.setStatusLogIn(false);
     }
 
-    public void deleteAccount(){
+    public void deleteAccount() {
         db.collection("Users").document(mAuth.getCurrentUser().getUid()).delete();
         mAuth.getCurrentUser().delete();
         Log.d(TAG, "Cuenta borrada");

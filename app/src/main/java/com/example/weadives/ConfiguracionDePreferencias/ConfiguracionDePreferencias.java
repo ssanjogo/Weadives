@@ -3,7 +3,6 @@ package com.example.weadives.ConfiguracionDePreferencias;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -40,6 +39,7 @@ import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
+import com.example.weadives.ViewModel;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModelParametros;
 
@@ -54,7 +54,6 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     private ImageView btn_añadir2, btn_home8,btn_basura,btn_Interrogante;
     private ScrollView scrollView2;
     private Switch sw_notificaciones, sw_mostrarEnPerfil;
-    private DatabaseAdapter dbA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +130,8 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         alturaOlaMin.setText(resources.getString(R.string.alturaOla)+" min");
         periodoOlaMax.setText(resources.getString(R.string.periodoOla)+" max");
         periodoOlaMin.setText(resources.getString(R.string.periodoOla)+" min");
+
+
 
         EditText editName=findViewById(R.id.etx_ActivityNameCP);
 
@@ -417,8 +418,5 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             return builder.create();
         }
     }
-
-
-
 
 }

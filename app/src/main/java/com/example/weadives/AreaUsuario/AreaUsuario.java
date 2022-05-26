@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
+import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.ViewModel;
 
@@ -72,6 +75,8 @@ public class AreaUsuario extends AppCompatActivity {
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
+        System.out.println("TOKEEEEEEEEEEEEEEEEEEEEN " + recuperarToken());
+
         correo = viewModel.getCurrentUser().getCorreo();
         limite = viewModel.sizelista();
         viewModel.fillUserList();
@@ -99,23 +104,17 @@ public class AreaUsuario extends AppCompatActivity {
             public void onClick(View view){
                 txt_noAmigos.setVisibility(View.INVISIBLE);
                 Intent pantallaMiperfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);
+                pantallaMiperfil.setAction(Intent.ACTION_OPEN_DOCUMENT);
                 startActivity(pantallaMiperfil);
-                finish();
             }
         });
 
         btn_home4.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!viewModel.getLogInStatus()){
-                    viewModel.singOut();
-                    Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
-                    startActivity(pantallaInicio);
-                    finish();
-                } else {
-                    Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
-                    startActivity(pantallaInicio);
-                }
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
+                finish();
             }
         });
 
@@ -177,5 +176,19 @@ public class AreaUsuario extends AppCompatActivity {
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
+    }
+
+    private String recuperarToken() {
+        SharedPreferences preferencias = getSharedPreferences("token",Context.MODE_PRIVATE);
+        return preferencias.getString("token","");
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == event.KEYCODE_BACK){
+            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+            startActivity(areaUsuario);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

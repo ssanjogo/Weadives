@@ -3,6 +3,8 @@ package com.example.weadives;
 import static java.lang.System.exit;
 
 import android.app.Application;
+import android.net.Uri;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.AndroidViewModel;
@@ -31,7 +33,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
 
     private String UID;
-    private boolean statusLogIn = false;
+    private boolean statusLogIn = false, keepSession = false;
     private final DatabaseAdapter dbA;
 
     private static ViewModel vm;
@@ -89,6 +91,22 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         return mToast;
     }
 
+    public boolean accountNotNull(){
+        return dbA.accountNotNull();
+    }
+
+    public boolean iskeepSession() {
+        return this.keepSession;
+    }
+
+    public void keepSession(boolean ks){
+        this.keepSession = ks;
+    }
+
+    public void getUser(){
+        dbA.getUser2();
+    }
+
     public UserClass getUserByUID(String uid){
         System.out.println(listaUsuarios.getValue());
         for (int i = 0; i < listaUsuarios.getValue().size(); i++) {
@@ -104,10 +122,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public void register(String nombre, String correo, String contraseña){
+        setLogInStatus(true);
         dbA.register(nombre, correo, contraseña);
         if (usuario != null) {
             listaUsuarios.getValue().add(usuario);
-            // Inform observer.
             listaUsuarios.setValue(listaUsuarios.getValue());
             reload();
         }
@@ -121,6 +139,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public void logIn(String correo, String contraseña){
+        setLogInStatus(true);
         dbA.logIn(correo, contraseña);
     }
 
@@ -161,6 +180,21 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void cambiarContraseña(String contraseña) {
         dbA.cambiarContraseña(contraseña);
     }
+
+    public void cambiarImagen(Uri uri) {
+        UserClass user = getCurrentUser();
+        System.out.println("ASI DEBERIA SER LA URI: " + uri);
+        user.setUrlImg(uri.toString());
+        HashMap<String, Object> usuario = convertUserToHashMap(user);
+        dbA.updateDatos(usuario);
+        this.usuario = user;
+    }
+
+    public void subirImagen(Uri imageUri){
+        dbA.subirImagen(imageUri, getCurrentUser().getId());
+        cambiarImagen(imageUri);
+    }
+
 
     public void unfollow(String idAmigo) {
         int i = 0;
@@ -335,9 +369,9 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public void buscarPorNombre(String nombre) {
         List<UserClass> listaFiltradaPorNombre = new ArrayList<>();
-        for (UserClass usuario : getListaUsers().getValue()){
-            if (usuario.getUsername().contains(nombre) && !usuario.equals(this.usuario)){
-                listaFiltradaPorNombre.add(usuario);
+        for (UserClass user : getListaUsers().getValue()){
+            if (user.getUsername().contains(nombre) && !user.equals(this.usuario)){
+                listaFiltradaPorNombre.add(user);
             }
         }
         this.listaRecyclerView.setValue(listaFiltradaPorNombre);
@@ -345,10 +379,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public void fillUserList() {
         UserClass currentUser = this.usuario;
+        System.out.println("AQUIIIIIIIIIIIIIIIIIIIII" + usuario);
         UserClass user;
         List<UserClass> listaUsers = new ArrayList<>();
-        System.out.println(getCurrentUser());
-        if (!currentUser.getStringSolicitudesRecibidas().equals("")) {
+        if (currentUser != null && !currentUser.getStringSolicitudesRecibidas().equals("")) {
             for (String uid : getCurrentUser().getListaSolicitudesRecibidas()) {
                 user = getUserByUID(uid);
                 if (user != null) {
@@ -357,7 +391,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             }
         }
 
-        if (!currentUser.getStringAmigos().equals("")) {
+        if (currentUser != null && !currentUser.getStringAmigos().equals("")) {
             for (String uid : getCurrentUser().getListaAmigos()) {
                 user = getUserByUID(uid);
                 if (user != null) {
@@ -450,7 +484,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     @Override
     public void setToast(String s) {
-            mToast.setValue(s);
+        mToast.setValue(s);
     }
 
     @Override

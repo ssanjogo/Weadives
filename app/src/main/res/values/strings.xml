@@ -68,4 +68,5 @@
     <string name="ayudapreferencias">In this page you will be able to create your own preferences. With the + button, you will be able to create a new preference which parameters can be changed writing in the txtLabel.</string>
     <string name="ayudapreferencias2" > With the button Save, you would be able to sabe the preference and using the switches you could activate notificatios or upload to your profile if you have one! </string>
     <string name="ayuda"> Guide to the user</string>
+    <string name="txtContraseña">password</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.weadives.PantallaMiPerfil;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -19,9 +20,11 @@ import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.DatoGradosClass;
 import com.example.weadives.Directions;
+import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionesPerfilAdapter;
+import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
@@ -101,6 +104,8 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
                 if(!viewModel.getLogInStatus()){
                     viewModel.singOut();
                 }
@@ -123,17 +128,29 @@ public class PantallaMiPerfil extends AppCompatActivity {
             public void onClick(View view) {
                 viewModel.setLogInStatus(false);
 
+                viewModel.keepSession(false);
                 viewModel.singOut();
                 finish();
             }
         });
 
+        btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.singOut();
+                recordarContraseña("");
+                Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
+                startActivity(pantallaLogIn);
+                finish();
+            }
+        });
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if(keyCode == event.KEYCODE_BACK){
             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
             startActivity(areaUsuario);
+            finish();
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -191,5 +208,12 @@ public class PantallaMiPerfil extends AppCompatActivity {
         publicacionList.add(new PublicacionClass("qawsqwe",p3,likeList3,comentariosList3));
 
         return publicacionList;
+    }
+
+    private void recordarContraseña(String contraseña) {
+        SharedPreferences preferencias = getSharedPreferences("contraseña", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("contraseña", contraseña);
+        editor.commit();
     }
 }

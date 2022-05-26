@@ -53,12 +53,11 @@ public class PantallaGestorInundaciones extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
     }
+
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
     }
+
 }

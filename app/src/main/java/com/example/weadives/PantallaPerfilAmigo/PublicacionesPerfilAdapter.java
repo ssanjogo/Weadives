@@ -102,6 +102,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
                     toast.show();
                     loadSocial(holder, position);
                     updatePublications(publicacionClassList.get(position));
+                    holder.btn_likes.setImageDrawable(resources.getDrawable(R.drawable.btn_like_color));
                 }else{
                     Toast toast = Toast.makeText(context, resources.getString(R.string.AlreadyLike), Toast.LENGTH_SHORT);
                     toast.show();
@@ -117,6 +118,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
                     toast.show();
                     loadSocial(holder, position);
                     updatePublications(publicacionClassList.get(position));
+                    holder.btn_dislikes.setImageDrawable(resources.getDrawable(R.drawable.btn_dislike_color));
                 }else{
                     Toast toast = Toast.makeText(context, (resources.getString(R.string.AlreadyLike)), Toast.LENGTH_SHORT);
                     toast.show();
@@ -128,6 +130,13 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
     }
 
     private void loadSocial(PublicacionesPerfilViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
+        if(!publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),1)){
+            holder.btn_likes.setImageDrawable(resources.getDrawable(R.drawable.btn_like_color));
+        } if(publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),0)){
+            holder.btn_dislikes.setImageDrawable(resources.getDrawable(R.drawable.btn_dislike_color));
+        }
         holder.txt_numlikes.setText(Integer.toString(publicacionClassList.get(position).getNumLikes()));
         holder.txt_numlikes2.setText(Integer.toString(publicacionClassList.get(position).getNumDislikes()));
         holder.txt_numlikes3.setText(Integer.toString(publicacionClassList.get(position).getNumComments()));

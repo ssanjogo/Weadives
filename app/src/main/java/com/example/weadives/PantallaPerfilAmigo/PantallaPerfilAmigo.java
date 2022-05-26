@@ -191,9 +191,6 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!viewModel.getLogInStatus()){
-                    viewModel.singOut();
-                }
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
             }
@@ -245,6 +242,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         if(keyCode == event.KEYCODE_BACK){
             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
             startActivity(areaUsuario);
+            finish();
         }
         return super.onKeyDown(keyCode, event);
     }
