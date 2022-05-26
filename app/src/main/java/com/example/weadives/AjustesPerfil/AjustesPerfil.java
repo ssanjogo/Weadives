@@ -160,11 +160,12 @@ public class AjustesPerfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 btn_eliminarCuenta.startAnimation(animation);
-                AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
-                alerta.setMessage(resources.getString(R.string.alertaEliminarCuenta)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
+                AlertDialog.Builder alertaE = new AlertDialog.Builder(AjustesPerfil.this);
+                alertaE.setMessage(resources.getString(R.string.alertaEliminarCuenta)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         viewModel.deleteAccount();
+
                     }
                 }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
                     @Override
@@ -172,10 +173,9 @@ public class AjustesPerfil extends AppCompatActivity {
                         dialogInterface.cancel();
                     }
                 });
-                AlertDialog titulo = alerta.create();
+                AlertDialog titulo = alertaE.create();
                 titulo.setTitle(resources.getString(R.string.eliminarCuenta));
                 titulo.show();
-
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
             }

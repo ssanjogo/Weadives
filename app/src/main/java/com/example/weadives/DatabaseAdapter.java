@@ -375,13 +375,14 @@ public class DatabaseAdapter extends Activity {
     public void singout(){
         mAuth.signOut();
         user = null;
-        listener.setUser(null);
         listener.setStatusLogIn(false);
     }
 
     public void deleteAccount() {
         db.collection("Users").document(mAuth.getCurrentUser().getUid()).delete();
         mAuth.getCurrentUser().delete();
+        System.out.println("ELIMINAR USER: " + mAuth.getCurrentUser());
+        mAuth.signOut();
         Log.d(TAG, "Cuenta borrada");
     }
 

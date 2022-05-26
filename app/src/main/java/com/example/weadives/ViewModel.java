@@ -41,6 +41,20 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     private MutableLiveData<ArrayList<PublicacionClass>> mutableListaTemp;
     private boolean acces=false;
 
+    public static ViewModel getInstance(AppCompatActivity application){
+        if (vm == null){
+            vm = new ViewModelProvider(application).get(ViewModel.class);
+        }
+        return vm;
+    }
+
+    public static ViewModel getInstance(){
+        if (vm == null){
+            exit(-1);
+        }
+        return vm;
+    }
+
     public ViewModel(Application application) {
         super(application);
         listaUsuarios = new MutableLiveData<>();
@@ -50,23 +64,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         statusLogIn = false;
         dbA = new DatabaseAdapter(this);
         dbA.getAllUsers();
-        dbA.getUser2();
+        if(dbA.accountNotNull()){
+            dbA.getUser2();
+        }
         listaTemp=new ArrayList<>();
         mutableListaTemp =new MutableLiveData<>();
         mutableListaTemp.setValue(listaTemp);
-    }
-
-    public static ViewModel getInstance(AppCompatActivity application){
-        if (vm == null){
-            vm = new ViewModelProvider(application).get(ViewModel.class);
-        }
-        return vm;
-    }
-    public static ViewModel getInstance(){
-        if (vm == null){
-            exit(-1);
-        }
-        return vm;
     }
 
     public  MutableLiveData<ArrayList<PublicacionClass>> getMutable() {
@@ -160,6 +163,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public void deleteAccount(){
+        System.out.println("PASAAAAAAAAAAAAAAAAAAA");
         dbA.deleteAccount();
     }
 

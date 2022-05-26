@@ -65,8 +65,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         List<PublicacionClass> publicacionList= new ArrayList<>();
 
         publicacionList=ViewModelParametros.getSingletonInstance().getPublications();
-
-
+        
         recyclerView = findViewById(R.id.rv_llistaAjustes);
         //mejorar performance
         recyclerView.hasFixedSize();
