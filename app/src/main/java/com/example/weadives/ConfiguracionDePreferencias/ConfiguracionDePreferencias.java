@@ -85,8 +85,8 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 btn_Interrogante.startAnimation(animation);
                 AlertDialog dialogBuilder= new AlertDialog.Builder(context)
                         .setTitle(resources.getString(R.string.ayuda))
-                        .setMessage(resources.getString(R.string.ayudapreferencias))
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setMessage(resources.getString(R.string.ayudapreferencias)+"\n\n"+resources.getString(R.string.ayudapreferencias2))
+                        .setIcon(R.drawable.logo_weadives_copiarande)
                         .show();
             }
         });
@@ -411,8 +411,8 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.ayudapreferencias);
-
+            builder.setMessage(R.string.ayudapreferencias+"\n"+R.string.ayudapreferencias2);
+            builder.setIcon(R.drawable.logo_weadives);
             // Create the AlertDialog object and return it
             return builder.create();
         }
