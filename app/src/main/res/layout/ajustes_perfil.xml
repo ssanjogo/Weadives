@@ -154,4 +154,17 @@
         android:background="@drawable/button_rounded_grey"
         android:textColor="@color/white"/>
 
+    <Button
+        android:id="@+id/btn_deleteImage"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:background="@drawable/button_rounded"
+        android:textColor="@color/white"
+        android:text="@string/eliminarImagen"
+        app:layout_constraintBottom_toTopOf="@+id/etN_nombrepersona2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_perfil"
+        app:layout_constraintVertical_bias="0.233" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

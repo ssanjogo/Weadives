@@ -78,8 +78,6 @@ public class PantallaPrincipal extends AppCompatActivity {
 
         btnHorario.setEnabled(false);
 
-
-
         viewModel = ViewModel.getInstance(this);
         mapViewModel = ViewModelMapa.getInstance(this);
         horarioViewModel = ViewModelHorario.getInstance(this);
@@ -93,12 +91,8 @@ public class PantallaPrincipal extends AppCompatActivity {
             startActivity(getIntent());
         }*/
 
-
-
         ArrayList<MarcadorClass> list = new ArrayList<>();
-
         list = mapViewModel.getMarcadores();
-
 
         ArrayAdapter<MarcadorClass> adapter = new ArrayAdapter<MarcadorClass>(this, R.layout.one_spinner_list, list){
             @Override
@@ -127,8 +121,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         };
         adapter.setDropDownViewResource(R.layout.one_spinner_list);
         DesplegableMarcadores.setAdapter(adapter);
-
-        System.out.println(adapter.getCount());
 
         DesplegableMarcadores.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -166,9 +158,7 @@ public class PantallaPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Intent LogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
-                //LogIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(LogIn);
-                //finish();
             }
         });
 

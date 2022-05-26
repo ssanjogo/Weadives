@@ -191,9 +191,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         this.usuario = user;
     }
 
-    public void subirImagen(Uri imageUri){
-        dbA.subirImagen(imageUri, getCurrentUser().getId());
-        cambiarImagen(imageUri);
+    public void cambiarImagen2(String imageUri){
+        UserClass user = getCurrentUser();
+        user.setUrlImg(imageUri.toString());
+        HashMap<String, Object> usuario = convertUserToHashMap(user);
+        dbA.updateDatos(usuario);
+        this.usuario = user;
     }
 
 
