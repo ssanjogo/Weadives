@@ -1,17 +1,30 @@
 package com.example.weadives;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.weadives.AreaUsuario.UserClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -19,11 +32,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StreamDownloadTask;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.grpc.internal.JsonUtil;
 
 public class DatabaseAdapter extends Activity {
 
@@ -34,11 +57,17 @@ public class DatabaseAdapter extends Activity {
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth.IdTokenListener mAuthIDTokenListener;
-    private FirebaseUser user;
+    private FirebaseUser user = mAuth.getCurrentUser();
 
     public static vmInterface listener;
+    public static mapaInterface listenerMapa;
+    public static horarioInterface listenerHorario;
     public static intentInterface listenerIntent;
     public static DatabaseAdapter databaseAdapter;
+
+    public String path;
+
+
 
     public DatabaseAdapter(vmInterface listener){
         this.listener = listener;
@@ -52,6 +81,21 @@ public class DatabaseAdapter extends Activity {
         FirebaseFirestore.setLoggingEnabled(true);
     }
 
+    public DatabaseAdapter(mapaInterface mapaInterface){
+        this.listenerMapa = mapaInterface;
+        databaseAdapter = this;
+        FirebaseFirestore.setLoggingEnabled(true);
+    }
+
+    public DatabaseAdapter(horarioInterface horarioInterface){
+        this.listenerHorario = horarioInterface;
+        databaseAdapter = this;
+        FirebaseFirestore.setLoggingEnabled(true);
+    }
+
+    public DatabaseAdapter(String path){
+        this.path = path;
+    }
 
     public interface vmInterface{
         void setCollection(ArrayList<UserClass> listaUsuarios);
@@ -71,9 +115,21 @@ public class DatabaseAdapter extends Activity {
         void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses);
     }
 
+    //Mapa
+    public interface mapaInterface{
+        void setLatLng(ArrayList<Double> lat, ArrayList<Double> lon);
+    }
+
+    //Horario
+    public interface horarioInterface{
+        void getCsvRef(String CsvRef);
+    }
+
+
     public interface intentInterface {
         void intent();
     }
+
 
     public void register (String nombre, String correo, String contraseña){
         mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -278,5 +334,58 @@ public class DatabaseAdapter extends Activity {
         db.collection("Users").document(mAuth.getCurrentUser().getUid()).delete();
         mAuth.getCurrentUser().delete();
         Log.d(TAG, "Cuenta borrada");
+    }
+
+    public void getLatLng(){
+        db.collection("Data").document("Coord_base").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    ArrayList<Double> Lat = (ArrayList<Double>) document.get("Lat");
+                    ArrayList<Double> Lon = (ArrayList<Double>) document.get("Lon");
+                    listenerMapa.setLatLng(Lat, Lon);
+                }
+            }
+        });
+    }
+
+
+    public void getStorageData (String fileName) {
+
+
+        //System.out.println(mAuth.getCurrentUser().getEmail());
+
+        StorageReference fileRef = storage.getReference()
+                .child("Weather_data")
+                .child("Coord_data")
+                .child(fileName + ".csv");
+
+        try {
+            File localCSV = File.createTempFile("weatherData", ".csv");
+
+            FileDownloadTask downloadTask = fileRef.getFile(localCSV);
+
+
+            int i = 0;
+            while(downloadTask.isInProgress()){
+                System.out.println("WHILE: " + i++);
+                System.out.println("Complete: " + downloadTask.isComplete());
+                System.out.println("Successful: " + downloadTask.isSuccessful());
+                System.out.println("Cancelled: " + downloadTask.isCanceled());
+                System.out.println("Paused: " + downloadTask.isPaused());
+            }
+
+            System.out.println("WE OOOUT!!:");
+            System.out.println("Complete: " + downloadTask.isComplete());
+            System.out.println("Successful: " + downloadTask.isSuccessful());
+            System.out.println("Cancelled: " + downloadTask.isCanceled());
+            System.out.println("Paused: " + downloadTask.isPaused());
+            System.out.println(downloadTask.getResult().getBytesTransferred());
+            System.out.println(localCSV.getPath());
+            listenerHorario.getCsvRef(localCSV.getAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("TREMENDOO ERROOOR. " + e.getMessage());
+        }
     }
 }
