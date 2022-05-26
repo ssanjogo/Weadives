@@ -10,7 +10,8 @@ import java.util.Locale;
 
 public final class SingletonIdioma extends AppCompatActivity {
 
-public final class SingletonIdioma {
+
+
     private static SingletonIdioma instance;
     public Traducciones value;
     public Context c;
@@ -61,6 +62,7 @@ public final class SingletonIdioma {
         }
         return instance;
     }
+
 
     public String getValue() {
         return value.toString().toLowerCase(Locale.ROOT);

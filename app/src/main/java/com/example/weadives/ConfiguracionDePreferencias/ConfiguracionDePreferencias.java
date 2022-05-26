@@ -1,5 +1,7 @@
 package com.example.weadives.ConfiguracionDePreferencias;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,10 +10,13 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -34,7 +39,6 @@ import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
-import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
 import com.example.weadives.ViewModel;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModelParametros;
@@ -415,13 +419,4 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         }
     }
 
-
-
-
-    private ArrayAdapter updateAdapter(ArrayList<ParametrosClass> list){
-        ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,list);
-        adapter.setDropDownViewResource(R.layout.one_spinner_list);
-        guardarPreferenciasParametros(comprimirArray(list));
-        return adapter;
-    }
 }

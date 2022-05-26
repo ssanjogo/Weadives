@@ -32,7 +32,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
 
     private String UID;
-    private boolean statusLogIn = false;
     private boolean statusLogIn = false, keepSession = false;
     private final DatabaseAdapter dbA;
 

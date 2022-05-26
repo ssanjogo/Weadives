@@ -120,10 +120,6 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
                         viewModel.keepSession(true);
                     }
                     viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
-                    } else {
-
-                        viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
-                    }
                 }
             }
         });
