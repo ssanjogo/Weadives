@@ -29,5 +29,8 @@ public enum Directions {
         public int toInt(Directions dir){
            return (dir==NORTE) ? 0 : (dir==NORDESTE) ? 1 :(dir==ESTE) ? 2:(dir==SUDESTE)?3:(dir==SUD)?4:(dir==SUDOESTE)?5:(dir==OESTE)?6:(dir==NORDOESTE)?7:8;
         }
+    public static Directions fromInt(int dir){
+        return (dir==0) ? NORTE : (dir==1) ? NORDESTE :(dir==2) ? ESTE:(dir==3)?SUDESTE:(dir==4)?SUD:(dir==5)?SUDOESTE:(dir==6)?OESTE:(dir==7)?NORDOESTE:NO_DIRECTION;
+    }
 
 }

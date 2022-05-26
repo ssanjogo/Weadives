@@ -250,9 +250,17 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     System.out.println("Activado");
                     sw_mostrarEnPerfil.setChecked(true);
                 }
+
+
                 editName.setText(((ParametrosClass) spinner.getSelectedItem()).getNombreActividad());
+                System.out.println("DIRTESTEODIR2");
+
                 spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas()));
                 spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento()));
+                System.out.println(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
+                System.out.println(spn_dirOlas.getSelectedItemPosition());
+                System.out.println(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento());
+                System.out.println(spn_dirViento.getSelectedItemPosition());
             }
 
 
@@ -325,14 +333,20 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     change.setTemperaturaMin(Float.valueOf(String.valueOf(edittmin.getText())));
                     change.setVientoMax(Float.valueOf(String.valueOf(editvmax.getText())));
                     change.setVientoMin(Float.valueOf(String.valueOf(editvmin.getText())));
-                    change.setDirectionViento(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento());
                     change.setAlturaOlaMax(Float.valueOf(String.valueOf(editaomax.getText())));
                     change.setAlturaOlaMin(Float.valueOf(String.valueOf(editaomin.getText())));
                     change.setPeriodoOlaMax(Float.valueOf(String.valueOf(editpomax.getText())));
                     change.setPeriodoOlaMin(Float.valueOf(String.valueOf(editpomin.getText())));
-                    change.setDirectionOlas(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
-                    //spinner.setAdapter(updateAdapter(test));
 
+                    System.out.println("DIRECTIONTEST");
+                    System.out.println();
+                    change.setDirectionViento(Directions.fromInt(spn_dirViento.getSelectedItemPosition()));
+                    change.setDirectionOlas(Directions.fromInt(spn_dirOlas.getSelectedItemPosition()));
+
+
+                    //spinner.setAdapter(updateAdapter(test));
+                    System.out.println("DIRTESTEODIR");
+                    System.out.println(change.toString2());
                     ViewModelParametros.getSingletonInstance().modifyParametro(change, (ParametrosClass) spinner.getSelectedItem(),sw_mostrarEnPerfil.isChecked());
 
 
