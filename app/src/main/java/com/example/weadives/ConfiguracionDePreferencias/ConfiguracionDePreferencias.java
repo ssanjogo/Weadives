@@ -3,6 +3,7 @@ package com.example.weadives.ConfiguracionDePreferencias;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -288,31 +289,49 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
             }
         });
 
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(resources.getString(R.string.deletePar1))
+                .setMessage(resources.getString(R.string.deletepar2))
+                .setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener()
+                {@Override
+                public void onClick(DialogInterface dialog, int which) {
+                    btn_basura.startAnimation(animation);
+                    ViewModelParametros.getSingletonInstance().deleteParametro((ParametrosClass) spinner.getSelectedItem());
+                    spinner.setSelection(0);
+                    if(ViewModelParametros.getSingletonInstance().getLista().size()==0){
+                        scrollView2.setVisibility(View.GONE);
+                        sw_mostrarEnPerfil.setVisibility(View.GONE);
+                        sw_notificaciones.setVisibility(View.GONE);
+                        btn_guardar.setVisibility(View.GONE);
+                        btn_basura.setVisibility(View.GONE);
+                        ParametrosClass newParametro=new ParametrosClass();
+                        newParametro.setNombreActividad(resources.getString(R.string.no_preferencias));
+                        newParametro.setIdPublicacion("-999");
+                        ViewModelParametros.getSingletonInstance().addParametro(newParametro);
+                        spinner.setSelection(adapter.getPosition(newParametro));
+                        spinner.setSelection(0);
+                    }
+                }
+
+                })
+                .setNegativeButton(resources.getString(R.string.negativo), null);
+
         btn_basura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_basura.startAnimation(animation);
-                ViewModelParametros.getSingletonInstance().deleteParametro((ParametrosClass) spinner.getSelectedItem());
-                spinner.setSelection(0);
-                if(ViewModelParametros.getSingletonInstance().getLista().size()==0){
-                    scrollView2.setVisibility(View.GONE);
-                    sw_mostrarEnPerfil.setVisibility(View.GONE);
-                    sw_notificaciones.setVisibility(View.GONE);
-                    btn_guardar.setVisibility(View.GONE);
-                    btn_basura.setVisibility(View.GONE);
-                    ParametrosClass newParametro=new ParametrosClass();
-                    newParametro.setNombreActividad(resources.getString(R.string.no_preferencias));
-                    newParametro.setIdPublicacion("-999");
-                    ViewModelParametros.getSingletonInstance().addParametro(newParametro);
-                    spinner.setSelection(adapter.getPosition(newParametro));
-                    spinner.setSelection(0);
 
-                }
+
+                dialog.show();
 
 
 
             }
         });
+
+
+
+
 
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override

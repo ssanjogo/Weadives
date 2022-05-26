@@ -71,4 +71,6 @@
     <string name="ayudapreferencias2" >Los Switches te permitiran hacer cosas increibles! El switch de publicar, te permitiá subir a tu perfil tus ajustes(Si lo tienes). El switch de notificaciones te notificará si se dan las condiciones de tu preferencia.</string>
     <string name="ayuda" > Ayuda al cliente </string>
     <string name="txtContraseña">contraseña</string>
+    <string name="deletePar1">Eliminar Parametro</string>
+    <string name="deletepar2">¿Estas seguro de que deseas eliminar este parametro?</string>
 </resources>
