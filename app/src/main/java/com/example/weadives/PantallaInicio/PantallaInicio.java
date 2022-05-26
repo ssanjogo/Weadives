@@ -28,6 +28,8 @@ import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelParametros;
 
 public class PantallaInicio extends AppCompatActivity {
 
@@ -38,8 +40,17 @@ public class PantallaInicio extends AppCompatActivity {
     private ViewModel viewModel;
 
     @Override
+    public void onResume(){
+        super.onResume();
+        //here...
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.pantalla_inicio);
         LinearLayout layout =findViewById(R.id.LinearMainLayout);
         Imagen_superior = findViewById(R.id.img_inicio);
@@ -60,6 +71,12 @@ public class PantallaInicio extends AppCompatActivity {
         if (viewModel.accountNotNull()){
             viewModel.getUser();
         }
+        ViewModelParametros p= ViewModelParametros.getSingletonInstance(resources2,this);
+        System.out.println(p.getLista());
+
+        //p.deleteALL();
+        overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+
 
         btn_en.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +85,8 @@ public class PantallaInicio extends AppCompatActivity {
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Language changed into English", Toast.LENGTH_SHORT);
                 toast.show();
+                finishAffinity();
+                startActivity(getIntent());
             }
         });
         btn_es.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +96,8 @@ public class PantallaInicio extends AppCompatActivity {
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Idioma cambiado a Castellano", Toast.LENGTH_SHORT);
                 toast.show();
+                finishAffinity();
+                startActivity(getIntent());
             }
         });
 

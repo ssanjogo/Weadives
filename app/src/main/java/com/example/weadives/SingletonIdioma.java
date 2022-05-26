@@ -10,6 +10,7 @@ import java.util.Locale;
 
 public final class SingletonIdioma extends AppCompatActivity {
 
+public final class SingletonIdioma {
     private static SingletonIdioma instance;
     public Traducciones value;
     public Context c;
@@ -71,14 +72,14 @@ public final class SingletonIdioma extends AppCompatActivity {
     }
 
     private void guardarPreferencias(String string) {
-        SharedPreferences preferencias = getSharedPreferences("idioma", MODE_PRIVATE);
+        SharedPreferences preferencias = c.getSharedPreferences("idioma", c.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferencias.edit();
         editor.putString("idioma",string);
         editor.commit();
     }
 
     private String cargarPreferencias() {
-        SharedPreferences preferencias = getSharedPreferences("idioma", MODE_PRIVATE);
+        SharedPreferences preferencias = c.getSharedPreferences("idioma", c.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
     }
 

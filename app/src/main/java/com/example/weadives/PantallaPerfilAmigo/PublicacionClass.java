@@ -6,8 +6,53 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PublicacionClass {
+
+
+    private ParametrosClass parametros;
+    private HashMap<String, Integer> likeList;
+    private HashMap<String, String> comentariosList;
+    private String idPublicacion;
+    private String  idUsuario;
+
+
+    public PublicacionClass(HashMap<String, String> map_comentarios, HashMap<String, String> map_likes, ParametrosClass p, String idPubli, String idUsuario) {
+        this.parametros = p;
+        HashMap<String,Integer> newMap = new HashMap<>();
+        for (HashMap.Entry<String, String> entry : map_likes.entrySet()) {
+                newMap.put(entry.getKey(), Integer.valueOf(entry.getValue()) );
+        }
+        this.likeList = newMap;
+        System.out.println(map_likes.getClass());
+        System.out.println(map_likes);
+        this.comentariosList = map_comentarios;
+        this.idPublicacion = idPubli;
+        System.out.println("TESTEO-\n");
+        System.out.println(idPubli);
+        p.setIdPublicacion(idPubli);
+        this.idUsuario=idUsuario;
+    }
+    public PublicacionClass(ParametrosClass p, String idPubli, String idUsuario,HashMap<String, String> map_comentarios, HashMap<String, Integer> map_likes) {
+        this.parametros = p;
+        this.likeList = map_likes;
+        System.out.println(map_likes.getClass());
+        System.out.println(map_likes);
+        this.comentariosList = map_comentarios;
+        this.idPublicacion = idPubli;
+        this.idUsuario=idUsuario;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     public ParametrosClass getParametros() {
         return parametros;
     }
@@ -16,14 +61,11 @@ public class PublicacionClass {
         this.parametros = parametros;
     }
 
-    private ParametrosClass parametros;
-    private HashMap<String, Integer> likeList;
-    private HashMap<String, String> comentariosList;
-
-    public PublicacionClass(ParametrosClass parametros, HashMap<String, Integer> likeList, HashMap<String, String> comentariosList) {
+    public PublicacionClass(String idPublicacion, ParametrosClass parametros, HashMap<String, Integer> likeList, HashMap<String, String> comentariosList) {
         this.parametros = parametros;
         this.likeList = likeList;
         this.comentariosList = comentariosList;
+        this.idPublicacion = idPublicacion;
     }
     public boolean like(String id, int votacion){
         if(likeList.containsKey(id)){return false;}
@@ -34,6 +76,14 @@ public class PublicacionClass {
         if(!likeList.containsKey(id)){return false;}
         likeList.remove(id);
         return true;
+    }
+
+    public String getIdPublicacion() {
+        return idPublicacion;
+    }
+
+    public void setIdPublicacion(String idPublicacion) {
+        this.idPublicacion = idPublicacion;
     }
 
     public void addComment(String id, String comment){
@@ -64,7 +114,12 @@ public class PublicacionClass {
         int sum=0;
         int value;
         String key;
-        for(Map.Entry<String, Integer> entry : likeList.entrySet()) {
+        System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP\n");
+        System.out.println(likeList);
+        for(HashMap.Entry<String, Integer> entry : likeList.entrySet()) {
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
+            Set s=likeList.entrySet();
             key = entry.getKey();
             value = entry.getValue();
             if (value==1){

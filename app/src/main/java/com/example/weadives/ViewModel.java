@@ -1,5 +1,7 @@
 package com.example.weadives;
 
+import static java.lang.System.exit;
+
 import android.app.Application;
 import android.net.Uri;
 import android.widget.ImageView;
@@ -11,7 +13,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,18 +25,32 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public static final String TAG = "ViewModel";
 
     private final MutableLiveData<List<UserClass>> listaUsuarios;
+    private final MutableLiveData<List<UserClass>> listaAmigos;
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
     private final MutableLiveData<String> mToast;
     private UserClass usuario;
 
+
+    private String UID;
+    private boolean statusLogIn = false;
     private boolean statusLogIn = false, keepSession = false;
     private final DatabaseAdapter dbA;
 
     private static ViewModel vm;
+    private ArrayList<PublicacionClass> listaTemp;
+    private MutableLiveData<ArrayList<PublicacionClass>> mutableListaTemp;
+    private boolean acces=false;
 
     public static ViewModel getInstance(AppCompatActivity application){
         if (vm == null){
             vm = new ViewModelProvider(application).get(ViewModel.class);
+
+        }
+        return vm;
+    }
+    public static ViewModel getInstance(){
+        if (vm == null){
+            exit(-1);
         }
         return vm;
     }
@@ -41,10 +59,24 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         super(application);
         listaUsuarios = new MutableLiveData<>();
         listaRecyclerView = new MutableLiveData<>();
+        listaAmigos = new MutableLiveData<>();
         mToast = new MutableLiveData<>();
         statusLogIn = false;
         dbA = new DatabaseAdapter(this);
         dbA.getAllUsers();
+        listaTemp=new ArrayList<>();
+        mutableListaTemp =new MutableLiveData<>();
+        mutableListaTemp.setValue(listaTemp);
+    }
+    public  MutableLiveData<ArrayList<PublicacionClass>> getMutable() {
+        System.out.println("GETMUTABLE");
+        System.out.println(mutableListaTemp);
+        System.out.println(listaTemp);
+        if (mutableListaTemp == null) {
+            mutableListaTemp = new MutableLiveData<>();
+        }
+
+        return mutableListaTemp;
     }
 
     public LiveData<List<UserClass>> getListaUsers(){
@@ -76,6 +108,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public UserClass getUserByUID(String uid){
+        System.out.println(listaUsuarios.getValue());
         for (int i = 0; i < listaUsuarios.getValue().size(); i++) {
             if (listaUsuarios.getValue().get(i).getId().equals(uid)){
                 return listaUsuarios.getValue().get(i);
@@ -96,6 +129,13 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             listaUsuarios.setValue(listaUsuarios.getValue());
             reload();
         }
+    }
+
+    public String getNom(){
+        return usuario.getUsername();
+    }
+    public String getUserId(){
+        return usuario.getId();
     }
 
     public void logIn(String correo, String contraseña){
@@ -323,6 +363,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         fillUserList();
     }
 
+    public void getPublicaciones(){
+        dbA.getPublicationsUsuario(this.UID);
+    }
+
     public void buscarPorNombre(String nombre) {
         List<UserClass> listaFiltradaPorNombre = new ArrayList<>();
         for (UserClass user : getListaUsers().getValue()){
@@ -406,6 +450,15 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         dbA.getAllUsers();
         dbA.getUser();
     }
+    public void subirPublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
+        dbA.savePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
+    }
+    public void updatePublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
+        dbA.updatePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
+    }
+    public void deletePublicacion(String idPublicacion){
+        dbA.deletePublicacion(idPublicacion);
+    }
 
     @Override
     public void setCollection(ArrayList<UserClass> listaUsuarios) {
@@ -418,12 +471,78 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     @Override
+    public void setUserID(String id) {
+        this.UID = id;
+    }
+
+    @Override
     public void setUser(UserClass u) {
         this.usuario = u;
+        ViewModelParametros.getSingletonInstance().setUser(u);
+
     }
 
     @Override
     public void setToast(String s) {
         mToast.setValue(s);
+    }
+
+    @Override
+    public void notifyId(String id) {
+        ViewModelParametros.getSingletonInstance().notifyId(id);
+    }
+
+    @Override
+    public void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses) {
+       ViewModelParametros.getSingletonInstance().setListaPublicacion(publicacionClasses);
+
+    }
+
+    @Override
+    public void setListaPublicacionTemp(ArrayList<PublicacionClass> lista) {
+        System.out.println("SOY EL VIEWMODEL RECIBIENDO ");
+        System.out.println(lista);
+        mutableListaTemp.setValue(lista);
+        listaTemp=lista;
+        ViewModel.getInstance().getMutable().setValue(lista);
+
+        if(lista!=null){
+            listaTemp=lista;
+            mutableListaTemp.setValue(lista);
+
+        }else{
+            mutableListaTemp.setValue(new ArrayList<>());
+        }
+        acces=true;
+
+    }
+    public MutableLiveData<ArrayList<PublicacionClass>> getCurrentList() {
+        if (mutableListaTemp == null) {
+            mutableListaTemp = new MutableLiveData<ArrayList<PublicacionClass>>();
+        }
+        return mutableListaTemp;
+    }
+
+
+
+    public void setGetPublicationsFrom(String id){
+        System.out.println("SOY EL VIEWMODEL PIDIENDO ");
+        dbA.getPublicationsFromUsuario(id);
+        acces=false;
+    }
+
+    public ArrayList<PublicacionClass> getPublicationsFrom(){
+
+        System.out.println("Metodo 3 ");
+        return new ArrayList<>();
+        /*System.out.println(listaTemp);
+        if(listaTemp.size()==0){
+            return new ArrayList<>();
+        }
+        return listaTemp;*/
+    }
+
+    public boolean getAcces() {
+        return acces;
     }
 }

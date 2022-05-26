@@ -62,5 +62,13 @@
     <string name="cambiarContraseña">Cambiar contraseña</string>
     <string name="seleccionarFotoGaleria">Elegir una foto de la galeria</string>
     <string name="hacerFoto">Sacar una foto</string>
+    <string name="no_public_available">No hay publicaciones</string>
+    <string name="no_friend">Debes ser amigo de este usuario para ver sus publicaciones</string>
+    <string name="AlreadyLike">Ya has dado tu opinion de esta publicacion</string>
+    <string name="no_preferencias">No existen preferencias</string>
+    <string name="nuevo_parametro"> Nuevo Parametro </string>
+    <string name="ayudapreferencias" > En esta pestaña podrás crear tus propias configuraciones de parametros! Con el boton +, podrás añadir un nuevo parametro. El boton guardar te permitirá no perder tus preferencias cuando cierres la aplicación.</string>
+    <string name="ayudapreferencias2" >Los Switches te permitiran hacer cosas increibles! El switch de publicar, te permitiá subir a tu perfil tus ajustes(Si lo tienes). El switch de notificaciones te notificará si se dan las condiciones de tu preferencia.</string>
+    <string name="ayuda" > Ayuda al cliente </string>
     <string name="txtContraseña">contraseña</string>
 </resources>

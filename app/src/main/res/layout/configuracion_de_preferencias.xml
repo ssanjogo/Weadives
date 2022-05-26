@@ -50,17 +50,6 @@
         android:textColor="@color/white"/>
 
     <Switch
-        android:id="@+id/sw_notificaciones"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="@string/notificaciones"
-        app:layout_constraintBottom_toTopOf="@+id/sw_mostrarEnPerfil"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Switch
         android:id="@+id/sw_mostrarEnPerfil"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
@@ -69,7 +58,18 @@
         android:text="@string/mostrar_en_perfil"
         app:layout_constraintBottom_toTopOf="@+id/btn_guardar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Switch
+        android:id="@+id/sw_notificaciones"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="@string/notificaciones"
+        app:layout_constraintBottom_toTopOf="@+id/sw_mostrarEnPerfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -78,7 +78,7 @@
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/spn_desplegableMarcadores2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toEndOf="@+id/spn_desplegableMarcadores2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.894"
@@ -493,5 +493,28 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/btn_basura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/sw_mostrarEnPerfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toEndOf="@+id/sw_notificaciones"
+        app:layout_constraintTop_toTopOf="@+id/sw_notificaciones"
+        app:layout_constraintVertical_bias="0.511"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <ImageView
+        android:id="@+id/btn_Interrogante"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_home8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_home8"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/interrogante" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

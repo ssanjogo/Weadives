@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.example.weadives.AreaUsuario.UserClass;
 import com.google.android.gms.tasks.Continuation;
+import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,8 +20,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -66,8 +69,19 @@ public class DatabaseAdapter extends Activity {
     public interface vmInterface{
         void setCollection(ArrayList<UserClass> listaUsuarios);
         void setStatusLogIn(boolean status);
+        void setUserID(String id);
         void setUser(UserClass u);
         void setToast(String s);
+        void notifyId(String id);
+        void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses);
+        void setListaPublicacionTemp(ArrayList<PublicacionClass> lista);
+    }
+
+    public interface vmpInterface{
+        void setStatusLogIn(boolean status);
+        void setUserID(String id);
+        void setUser(UserClass u);
+        void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses);
     }
 
     public interface intentInterface {
@@ -93,7 +107,10 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+                    listener.setUserID(task.getResult().getUser().getUid());
                     getUser();
+                    System.out.println("LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    getPublicationsUsuario(task.getResult().getUser().getUid());
                 } else {
                     Log.e(TAG, "Error en el log in");
                 }
@@ -126,6 +143,79 @@ public class DatabaseAdapter extends Activity {
                 }
             }
         });
+    }
+
+    public void getPublicationsUsuario(String idUsuario) {
+        db.collection("Publicaciones").whereEqualTo("idUsuario", idUsuario).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    ArrayList<PublicacionClass> lista= new ArrayList<>();
+                    for(DocumentSnapshot document : task.getResult()){
+                        Map<String, Object> publi = document.getData();
+                        ParametrosClass p = ParametrosClass.descomprimir(document.getString("Parametros")).get(0);
+                        PublicacionClass pc = new PublicacionClass((HashMap<String, String>) publi.get("Map comentarios"), (HashMap<String, String>) publi.get("Map likes"), p, (String)publi.get("idPublicacion"), (String)publi.get("idUsuario"));
+                        lista.add(pc);
+                    }
+                    listener.setListaPublicacion(lista);
+                }
+            }
+        });
+    }
+    public void getPublicationsFromUsuario(String idUsuario) {
+        db.collection("Publicaciones").whereEqualTo("idUsuario", idUsuario).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    ArrayList<PublicacionClass> lista= new ArrayList<>();
+                    for(DocumentSnapshot document : task.getResult()){
+                        Map<String, Object> publi = document.getData();
+                        ParametrosClass p = ParametrosClass.descomprimir(document.getString("Parametros")).get(0);
+                        PublicacionClass pc = new PublicacionClass((HashMap<String, String>) publi.get("Map comentarios"), (HashMap<String, String>) publi.get("Map likes"), p, (String)publi.get("idPublicacion"), (String)publi.get("idUsuario"));
+                        lista.add(pc);
+                    }
+                    System.out.println("SOY EL DATABASE");
+                    System.out.println(lista);
+                    listener.setListaPublicacionTemp(lista);
+                }
+            }
+        });
+    }
+    public void updatePublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
+        Map<String, Object> publicacion = new HashMap<>();
+        publicacion.put("Map comentarios", coments);
+        publicacion.put("Map likes", likes);
+        publicacion.put("Parametros", parametros);
+        publicacion.put("idPublicacion", idPublicacion);
+        publicacion.put("idUsuario", idUsuario);
+        Log.i(TAG, "updatePublicacion");
+        db.collection("Publicaciones").document(idPublicacion).update(publicacion);
+    }
+    public void savePublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
+        DocumentReference dr=db.collection("Publicaciones").document();
+        Map<String, Object> publicacion = new HashMap<>();
+        publicacion.put("Map comentarios", coments);
+        publicacion.put("Map likes", likes);
+        publicacion.put("Parametros", parametros);
+        publicacion.put("idPublicacion", dr.getId());
+        publicacion.put("idUsuario", idUsuario);
+
+        Log.i(TAG, "savePublicacion");
+
+
+        db.collection("Publicaciones").document(dr.getId()).set(publicacion).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                   listener.notifyId(dr.getId());
+                }
+            }
+        });
+    }
+    public void deletePublicacion(String idPublicacion){
+        Log.i(TAG, "deletePublicacion");
+        db.collection("Publicaciones").document(idPublicacion).delete();
+
     }
 
     public void saveUser (String nombre, String correo, String uid) {
@@ -229,6 +319,7 @@ public class DatabaseAdapter extends Activity {
     public void singout(){
         mAuth.signOut();
         user = null;
+        listener.setUser(null);
         listener.setStatusLogIn(false);
     }
 

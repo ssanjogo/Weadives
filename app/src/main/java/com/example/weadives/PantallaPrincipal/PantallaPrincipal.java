@@ -19,7 +19,6 @@ import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaDeHorarios.PantallaDeHorarios;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.R;
-import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
 
@@ -31,11 +30,23 @@ public class PantallaPrincipal extends AppCompatActivity {
     private ViewModel viewModel;
 
     @Override
+    public void onResume(){
+        super.onResume();
+        final Context context;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
+        context = LocaleHelper.setLocale(this, cargarPreferencias());
+
+        btnHorario.setText(resources.getString(R.string.horarios));
+        btn_gestionarParametros.setText((resources.getString(R.string.gestionar_parametros)));
+
+
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pantalla_principal);
         btnHorario = findViewById(R.id.btnHorario);
-        btnAñadirNotificacion = findViewById(R.id.btnAñadirNotificacion);
         btn_gestionarParametros = findViewById(R.id.btn_gestionarParametros);
         btn_home = findViewById(R.id.btn_home);
         btn_social = findViewById(R.id.btn_social);
@@ -47,11 +58,18 @@ public class PantallaPrincipal extends AppCompatActivity {
         context = LocaleHelper.setLocale(this, cargarPreferencias());
 
         btnHorario.setText(resources.getString(R.string.horarios));
-        btnAñadirNotificacion.setText((resources.getString(R.string.AñadirNotificacion)));
         btn_gestionarParametros.setText((resources.getString(R.string.gestionar_parametros)));
 
         viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
+
+       /* @Override
+        public void onBackPressed()
+        {
+            super.onBackPressed();
+            finish();
+            startActivity(getIntent());
+        }*/
 
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -77,18 +95,6 @@ public class PantallaPrincipal extends AppCompatActivity {
                 btnHorario.startAnimation(animation);
                 Intent pantallaHorarios = new Intent(getApplicationContext(), PantallaDeHorarios.class);
                 startActivity(pantallaHorarios);
-            }
-        });
-
-
-        btnAñadirNotificacion.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Animation animation2= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
-                btnAñadirNotificacion.startAnimation(animation2);
-                Intent seleccionDeAjuste = new Intent(getApplicationContext(), SeleccionDeAjuste.class);
-                startActivity(seleccionDeAjuste);
-
             }
         });
 

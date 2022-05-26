@@ -1,5 +1,7 @@
 package com.example.weadives;
 
+import java.util.ArrayList;
+
 public class ParametrosClass {
 
     enum direction {
@@ -41,17 +43,38 @@ public class ParametrosClass {
     private float periodoOlaMin;
 
     private DatoGradosClass directionOlas;
+    private String idPublicacion;
 
+    public String getIdPublicacion() {
+        return idPublicacion;
+    }
+
+    public void setIdPublicacion(String idPublicacion) {
+        this.idPublicacion = idPublicacion;
+    }
 
     public ParametrosClass() {
-        this.nombreActividad = "New";
+        this.nombreActividad = "New Parameter";
+        this.presionMax = 0;
+        this.presionMin = 0;
+        this.temperaturaMax = 0;
+        this.temperaturaMin = 0;
+        this.vientoMax = 0;
+        this.vientoMin = 0;
+        this.directionViento = new DatoGradosClass(Directions.NO_DIRECTION);
+        this.alturaOlaMax = 0;
+        this.alturaOlaMin = 0;
+        this.periodoOlaMax = 0;
+        this.periodoOlaMin = 0;
+        this.directionOlas = new DatoGradosClass(Directions.NO_DIRECTION);
+        this.idPublicacion="0";
 
     }
 
 
 
     public ParametrosClass(String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
-        this.nombreActividad = nombreActividad;
+        this.nombreActividad = nombreActividad.replaceAll("[^A-Za-z0-9 ]","");
         this.presionMax = presionMax;
         this.presionMin = presionMin;
         this.temperaturaMax = temperaturaMax;
@@ -64,6 +87,24 @@ public class ParametrosClass {
         this.periodoOlaMax = periodoOlaMax;
         this.periodoOlaMin = periodoOlaMin;
         this.directionOlas = directionOlas;
+        this.idPublicacion="0";
+    }
+
+    public ParametrosClass(String idPublicacion,String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
+        this.nombreActividad = nombreActividad.replaceAll("[^A-Za-z0-9 ]","");
+        this.presionMax = presionMax;
+        this.presionMin = presionMin;
+        this.temperaturaMax = temperaturaMax;
+        this.temperaturaMin = temperaturaMin;
+        this.vientoMax = vientoMax;
+        this.vientoMin = vientoMin;
+        this.directionViento = directionViento;
+        this.alturaOlaMax = alturaOlaMax;
+        this.alturaOlaMin = alturaOlaMin;
+        this.periodoOlaMax = periodoOlaMax;
+        this.periodoOlaMin = periodoOlaMin;
+        this.directionOlas = directionOlas;
+        this.idPublicacion=idPublicacion;
     }
 
 
@@ -123,6 +164,7 @@ public class ParametrosClass {
     }
 
     public void setNombreActividad(String nombreActividad) {
+        nombreActividad.replaceAll("[^A-Za-z0-9 ]","");
         this.nombreActividad = nombreActividad;
     }
 
@@ -228,4 +270,25 @@ public class ParametrosClass {
     public void setDirectionOlas(Directions directionOlas) {
         this.directionOlas.setDir(directionOlas);
     }
+
+    static ArrayList<ParametrosClass> descomprimir(String l){
+            System.out.println(l);
+            String[] parametrosStringList = l.split("¿");
+            int count = l.length() - l.replace("¿", "").length();
+            System.out.println(count);
+            ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
+            String[] fixedParam;
+            for (String i : parametrosStringList) {
+                System.out.println(i);
+                fixedParam=i.split(",");
+                for (String x : fixedParam) {
+                    System.out.println(x);
+                }
+
+                parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));
+            }
+
+            return parametrosList;
+        }
+
 }

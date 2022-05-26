@@ -60,5 +60,13 @@
     <string name="cambiarContraseña">Change password</string>
     <string name="seleccionarFotoGaleria">Choose photo from gallery</string>
     <string name="hacerFoto">Take picture</string>
+    <string name="no_public_available">No publications available</string>
+    <string name="no_friend">You have to be friend with this user to see his/her publications</string>
+    <string name="AlreadyLike">You already Like/Disliked this</string>
+    <string name="no_preferencias">There are no preferences</string>
+    <string name="nuevo_parametro">New Parameter</string>
+    <string name="ayudapreferencias">In this page you will be able to create your own preferences. With the + button, you will be able to create a new preference which parameters can be changed writing in the txtLabel.</string>
+    <string name="ayudapreferencias2" > With the button Save, you would be able to sabe the preference and using the switches you could activate notificatios or upload to your profile if you have one! </string>
+    <string name="ayuda"> Guide to the user</string>
     <string name="txtContraseña">password</string>
 </resources>

@@ -200,4 +200,13 @@ public class AjustesPerfil extends AppCompatActivity {
         SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            Uri path = data.getData();
+            img_perfil.setImageURI(path);
+        }
+    }
 }

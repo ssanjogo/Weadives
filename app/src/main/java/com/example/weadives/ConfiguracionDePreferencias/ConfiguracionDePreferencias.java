@@ -20,7 +20,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.DatoGradosClass;
@@ -32,6 +36,8 @@ import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SeleccionDeAjuste.SeleccionDeAjuste;
 import com.example.weadives.ViewModel;
+import com.example.weadives.SingletonIdioma;
+import com.example.weadives.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +47,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
     private Spinner spinner;
     private Button btn_guardar;
-    private ImageView btn_añadir2, btn_home8;
+    private ImageView btn_añadir2, btn_home8,btn_basura,btn_Interrogante;
     private ScrollView scrollView2;
     private Switch sw_notificaciones, sw_mostrarEnPerfil;
 
@@ -56,23 +62,37 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         scrollView2 = findViewById(R.id.scrollView2);
         sw_notificaciones = findViewById(R.id.sw_notificaciones);
         sw_mostrarEnPerfil = findViewById(R.id.sw_mostrarEnPerfil);
-
+        btn_basura=findViewById(R.id.btn_basura);
+        btn_Interrogante=findViewById(R.id.btn_Interrogante);
         Intent intent = getIntent();
 
-        final Context context;
-        final Resources resources;
-        context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+        final Context context=this;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
         btn_guardar.setText(resources.getString(R.string.guardar));
         sw_notificaciones.setText(resources.getString(R.string.notificaciones));
         sw_mostrarEnPerfil.setText(resources.getString(R.string.mostrar_en_perfil));
+        Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+        btn_Interrogante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                btn_Interrogante.startAnimation(animation);
+                AlertDialog dialogBuilder= new AlertDialog.Builder(context)
+                        .setTitle(resources.getString(R.string.ayuda))
+                        .setMessage(resources.getString(R.string.ayudapreferencias)+"\n\n"+resources.getString(R.string.ayudapreferencias2))
+                        .setIcon(R.drawable.logo_weadives_copiarande)
+                        .show();
+            }
+        });
 
         btn_home8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
+                btn_home8.startAnimation(animation);
+
             }
         });
         //Para que no se suba cuando escribes
@@ -141,22 +161,73 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         spn_dirViento.setAdapter(adapterViento);
 
 
+        sw_mostrarEnPerfil.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
+
+        sw_notificaciones.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
 
 
 
         //Spinner superior
-        ArrayList<ParametrosClass> test=descomprimirArray(cargarPreferenciasParametros());
+        //ArrayList<ParametrosClass> test=descomprimirArray(cargarPreferenciasParametros());
+        ArrayList<ParametrosClass> test= ViewModelParametros.getSingletonInstance().getLista();
+        System.out.println(test);
+        if(test.size()==0){
+            //test.add(new ParametrosClass());
+            scrollView2.setVisibility(View.GONE);
+            sw_mostrarEnPerfil.setVisibility(View.GONE);
+            sw_notificaciones.setVisibility(View.GONE);
+            btn_guardar.setVisibility(View.GONE);
+            btn_basura.setVisibility(View.GONE);
+            ParametrosClass newParametro=new ParametrosClass();
+            newParametro.setNombreActividad(resources.getString(R.string.no_preferencias));
+            newParametro.setIdPublicacion("-999");
+            ViewModelParametros.getSingletonInstance().addParametro(newParametro);
+            spinner.setSelection(0);
+        }
         ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,test);
         adapter.setDropDownViewResource(R.layout.one_spinner_list);
         spinner.setAdapter(adapter);
-
+        /*
+        final Observer<ArrayList<ParametrosClass>> listObserver = new Observer<ArrayList<ParametrosClass>>() {
+            @Override
+            public void onChanged(ArrayList<ParametrosClass> parametrosClasses) {
+                ArrayList<ParametrosClass> test= parametrosClasses;
+                if(test.size()==0){
+                    test.add(new ParametrosClass());
+                }
+                ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<>(this, R.layout.one_spinner_list,test);
+                adapter.setDropDownViewResource(R.layout.one_spinner_list);
+                spinner.setAdapter(adapter);
+            }
+        };*/
+        if(((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion().equals("-999")){
+            scrollView2.setVisibility(View.GONE);
+            sw_mostrarEnPerfil.setVisibility(View.GONE);
+            sw_notificaciones.setVisibility(View.GONE);
+            btn_guardar.setVisibility(View.GONE);
+            btn_basura.setVisibility(View.GONE);
+        }
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(!((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion().equals("-999")){
+                    scrollView2.setVisibility(View.VISIBLE);
+                }
 
-                mostrarAjuste((ParametrosClass) spinner.getSelectedItem());
+
+                //mostrarAjuste((ParametrosClass) spinner.getSelectedItem());
                 editpmax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPresionMax())));
                 editpmin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPresionMin())));
                 edittmax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getTemperaturaMax())));
@@ -168,6 +239,13 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 editpomax.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMax())));
                 editpomin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMin())));
 
+                if(((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion().equals("0")){
+                    System.out.println("Desactivado");
+                    sw_mostrarEnPerfil.setChecked(false);
+                }else{
+                    System.out.println("Activado");
+                    sw_mostrarEnPerfil.setChecked(true);
+                }
                 editName.setText(((ParametrosClass) spinner.getSelectedItem()).getNombreActividad());
                 spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas()));
                 spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento()));
@@ -176,6 +254,50 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                scrollView2.setVisibility(View.GONE);
+
+
+                editName.setText("Nothing selected");
+                /*
+                editpmax.setText("");
+                editpmin.setText("");
+                edittmax.setText("");
+                edittmin.setText("");
+                editvmax.setText("");
+                editvmin.setText("");
+                editaomax.setText("");
+                editaomin.setText("");
+                editpomax.setText("");
+                editpomin.setText("");
+                spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
+                spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
+
+                 */
+            }
+        });
+
+        btn_basura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_basura.startAnimation(animation);
+                ViewModelParametros.getSingletonInstance().deleteParametro((ParametrosClass) spinner.getSelectedItem());
+                spinner.setSelection(0);
+                if(ViewModelParametros.getSingletonInstance().getLista().size()==0){
+                    scrollView2.setVisibility(View.GONE);
+                    sw_mostrarEnPerfil.setVisibility(View.GONE);
+                    sw_notificaciones.setVisibility(View.GONE);
+                    btn_guardar.setVisibility(View.GONE);
+                    btn_basura.setVisibility(View.GONE);
+                    ParametrosClass newParametro=new ParametrosClass();
+                    newParametro.setNombreActividad(resources.getString(R.string.no_preferencias));
+                    newParametro.setIdPublicacion("-999");
+                    ViewModelParametros.getSingletonInstance().addParametro(newParametro);
+                    spinner.setSelection(adapter.getPosition(newParametro));
+                    spinner.setSelection(0);
+
+                }
+
+
 
             }
         });
@@ -183,9 +305,16 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+                btn_guardar.startAnimation(animation);
                 ParametrosClass change = ((ParametrosClass) spinner.getSelectedItem());
                 try {
-                    change.setNombreActividad(String.valueOf(editName.getText()));
+
+                    change.setNombreActividad(String.valueOf(editName.getText()).replaceAll("[^A-Za-z0-9 ]",""));
+                    if(!change.getNombreActividad().equals(editName.getText())){
+                        editName.setText(change.getNombreActividad());
+                    }
                     change.setPresionMax(Float.valueOf(String.valueOf(editpmax.getText())));
                     change.setPresionMin(Float.valueOf(String.valueOf(editpmin.getText())));
                     change.setTemperaturaMax(Float.valueOf(String.valueOf(edittmax.getText())));
@@ -198,9 +327,12 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     change.setPeriodoOlaMax(Float.valueOf(String.valueOf(editpomax.getText())));
                     change.setPeriodoOlaMin(Float.valueOf(String.valueOf(editpomin.getText())));
                     change.setDirectionOlas(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
-                    spinner.setAdapter(updateAdapter(test));
+                    //spinner.setAdapter(updateAdapter(test));
+
+                    ViewModelParametros.getSingletonInstance().modifyParametro(change, (ParametrosClass) spinner.getSelectedItem(),sw_mostrarEnPerfil.isChecked());
 
 
+                    spinner.setSelection(adapter.getPosition(change));
                 }catch (Exception e){
 
                 }
@@ -213,7 +345,9 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_añadir2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editName.setText("");
+                btn_añadir2.startAnimation(animation);
+                scrollView2.setVisibility(View.VISIBLE);
+                /*editName.setText("");
                 editpmax.setText("");
                 editpmin.setText("");
                 edittmax.setText("");
@@ -225,77 +359,63 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 editpomax.setText("");
                 editpomin.setText("");
                 spn_dirOlas.setSelection(0);
-                spn_dirViento.setSelection(0);
+                spn_dirViento.setSelection(0);*/
                 ParametrosClass newParametro=new ParametrosClass();
-
-
+                newParametro.setNombreActividad(resources.getString(R.string.nuevo_parametro));
+                ViewModelParametros.getSingletonInstance().addParametro(newParametro);
+                ParametrosClass newParametro2 =ViewModelParametros.getSingletonInstance().getParametroPorId("-999");
+                ViewModelParametros.getSingletonInstance().deleteParametro(newParametro2);
+                spinner.setSelection(adapter.getPosition(newParametro));
+                scrollView2.setVisibility(View.VISIBLE);
+                sw_mostrarEnPerfil.setVisibility(View.VISIBLE);
+                sw_notificaciones.setVisibility(View.VISIBLE);
+                btn_guardar.setVisibility(View.VISIBLE);
+                btn_basura.setVisibility(View.VISIBLE);
             }
         });
 
 
-    }
-    private String comprimirArray(ArrayList<ParametrosClass> l){
-        String str="";
-        for(int i=0; i<l.size();i++){
-            str=str+l.get(i).toSaveString()+"¿";
-        }
-        return str;
-    }
-    private ArrayList<ParametrosClass> descomprimirArray(String l){
-        System.out.println(l);
-        String[] parametrosStringList = l.split("¿");
-        int count = l.length() - l.replace("¿", "").length();
-        System.out.println(count);
-        ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
-        String[] fixedParam;
-        for (String i : parametrosStringList) {
-            System.out.println(i);
-            fixedParam=i.split(",");
-            for (String x : fixedParam) {
-                System.out.println(x);
+
+        // Create the observer which updates the UI.
+        final Observer<ArrayList<ParametrosClass>> nameObserver = new Observer<ArrayList<ParametrosClass>>() {
+            @Override
+            public void onChanged(@Nullable final ArrayList<ParametrosClass> list) {
+                // Update the UI, in this case, a TextView.
+                System.out.println("OBSERVEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEER\n");
+                System.out.println(list);
+                ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<ParametrosClass>(context, R.layout.one_spinner_list,list);
+                adapter.setDropDownViewResource(R.layout.one_spinner_list);
+                spinner.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+
             }
+        };
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        ViewModelParametros.getSingletonInstance().getMutable().observe(this, nameObserver);
 
-            parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));
-        }
 
-        return parametrosList;
+
     }
 
-    private void guardarPreferenciasParametros(String string) {
-        SharedPreferences preferencias = getSharedPreferences("parametros",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("parametros",string);
-        editor.commit();
-    }
-
-    private String cargarPreferenciasParametros() {
-        SharedPreferences preferencias = getSharedPreferences("parametros",Context.MODE_PRIVATE);
-        return preferencias.getString("parametros",comprimirArray(fillParametrosList()));
-    }
 
     private void mostrarAjuste(ParametrosClass parametro) {
         Toast.makeText(this,parametro.getNombreActividad(),Toast.LENGTH_SHORT).show();
     }
 
+    public class StartGameDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.ayudapreferencias+"\n"+R.string.ayudapreferencias2);
+            builder.setIcon(R.drawable.logo_weadives);
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
+    }
 
-    private String cargarPreferencias() {
-        SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
-        return preferencias.getString("idioma","en");
-    }
-    private ArrayList<ParametrosClass> fillParametrosList() {
-        ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
-        ParametrosClass p1= new ParametrosClass("SurfLoco", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
-        parametrosList.add(p1);
-        parametrosList.add(new ParametrosClass("Surf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("Playa",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("Vela",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("Kayak",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("LioLegends",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("CallDuty",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("BalonPie",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        parametrosList.add(new ParametrosClass("DokkanBattle", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
-        return parametrosList;
-    }
+
 
 
     private ArrayAdapter updateAdapter(ArrayList<ParametrosClass> list){
