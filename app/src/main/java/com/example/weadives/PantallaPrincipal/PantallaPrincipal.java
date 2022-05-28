@@ -42,6 +42,7 @@ public class PantallaPrincipal extends AppCompatActivity {
     private ViewModelMapa mapViewModel;
     private ViewModelHorario horarioViewModel;
     private Boolean marcadoresEmpty;
+    private ArrayAdapter<MarcadorClass> adapter;
 
     @Override
     public void onResume(){
@@ -80,6 +81,8 @@ public class PantallaPrincipal extends AppCompatActivity {
 
         viewModel = ViewModel.getInstance(this);
         mapViewModel = ViewModelMapa.getInstance(this);
+        //mapViewModel.setR(resources);
+
         horarioViewModel = ViewModelHorario.getInstance(this);
         Intent intent = getIntent();
 
@@ -94,7 +97,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         ArrayList<MarcadorClass> list = new ArrayList<>();
         list = mapViewModel.getMarcadores();
 
-        ArrayAdapter<MarcadorClass> adapter = new ArrayAdapter<MarcadorClass>(this, R.layout.one_spinner_list, list){
+        adapter = new ArrayAdapter<MarcadorClass>(this, R.layout.one_spinner_list, list){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0){

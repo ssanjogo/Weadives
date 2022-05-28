@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaMapa.PantallaMapa;
+import com.example.weadives.PantallaMapa.ViewModelMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
@@ -33,6 +34,9 @@ public class PantallaInicio extends AppCompatActivity {
     private ImageView Imagen_superior, btn_en, btn_es;
     private Bitmap results, maskbitmap;
     private Button btn_invisible;
+    private
+    Context context;
+    private Resources resources2;
 
     private ViewModel viewModel;
 
@@ -56,14 +60,14 @@ public class PantallaInicio extends AppCompatActivity {
         btn_en = findViewById(R.id.btn_en);
         btn_es = findViewById(R.id.btn_es);
 
-        final Context context;
-        final Resources resources2;
+
         context = LocaleHelper.setLocale(this, cargarPreferencias());
         resources2 = context.getResources();
         SingletonIdioma s= SingletonIdioma.getInstance();
         s.setResources(resources2);
 
         viewModel = viewModel.getInstance(this);
+        ViewModelMapa mapViewModel = ViewModelMapa.getInstance(this, resources2);
 
         if (viewModel.accountNotNull()){
             viewModel.getUser();
@@ -78,22 +82,34 @@ public class PantallaInicio extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 guardarPreferencias("en");
+                context = LocaleHelper.setLocale(context, cargarPreferencias());
+                resources2 = context.getResources();
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Language changed into English", Toast.LENGTH_SHORT);
                 toast.show();
+
                 finishAffinity();
                 startActivity(getIntent());
+
+                System.out.println(resources2.getString(R.string.marcador_vacio));
+                mapViewModel.updateTextSelect(resources2);
             }
         });
         btn_es.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 guardarPreferencias("es");
+                context = LocaleHelper.setLocale(context, cargarPreferencias());
+                resources2 = context.getResources();
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Idioma cambiado a Castellano", Toast.LENGTH_SHORT);
                 toast.show();
+
                 finishAffinity();
                 startActivity(getIntent());
+
+                mapViewModel.updateTextSelect(resources2);
             }
         });
 

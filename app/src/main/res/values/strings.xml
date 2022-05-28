@@ -73,4 +73,5 @@
     <string name="deletepar2">Are you sure you want to delete this parameter?</string>
     <string name="eliminarImagen">Delete image</string>
     <string name="alertaEliminarImagen">¿Are you sure you want to delete your profile photo?</string>
+    <string name="marcador_vacio"> Choose a Waypoint </string>
 </resources>
