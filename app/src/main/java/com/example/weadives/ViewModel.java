@@ -44,10 +44,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public static ViewModel getInstance(AppCompatActivity application){
         if (vm == null){
             vm = new ViewModelProvider(application).get(ViewModel.class);
-
         }
         return vm;
     }
+
     public static ViewModel getInstance(){
         if (vm == null){
             exit(-1);
@@ -64,10 +64,14 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         statusLogIn = false;
         dbA = new DatabaseAdapter(this);
         dbA.getAllUsers();
+        if(dbA.accountNotNull()){
+            dbA.getUser2();
+        }
         listaTemp=new ArrayList<>();
         mutableListaTemp =new MutableLiveData<>();
         mutableListaTemp.setValue(listaTemp);
     }
+
     public  MutableLiveData<ArrayList<PublicacionClass>> getMutable() {
         System.out.println("GETMUTABLE");
         System.out.println(mutableListaTemp);
@@ -159,6 +163,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public void deleteAccount(){
+        System.out.println("PASAAAAAAAAAAAAAAAAAAA");
         dbA.deleteAccount();
     }
 
@@ -190,9 +195,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         this.usuario = user;
     }
 
-    public void subirImagen(Uri imageUri){
-        dbA.subirImagen(imageUri, getCurrentUser().getId());
-        cambiarImagen(imageUri);
+    public void cambiarImagen2(String imageUri){
+        UserClass user = getCurrentUser();
+        user.setUrlImg(imageUri.toString());
+        HashMap<String, Object> usuario = convertUserToHashMap(user);
+        dbA.updateDatos(usuario);
+        this.usuario = user;
     }
 
 
@@ -370,7 +378,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void buscarPorNombre(String nombre) {
         List<UserClass> listaFiltradaPorNombre = new ArrayList<>();
         for (UserClass user : getListaUsers().getValue()){
-            if (user.getUsername().contains(nombre) && !user.equals(this.usuario)){
+            if (user.getUsername().contains(nombre) && !user.getId().equals(this.usuario.getId())){
                 listaFiltradaPorNombre.add(user);
             }
         }

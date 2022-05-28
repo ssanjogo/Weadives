@@ -18,16 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.weadives.AreaUsuario.AreaUsuario;
-import com.example.weadives.ConfiguracionDePreferencias.ConfiguracionDePreferencias;
 import com.example.weadives.LocaleHelper;
-import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaMapa.PantallaMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
 import com.example.weadives.ViewModel;
 import com.example.weadives.ViewModelParametros;
 
@@ -66,15 +63,14 @@ public class PantallaInicio extends AppCompatActivity {
         SingletonIdioma s= SingletonIdioma.getInstance();
         s.setResources(resources2);
 
-        viewModel = ViewModel.getInstance(this);
+        viewModel = viewModel.getInstance(this);
 
         if (viewModel.accountNotNull()){
             viewModel.getUser();
         }
-        ViewModelParametros p= ViewModelParametros.getSingletonInstance(resources2,this);
+        ViewModelParametros p = ViewModelParametros.getSingletonInstance(resources2,this);
         System.out.println(p.getLista());
 
-        //p.deleteALL();
         overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 
 

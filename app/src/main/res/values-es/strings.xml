@@ -73,4 +73,6 @@
     <string name="txtContraseña">contraseña</string>
     <string name="deletePar1">Eliminar Parametro</string>
     <string name="deletepar2">¿Estas seguro de que deseas eliminar este parametro?</string>
+    <string name="eliminarImagen">Eliminar imagen</string>
+    <string name="alertaEliminarImagen">¿Estas seguro de que quieres eliminar tu foto de perfil?</string>
 </resources>

@@ -44,7 +44,7 @@ public class AjustesPerfil extends AppCompatActivity {
     private TextView txt_correo, txt_nombre2, txt_contraseña3;
     private EditText etA_correo3, etP_contraseña3, etN_nombrepersona2;
     private ImageView btn_home6, img_perfil;
-    private Button btn_guardarCambios, btn_eliminarCuenta;
+    private Button btn_guardarCambios, btn_eliminarCuenta, btn_eliminarImagen;
 
     private Uri imageUri;
     private static final int REQUEST_CODE = 200;
@@ -64,6 +64,7 @@ public class AjustesPerfil extends AppCompatActivity {
         etN_nombrepersona2 = findViewById(R.id.etN_nombrepersona2);;
         btn_home6 = findViewById(R.id.btn_home6);
         img_perfil = findViewById(R.id.img_perfil);
+        btn_eliminarImagen = findViewById(R.id.btn_deleteImage);
 
         final Context context;
         final Resources resources;
@@ -89,6 +90,29 @@ public class AjustesPerfil extends AppCompatActivity {
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
                 finish();
+            }
+        });
+
+        btn_eliminarImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_eliminarImagen.startAnimation(animation);
+                AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
+                alerta.setMessage(resources.getString(R.string.alertaEliminarImagen)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Glide.with(getApplication()).load("https://firebasestorage.googleapis.com/v0/b/weadives.appspot.com/o/Imagenes_Perfil%2FprofillePicBase.png?alt=media&token=544d8b5c-11de-4acb-9bdd-54bb5f5297af").into(img_perfil);
+                        viewModel.cambiarImagen2("https://firebasestorage.googleapis.com/v0/b/weadives.appspot.com/o/Imagenes_Perfil%2FprofillePicBase.png?alt=media&token=544d8b5c-11de-4acb-9bdd-54bb5f5297af");
+                    }
+                }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                AlertDialog titulo = alerta.create();
+                titulo.setTitle(resources.getString(R.string.eliminarCuenta));
+                titulo.show();
             }
         });
 
@@ -136,11 +160,12 @@ public class AjustesPerfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 btn_eliminarCuenta.startAnimation(animation);
-                AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
-                alerta.setMessage(resources.getString(R.string.alertaEliminarCuenta)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
+                AlertDialog.Builder alertaE = new AlertDialog.Builder(AjustesPerfil.this);
+                alertaE.setMessage(resources.getString(R.string.alertaEliminarCuenta)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         viewModel.deleteAccount();
+
                     }
                 }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
                     @Override
@@ -148,10 +173,9 @@ public class AjustesPerfil extends AppCompatActivity {
                         dialogInterface.cancel();
                     }
                 });
-                AlertDialog titulo = alerta.create();
+                AlertDialog titulo = alertaE.create();
                 titulo.setTitle(resources.getString(R.string.eliminarCuenta));
                 titulo.show();
-
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
             }
@@ -179,7 +203,7 @@ public class AjustesPerfil extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
             img_perfil.setImageURI(imageUri);
-            viewModel.subirImagen(imageUri);
+            //viewModel.subirImagen(imageUri);
         }
     }
 
