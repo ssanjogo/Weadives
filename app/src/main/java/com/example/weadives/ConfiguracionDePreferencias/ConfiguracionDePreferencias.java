@@ -160,10 +160,12 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         Spinner spn_dirOlas=findViewById(R.id.spn_DireccionOlasCP);
         ArrayAdapter<ParametrosClass> adapterOlas= new ArrayAdapter<>(this, R.layout.one_spinner_list, Directions.NO_DIRECTION.toArrayString());
         spn_dirOlas.setAdapter(adapterOlas);
+        spn_dirOlas.setPrompt(resources.getString(R.string.selecciona_direccion));
 
         Spinner spn_dirViento=findViewById(R.id.spn_DireccionVientoCP);
         ArrayAdapter<ParametrosClass> adapterViento= new ArrayAdapter<>(this, R.layout.one_spinner_list, Directions.NO_DIRECTION.toArrayString());
         spn_dirViento.setAdapter(adapterViento);
+        spn_dirViento.setPrompt(resources.getString(R.string.selecciona_direccion));
 
 
         sw_mostrarEnPerfil.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

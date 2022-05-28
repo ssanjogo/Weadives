@@ -88,8 +88,8 @@ public class PantallaInicio extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Language changed into English", Toast.LENGTH_SHORT);
                 toast.show();
 
-                finishAffinity();
-                startActivity(getIntent());
+                //finishAffinity();
+                //startActivity(getIntent());
 
                 System.out.println(resources2.getString(R.string.marcador_vacio));
                 mapViewModel.updateTextSelect(resources2);
@@ -106,8 +106,8 @@ public class PantallaInicio extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "Idioma cambiado a Castellano", Toast.LENGTH_SHORT);
                 toast.show();
 
-                finishAffinity();
-                startActivity(getIntent());
+                //finishAffinity();
+                //startActivity(getIntent());
 
                 mapViewModel.updateTextSelect(resources2);
             }

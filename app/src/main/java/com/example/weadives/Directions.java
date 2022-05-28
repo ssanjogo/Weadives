@@ -1,5 +1,7 @@
 package com.example.weadives;
 
+import android.content.res.Resources;
+
 import java.util.ArrayList;
 
 public enum Directions {
@@ -14,16 +16,18 @@ public enum Directions {
         NO_DIRECTION;
 
        public ArrayList toArrayString(){
+           Resources resources = SingletonIdioma.getInstance().getResources();
+
                 ArrayList<String> list=new ArrayList<>();
-                list.add(NORTE.toString());
-                list.add(NORDESTE.toString());
-                list.add(ESTE.toString());
-                list.add(SUDESTE.toString());
-                list.add(SUD.toString());
-                list.add(SUDESTE.toString());
-                list.add(OESTE.toString());
-                list.add(NORDOESTE.toString());
-                list.add(NO_DIRECTION.toString());
+                list.add(resources.getString(R.string.norte));
+                list.add(resources.getString(R.string.nordeste));
+                list.add(resources.getString(R.string.este));
+                list.add(resources.getString(R.string.sudeste));
+                list.add(resources.getString(R.string.sud));
+                list.add(resources.getString(R.string.sudoeste));
+                list.add(resources.getString(R.string.oeste));
+                list.add(resources.getString(R.string.nordoeste));
+                list.add(resources.getString(R.string.no_dir));
                 return list;
         }
         public int toInt(Directions dir){
