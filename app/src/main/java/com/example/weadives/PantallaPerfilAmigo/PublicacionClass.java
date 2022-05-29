@@ -68,12 +68,31 @@ public class PublicacionClass {
         this.idPublicacion = idPublicacion;
     }
     public boolean like(String id, int votacion){
-        if(likeList.containsKey(id)){return false;}
+        if(likeList.containsKey(id)) {
+            if (likeList.get(id) == -1) {
+                likeList.put(id,votacion);
+                return true;
+            } else {
+                return false;
+            }
+        }
         likeList.put(id,votacion);
         return true;
     }
+
+    public boolean containlike(String id, int votacion){
+        if(likeList.containsKey(id)){
+
+            if(likeList.get(id) == (votacion)){
+                return true;
+            }return false;
+        }
+        return false;
+    }
+
     public boolean removeLike(String id){
-        if(!likeList.containsKey(id)){return false;}
+        if(!likeList.containsKey(id)){
+            return false;}
         likeList.remove(id);
         return true;
     }
@@ -114,11 +133,11 @@ public class PublicacionClass {
         int sum=0;
         int value;
         String key;
-        System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP\n");
-        System.out.println(likeList);
+        //System.out.println("Num of likes : \n");
+        //System.out.println(likeList);
         for(HashMap.Entry<String, Integer> entry : likeList.entrySet()) {
-            System.out.println(entry.getKey());
-            System.out.println(entry.getValue());
+            //System.out.println(entry.getKey());
+            //System.out.println(entry.getValue());
             Set s=likeList.entrySet();
             key = entry.getKey();
             value = entry.getValue();

@@ -1,5 +1,6 @@
 package com.example.weadives.PantallaMiPerfil;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -48,6 +50,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<ParametrosClass> parametrosList;
+    private List<PublicacionClass> publicacionList;
 
 
     @Override
@@ -62,38 +65,74 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_cerrarSesion = findViewById(R.id.btn_cerrarSession);
         emptyView  = findViewById(R.id.empty_view);
 
-        //parametrosList = fillParametrosList();
-        //List<PublicacionClass> publicacionList= fillPublicacionList();
-        List<PublicacionClass> publicacionList= new ArrayList<>();
 
         publicacionList=ViewModelParametros.getSingletonInstance().getPublications();
-        
-        recyclerView = findViewById(R.id.rv_llistaAjustes);
-        //mejorar performance
-        recyclerView.hasFixedSize();
-        //lineal layout
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        //especificar adapter
+        ViewModel.getInstance().setGetPublicationsFrom(ViewModel.getInstance().getUserId());
         if(publicacionList==null){
             publicacionList=new ArrayList<>();
         }
-        System.out.println(publicacionList);
+        System.out.println("SIZEEEEEEEEEEEEE : "+publicacionList.size());
+
+
+
+        recyclerView = findViewById(R.id.rv_llistaAjustes);
+        //mejorar performance
+        //recyclerView.hasFixedSize();
+        //lineal layout
+        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        //especificar adapter
+
         mAdapter= new PublicacionesPerfilAdapter(publicacionList,PantallaMiPerfil.this);
         recyclerView.setAdapter(mAdapter);
-        //setLiveDataObservers();
-        viewModel = ViewModel.getInstance(this);
-        Intent intent = getIntent();
 
+
+        final Context context;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
+        //setLiveDataObservers();
+
+        viewModel = ViewModel.getInstance(this);
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
         System.out.println("AAAAAAAAAAA " + viewModel.getCurrentUser().getUrlImg());
         //Glide.with(img_perfil.getContext()).clear(img_perfil);
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
-        final Context context;
-        SingletonIdioma s= SingletonIdioma.getInstance();
-        Resources resources=s.getResources();
 
+
+
+        final Observer<ArrayList<PublicacionClass>> nameObserver2 = new Observer<ArrayList<PublicacionClass>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onChanged(@Nullable final ArrayList<PublicacionClass> list) {
+
+                // Update the UI, in this case, a TextView.
+                System.out.println("UPDATE size : "+list.size());
+                System.out.println(list);
+                publicacionList.clear();
+                publicacionList.addAll(list);
+                recyclerView.getAdapter().notifyDataSetChanged();
+                System.out.println("Set");
+                System.out.println(recyclerView.getAdapter().getItemCount());
+                recyclerView.getAdapter().notifyDataSetChanged();
+                //recyclerView.setAdapter(new PublicacionesPerfilAdapter(publicacionList, PantallaPerfilAmigo.this));
+                System.out.println("post set");
+
+                if (publicacionList.isEmpty()) {
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setText(resources.getString(R.string.no_public_available));
+                    emptyView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);
+                }
+            }
+        };
+        ViewModel.getInstance().getMutable().observe(this, nameObserver2);
+
+
+    /*
         if (publicacionList.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             emptyView.setText(resources.getString(R.string.no_public_available));
@@ -103,7 +142,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
             recyclerView.setVisibility(View.VISIBLE);
             emptyView.setVisibility(View.GONE);
         }
-
+*/
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -146,19 +185,6 @@ public class PantallaMiPerfil extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    /*public void setLiveDataObservers() {
-        viewModel = new ViewModelProvider(this).get(ViewModel.class);
-
-        System.out.println("OBSERVEEEEEEEEEEEEEEEEEEER");
-
-        final Observer<String> observer = new Observer<String>() {
-            @Override
-            public void onChanged(String ac) {
-                Glide.with(getApplicationContext()).load(ac).into(img_perfil);
-            }
-        };
-        viewModel.getURL().observe(this, observer);
-    }*/
 
     private ArrayList<ParametrosClass> fillParametrosList() {
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();

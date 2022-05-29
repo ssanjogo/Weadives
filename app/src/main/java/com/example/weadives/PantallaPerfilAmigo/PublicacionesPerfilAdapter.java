@@ -2,7 +2,6 @@ package com.example.weadives.PantallaPerfilAmigo;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -19,8 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
@@ -103,10 +100,19 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
                     loadSocial(holder, position);
                     updatePublications(publicacionClassList.get(position));
                     holder.btn_likes.setImageDrawable(resources.getDrawable(R.drawable.btn_like_color));
+                }else if(publicacionClassList.get(position).containlike(ViewModel.getInstance().getUserId(),1) ) {
+                    Toast toast = Toast.makeText(context, "UNLike", Toast.LENGTH_SHORT);
+                    toast.show();
+                    publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),-1);
+                    loadSocial(holder, position);
+                    updatePublications(publicacionClassList.get(position));
+                    holder.btn_likes.setImageDrawable(resources.getDrawable(R.drawable.btn_like));
                 }else{
                     Toast toast = Toast.makeText(context, resources.getString(R.string.AlreadyLike), Toast.LENGTH_SHORT);
                     toast.show();
                 }
+                System.out.println("TEST LIKES");
+                System.out.println("Numero de likes "+publicacionClassList.get(position).getNumLikes());
             }
         });
         holder.btn_dislikes.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +125,15 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
                     loadSocial(holder, position);
                     updatePublications(publicacionClassList.get(position));
                     holder.btn_dislikes.setImageDrawable(resources.getDrawable(R.drawable.btn_dislike_color));
+                }else if(publicacionClassList.get(position).containlike(ViewModel.getInstance().getUserId(),0) ) {
+                    Toast toast = Toast.makeText(context, "UNLike", Toast.LENGTH_SHORT);
+                    toast.show();
+                    publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),-1);
+                    loadSocial(holder, position);
+                    updatePublications(publicacionClassList.get(position));
+                    holder.btn_dislikes.setImageDrawable(resources.getDrawable(R.drawable.btn_dislike));
                 }else{
-                    Toast toast = Toast.makeText(context, (resources.getString(R.string.AlreadyLike)), Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(context, resources.getString(R.string.AlreadyLike), Toast.LENGTH_SHORT);
                     toast.show();
                 }
 
@@ -132,14 +145,25 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
     private void loadSocial(PublicacionesPerfilViewHolder holder, @SuppressLint("RecyclerView") int position) {
         SingletonIdioma s= SingletonIdioma.getInstance();
         Resources resources=s.getResources();
-        if(!publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),1)){
+        if(publicacionClassList.get(position).containlike(ViewModel.getInstance().getUserId(),1)){
             holder.btn_likes.setImageDrawable(resources.getDrawable(R.drawable.btn_like_color));
-        } if(publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),0)){
+        } else{
+            holder.btn_likes.setImageDrawable(resources.getDrawable(R.drawable.btn_like));
+        }
+        if(publicacionClassList.get(position).containlike(ViewModel.getInstance().getUserId(),0)){
             holder.btn_dislikes.setImageDrawable(resources.getDrawable(R.drawable.btn_dislike_color));
         }
+        else{
+            holder.btn_dislikes.setImageDrawable(resources.getDrawable(R.drawable.btn_dislike));
+        }
+        System.out.println("LIKES");
+        System.out.println(Integer.toString(publicacionClassList.get(position).getNumLikes()));
         holder.txt_numlikes.setText(Integer.toString(publicacionClassList.get(position).getNumLikes()));
+        System.out.println("DISLIKES");
+        System.out.println(Integer.toString(publicacionClassList.get(position).getNumDislikes()));
         holder.txt_numlikes2.setText(Integer.toString(publicacionClassList.get(position).getNumDislikes()));
         holder.txt_numlikes3.setText(Integer.toString(publicacionClassList.get(position).getNumComments()));
+        System.out.println("------------------------------------------------------------------------------");
     }
 
 
@@ -182,7 +206,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
 
         AlertDialog.Builder dialogBuilder;
         AlertDialog dialog;
-        Button btn_test;
+        Button btn_añadirComentario1;
         RecyclerView rv_commentList;
         RecyclerView.Adapter mAdapter;
         RecyclerView.LayoutManager layoutManager;
@@ -239,8 +263,8 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
 
 
             //Definicion de los items
-            btn_test=popupView.findViewById(R.id.btn_test);
-            btn_test.setText(resources.getString(R.string.añadircomment));
+            btn_añadirComentario1 =popupView.findViewById(R.id.btn_test);
+            btn_añadirComentario1.setText(resources.getString(R.string.añadircomment));
 
             rv_commentList=popupView.findViewById(R.id.rv_commentList);
             //mejorar performance
@@ -266,11 +290,11 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             dialog.show();
 
             //Metodos adicionales
-            btn_test.setOnClickListener(new View.OnClickListener() {
+            btn_añadirComentario1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast toast = Toast.makeText(context, "TestButton", Toast.LENGTH_SHORT);
-                    toast.show();
+                    //Toast toast = Toast.makeText(context, "TestButton", Toast.LENGTH_SHORT);
+                    //toast.show();
                     createNewAddCommentDialog(holder,position);
 
 
