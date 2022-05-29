@@ -31,7 +31,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     private final MutableLiveData<String> mToast;
     private UserClass usuario;
 
-
+    private String url;
     private String UID;
     private boolean statusLogIn = false, keepSession = false;
     private final DatabaseAdapter dbA;
@@ -111,6 +111,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         dbA.getUser2();
     }
 
+    public String getUrl(){
+        return this.url;
+    }
+
     public UserClass getUserByUID(String uid){
         System.out.println(listaUsuarios.getValue());
         for (int i = 0; i < listaUsuarios.getValue().size(); i++) {
@@ -186,14 +190,16 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         dbA.cambiarContraseña(contraseña);
     }
 
-    public void cambiarImagen(Uri uri) {
-        UserClass user = getCurrentUser();
-        System.out.println("ASI DEBERIA SER LA URI: " + uri);
-        user.setUrlImg(uri.toString());
-        HashMap<String, Object> usuario = convertUserToHashMap(user);
-        dbA.updateDatos(usuario);
-        this.usuario = user;
+    public void subirImagen(Uri uri) {
+        dbA.subirImagen(uri, getUserId());
     }
+
+    public void cambiarImagen(String imageUri){
+        System.out.println("PASA POR CAMBIAR IMAGEN");
+        HashMap<String, Object> usuario = convertUserToHashMap(getCurrentUser());
+        dbA.updateDatos(usuario);
+    }
+
 
     public void cambiarImagen2(String imageUri){
         UserClass user = getCurrentUser();
@@ -479,8 +485,11 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     @Override
-    public void setUserID(String id) {
-        this.UID = id;
+    public void setImage(String url) {
+        this.url = url;
+        this.usuario.setUrlImg(url);
+        System.out.println("USUARIO: " + this.usuario.toString());
+        cambiarImagen(url);
     }
 
     @Override

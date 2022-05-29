@@ -12,19 +12,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.AreaUsuario.AreaUsuario;
+import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.AreaUsuario.UserListAdapter;
 import com.example.weadives.DatoGradosClass;
 import com.example.weadives.Directions;
 import com.example.weadives.PantallaInicio.PantallaInicio;
-import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionesPerfilAdapter;
-import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
@@ -79,11 +81,13 @@ public class PantallaMiPerfil extends AppCompatActivity {
         System.out.println(publicacionList);
         mAdapter= new PublicacionesPerfilAdapter(publicacionList,PantallaMiPerfil.this);
         recyclerView.setAdapter(mAdapter);
-
+        //setLiveDataObservers();
         viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
+        System.out.println("AAAAAAAAAAA " + viewModel.getCurrentUser().getUrlImg());
+        //Glide.with(img_perfil.getContext()).clear(img_perfil);
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
         final Context context;
@@ -105,12 +109,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
             public void onClick(View view){
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
-                if(!viewModel.getLogInStatus()){
-                    viewModel.singOut();
-                }
-
                 finish();
-                System.out.println("TESTING LIMITS");
             }
         });
 
@@ -119,28 +118,21 @@ public class PantallaMiPerfil extends AppCompatActivity {
             public void onClick(View view){
                 Intent ajustePerfil = new Intent(getApplicationContext(), AjustesPerfil.class);
                 startActivity(ajustePerfil);
+                finish();
             }
         });
 
         btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.setLogInStatus(false);
-
+                String url = viewModel.getCurrentUser().getUrlImg();
+                System.out.println("URL DE LOS COJONES: " + url);
+                /*viewModel.setLogInStatus(false);
                 viewModel.keepSession(false);
                 viewModel.singOut();
-                finish();
-            }
-        });
-
-        btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.singOut();
-                recordarContraseña("");
                 Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
                 startActivity(pantallaLogIn);
-                finish();
+                finish();*/
             }
         });
     }
@@ -153,6 +145,20 @@ public class PantallaMiPerfil extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    /*public void setLiveDataObservers() {
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+
+        System.out.println("OBSERVEEEEEEEEEEEEEEEEEEER");
+
+        final Observer<String> observer = new Observer<String>() {
+            @Override
+            public void onChanged(String ac) {
+                Glide.with(getApplicationContext()).load(ac).into(img_perfil);
+            }
+        };
+        viewModel.getURL().observe(this, observer);
+    }*/
 
     private ArrayList<ParametrosClass> fillParametrosList() {
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();

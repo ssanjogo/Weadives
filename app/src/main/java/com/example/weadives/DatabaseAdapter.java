@@ -113,7 +113,7 @@ public class DatabaseAdapter extends Activity {
     public interface vmInterface{
         void setCollection(ArrayList<UserClass> listaUsuarios);
         void setStatusLogIn(boolean status);
-        void setUserID(String id);
+        void setImage(String url);
         void setUser(UserClass u);
         void setToast(String s);
         void notifyId(String id);
@@ -163,9 +163,7 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    listener.setUserID(task.getResult().getUser().getUid());
                     getUser();
-                    System.out.println("LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                     getPublicationsUsuario(task.getResult().getUser().getUid());
                 } else {
                     Log.e(TAG, "Error en el log in");
@@ -194,6 +192,7 @@ public class DatabaseAdapter extends Activity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
+                    getPublicationsUsuario(document.getString("UID"));
                     UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
                     listener.setUser(u);
                 }
@@ -247,6 +246,7 @@ public class DatabaseAdapter extends Activity {
         Log.i(TAG, "updatePublicacion");
         db.collection("Publicaciones").document(idPublicacion).update(publicacion);
     }
+
     public void savePublicacion(HashMap<String, String> coments, HashMap<String, String> likes, String parametros, String idPublicacion, String idUsuario){
         DocumentReference dr=db.collection("Publicaciones").document();
         Map<String, Object> publicacion = new HashMap<>();
@@ -279,7 +279,7 @@ public class DatabaseAdapter extends Activity {
         user.put("Nombre", nombre);
         user.put("Correo", correo);
         user.put("UID", uid);
-        user.put("Imagen", "https://firebasestorage.googleapis.com/v0/b/weadives.appspot.com/o/Imagenes_Perfil%2FprofillePicBase.png?alt=media&token=544d8b5c-11de-4acb-9bdd-54bb5f5297af"); //Cambiar
+        user.put("Imagen", "https://firebasestorage.googleapis.com/v0/b/weadives.appspot.com/o/Imagenes_Perfil%2FprofillePicBase.png?alt=media&token=544d8b5c-11de-4acb-9bdd-54bb5f5297af");
         user.put("Amigos", "");
         user.put("Solicitudes recibidas", "");
         user.put("Solicitudes enviadas", "");
@@ -366,6 +366,8 @@ public class DatabaseAdapter extends Activity {
             public void onComplete(@NonNull Task<Uri> task) {
                 if(task.isSuccessful()){
                     Uri uri = task.getResult();  //AQUI YA TENGO LA RUTA DE LA FOTO LISTA PARA INSERTRLA EN DATABASE
+                    System.out.println("URL BUENA: " + uri.toString());
+                    listener.setImage(uri.toString());
                     assert uri != null;
                 }
             }
@@ -402,20 +404,15 @@ public class DatabaseAdapter extends Activity {
 
 
     public void getStorageData (String fileName) {
-
-
         //System.out.println(mAuth.getCurrentUser().getEmail());
-
         StorageReference fileRef = storage.getReference()
                 .child("Weather_data")
                 .child("Coord_data")
                 .child(fileName + ".csv");
-
         try {
             File localCSV = File.createTempFile("weatherData", ".csv");
 
             FileDownloadTask downloadTask = fileRef.getFile(localCSV);
-
 
             int i = 0;
             while(downloadTask.isInProgress()){
