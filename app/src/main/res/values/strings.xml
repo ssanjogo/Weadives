@@ -31,7 +31,7 @@
     <string name="mostrar_en_perfil">Show Profile</string>
     <string name="gestionar_parametros">Modify Parameters</string>
     <string name="confirmar_parametros">Confirm Parameters</string>
-    <string name="viento">wind</string>
+    <string name="viento">Wind</string>
     <string name="NombreActividad">Activity Name</string>
     <string name="cerrar_sesión">Sing out</string>
     <string name="añadir_amigo">Add friend</string>
@@ -73,4 +73,15 @@
     <string name="deletepar2">Are you sure you want to delete this parameter?</string>
     <string name="eliminarImagen">Delete image</string>
     <string name="alertaEliminarImagen">¿Are you sure you want to delete your profile photo?</string>
+    <string name="marcador_vacio"> Choose a Waypoint </string>
+    <string name="buscar">Search by name</string>
+    <string name="norte">North</string>
+    <string name="nordeste">Northeast</string>
+    <string name="este">East</string>
+    <string name="sudeste">Southeast</string>
+    <string name="sud">south</string>
+    <string name="sudoeste">Southest</string>
+    <string name="oeste">West</string>
+    <string name="nordoeste">NorthWest</string>
+    <string name="no_dir">Any Direction</string>
 </resources>

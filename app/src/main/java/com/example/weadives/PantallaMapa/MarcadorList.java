@@ -31,6 +31,19 @@ public class MarcadorList {
     public void eliminarMarcador(String nombre, LatLng latLng){
         marcadorList.remove(buscarMarcador(nombre, latLng));
     }
+    public void deletePos(int pos){
+        marcadorList.remove(pos);
+    }
+
+    public void insertPos(int pos,String nombre, LatLng latLng){
+        castCoord(latLng.longitude, latLng.latitude);
+        marcadorList.add(pos,new MarcadorClass(nombre, latLng, r_lat, r_lon));
+    }
+    public void insertPos(int pos,MarcadorClass m){
+        marcadorList.add(pos,m);
+    }
+
+
 
     public ArrayList<MarkerOptions> getMarkerOptionsList() {
         ArrayList<MarkerOptions> markerList = new ArrayList<>();

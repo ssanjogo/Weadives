@@ -28,6 +28,7 @@ import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
 
 import java.util.List;
@@ -68,8 +69,9 @@ public class AreaUsuario extends AppCompatActivity {
         final Context context;
         final Resources resources;
         context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+        resources = SingletonIdioma.getInstance().getResources();
         txt_noAmigos.setText(resources.getString(R.string.noAmigos));
+        etT_buscarPorNombre.setHint(resources.getString(R.string.buscar));
 
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());

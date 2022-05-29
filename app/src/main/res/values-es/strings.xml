@@ -34,7 +34,7 @@
     <string name="gestionar_parametros">Gestionar Parametros</string>
     <string name="confirmar_parametros">Confirmar Parametros</string>
     <string name="NombreActividad">Nombre actividad</string>
-    <string name="viento">viento</string>
+    <string name="viento">Viento</string>
     <string name="cerrar_sesión">Cerrar sesión</string>
     <string name="añadir_amigo">Añadir amigo</string>
     <string name="pendiente">Pendiente</string>
@@ -75,4 +75,15 @@
     <string name="deletepar2">¿Estas seguro de que deseas eliminar este parametro?</string>
     <string name="eliminarImagen">Eliminar imagen</string>
     <string name="alertaEliminarImagen">¿Estas seguro de que quieres eliminar tu foto de perfil?</string>
+    <string name="marcador_vacio"> Selecciona un marcador</string>
+    <string name="buscar">Buscar por nombre</string>
+    <string name="norte">Norte</string>
+    <string name="nordeste">Nordeste</string>
+    <string name="este">Este</string>
+    <string name="sudeste">Sudeste</string>
+    <string name="sud">Sud</string>
+    <string name="sudoeste">Sudoeste</string>
+    <string name="oeste">Oeste</string>
+    <string name="nordoeste">Nordoeste</string>
+    <string name="no_dir">Cualquiera</string>
 </resources>
