@@ -66,12 +66,35 @@ public class PublicacionClass {
         this.likeList = likeList;
         this.comentariosList = comentariosList;
         this.idPublicacion = idPublicacion;
-    }
+    }/*
     public boolean like(String id, int votacion){
         if(likeList.containsKey(id)){return false;}
         likeList.put(id,votacion);
         return true;
+    }*/
+    public boolean like(String id, int votacion){
+        if(likeList.containsKey(id)) {
+            if (likeList.get(id) == -1) {
+                likeList.put(id,votacion);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        likeList.put(id,votacion);
+        return true;
     }
+
+    public boolean containlike(String id, int votacion){
+        if(likeList.containsKey(id)){
+
+            if(likeList.get(id) == (votacion)){
+                return true;
+            }return false;
+        }
+        return false;
+    }
+
     public boolean removeLike(String id){
         if(!likeList.containsKey(id)){return false;}
         likeList.remove(id);

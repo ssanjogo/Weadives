@@ -132,9 +132,10 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
     private void loadSocial(PublicacionesPerfilViewHolder holder, @SuppressLint("RecyclerView") int position) {
         SingletonIdioma s= SingletonIdioma.getInstance();
         Resources resources=s.getResources();
-        if(!publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),1)){
+        if(publicacionClassList.get(position).containlike(ViewModel.getInstance().getUserId(),1)){
             holder.btn_likes.setImageDrawable(resources.getDrawable(R.drawable.btn_like_color));
-        } if(publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),0)){
+        }
+        if(publicacionClassList.get(position).containlike(ViewModel.getInstance().getUserId(),0)){
             holder.btn_dislikes.setImageDrawable(resources.getDrawable(R.drawable.btn_dislike_color));
         }
         holder.txt_numlikes.setText(Integer.toString(publicacionClassList.get(position).getNumLikes()));
