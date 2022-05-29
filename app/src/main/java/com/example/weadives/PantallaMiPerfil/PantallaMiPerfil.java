@@ -25,6 +25,7 @@ import com.example.weadives.AreaUsuario.UserListAdapter;
 import com.example.weadives.DatoGradosClass;
 import com.example.weadives.Directions;
 import com.example.weadives.PantallaInicio.PantallaInicio;
+import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionesPerfilAdapter;
 import com.example.weadives.ParametrosClass;
@@ -125,14 +126,12 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = viewModel.getCurrentUser().getUrlImg();
-                System.out.println("URL DE LOS COJONES: " + url);
-                /*viewModel.setLogInStatus(false);
+                viewModel.setLogInStatus(false);
                 viewModel.keepSession(false);
                 viewModel.singOut();
                 Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
                 startActivity(pantallaLogIn);
-                finish();*/
+                finish();
             }
         });
     }
@@ -145,20 +144,6 @@ public class PantallaMiPerfil extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
-    /*public void setLiveDataObservers() {
-        viewModel = new ViewModelProvider(this).get(ViewModel.class);
-
-        System.out.println("OBSERVEEEEEEEEEEEEEEEEEEER");
-
-        final Observer<String> observer = new Observer<String>() {
-            @Override
-            public void onChanged(String ac) {
-                Glide.with(getApplicationContext()).load(ac).into(img_perfil);
-            }
-        };
-        viewModel.getURL().observe(this, observer);
-    }*/
 
     private ArrayList<ParametrosClass> fillParametrosList() {
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();

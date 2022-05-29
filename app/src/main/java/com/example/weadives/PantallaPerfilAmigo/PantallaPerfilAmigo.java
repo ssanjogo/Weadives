@@ -62,7 +62,6 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         emptyView= findViewById(R.id.empty_view);
         RecyclerView recyclerView = findViewById(R.id.rv_llistaAjustes3);
 
-
         Intent intent = getIntent();
 
         String username = intent.getStringExtra("username");
@@ -73,9 +72,6 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         publicacionList= ViewModel.getInstance().getPublicationsFrom();
         //publicacionList= new ArrayList<>();
         ViewModel.getInstance().setGetPublicationsFrom(idAmigo);
-
-
-
 
         //mejorar performance
         //recyclerView.hasFixedSize();
@@ -95,7 +91,6 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
 
         viewModel = ViewModel.getInstance(this);
 
-
         txt_nombrePerfil.setText(username);
         Glide.with(this).load(imagen).into(img_perfil);
         System.out.println("Sett");
@@ -104,17 +99,10 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
             System.out.println("Waiting for access");
         }*/
 
-
         final Observer<ArrayList<PublicacionClass>> nameObserver = new Observer<ArrayList<PublicacionClass>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChanged(@Nullable final ArrayList<PublicacionClass> list) {
-
-
-
-                // Update the UI, in this case, a TextView.
-                System.out.println("UPDATE");
-                System.out.println(list);
                 publicacionList.clear();
                 publicacionList.addAll(list);
                 recyclerView.getAdapter().notifyDataSetChanged();
@@ -138,9 +126,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     recyclerView.setVisibility(View.VISIBLE);
                     emptyView.setVisibility(View.GONE);
                 }
-                /*
-
-                publicacionList.clear();
+                /*publicacionList.clear();
                 publicacionList.addAll(list);
                 mAdapter.notifyDataSetChanged();
                 System.out.println(publicacionList);
@@ -150,16 +136,10 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
                 mAdapter.notifyDataSetChanged();
                 //mAdapter.notify();
-                //mAdapter.notifyAll();
-*/
-
+                //mAdapter.notifyAll(); */
             }
         };
         ViewModel.getInstance().getMutable().observe(this, nameObserver);
-
-
-
-        System.out.println(publicacionList);
 
         if (viewModel.uidInListaAmigos(idAmigo)){
             btn_añadirAmigo.setText(resources.getString(R.string.añadido));
@@ -203,17 +183,15 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     btn_añadirAmigo.setText(resources.getString(R.string.pendiente));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded_grey));
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
-                    //FALTA
-                    //Enviar solicitud
-                    viewModel.enviarsolicitud(idAmigo);
+                    //FALTA. Enviar solicitud
+                    viewModel.enviarSolicitud(idAmigo);
                 } else if (btn_añadirAmigo.getText().equals(resources.getString(R.string.pendiente))){
-
                     btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));
                     //FALTA
                     //Eliminar solicitud enviada
-                    viewModel.cancelarEvioSolicitud(idAmigo);
+                    viewModel.rechazarSolicitud(idAmigo);
                 } else {
                     AlertDialog.Builder alerta = new AlertDialog.Builder(PantallaPerfilAmigo.this);
                     alerta.setMessage(resources.getString(R.string.alertaDejarDeSeguir)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {

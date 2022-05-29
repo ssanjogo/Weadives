@@ -297,10 +297,7 @@ public class DatabaseAdapter extends Activity {
 
     public void updateDatos(HashMap<String, Object> user){
         db.collection("Users").document(user.get("UID").toString()).update(user);
-    }
-
-    public void unfollow(HashMap<String, Object> user) {
-        db.collection("Users").document(mAuth.getCurrentUser().getUid()).update(user);
+        getUser();
     }
 
     public void getAllUsers(){

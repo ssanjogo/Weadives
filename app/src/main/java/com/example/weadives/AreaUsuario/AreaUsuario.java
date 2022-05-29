@@ -42,8 +42,7 @@ public class AreaUsuario extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ConstraintLayout constraintLayout;
-    private String correo;
-    private int limite;
+    private int limite = 0;
 
     private List<UserClass> userList;
     private ViewModel viewModel;
@@ -73,14 +72,14 @@ public class AreaUsuario extends AppCompatActivity {
         txt_noAmigos.setText(resources.getString(R.string.noAmigos));
         etT_buscarPorNombre.setHint(resources.getString(R.string.buscar));
 
-
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
-
-        System.out.println("TOKEEEEEEEEEEEEEEEEEEEEN " + recuperarToken());
-
-        correo = viewModel.getCurrentUser().getCorreo();
-        limite = viewModel.sizelista();
+        //if (limite != 0){
+            //limite = viewModel.sizelista();
+        //} else {
+            limite = viewModel.sizelista();
+        System.out.println("LIMITEAAAAAAAAAAAAAAAA: " + limite);
+        //}
         viewModel.fillUserList();
         userList = viewModel.getListaRecyclerView().getValue();
         setLiveDataObservers();
@@ -99,8 +98,6 @@ public class AreaUsuario extends AppCompatActivity {
             txt_noAmigos.setVisibility(View.VISIBLE);
         }
 
-        //viewModel.getPublicaciones();
-
         constraintLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -108,6 +105,7 @@ public class AreaUsuario extends AppCompatActivity {
                 Intent pantallaMiperfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);
                 pantallaMiperfil.setAction(Intent.ACTION_OPEN_DOCUMENT);
                 startActivity(pantallaMiperfil);
+                finish();
             }
         });
 
@@ -167,6 +165,7 @@ public class AreaUsuario extends AppCompatActivity {
         final Observer<List<UserClass>> observer = new Observer<List<UserClass>>() {
             @Override
             public void onChanged(List<UserClass> ac) {
+                limite = viewModel.sizelista();
                 UserListAdapter newAdapter = new UserListAdapter(viewModel.getListaRecyclerView().getValue(),AreaUsuario.this, viewModel, limite);
                 rv_llistaUsuarios.swapAdapter(newAdapter, true);
                 newAdapter.notifyDataSetChanged();
