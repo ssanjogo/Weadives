@@ -187,10 +187,11 @@ public class AreaUsuario extends AppCompatActivity {
 
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if(keyCode == event.KEYCODE_BACK){
-            Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
+            Intent areaUsuario = new Intent(getApplicationContext(), PantallaPrincipal.class);
             startActivity(areaUsuario);
             finish();
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }
