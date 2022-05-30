@@ -23,9 +23,6 @@ import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
-import com.example.weadives.ViewModelParametros;
-
-import java.util.ArrayList;
 
 public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.intentInterface {
 
@@ -124,11 +121,6 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
                 }
             }
         });
-    }
-
-    private String cargarPreferencias() {
-        SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
-        return preferencias.getString("idioma","en");
     }
 
     private void recordarCorreo(String correo) {

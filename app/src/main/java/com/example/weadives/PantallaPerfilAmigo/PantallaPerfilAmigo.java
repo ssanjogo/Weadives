@@ -9,7 +9,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,19 +21,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.AreaUsuario.AreaUsuario;
-import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.DatoGradosClass;
 import com.example.weadives.Directions;
-import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
-import com.example.weadives.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -173,6 +167,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
             public void onClick(View view){
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
+                finish();
             }
         });
 
@@ -183,14 +178,11 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     btn_añadirAmigo.setText(resources.getString(R.string.pendiente));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded_grey));
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
-                    //FALTA. Enviar solicitud
                     viewModel.enviarSolicitud(idAmigo);
                 } else if (btn_añadirAmigo.getText().equals(resources.getString(R.string.pendiente))){
                     btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));
-                    //FALTA
-                    //Eliminar solicitud enviada
                     viewModel.rechazarSolicitud(idAmigo);
                 } else {
                     AlertDialog.Builder alerta = new AlertDialog.Builder(PantallaPerfilAmigo.this);

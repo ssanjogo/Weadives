@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaMapa.PantallaMapa;
@@ -107,10 +106,6 @@ public class PantallaInicio extends AppCompatActivity {
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Idioma cambiado a Castellano", Toast.LENGTH_SHORT);
                 toast.show();
-
-                //finishAffinity();
-                //startActivity(getIntent());
-
                 mapViewModel.updateTextSelect(resources2);
             }
         });

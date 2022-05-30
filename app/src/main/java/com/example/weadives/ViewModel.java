@@ -4,7 +4,6 @@ import static java.lang.System.exit;
 
 import android.app.Application;
 import android.net.Uri;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.AndroidViewModel;
@@ -15,11 +14,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.weadives.AreaUsuario.UserClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmInterface {
 

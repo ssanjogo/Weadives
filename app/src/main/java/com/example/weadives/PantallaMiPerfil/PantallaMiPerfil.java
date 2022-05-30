@@ -12,16 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.AreaUsuario.AreaUsuario;
-import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.AreaUsuario.UserListAdapter;
 import com.example.weadives.DatoGradosClass;
 import com.example.weadives.Directions;
 import com.example.weadives.PantallaInicio.PantallaInicio;
