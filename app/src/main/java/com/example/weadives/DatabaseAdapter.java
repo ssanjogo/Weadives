@@ -1,60 +1,34 @@
 package com.example.weadives;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Environment;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.weadives.AreaUsuario.UserClass;
-import com.google.android.gms.tasks.Continuation;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StreamDownloadTask;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import io.grpc.internal.JsonUtil;
 
 public class DatabaseAdapter extends Activity {
 
@@ -64,9 +38,6 @@ public class DatabaseAdapter extends Activity {
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
     private final StorageReference storageRef = storage.getReference();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseAuth.IdTokenListener mAuthIDTokenListener;
-    private FirebaseUser user = mAuth.getCurrentUser();
 
     public static vmInterface listener;
     public static mapaInterface listenerMapa;
@@ -75,8 +46,6 @@ public class DatabaseAdapter extends Activity {
     public static DatabaseAdapter databaseAdapter;
 
     public String path;
-
-
 
     public DatabaseAdapter(vmInterface listener){
         this.listener = listener;
@@ -373,7 +342,6 @@ public class DatabaseAdapter extends Activity {
 
     public void singout(){
         mAuth.signOut();
-        user = null;
         listener.setStatusLogIn(false);
     }
 
@@ -381,8 +349,7 @@ public class DatabaseAdapter extends Activity {
         db.collection("Users").document(mAuth.getCurrentUser().getUid()).delete();
         mAuth.getCurrentUser().delete();
         System.out.println("ELIMINAR USER: " + mAuth.getCurrentUser());
-        mAuth.signOut();
-        Log.d(TAG, "Cuenta borrada");
+        singout();
     }
 
     public void getLatLng(){

@@ -77,7 +77,7 @@ public class AreaUsuario extends AppCompatActivity {
         //if (limite != 0){
             //limite = viewModel.sizelista();
         //} else {
-            limite = viewModel.sizelista();
+        limite = viewModel.sizelista();
         System.out.println("LIMITEAAAAAAAAAAAAAAAA: " + limite);
         //}
         viewModel.fillUserList();

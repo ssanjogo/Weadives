@@ -161,7 +161,9 @@ public class AjustesPerfil extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         viewModel.deleteAccount();
-
+                        Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                        startActivity(pantallaInicio);
+                        finish();
                     }
                 }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
                     @Override
@@ -172,8 +174,6 @@ public class AjustesPerfil extends AppCompatActivity {
                 AlertDialog titulo = alertaE.create();
                 titulo.setTitle(resources.getString(R.string.eliminarCuenta));
                 titulo.show();
-                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
-                startActivity(pantallaInicio);
             }
         });
 
