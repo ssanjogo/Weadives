@@ -20,4 +20,11 @@ public class DatoGradosClass {
     public void setDir(Directions dir) {
         this.dir = dir;
     }
+    public String toString2(){
+        return dir.name();
+    }
+    public void setDirFromInt(int i) {
+        this.dir=Directions.fromInt(i);
+    }
+
 }

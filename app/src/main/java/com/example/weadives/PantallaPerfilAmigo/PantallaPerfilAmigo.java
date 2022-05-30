@@ -1,5 +1,6 @@
 package com.example.weadives.PantallaPerfilAmigo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,19 +13,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.AreaUsuario.AreaUsuario;
-import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.DatabaseAdapter;
 import com.example.weadives.DatoGradosClass;
 import com.example.weadives.Directions;
-import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
@@ -38,7 +37,7 @@ import java.util.List;
 public class PantallaPerfilAmigo extends AppCompatActivity {
 
     private ImageView img_perfil, btn_home;
-    private TextView txt_nombrePerfil, txt_codigo;
+    private TextView txt_nombrePerfil, txt_codigo,emptyView;
     private RecyclerView recyclerView;
     private Button btn_añadirAmigo;
     private RecyclerView.Adapter mAdapter;
@@ -54,14 +53,24 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         btn_home = findViewById(R.id.btn_home11);
         txt_nombrePerfil = findViewById(R.id.txt_nombrePerfil3);
         btn_añadirAmigo = findViewById(R.id.btn_añadirAmigo);
-
-        publicacionList = fillPublicacionList();
-
+        emptyView= findViewById(R.id.empty_view);
         RecyclerView recyclerView = findViewById(R.id.rv_llistaAjustes3);
+
+        Intent intent = getIntent();
+
+        String username = intent.getStringExtra("username");
+        String idAmigo = intent.getStringExtra("id");
+        String imagen = intent.getStringExtra("Imagen");
+
+        //publicacionList = fillPublicacionList();
+        publicacionList= ViewModel.getInstance().getPublicationsFrom();
+        //publicacionList= new ArrayList<>();
+        ViewModel.getInstance().setGetPublicationsFrom(idAmigo);
+
         //mejorar performance
-        recyclerView.hasFixedSize();
+        //recyclerView.hasFixedSize();
         //lineal layout
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         //especificar adapter
         mAdapter= new PublicacionesPerfilAdapter(publicacionList, PantallaPerfilAmigo.this);
@@ -71,16 +80,60 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         SingletonIdioma s= SingletonIdioma.getInstance();
         Resources resources=s.getResources();
         btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
+        String no_friend=resources.getString(R.string.no_friend);
+        String no_publications=resources.getString(R.string.no_public_available);
 
         viewModel = ViewModel.getInstance(this);
-        Intent intent = getIntent();
-
-        String username = intent.getStringExtra("username");
-        String idAmigo = intent.getStringExtra("id");
-        String imagen = intent.getStringExtra("Imagen");
 
         txt_nombrePerfil.setText(username);
         Glide.with(this).load(imagen).into(img_perfil);
+        System.out.println("Sett");
+        /*
+        while(!ViewModel.getInstance().getAcces()){
+            System.out.println("Waiting for access");
+        }*/
+
+        final Observer<ArrayList<PublicacionClass>> nameObserver = new Observer<ArrayList<PublicacionClass>>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onChanged(@Nullable final ArrayList<PublicacionClass> list) {
+                publicacionList.clear();
+                publicacionList.addAll(list);
+                recyclerView.getAdapter().notifyDataSetChanged();
+                System.out.println("Set");
+                System.out.println(recyclerView.getAdapter().getItemCount());
+                recyclerView.getAdapter().notifyDataSetChanged();
+                //recyclerView.setAdapter(new PublicacionesPerfilAdapter(publicacionList, PantallaPerfilAmigo.this));
+                System.out.println("post set");
+
+                if (!btn_añadirAmigo.getText().equals(resources.getString(R.string.añadido))){
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setText(R.string.no_friend);
+                    emptyView.setVisibility(View.VISIBLE);
+                }
+                else if (publicacionList.isEmpty()) {
+                    recyclerView.setVisibility(View.GONE);
+                    emptyView.setText(resources.getString(R.string.no_public_available));
+                    emptyView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    emptyView.setVisibility(View.GONE);
+                }
+                /*publicacionList.clear();
+                publicacionList.addAll(list);
+                mAdapter.notifyDataSetChanged();
+                System.out.println(publicacionList);
+                //mAdapter= new PublicacionesPerfilAdapter(publicacionList, PantallaPerfilAmigo.this);
+                //recyclerView.setAdapter(mAdapter);
+                System.out.println("Notify");
+                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
+                //mAdapter.notify();
+                //mAdapter.notifyAll(); */
+            }
+        };
+        ViewModel.getInstance().getMutable().observe(this, nameObserver);
 
         if (viewModel.uidInListaAmigos(idAmigo)){
             btn_añadirAmigo.setText(resources.getString(R.string.añadido));
@@ -92,14 +145,29 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
             btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
         }
 
+        //CASO NO FRIEND
+
+        if (!btn_añadirAmigo.getText().equals(resources.getString(R.string.añadido))){
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setText(R.string.no_friend);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else if (publicacionList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setText(R.string.no_public_available);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
+
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!viewModel.getLogInStatus()){
-                    viewModel.singOut();
-                }
                 Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                 startActivity(pantallaInicio);
+                finish();
             }
         });
 
@@ -110,18 +178,12 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     btn_añadirAmigo.setText(resources.getString(R.string.pendiente));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded_grey));
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.black));
-                    //FALTA
-                    //Enviar solicitud
-                    viewModel.enviarsolicitud(idAmigo);
+                    viewModel.enviarSolicitud(idAmigo);
                 } else if (btn_añadirAmigo.getText().equals(resources.getString(R.string.pendiente))){
-                    System.out.println(btn_añadirAmigo.getText());
-                    System.out.println("pasa");
                     btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));
-                    //FALTA
-                    //Eliminar solicitud enviada
-                    viewModel.cancelarEvioSolicitud(idAmigo);
+                    viewModel.rechazarSolicitud(idAmigo);
                 } else {
                     AlertDialog.Builder alerta = new AlertDialog.Builder(PantallaPerfilAmigo.this);
                     alerta.setMessage(resources.getString(R.string.alertaDejarDeSeguir)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
@@ -150,6 +212,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         if(keyCode == event.KEYCODE_BACK){
             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
             startActivity(areaUsuario);
+            finish();
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -171,7 +234,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         comentariosList1.put("Sara","Totorooooo");
         comentariosList1.put("Matt","Has visto como entrenar a tu dragon?");
         comentariosList1.put("Septimus","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        publicacionList.add(new PublicacionClass(p1,likeList1,comentariosList1));
+        publicacionList.add(new PublicacionClass("12awq22",p1,likeList1,comentariosList1));
         ParametrosClass p2= new ParametrosClass("Surf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
         HashMap<String, Integer> likeList2=new HashMap<>();
         likeList2.put("0000",0);
@@ -181,7 +244,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         comentariosList2.put("0001","---");
         comentariosList2.put("0021","---");
         comentariosList2.put("0031","---");
-        publicacionList.add(new PublicacionClass(p2,likeList2,comentariosList2));
+        publicacionList.add(new PublicacionClass("AWQW",p2,likeList2,comentariosList2));
         ParametrosClass p3= new ParametrosClass("DokkanBattle", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
         HashMap<String, Integer> likeList3=new HashMap<>();
         likeList3.put("0000",1);
@@ -190,7 +253,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
         HashMap<String, String> comentariosList3=new HashMap<>();
         comentariosList3.put("0001","---");
         comentariosList3.put("0021","---");
-        publicacionList.add(new PublicacionClass(p3,likeList3,comentariosList3));
+        publicacionList.add(new PublicacionClass("asdqdw",p3,likeList3,comentariosList3));
 
         return publicacionList;
     }

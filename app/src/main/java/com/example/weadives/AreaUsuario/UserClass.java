@@ -1,6 +1,8 @@
 package com.example.weadives.AreaUsuario;
 
 import com.example.weadives.DatabaseAdapter;
+import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
+import com.example.weadives.ParametrosClass;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,6 +12,7 @@ public class UserClass {
 
     private String id, username, correo, urlImg, amigos, solicitudes_recibidas, solicitudes_enviadas;
     private int solicitudRecibida = 0;
+    private List<PublicacionClass> publicacionList;
 
 
     public UserClass(String id, String username, String correo, String urlImg, String amigos, String solicitudes_recibidas, String solicitudes_enviadas) {
@@ -24,6 +27,29 @@ public class UserClass {
         this.amigos = amigos;
         this.solicitudes_recibidas = solicitudes_recibidas;
         this.solicitudes_enviadas = solicitudes_enviadas;
+    }
+    //Hay que usar este
+    public UserClass(String id, String username, String correo, String urlImg, String amigos, String solicitudes_recibidas, String solicitudes_enviadas,List<PublicacionClass> pl) {
+        this.id = id;
+        this.username = username;
+        this.correo = correo;
+        if (urlImg == ""){
+            this.urlImg = "https://www.pngmart.com/files/21/Account-User-PNG-Photo.png";
+        } else {
+            this.urlImg = urlImg;
+        }
+        this.amigos = amigos;
+        this.solicitudes_recibidas = solicitudes_recibidas;
+        this.solicitudes_enviadas = solicitudes_enviadas;
+        this.publicacionList=pl;
+    }
+
+    public List<PublicacionClass> getPublicacionList() {
+        return publicacionList;
+    }
+
+    public void setPublicacionList(List<PublicacionClass> publicacionList) {
+        this.publicacionList = publicacionList;
     }
 
     public void sentSolicitud(){
@@ -61,11 +87,7 @@ public class UserClass {
     }
 
     public String getUrlImg() {
-        if (urlImg == null){
-            return "https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png";
-        } else {
-            return urlImg;
-        }
+        return urlImg;
     }
 
     public void setUrlImg(String urlImg) {

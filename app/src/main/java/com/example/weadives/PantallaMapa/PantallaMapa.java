@@ -16,7 +16,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.weadives.LocaleHelper;
@@ -24,11 +23,9 @@ import com.example.weadives.PantallaGestorInundaciones.PantallaGestorInundacione
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
 import com.example.weadives.databinding.PantallaMapaBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -39,12 +36,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import androidx.lifecycle.ViewModelProvider;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-
 import java.util.ArrayList;
-import java.util.Map;
 
 public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback {
 
@@ -66,13 +58,13 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private Marker tempMarcador;
     private GroundOverlay imagenClima;
     //ViewModel
-    MapaViewModel mapaViewModel;
+    ViewModelMapa viewModelMapa;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mapaViewModel = MapaViewModel.getInstance(this);
+        viewModelMapa = ViewModelMapa.getInstance(this);
 
         ImageButton btn_home20;
         binding = PantallaMapaBinding.inflate(getLayoutInflater());
@@ -140,7 +132,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mapaViewModel.guardarMarcador(txt_nombreMarcador.getText().toString(), coordsMarcador);
+                viewModelMapa.guardarMarcador(txt_nombreMarcador.getText().toString(), coordsMarcador);
                 mMap.addMarker(new MarkerOptions().title(txt_nombreMarcador.getText().toString()).position(coordsMarcador));
                 lay_layoutMarcador.setVisibility(View.INVISIBLE);
                 txt_nombreMarcador.setText("");
@@ -150,7 +142,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mapaViewModel.eliminarMarcador(tempMarcador.getTitle(), tempMarcador.getPosition());
+                viewModelMapa.eliminarMarcador(tempMarcador.getTitle(), tempMarcador.getPosition());
                 tempMarcador.remove();
                 lay_layoutMarcadorEliminar.setVisibility(View.INVISIBLE);
             }
@@ -171,28 +163,16 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
 
 
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -253,13 +233,11 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void actualizarMarcadores(){
-        ArrayList<MarkerOptions> markerList = mapaViewModel.getMarkerOptionsList();
+        ArrayList<MarkerOptions> markerList = viewModelMapa.getMarkerOptionsList();
         for(MarkerOptions marker : markerList){
             mMap.addMarker(marker);
         }
     }
-
-
 
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);

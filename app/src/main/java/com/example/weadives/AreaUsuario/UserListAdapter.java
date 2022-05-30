@@ -19,7 +19,9 @@ import com.example.weadives.PantallaPerfilAmigo.PantallaPerfilAmigo;
 import com.example.weadives.R;
 import com.example.weadives.ViewModel;
 
+import java.sql.SQLOutput;
 import java.util.List;
+import java.util.SortedMap;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserListViewHolder> {
 
@@ -46,14 +48,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     public void onBindViewHolder(@NonNull UserListViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.txt_friendname.setText(userClassList.get(position).getUsername());
         Glide.with(context).load(userClassList.get(position).getUrlImg()).into(holder.profilepic);
-        if(position >= limite) {
+        if(position > limite) {
             holder.btn_accept.setVisibility(View.GONE);
             holder.btn_deny.setVisibility(View.GONE);
         } else {
             holder.btn_accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    vm.aceptarSolicitud(userClassList.get(position));
+                    vm.aceptarSolicitud(userClassList.get(position).getId());
                     holder.btn_accept.setVisibility(View.GONE);
                     holder.btn_deny.setVisibility(View.GONE);
                 }
@@ -61,7 +63,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
             holder.btn_deny.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    vm.rechazarSolicitud(userClassList.get(position));
+                    vm.rechazarSolicitud(userClassList.get(position).getId());
                     holder.btn_accept.setVisibility(View.GONE);
                     holder.btn_deny.setVisibility(View.GONE);
                 }
@@ -76,6 +78,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
                 intent.putExtra("id", userClassList.get(position).getId());
                 intent.putExtra("Imagen", userClassList.get(position).getUrlImg());
                 context.startActivity(intent);
+                //context.finish();
             }
         });
     }

@@ -269,12 +269,12 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toStartOf="@+id/txt_numLikes"
         app:layout_constraintTop_toTopOf="@+id/imageView2"
-        app:srcCompat="@android:drawable/ic_delete" />
+        app:srcCompat="@drawable/btn_dislike" />
 
     <TextView
         android:id="@+id/txt_numLikes"
@@ -315,8 +315,8 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toStartOf="@+id/txt_numLikes2"
         app:layout_constraintTop_toTopOf="@+id/imageView3"
@@ -324,12 +324,12 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutAreaUsuarios"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/btn_like" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

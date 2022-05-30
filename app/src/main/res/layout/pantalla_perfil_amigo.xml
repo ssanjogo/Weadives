@@ -38,14 +38,14 @@
         android:id="@+id/img_perfil3"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.099"
-        app:srcCompat="@drawable/imagen_de_perfil"
-        android:contentDescription="@string/todo" />
+        app:srcCompat="@drawable/profillepicbase" />
 
     <TextView
         android:id="@+id/txt_nombrePerfil3"
@@ -73,5 +73,15 @@
         app:layout_constraintVertical_bias="0.481"
         android:background="@drawable/button_rounded"
         android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="@string/no_public_available"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/btn_añadirAmigo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

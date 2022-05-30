@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -24,7 +25,9 @@ import com.bumptech.glide.Glide;
 import com.example.weadives.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
+import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
 
 import java.util.List;
@@ -38,8 +41,7 @@ public class AreaUsuario extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ConstraintLayout constraintLayout;
-    private String correo;
-    private int limite;
+    private int limite = 0;
 
     private List<UserClass> userList;
     private ViewModel viewModel;
@@ -65,15 +67,18 @@ public class AreaUsuario extends AppCompatActivity {
         final Context context;
         final Resources resources;
         context = LocaleHelper.setLocale(this, cargarPreferencias());
-        resources = context.getResources();
+        resources = SingletonIdioma.getInstance().getResources();
         txt_noAmigos.setText(resources.getString(R.string.noAmigos));
-
+        etT_buscarPorNombre.setHint(resources.getString(R.string.buscar));
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
-
-        correo = viewModel.getCurrentUser().getCorreo();
+        //if (limite != 0){
+            //limite = viewModel.sizelista();
+        //} else {
         limite = viewModel.sizelista();
+        System.out.println("LIMITEAAAAAAAAAAAAAAAA: " + limite);
+        //}
         viewModel.fillUserList();
         userList = viewModel.getListaRecyclerView().getValue();
         setLiveDataObservers();
@@ -97,6 +102,7 @@ public class AreaUsuario extends AppCompatActivity {
             public void onClick(View view){
                 txt_noAmigos.setVisibility(View.INVISIBLE);
                 Intent pantallaMiperfil = new Intent(getApplicationContext(), PantallaMiPerfil.class);
+                pantallaMiperfil.setAction(Intent.ACTION_OPEN_DOCUMENT);
                 startActivity(pantallaMiperfil);
                 finish();
             }
@@ -105,15 +111,9 @@ public class AreaUsuario extends AppCompatActivity {
         btn_home4.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!viewModel.getLogInStatus()){
-                    viewModel.singOut();
-                    Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
-                    startActivity(pantallaInicio);
-                    finish();
-                } else {
-                    Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
-                    startActivity(pantallaInicio);
-                }
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
+                finish();
             }
         });
 
@@ -164,6 +164,7 @@ public class AreaUsuario extends AppCompatActivity {
         final Observer<List<UserClass>> observer = new Observer<List<UserClass>>() {
             @Override
             public void onChanged(List<UserClass> ac) {
+                limite = viewModel.sizelista();
                 UserListAdapter newAdapter = new UserListAdapter(viewModel.getListaRecyclerView().getValue(),AreaUsuario.this, viewModel, limite);
                 rv_llistaUsuarios.swapAdapter(newAdapter, true);
                 newAdapter.notifyDataSetChanged();
@@ -176,4 +177,19 @@ public class AreaUsuario extends AppCompatActivity {
         SharedPreferences preferencias = getSharedPreferences("idioma",Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
     }
+
+    private String recuperarToken() {
+        SharedPreferences preferencias = getSharedPreferences("token",Context.MODE_PRIVATE);
+        return preferencias.getString("token","");
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == event.KEYCODE_BACK){
+            Intent areaUsuario = new Intent(getApplicationContext(), PantallaPrincipal.class);
+            startActivity(areaUsuario);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

@@ -1,6 +1,9 @@
 package com.example.weadives.PantallaMiPerfil;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,12 +20,15 @@ import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.AreaUsuario.AreaUsuario;
 import com.example.weadives.DatoGradosClass;
 import com.example.weadives.Directions;
+import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionesPerfilAdapter;
 import com.example.weadives.ParametrosClass;
 import com.example.weadives.R;
+import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +37,7 @@ import java.util.List;
 public class PantallaMiPerfil extends AppCompatActivity {
 
     private ImageView img_perfil, btn_home, btn_config;
-    private TextView txt_nombrePerfil;
+    private TextView txt_nombrePerfil,emptyView;
     private RecyclerView recyclerView;
     private Button btn_cerrarSesion;
 
@@ -51,10 +57,14 @@ public class PantallaMiPerfil extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv_llistaAjustes);
         btn_config = findViewById(R.id.btn_config);
         btn_cerrarSesion = findViewById(R.id.btn_cerrarSession);
+        emptyView  = findViewById(R.id.empty_view);
 
         //parametrosList = fillParametrosList();
-        List<PublicacionClass> publicacionesList= fillPublicacionList();
+        //List<PublicacionClass> publicacionList= fillPublicacionList();
+        List<PublicacionClass> publicacionList= new ArrayList<>();
 
+        publicacionList=ViewModelParametros.getSingletonInstance().getPublications();
+        
         recyclerView = findViewById(R.id.rv_llistaAjustes);
         //mejorar performance
         recyclerView.hasFixedSize();
@@ -62,21 +72,40 @@ public class PantallaMiPerfil extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         //especificar adapter
-        mAdapter= new PublicacionesPerfilAdapter(publicacionesList,PantallaMiPerfil.this);
+        if(publicacionList==null){
+            publicacionList=new ArrayList<>();
+        }
+        System.out.println(publicacionList);
+        mAdapter= new PublicacionesPerfilAdapter(publicacionList,PantallaMiPerfil.this);
         recyclerView.setAdapter(mAdapter);
-
+        //setLiveDataObservers();
         viewModel = ViewModel.getInstance(this);
         Intent intent = getIntent();
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
+        System.out.println("AAAAAAAAAAA " + viewModel.getCurrentUser().getUrlImg());
+        //Glide.with(img_perfil.getContext()).clear(img_perfil);
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
+
+        final Context context;
+        SingletonIdioma s= SingletonIdioma.getInstance();
+        Resources resources=s.getResources();
+
+        if (publicacionList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setText(resources.getString(R.string.no_public_available));
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
 
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(!viewModel.getLogInStatus()){
-                    viewModel.singOut();
-                }
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
                 finish();
             }
         });
@@ -86,14 +115,6 @@ public class PantallaMiPerfil extends AppCompatActivity {
             public void onClick(View view){
                 Intent ajustePerfil = new Intent(getApplicationContext(), AjustesPerfil.class);
                 startActivity(ajustePerfil);
-            }
-        });
-
-        btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.setLogInStatus(false);
-                viewModel.singOut();
                 finish();
             }
         });
@@ -101,9 +122,13 @@ public class PantallaMiPerfil extends AppCompatActivity {
         btn_cerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                viewModel.setLogInStatus(false);
+                viewModel.keepSession(false);
                 viewModel.singOut();
+                recordarSesion(false);
                 Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
                 startActivity(pantallaLogIn);
+                finish();
             }
         });
     }
@@ -112,6 +137,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         if(keyCode == event.KEYCODE_BACK){
             Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
             startActivity(areaUsuario);
+            finish();
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -147,7 +173,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         comentariosList1.put("Sara","Totorooooo");
         comentariosList1.put("Matt","Has visto como entrenar a tu dragon?");
         comentariosList1.put("Septimus","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        publicacionList.add(new PublicacionClass(p1,likeList1,comentariosList1));
+        publicacionList.add(new PublicacionClass("123131",p1,likeList1,comentariosList1));
         ParametrosClass p2= new ParametrosClass("Surf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
         HashMap<String, Integer> likeList2=new HashMap<>();
         likeList2.put("0000",0);
@@ -157,7 +183,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         comentariosList2.put("0001","---");
         comentariosList2.put("0021","---");
         comentariosList2.put("0031","---");
-        publicacionList.add(new PublicacionClass(p2,likeList2,comentariosList2));
+        publicacionList.add(new PublicacionClass("12131",p2,likeList2,comentariosList2));
         ParametrosClass p3= new ParametrosClass("DokkanBattle", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE));
         HashMap<String, Integer> likeList3=new HashMap<>();
         likeList3.put("0000",1);
@@ -166,8 +192,15 @@ public class PantallaMiPerfil extends AppCompatActivity {
         HashMap<String, String> comentariosList3=new HashMap<>();
         comentariosList3.put("0001","---");
         comentariosList3.put("0021","---");
-        publicacionList.add(new PublicacionClass(p3,likeList3,comentariosList3));
+        publicacionList.add(new PublicacionClass("qawsqwe",p3,likeList3,comentariosList3));
 
         return publicacionList;
+    }
+
+    private void recordarSesion(boolean b) {
+        SharedPreferences preferencias = getSharedPreferences("sesion", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putBoolean("sesion", b);
+        editor.commit();
     }
 }

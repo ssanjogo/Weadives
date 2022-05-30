@@ -95,15 +95,16 @@
         android:id="@+id/chkb_mantenerSession"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:buttonTint="@color/black"
+        android:checked="true"
         android:minHeight="48dp"
         android:text="@string/mantener_sessi_n_iniciada"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526"
-        android:textColor="@color/black"
-        android:buttonTint="@color/black"/>
+        app:layout_constraintVertical_bias="0.526" />
 
     <Button
         android:id="@+id/btn_registrarse"

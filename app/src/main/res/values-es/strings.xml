@@ -34,7 +34,7 @@
     <string name="gestionar_parametros">Gestionar Parametros</string>
     <string name="confirmar_parametros">Confirmar Parametros</string>
     <string name="NombreActividad">Nombre actividad</string>
-    <string name="viento">viento</string>
+    <string name="viento">Viento</string>
     <string name="cerrar_sesión">Cerrar sesión</string>
     <string name="añadir_amigo">Añadir amigo</string>
     <string name="pendiente">Pendiente</string>
@@ -62,4 +62,28 @@
     <string name="cambiarContraseña">Cambiar contraseña</string>
     <string name="seleccionarFotoGaleria">Elegir una foto de la galeria</string>
     <string name="hacerFoto">Sacar una foto</string>
+    <string name="no_public_available">No hay publicaciones</string>
+    <string name="no_friend">Debes ser amigo de este usuario para ver sus publicaciones</string>
+    <string name="AlreadyLike">Ya has dado tu opinion de esta publicacion</string>
+    <string name="no_preferencias">No existen preferencias</string>
+    <string name="nuevo_parametro"> Nuevo Parametro </string>
+    <string name="ayudapreferencias" > En esta pestaña podrás crear tus propias configuraciones de parametros! Con el boton +, podrás añadir un nuevo parametro. El boton guardar te permitirá no perder tus preferencias cuando cierres la aplicación.</string>
+    <string name="ayudapreferencias2" >Los Switches te permitiran hacer cosas increibles! El switch de publicar, te permitiá subir a tu perfil tus ajustes(Si lo tienes). El switch de notificaciones te notificará si se dan las condiciones de tu preferencia.</string>
+    <string name="ayuda" > Ayuda al cliente </string>
+    <string name="txtContraseña">contraseña</string>
+    <string name="deletePar1">Eliminar Parametro</string>
+    <string name="deletepar2">¿Estas seguro de que deseas eliminar este parametro?</string>
+    <string name="eliminarImagen">Eliminar imagen</string>
+    <string name="alertaEliminarImagen">¿Estas seguro de que quieres eliminar tu foto de perfil?</string>
+    <string name="marcador_vacio"> Selecciona un marcador</string>
+    <string name="buscar">Buscar por nombre</string>
+    <string name="norte">Norte</string>
+    <string name="nordeste">Nordeste</string>
+    <string name="este">Este</string>
+    <string name="sudeste">Sudeste</string>
+    <string name="sud">Sud</string>
+    <string name="sudoeste">Sudoeste</string>
+    <string name="oeste">Oeste</string>
+    <string name="nordoeste">Nordoeste</string>
+    <string name="no_dir">Cualquiera</string>
 </resources>
