@@ -69,8 +69,10 @@ public class PantallaInicio extends AppCompatActivity {
         viewModel = viewModel.getInstance(this);
         ViewModelMapa mapViewModel = ViewModelMapa.getInstance(this, resources2);
 
-        if (viewModel.accountNotNull()){
+        if (viewModel.accountNotNull() && cargarSesion()){
             viewModel.getUser();
+        } else if (!cargarSesion()){
+            viewModel.singOut();
         }
         ViewModelParametros p = ViewModelParametros.getSingletonInstance(resources2,this);
         System.out.println(p.getLista());
@@ -202,5 +204,10 @@ public class PantallaInicio extends AppCompatActivity {
             System.out.println("Cerramos session");
             viewModel.singOut();
         }
+    }
+
+    private boolean cargarSesion() {
+        SharedPreferences preferencias = getSharedPreferences("sesion",Context.MODE_PRIVATE);
+        return preferencias.getBoolean("sesion",false);
     }
 }

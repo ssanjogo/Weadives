@@ -117,6 +117,7 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
                         etA_correo.setError("Correo no registrado");
                     }
                     if (chkb_mantenerSession.isChecked()) {
+                        recordarSesion(true);
                         viewModel.keepSession(true);
                     }
                     viewModel.logIn(etA_correo.getText().toString(), etP_contraseña.getText().toString());
@@ -136,9 +137,17 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
         editor.putString("correo",correo);
         editor.commit();
     }
+
     private String cargarCorreo() {
         SharedPreferences preferencias = getSharedPreferences("correo",Context.MODE_PRIVATE);
         return preferencias.getString("correo","");
+    }
+
+    private void recordarSesion(boolean b) {
+        SharedPreferences preferencias = getSharedPreferences("sesion", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putBoolean("sesion", b);
+        editor.commit();
     }
 
     @Override

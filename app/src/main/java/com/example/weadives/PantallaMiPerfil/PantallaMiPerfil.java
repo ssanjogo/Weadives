@@ -129,6 +129,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
                 viewModel.setLogInStatus(false);
                 viewModel.keepSession(false);
                 viewModel.singOut();
+                recordarSesion(false);
                 Intent pantallaLogIn = new Intent(getApplicationContext(), PantallaLogIn.class);
                 startActivity(pantallaLogIn);
                 finish();
@@ -200,10 +201,10 @@ public class PantallaMiPerfil extends AppCompatActivity {
         return publicacionList;
     }
 
-    private void recordarContraseña(String contraseña) {
-        SharedPreferences preferencias = getSharedPreferences("contraseña", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferencias.edit();
-        editor.putString("contraseña", contraseña);
+    private void recordarSesion(boolean b) {
+        SharedPreferences preferencias = getSharedPreferences("sesion", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putBoolean("sesion", b);
         editor.commit();
     }
 }
