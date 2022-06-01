@@ -45,6 +45,8 @@ public class ParametrosClass {
     private DatoGradosClass directionOlas;
     private String idPublicacion;
 
+    private String idNotification;
+
     public String getIdPublicacion() {
         return idPublicacion;
     }
@@ -68,6 +70,7 @@ public class ParametrosClass {
         this.periodoOlaMin = 0;
         this.directionOlas = new DatoGradosClass(Directions.NO_DIRECTION);
         this.idPublicacion="0";
+        this.idNotification = "0";
 
     }
 
@@ -88,9 +91,28 @@ public class ParametrosClass {
         this.periodoOlaMin = periodoOlaMin;
         this.directionOlas = directionOlas;
         this.idPublicacion="0";
+        this.idNotification= "0";
     }
 
-    public ParametrosClass(String idPublicacion,String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
+    public ParametrosClass(String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas, String idNotification) {
+        this.nombreActividad = nombreActividad.replaceAll("[^A-Za-z0-9 ]","");
+        this.presionMax = presionMax;
+        this.presionMin = presionMin;
+        this.temperaturaMax = temperaturaMax;
+        this.temperaturaMin = temperaturaMin;
+        this.vientoMax = vientoMax;
+        this.vientoMin = vientoMin;
+        this.directionViento = directionViento;
+        this.alturaOlaMax = alturaOlaMax;
+        this.alturaOlaMin = alturaOlaMin;
+        this.periodoOlaMax = periodoOlaMax;
+        this.periodoOlaMin = periodoOlaMin;
+        this.directionOlas = directionOlas;
+        this.idPublicacion="0";
+        this.idNotification= idNotification;
+    }
+
+    public ParametrosClass(String idPublicacion, String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas) {
         this.nombreActividad = nombreActividad.replaceAll("[^A-Za-z0-9 ]","");
         this.presionMax = presionMax;
         this.presionMin = presionMin;
@@ -105,6 +127,7 @@ public class ParametrosClass {
         this.periodoOlaMin = periodoOlaMin;
         this.directionOlas = directionOlas;
         this.idPublicacion=idPublicacion;
+        this.idNotification = "0";
     }
 
 
@@ -131,6 +154,7 @@ public class ParametrosClass {
                 '}';
     }
     public String toSaveString() {
+        System.out.println("la id loco:" + idNotification);
         return nombreActividad +
                 "," + presionMax +
                 "," + presionMin +
@@ -143,7 +167,8 @@ public class ParametrosClass {
                 "," + alturaOlaMin +
                 "," + periodoOlaMax +
                 "," + periodoOlaMin +
-                "," + directionOlas.getDir();
+                "," + directionOlas.getDir() +
+                "," + idNotification;
     }
 
     public float getViento() {
@@ -271,6 +296,13 @@ public class ParametrosClass {
         this.directionOlas.setDir(directionOlas);
     }
 
+    public String getIdNotification() {
+        return idNotification;
+    }
+
+    public void setIdNotification(String idNotification) {
+        this.idNotification = idNotification;
+    }
 
     static ArrayList<ParametrosClass> descomprimir(String l){
             System.out.println(l);

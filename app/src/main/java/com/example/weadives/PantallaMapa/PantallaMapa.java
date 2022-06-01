@@ -134,6 +134,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 viewModelMapa.guardarMarcador(txt_nombreMarcador.getText().toString(), coordsMarcador);
                 mMap.addMarker(new MarkerOptions().title(txt_nombreMarcador.getText().toString()).position(coordsMarcador));
+                viewModelMapa.guardarPersistencia();
                 lay_layoutMarcador.setVisibility(View.INVISIBLE);
                 txt_nombreMarcador.setText("");
             }
@@ -144,6 +145,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 viewModelMapa.eliminarMarcador(tempMarcador.getTitle(), tempMarcador.getPosition());
                 tempMarcador.remove();
+                viewModelMapa.guardarPersistencia();
                 lay_layoutMarcadorEliminar.setVisibility(View.INVISIBLE);
             }
         });

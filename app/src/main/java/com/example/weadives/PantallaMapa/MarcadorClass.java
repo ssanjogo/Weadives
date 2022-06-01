@@ -26,6 +26,12 @@ public class MarcadorClass{
         this.r_lat = "0";
         this.r_lon = "0";
     }
+    public MarcadorClass(String name,LatLng latLng){
+        this.name = name;
+        this.latLng = latLng;
+        this.r_lat = "0";
+        this.r_lon = "0";
+    }
 
     public LatLng getLatLng() {
         return latLng;
@@ -50,6 +56,10 @@ public class MarcadorClass{
     @Override
     public String toString(){
         return this.name;
+    }
+
+    public String stringToSave(){
+        return name + "," + latLng.latitude + "," + latLng.longitude + "," + r_lat + "," + r_lon + ",";
     }
 
 }

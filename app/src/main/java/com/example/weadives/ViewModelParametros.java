@@ -9,18 +9,24 @@ import android.content.res.Resources;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.weadives.AreaUsuario.UserClass;
+import com.example.weadives.PantallaMapa.MarcadorClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
+public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, DatabaseAdapter.preferenciasInterface{
     private static ViewModelParametros SINGLETON_INSTANCE;
     private  MutableLiveData<ArrayList<ParametrosClass>> mutableList;
+    private final DatabaseAdapter dbA;
+    private MutableLiveData<String> idNotification;
     public Context c;
     public Resources r;
     private UserClass currentUser;
+    private ParametrosClass currentParametro;
+    private MarcadorClass marcador;
     //private MutableLiveData<ArrayList<ParametrosClass>> mutableList;
 
     private ArrayList<ParametrosClass> lista;
@@ -34,22 +40,19 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
         return mutableList;
     }
 
-
-
-    private ViewModelParametros() {
-
-    }
-
     public ViewModelParametros(Resources r,Context c) {
         this.r=r;
         this.c=c;
         System.out.println("AQUI LLEGA\n");
         String test=cargarPreferenciasParametros();
         //String test="";
-        System.out.println(test);
+        System.out.println("p: "+test);
         if(test.length()!=0){lista=descomprimirArray(test);}else{
             lista=new ArrayList<>();
         }
+        dbA = new DatabaseAdapter(this);
+        idNotification = new MutableLiveData<>();
+
 
         System.out.println(lista);
     }
@@ -88,6 +91,13 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
         }
         System.out.println(lista);
         System.out.println(mutableList.toString());
+        guardarPersistencia();
+        mutableList.setValue(lista);
+    }
+
+    public void changeParametro(ParametrosClass oldP, ParametrosClass newP){
+        lista.remove(oldP);
+        lista.add(newP);
         guardarPersistencia();
         mutableList.setValue(lista);
     }
@@ -234,6 +244,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
     private String comprimirArray(ArrayList<ParametrosClass> l){
         String str="";
         for(int i=0; i<l.size();i++){
+            System.out.println("aver: " + l.get(i).toSaveString());
             str=str+l.get(i).toSaveString()+"¿";
         }
         return str;
@@ -252,7 +263,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
             for (String x : fixedParam) {
                 System.out.println(x);
             }
-            parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));
+            parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12])), fixedParam[13]));
         }
 
         return parametrosList;
@@ -318,6 +329,11 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
         }
     }
 
+    @Override
+    public void setToast(String s) {
+
+    }
+
     public void notifyId(String id) {
         for (PublicacionClass k : listaPublic){
             if (k.getIdPublicacion().equals("-1")){
@@ -327,8 +343,6 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
         }
     }
 
-
-    @Override
     public void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses) {
         System.out.println("PUBLICACIONES RELLENADAS\n");
         this.listaPublic= (ArrayList<PublicacionClass>) publicacionClasses;
@@ -388,6 +402,34 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
             }
         }
         return null;
+    }
+
+    @Override
+    public void setNotificationId(String id) {
+        System.out.println("docid: " + id);
+        ParametrosClass newParametro = currentParametro;
+        newParametro.setIdNotification(id);
+        changeParametro(currentParametro, newParametro);
+    }
+
+    public void deleteNotification(String idNotification, ParametrosClass old){
+        System.out.println("aver:2" + old.toString());
+        dbA.deleteNotification(idNotification);
+        ParametrosClass newP = old;
+        newP.setIdNotification("0");
+        changeParametro(old, newP);
+    }
+    public void createCoordsNotification(String coords, Map<String, Object> data, ParametrosClass old) {
+        dbA.createCoordsNotification(coords, data);
+        currentParametro = old;
+    }
+
+    public MarcadorClass getMarcador() {
+        return marcador;
+    }
+
+    public void setMarcador(MarcadorClass marcador) {
+        this.marcador = marcador;
     }
 }
 

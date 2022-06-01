@@ -1,6 +1,10 @@
 package com.example.weadives.PantallaMapa;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
@@ -24,6 +28,10 @@ public class ViewModelMapa extends AndroidViewModel implements DatabaseAdapter.m
     private MarcadorList marcadorList;
     private final DatabaseAdapter dbA;
     private Resources r;
+    private Context context;
+    ArrayList<MarcadorClass> listaMarcador;
+
+
 
     public Resources getR() {
         return r;
@@ -35,9 +43,10 @@ public class ViewModelMapa extends AndroidViewModel implements DatabaseAdapter.m
 
     public ViewModelMapa(@NonNull Application application) {
         super(application);
-        dbA = new DatabaseAdapter(this);
+        context = getApplication().getApplicationContext();
         marcadorList = new MarcadorList();
-
+        dbA = new DatabaseAdapter(this);
+        cargarPersistencia();
     }
 
 
@@ -101,4 +110,44 @@ public class ViewModelMapa extends AndroidViewModel implements DatabaseAdapter.m
         //_lon.setValue(lon);
         marcadorList.set_lon(lon);
     }
+
+    public void guardarPersistencia(){
+        String save = comprimirArray( marcadorList.getMarcadores());
+        SharedPreferences preferencias = context.getSharedPreferences("marcadores", MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putString("marcadores",save);
+        editor.commit();
+
+    }
+
+    public void cargarPersistencia(){
+        //Array de prueba
+        ArrayList<MarcadorClass> marcadorList = new ArrayList<>();
+        marcadorList.add(new MarcadorClass("test", new LatLng(2.4688644409,74.4644393921)));
+
+        SharedPreferences preferencias = context.getSharedPreferences("marcadores",MODE_PRIVATE);
+
+        marcadorList = descomprimirArray(preferencias.getString("marcadores", comprimirArray(marcadorList)));
+        this.marcadorList.setMarcadores(marcadorList);
+    }
+
+    private String comprimirArray(ArrayList<MarcadorClass> marcadorList){
+        String save = "";
+        for(int i = 0; i < marcadorList.size(); i++){
+            save += marcadorList.get(i).stringToSave() + "¿";
+        }
+        return save;
+    }
+
+    private ArrayList<MarcadorClass> descomprimirArray(String save){
+        ArrayList<MarcadorClass> marcadorList = new ArrayList<>();
+        String[] marcadorArray = save.split("¿");
+        String[] fixArray;
+        for(String marcadorString : marcadorArray){
+            fixArray = marcadorString.split(",");
+            marcadorList.add(new MarcadorClass(fixArray[0], new LatLng(Double.parseDouble(fixArray[1]), Double.parseDouble(fixArray[2])), fixArray[3], fixArray[4]));
+        }
+        return marcadorList;
+    }
+
 }

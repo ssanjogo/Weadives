@@ -10,8 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.DatabaseAdapter;
-import com.example.weadives.PantallaMapa.MapaViewModel;
-import com.example.weadives.PantallaMapa.MarcadorList;
 
 import java.util.ArrayList;
 import java.util.Map;

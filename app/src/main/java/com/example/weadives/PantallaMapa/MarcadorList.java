@@ -1,5 +1,10 @@
 package com.example.weadives.PantallaMapa;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
+
+import com.example.weadives.ParametrosClass;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -9,6 +14,7 @@ import java.util.ArrayList;
 public class MarcadorList {
 
     private ArrayList<MarcadorClass> marcadorList;
+    private ViewModelMapa viewModel;
 
 
     private ArrayList<Double> _lat;     // Array de Latitudes reales
@@ -21,6 +27,10 @@ public class MarcadorList {
 
     public MarcadorList() {
         this.marcadorList = new ArrayList<>();
+    }
+
+    public MarcadorList(ArrayList<MarcadorClass> marcadorListlist) {
+        this.marcadorList = marcadorList;
     }
 
     public void guardarMarcador(String nombre, LatLng latLng){
@@ -55,6 +65,10 @@ public class MarcadorList {
 
     public ArrayList<MarcadorClass> getMarcadores(){
         return marcadorList;
+    }
+
+    public void setMarcadores(ArrayList<MarcadorClass> marcadorList){
+        this.marcadorList = marcadorList;
     }
 
     private MarcadorClass buscarMarcador(String name, LatLng pos){
@@ -100,6 +114,8 @@ public class MarcadorList {
     public void set_lon(ArrayList<Double> _lon) {
         this._lon = _lon;
     }
+
+
 
 
 }

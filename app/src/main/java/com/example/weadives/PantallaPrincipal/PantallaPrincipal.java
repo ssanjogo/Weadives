@@ -32,6 +32,7 @@ import com.example.weadives.PantallaMapa.ViewModelMapa;
 import com.example.weadives.R;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelParametros;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 
 public class PantallaPrincipal extends AppCompatActivity {
 
-    private Button btnHorario, btnAñadirNotificacion, btn_gestionarParametros;
+    private Button btnHorario, btn_gestionarParametros;
     private ImageView btn_home, btn_social;
     private Spinner DesplegableMarcadores;
     private ViewModel viewModel;
@@ -83,6 +84,8 @@ public class PantallaPrincipal extends AppCompatActivity {
         btn_gestionarParametros.setText((resources.getString(R.string.gestionar_parametros)));
 
         btnHorario.setEnabled(false);
+        btn_gestionarParametros.setEnabled(false);
+
 
         viewModel = ViewModel.getInstance(this);
         mapViewModel = ViewModelMapa.getInstance(this);
@@ -137,11 +140,13 @@ public class PantallaPrincipal extends AppCompatActivity {
                 String location = ((MarcadorClass) DesplegableMarcadores.getSelectedItem()).getLocation();
                 if(!location.equals("0_0")){
                     horarioViewModel.setMarcador((MarcadorClass) DesplegableMarcadores.getSelectedItem());
+                    ViewModelParametros.getSingletonInstance().setMarcador((MarcadorClass) DesplegableMarcadores.getSelectedItem());
                     System.out.println("AWAAWA");
                 }
                 System.out.println(location + "  " + i);
                 if(i > 0){
                     btnHorario.setEnabled(true);
+                    btn_gestionarParametros.setEnabled(true);
                     Toast.makeText(getApplicationContext(), "Selected : " + DesplegableMarcadores.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                 }
             }

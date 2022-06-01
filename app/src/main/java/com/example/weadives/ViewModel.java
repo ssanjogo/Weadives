@@ -222,9 +222,22 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
             u.setStringSolicitudesRecibidas(u.getStringSolicitudesRecibidas() + "," + this.usuario.getId());
         }
         HashMap<String, Object> hmFuturoAmigo = convertUserToHashMap(u);
+
+
         dbA.updateDatos(hmFuturoAmigo);
+        // Enviamos solicitud de amigo
+        createSolicitud(usuario.getId(),u.getId());
+
 
         fillUserList();
+    }
+
+    private void createSolicitud(String idS, String idR){
+        HashMap<String, Object> solicitudData = new HashMap<>();
+        solicitudData.put("idS", idS);
+        solicitudData.put("idR", idR);
+        dbA.createFriendNoti(solicitudData);
+
     }
 
     public void cancelarEnvioSolicitud(String idSolicitado){
