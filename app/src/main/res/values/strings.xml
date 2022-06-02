@@ -84,4 +84,5 @@
     <string name="oeste">West</string>
     <string name="nordoeste">NorthWest</string>
     <string name="no_dir">Any Direction</string>
+    <string name="commentadded">Comment Added</string>
 </resources>
