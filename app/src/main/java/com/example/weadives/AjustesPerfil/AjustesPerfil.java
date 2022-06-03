@@ -126,7 +126,6 @@ public class AjustesPerfil extends AppCompatActivity {
                 }
 
                 if (!etP_contraseña3.getText().toString().equals("")) {
-                    System.out.println(etP_contraseña3.getText().toString());
                     AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
                     alerta.setMessage(resources.getString(R.string.alertaCambiarContraseña)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
                         @Override

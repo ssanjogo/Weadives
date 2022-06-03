@@ -28,7 +28,6 @@ public class PreferenciasViewModel extends AndroidViewModel implements DatabaseA
 
     public static PreferenciasViewModel getInstance(AppCompatActivity application){
         if (preferenciasViewModel == null){
-            System.out.println("viene aqui");
             preferenciasViewModel = new ViewModelProvider(application).get(PreferenciasViewModel.class);
         }
         return preferenciasViewModel;
