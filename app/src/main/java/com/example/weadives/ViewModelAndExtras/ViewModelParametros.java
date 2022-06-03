@@ -124,7 +124,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
             String parametros=p.getParametros().toSaveString();
             String idPublicacion=p.getIdPublicacion();
             if(idPublicacion.equals("0")){
-                System.out.println("CREAR NUEVA PUBLICACION - ERROR");
+                //System.out.println("CREAR NUEVA PUBLICACION - ERROR");
             }
             String idUsuario=p.getIdUsuario();
             ViewModel.getInstance().updatePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
@@ -147,7 +147,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
             String parametros=p.getParametros().toSaveString();
             String idPublicacion=p.getIdPublicacion();
             if(idPublicacion.equals("0")){
-                System.out.println("CREAR NUEVA PUBLICACION - ERROR");
+                //System.out.println("CREAR NUEVA PUBLICACION - ERROR");
             }
             String idUsuario=p.getIdUsuario();
             ViewModel.getInstance().updatePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
@@ -188,7 +188,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
         guardarPreferenciasParametros("");
         lista=new ArrayList<>();
         lista.add(new ParametrosClass());
-        System.out.println(lista);
+        //System.out.println(lista);
         mutableList = new MutableLiveData<ArrayList<ParametrosClass>>();
         mutableList.setValue(lista);
     }
@@ -259,18 +259,18 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
         return str;
     }
     private ArrayList<ParametrosClass> descomprimirArray(String l){
-        System.out.println("HEHHEHEHEHHEHEH");
-        System.out.println(l);
+        //System.out.println("HEHHEHEHEHHEHEH");
+        //System.out.println(l);
         String[] parametrosStringList = l.split("¿");
         int count = l.length() - l.replace("¿", "").length();
-        System.out.println(count);
+        //System.out.println(count);
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
         String[] fixedParam;
         for (String i : parametrosStringList) {
-            System.out.println(i);
+            //System.out.println(i);
             fixedParam=i.split(",");
             for (String x : fixedParam) {
-                System.out.println(x);
+                //System.out.println(x);
             }
             parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));
         }
@@ -282,7 +282,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
     public List<PublicacionClass> getPublications(){
         List<PublicacionClass> publicaciones = new ArrayList<>();
         if(currentUser!=null){
-            System.out.println("USUARIO LOGEADOOOO");
+            //System.out.println("USUARIO LOGEADOOOO");
             //DatabaseAdapter.getPublications;
             //publicaciones=fillPublicacionList();
 
@@ -350,9 +350,9 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
 
     @Override
     public void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses) {
-        System.out.println("PUBLICACIONES RELLENADAS\n");
+        //System.out.println("PUBLICACIONES RELLENADAS\n");
         this.listaPublic= (ArrayList<PublicacionClass>) publicacionClasses;
-        System.out.println(lista.size());
+        //System.out.println(lista.size());
         boolean existe=false;
         for (PublicacionClass i : publicacionClasses) {
             for (ParametrosClass k : lista) {
@@ -365,7 +365,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
                 existe=false;
             }
         }
-        System.out.println(lista.size());
+        //System.out.println(lista.size());
     }
 
 

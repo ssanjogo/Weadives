@@ -609,7 +609,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void setImage(String url) {
         this.url = url;
         this.usuario.setUrlImg(url);
-        System.out.println("USUARIO: " + this.usuario.toString());
+        //System.out.println("USUARIO: " + this.usuario.toString());
         cambiarImagen(url);
     }
 
@@ -638,8 +638,8 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     @Override
     public void setListaPublicacionTemp(ArrayList<PublicacionClass> lista) {
-        System.out.println("SOY EL VIEWMODEL RECIBIENDO ");
-        System.out.println(lista);
+        //System.out.println("SOY EL VIEWMODEL RECIBIENDO ");
+        //System.out.println(lista);
         mutableListaTemp.setValue(lista);
         listaTemp=lista;
         ViewModel.getInstance().getMutable().setValue(lista);
@@ -664,14 +664,14 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
 
     public void setGetPublicationsFrom(String id){
-        System.out.println("SOY EL VIEWMODEL PIDIENDO ");
+        //System.out.println("SOY EL VIEWMODEL PIDIENDO ");
         dbA.getPublicationsFromUsuario(id);
         acces=false;
     }
 
     public ArrayList<PublicacionClass> getPublicationsFrom(){
 
-        System.out.println("Metodo 3 ");
+        //System.out.println("Metodo 3 ");
         return new ArrayList<>();
         /*System.out.println(listaTemp);
         if(listaTemp.size()==0){
