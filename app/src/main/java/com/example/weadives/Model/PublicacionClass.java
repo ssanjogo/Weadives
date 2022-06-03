@@ -23,20 +23,20 @@ public class PublicacionClass {
                 newMap.put(entry.getKey(), Integer.valueOf(entry.getValue()) );
         }
         this.likeList = newMap;
-        System.out.println(map_likes.getClass());
-        System.out.println(map_likes);
+        //System.out.println(map_likes.getClass());
+        //System.out.println(map_likes);
         this.comentariosList = map_comentarios;
         this.idPublicacion = idPubli;
-        System.out.println("TESTEO-\n");
-        System.out.println(idPubli);
+        //System.out.println("TESTEO-\n");
+        //System.out.println(idPubli);
         p.setIdPublicacion(idPubli);
         this.idUsuario=idUsuario;
     }
     public PublicacionClass(ParametrosClass p, String idPubli, String idUsuario,HashMap<String, String> map_comentarios, HashMap<String, Integer> map_likes) {
         this.parametros = p;
         this.likeList = map_likes;
-        System.out.println(map_likes.getClass());
-        System.out.println(map_likes);
+        //System.out.println(map_likes.getClass());
+        //System.out.println(map_likes);
         this.comentariosList = map_comentarios;
         this.idPublicacion = idPubli;
         this.idUsuario=idUsuario;
@@ -134,11 +134,11 @@ public class PublicacionClass {
         int sum=0;
         int value;
         String key;
-        System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP\n");
-        System.out.println(likeList);
+        //System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP\n");
+        //System.out.println(likeList);
         for(HashMap.Entry<String, Integer> entry : likeList.entrySet()) {
-            System.out.println(entry.getKey());
-            System.out.println(entry.getValue());
+            //System.out.println(entry.getKey());
+            //System.out.println(entry.getValue());
             Set s=likeList.entrySet();
             key = entry.getKey();
             value = entry.getValue();
