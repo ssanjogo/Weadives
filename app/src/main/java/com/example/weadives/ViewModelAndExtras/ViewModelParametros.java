@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, DatabaseAdapter.preferenciasInterface{
+
     private static ViewModelParametros SINGLETON_INSTANCE;
     private  MutableLiveData<ArrayList<ParametrosClass>> mutableList;
     private final DatabaseAdapter dbA;
