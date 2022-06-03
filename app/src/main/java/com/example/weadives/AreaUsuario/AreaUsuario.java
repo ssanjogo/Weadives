@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -62,7 +63,7 @@ public class AreaUsuario extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         etT_buscarPorNombre.setEnabled(false);
 
-        viewModel = ViewModel.getInstance(this);
+        viewModel = ViewModel.getInstance();
         Intent intent = getIntent();
 
         final Context context;
@@ -72,14 +73,27 @@ public class AreaUsuario extends AppCompatActivity {
         txt_noAmigos.setText(resources.getString(R.string.noAmigos));
         etT_buscarPorNombre.setHint(resources.getString(R.string.buscar));
 
+        /*System.out.println("CURRENT USER " + viewModel.getCurrentUser());
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
-        //if (limite != 0){
-            //limite = viewModel.sizelista();
-        //} else {
-        limite = viewModel.sizelista();
-        System.out.println("LIMITEAAAAAAAAAAAAAAAA: " + limite);
-        //}
+        limite = viewModel.sizelista();*/
+
+        try{
+            txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
+            Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
+            limite = viewModel.sizelista();
+        }catch (Exception e){
+            viewModel.setI(true);
+            Toast t = new Toast(getApplicationContext());
+            t.setText(resources.getString(R.string.errorLogIn));
+            t.show();
+            Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+            pantallaInicio.putExtra("reinicia", "");
+            viewModel.singOut();
+            startActivity(pantallaInicio);
+            finish();
+        }
+
         viewModel.fillUserList();
         userList = viewModel.getListaRecyclerView().getValue();
         setLiveDataObservers();

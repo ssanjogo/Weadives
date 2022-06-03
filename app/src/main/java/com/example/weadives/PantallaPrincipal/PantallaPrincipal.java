@@ -26,7 +26,7 @@ import com.example.weadives.PantallaDeHorarios.PantallaDeHorarios;
 import com.example.weadives.PantallaDeHorarios.ViewModelHorario;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaMapa.MarcadorClass;
-import com.example.weadives.PantallaMapa.ViewModelMapa;
+import com.example.weadives.ViewModelAndExtras.ViewModelMapa;
 import com.example.weadives.R;
 import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
 import com.example.weadives.ViewModelAndExtras.ViewModel;

@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.PantallaMapa.PantallaMapa;
-import com.example.weadives.PantallaMapa.ViewModelMapa;
+import com.example.weadives.ViewModelAndExtras.ViewModelMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
 import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
@@ -50,7 +50,6 @@ public class PantallaInicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.pantalla_inicio);
         LinearLayout layout =findViewById(R.id.LinearMainLayout);
         Imagen_superior = findViewById(R.id.img_inicio);
@@ -58,7 +57,6 @@ public class PantallaInicio extends AppCompatActivity {
         Bitmap finalMasking = MaskingProcess();
         btn_en = findViewById(R.id.btn_en);
         btn_es = findViewById(R.id.btn_es);
-
 
         context = LocaleHelper.setLocale(this, cargarPreferencias());
         resources2 = context.getResources();
@@ -74,10 +72,16 @@ public class PantallaInicio extends AppCompatActivity {
             viewModel.singOut();
         }
         ViewModelParametros p = ViewModelParametros.getSingletonInstance(resources2,this);
-        //System.out.println(p.getLista());
 
         overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 
+        Intent intent = getIntent();
+
+        if (viewModel.isI()) {
+            viewModel.setI(false);
+            finishAffinity();
+            startActivity(getIntent());
+        }
 
         btn_en.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,18 +92,16 @@ public class PantallaInicio extends AppCompatActivity {
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Language changed into English", Toast.LENGTH_SHORT);
                 toast.show();
-
                 //finishAffinity();
                 //startActivity(getIntent());
-
                 //System.out.println(resources2.getString(R.string.marcador_vacio));
                 mapViewModel.updateTextSelect(resources2);
             }
         });
+
         btn_es.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 guardarPreferencias("es");
                 context = LocaleHelper.setLocale(context, cargarPreferencias());
                 resources2 = context.getResources();
@@ -113,16 +115,11 @@ public class PantallaInicio extends AppCompatActivity {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 try {
-
                     Intent testIntent = new Intent(getApplicationContext(), PantallaPrincipal.class);
                     //testIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(testIntent);
-                    //finish();
-
-
-
+                    finish();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast toast2 = Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT);
@@ -136,10 +133,10 @@ public class PantallaInicio extends AppCompatActivity {
         btn_invisible.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 try {
                     Intent testIntent = new Intent(getApplicationContext(), PantallaMapa.class);
                     startActivity(testIntent);
+                    finish();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast toast2 = Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT);

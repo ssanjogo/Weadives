@@ -26,24 +26,27 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     private final MutableLiveData<List<UserClass>> listaAmigos;
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
     private final MutableLiveData<String> mToast;
-    private UserClass usuario;
+    private final MutableLiveData<UserClass> usuario;
 
     private String url;
-    private String UID;
     private boolean statusLogIn = false, keepSession = false;
     private final DatabaseAdapter dbA;
 
     private static ViewModel vm;
     private ArrayList<PublicacionClass> listaTemp;
     private MutableLiveData<ArrayList<PublicacionClass>> mutableListaTemp;
-    private boolean acces=false;
+    private boolean acces = false;
+    private boolean I = false;
 
     public static ViewModel getInstance(AppCompatActivity application){
         if (vm == null){
+            System.out.println("PASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             vm = new ViewModelProvider(application).get(ViewModel.class);
         }
         return vm;
     }
+
+
 
     public static ViewModel getInstance(){
         if (vm == null){
@@ -54,6 +57,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public ViewModel(Application application) {
         super(application);
+        this.usuario = new MutableLiveData<>();
         listaUsuarios = new MutableLiveData<>();
         listaRecyclerView = new MutableLiveData<>();
         listaAmigos = new MutableLiveData<>();
@@ -123,23 +127,24 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public UserClass getCurrentUser(){
-        return this.usuario;
+        System.out.println("GET CURRENT USER " + usuario);
+        return this.usuario.getValue();
     }
 
     public void register(String nombre, String correo, String contraseña){
         setLogInStatus(true);
         dbA.register(nombre, correo, contraseña);
-        if (usuario != null) {
-            listaUsuarios.getValue().add(usuario);
+        if (usuario.getValue() != null) {
+            listaUsuarios.getValue().add(usuario.getValue());
             listaUsuarios.setValue(listaUsuarios.getValue());
         }
     }
 
     public String getNom(){
-        return usuario.getUsername();
+        return usuario.getValue().getUsername();
     }
     public String getUserId(){
-        return usuario.getId();
+        return usuario.getValue().getId();
     }
 
     public void logIn(String correo, String contraseña){
@@ -158,12 +163,13 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void singOut(){
         setLogInStatus(false);
         listaRecyclerView.setValue(null);
-        this.usuario = null;
+        System.out.println("PASAAAAA " + usuario.getValue());
+        this.usuario.setValue(null);
+        System.out.println("PASAAAAA2 " + usuario.getValue());
         dbA.singout();
     }
 
     public void deleteAccount(){
-        System.out.println("PASAAAAAAAAAAAAAAAAAAA");
         dbA.deleteAccount();
     }
 
@@ -202,24 +208,24 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         user.setUrlImg(imageUri.toString());
         HashMap<String, Object> usuario = convertUserToHashMap(user);
         dbA.updateDatos(usuario);
-        this.usuario = user;
+        this.usuario.setValue(user);
     }
 
     public void enviarSolicitud(String idSolicitado){
         UserClass u = getUserByUID(idSolicitado);
 
-        if (usuario.getStringSolicitudesEnviadas().equals("")){
-            this.usuario.setStringSolicitudesEnviadas(usuario.getStringSolicitudesEnviadas() + idSolicitado);
+        if (usuario.getValue().getStringSolicitudesEnviadas().equals("")){
+            this.usuario.getValue().setStringSolicitudesEnviadas(usuario.getValue().getStringSolicitudesEnviadas() + idSolicitado);
         } else {
-            this.usuario.setStringSolicitudesEnviadas(usuario.getStringSolicitudesEnviadas() + "," + idSolicitado);
+            this.usuario.getValue().setStringSolicitudesEnviadas(usuario.getValue().getStringSolicitudesEnviadas() + "," + idSolicitado);
         }
-        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(usuario);
+        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(usuario.getValue());
         dbA.updateDatos(hmCurrentUser);
 
         if (u.getStringSolicitudesRecibidas().equals("")){
-            u.setStringSolicitudesRecibidas(u.getStringSolicitudesRecibidas() + this.usuario.getId());
+            u.setStringSolicitudesRecibidas(u.getStringSolicitudesRecibidas() + this.usuario.getValue().getId());
         } else {
-            u.setStringSolicitudesRecibidas(u.getStringSolicitudesRecibidas() + "," + this.usuario.getId());
+            u.setStringSolicitudesRecibidas(u.getStringSolicitudesRecibidas() + "," + this.usuario.getValue().getId());
         }
         HashMap<String, Object> hmFuturoAmigo = convertUserToHashMap(u);
         dbA.updateDatos(hmFuturoAmigo);
@@ -232,7 +238,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         String solE = "", solR = "";
         boolean first = true;
 
-        for (String id : this.usuario.getListaSolicitudesEnviadas()){
+        for (String id : this.usuario.getValue().getListaSolicitudesEnviadas()){
             if (!id.equals(idSolicitado) && first){
                 solE += id;
                 first = false;
@@ -240,8 +246,8 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
                 solE += ("," + id);
             }
         }
-        this.usuario.setStringSolicitudesEnviadas(solE);
-        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(usuario);
+        this.usuario.getValue().setStringSolicitudesEnviadas(solE);
+        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(usuario.getValue());
         dbA.updateDatos(hmCurrentUser);
 
         first = true;
@@ -293,21 +299,21 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void aceptarSolicitud(String idSolicita){
         UserClass u = getUserByUID(idSolicita);
 
-        if (usuario.getStringAmigos().equals("")){
-            this.usuario.setStringAmigos(usuario.getStringAmigos() + idSolicita);
+        if (usuario.getValue().getStringAmigos().equals("")){
+            this.usuario.getValue().setStringAmigos(usuario.getValue().getStringAmigos() + idSolicita);
         } else {
-            this.usuario.setStringAmigos(usuario.getStringAmigos() + "," + idSolicita);
+            this.usuario.getValue().setStringAmigos(usuario.getValue().getStringAmigos() + "," + idSolicita);
         }
-        usuario = eliminarDeSolR(usuario, idSolicita);
-        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(usuario);
+        usuario.setValue(eliminarDeSolR(usuario.getValue(), idSolicita));
+        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(usuario.getValue());
         dbA.updateDatos(hmCurrentUser);
 
         if (u.getStringAmigos().equals("")){
-            u.setStringAmigos(u.getStringAmigos() + this.usuario.getId());
+            u.setStringAmigos(u.getStringAmigos() + this.usuario.getValue().getId());
         } else {
-            u.setStringAmigos(u.getStringAmigos() + "," + this.usuario.getId());
+            u.setStringAmigos(u.getStringAmigos() + "," + this.usuario.getValue().getId());
         }
-        u = eliminarDeSolE(u, this.usuario.getId());
+        u = eliminarDeSolE(u, this.usuario.getValue().getId());
         HashMap<String, Object> hmFuturoAmigo = convertUserToHashMap(u);
         dbA.updateDatos(hmFuturoAmigo);
 
@@ -317,11 +323,11 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void rechazarSolicitud(String idSolicita){
         UserClass u = getUserByUID(idSolicita);
 
-        usuario = eliminarDeSolR(usuario, idSolicita);
-        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(usuario);
+        usuario.setValue(eliminarDeSolR(usuario.getValue(), idSolicita));
+        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(usuario.getValue());
         dbA.updateDatos(hmCurrentUser);
 
-        u = eliminarDeSolE(u, this.usuario.getId());
+        u = eliminarDeSolE(u, this.usuario.getValue().getId());
         HashMap<String, Object> hmFuturoAmigo = convertUserToHashMap(u);
         dbA.updateDatos(hmFuturoAmigo);
 
@@ -332,25 +338,25 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         UserClass user = getUserByUID(idAmigo);
         String amigos = "";
         boolean first = true;
-        for(String uid: usuario.getListaAmigos()){
+        for(String uid: usuario.getValue().getListaAmigos()){
             if (!idAmigo.equals(uid) && first){
                 amigos += uid;
                 first = false;
-            } else if (!(usuario.getId()).equals(uid) && !first){
+            } else if (!(usuario.getValue().getId()).equals(uid) && !first){
                 amigos += ("," + uid);
             }
         }
-        usuario.setStringAmigos(amigos);
-        HashMap<String, Object> hmUsuario = convertUserToHashMap(usuario);
+        usuario.getValue().setStringAmigos(amigos);
+        HashMap<String, Object> hmUsuario = convertUserToHashMap(usuario.getValue());
         dbA.updateDatos(hmUsuario);
 
         amigos = "";
         first = true;
         for(String uid: user.getListaAmigos()){
-            if (!(usuario.getId()).equals(uid) && first){
+            if (!(usuario.getValue().getId()).equals(uid) && first){
                 amigos += uid;
                 first = false;
-            } else if (!(usuario.getId()).equals(uid) && !first){
+            } else if (!(usuario.getValue().getId()).equals(uid) && !first){
                 amigos += ("," + uid);
             }
         }
@@ -361,152 +367,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         fillUserList();
     }
 
-
-    /*public void unfollow(String idAmigo) {
-        int i = 0;
-        String amigos = "";
-        UserClass user = usuario;
-        for(String uid: user.getListaAmigos()){
-            if (!idAmigo.equals(uid)){
-                if (i == 0){
-                    amigos += uid;
-                } else {
-                    amigos += ("," + uid);
-                }
-                i++;
-            }
-        }
-        user.setStringAmigos(amigos);
-        HashMap<String, Object> usuario = convertUserToHashMap(user);
-        dbA.unfollow(usuario);
-
-        fillUserList();
-    }
-
-    public void cancelarEvioSolicitud(String idAmigo) {
-        int i = 0;
-        String solR = "";
-        UserClass futuroAmigo = getUserByUID(idAmigo);
-        for(String uid: futuroAmigo.getListaSolicitudesRecibidas()){
-            if (!idAmigo.equals(uid)){
-                if (i == 0){
-                    solR += uid;
-                } else {
-                    solR += ("," + uid);
-                }
-                i++;
-            }
-        }
-        futuroAmigo.setStringSolicitudesRecibidas(solR);
-        HashMap<String, Object> hmFuturoAmigo = convertUserToHashMap(futuroAmigo);
-        dbA.updateDatos(hmFuturoAmigo);
-
-        i = 0;
-        String solE = "";
-        UserClass currentUser = usuario;
-        for(String uid: currentUser.getListaSolicitudesEnviadas()){
-            if (!currentUser.getId().equals(uid)){
-                if (i == 0){
-                    solE += uid;
-                } else {
-                    solE += ("," + uid);
-                }
-                i++;
-            }
-        }
-        currentUser.setStringSolicitudesEnviadas(solE);
-        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(currentUser);
-        dbA.updateDatos(hmCurrentUser);
-        fillUserList();
-    }
-
-    public void aceptarSolicitud(UserClass usuarioSolicita){
-        UserClass currentUser = usuario;
-
-        int i = 0;
-        String solR = "";
-        String solE = "";
-        String amigos = "";
-        for(String uid: currentUser.getListaSolicitudesRecibidas()){
-            if (!usuarioSolicita.getId().equals(uid)){
-                if (i == 0){
-                    solR += uid;
-                } else {
-                    solR += ("," + uid);
-                }
-                i++;
-            }
-        }
-        currentUser.setStringSolicitudesRecibidas(solR);
-        this.usuario = currentUser;
-        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(currentUser);
-        dbA.updateDatos(hmCurrentUser);
-
-        i = 0;
-        for(String uid: usuarioSolicita.getListaSolicitudesEnviadas()){
-            if (!currentUser.getId().equals(uid)){
-                if (i == 0){
-                    solE += uid;
-                } else {
-                    solE += ("," + uid);
-                }
-                i++;
-            }
-        }
-        usuarioSolicita.setStringSolicitudesEnviadas(solE);
-        amigos += usuarioSolicita.getStringAmigos() + currentUser.getId();
-        usuarioSolicita.setStringAmigos(amigos);
-        HashMap<String, Object> hmUsuarioSolicita = convertUserToHashMap(usuarioSolicita);
-        dbA.updateDatos(hmUsuarioSolicita);
-        fillUserList();
-    }
-
-    public void rechazarSolicitud(UserClass usuarioSolicita){
-        UserClass currentUser = usuario;
-        String solR = "", solE = "";
-        int i = 0;
-
-        for(String uid: currentUser.getListaSolicitudesRecibidas()){
-            if (!usuarioSolicita.getId().equals(uid)){
-                if (i == 0){
-                    solR += uid;
-                } else {
-                    solR += ("," + uid);
-                }
-                i++;
-            }
-        }
-        currentUser.setStringSolicitudesRecibidas(solR);
-        this.usuario = currentUser;
-        HashMap<String, Object> hmCurrentUser = convertUserToHashMap(currentUser);
-        dbA.updateDatos(hmCurrentUser);
-
-        i = 0;
-
-        for(String uid: usuarioSolicita.getListaSolicitudesEnviadas()){
-            if (!currentUser.getId().equals(uid)){
-                if (i == 0){
-                    solE += uid;
-                } else {
-                    solE += ("," + uid);
-                }
-                i++;
-            }
-        }
-        usuarioSolicita.setStringSolicitudesEnviadas(solE);
-        HashMap<String, Object> hmUsuarioSolicita = convertUserToHashMap(usuarioSolicita);
-        dbA.updateDatos(hmUsuarioSolicita);
-        fillUserList();
-    }*/
-
-    public void getPublicaciones(){
-        dbA.getPublicationsUsuario(this.UID);
-    }
-
     public void buscarPorNombre(String nombre) {
         List<UserClass> listaFiltradaPorNombre = new ArrayList<>();
         for (UserClass user : getListaUsers().getValue()){
-            if (user.getUsername().contains(nombre) && !user.getId().equals(this.usuario.getId())){
+            if (user.getUsername().contains(nombre) && !user.getId().equals(this.usuario.getValue().getId())){
                 listaFiltradaPorNombre.add(user);
             }
         }
@@ -514,8 +378,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public void fillUserList() {
-        UserClass currentUser = this.usuario;
-        System.out.println("AQUIIIIIIIIIIIIIIIIIIIII" + usuario);
+        UserClass currentUser = this.usuario.getValue();
         UserClass user;
         List<UserClass> listaUsers = new ArrayList<>();
         if (currentUser != null && !currentUser.getStringSolicitudesRecibidas().equals("")) {
@@ -539,10 +402,10 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public int sizelista(){
-        if (usuario.getStringSolicitudesRecibidas().equals("")){
+        if (usuario.getValue().getStringSolicitudesRecibidas().equals("")){
             return -1;
         }
-        return usuario.getListaSolicitudesRecibidas().size();
+        return usuario.getValue().getListaSolicitudesRecibidas().size();
     }
 
     public boolean correoRepetido(String correo) {
@@ -608,15 +471,17 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     @Override
     public void setImage(String url) {
         this.url = url;
-        this.usuario.setUrlImg(url);
+        this.usuario.getValue().setUrlImg(url);
         //System.out.println("USUARIO: " + this.usuario.toString());
         cambiarImagen(url);
     }
 
     @Override
     public void setUser(UserClass u) {
-        this.usuario = u;
+        this.usuario.setValue(u);
+        System.out.println("VIEW MODEL " + usuario.getValue());
         ViewModelParametros.getSingletonInstance().setUser(u);
+        System.out.println("VIEW MODEL2 " + usuario.getValue());
 
     }
 
@@ -684,4 +549,11 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         return acces;
     }
 
+    public void setI(boolean b) {
+        this.I = b;
+    }
+
+    public boolean isI(){
+        return I;
+    }
 }
