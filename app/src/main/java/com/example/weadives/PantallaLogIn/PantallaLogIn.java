@@ -17,12 +17,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.AreaUsuario.AreaUsuario;
-import com.example.weadives.DatabaseAdapter;
+import com.example.weadives.ViewModelAndExtras.DatabaseAdapter;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaRegistro.PantallaRegistro;
 import com.example.weadives.R;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
 
 public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.intentInterface {
 

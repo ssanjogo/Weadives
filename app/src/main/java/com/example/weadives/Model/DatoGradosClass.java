@@ -1,6 +1,4 @@
-package com.example.weadives;
-
-import android.graphics.Path;
+package com.example.weadives.Model;
 
 public class DatoGradosClass {
     Directions dir;

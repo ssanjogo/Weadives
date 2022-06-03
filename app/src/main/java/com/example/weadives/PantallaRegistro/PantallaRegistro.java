@@ -15,15 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.weadives.AreaUsuario.AreaUsuario;
-import com.example.weadives.DatabaseAdapter;
-import com.example.weadives.LocaleHelper;
+import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
 
 import java.util.regex.Pattern;
 

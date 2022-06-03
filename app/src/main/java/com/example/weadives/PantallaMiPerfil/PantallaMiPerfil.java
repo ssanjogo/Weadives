@@ -18,17 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.weadives.AjustesPerfil.AjustesPerfil;
 import com.example.weadives.AreaUsuario.AreaUsuario;
-import com.example.weadives.DatoGradosClass;
-import com.example.weadives.Directions;
+import com.example.weadives.Model.DatoGradosClass;
+import com.example.weadives.Model.Directions;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
-import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
+import com.example.weadives.Model.PublicacionClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionesPerfilAdapter;
-import com.example.weadives.ParametrosClass;
+import com.example.weadives.Model.ParametrosClass;
 import com.example.weadives.R;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
-import com.example.weadives.ViewModelParametros;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
+import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,7 +75,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         if(publicacionList==null){
             publicacionList=new ArrayList<>();
         }
-        System.out.println(publicacionList);
+        //System.out.println(publicacionList);
         mAdapter= new PublicacionesPerfilAdapter(publicacionList,PantallaMiPerfil.this);
         recyclerView.setAdapter(mAdapter);
         //setLiveDataObservers();
@@ -83,7 +83,7 @@ public class PantallaMiPerfil extends AppCompatActivity {
         Intent intent = getIntent();
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
-        System.out.println("AAAAAAAAAAA " + viewModel.getCurrentUser().getUrlImg());
+        //System.out.println("AAAAAAAAAAA " + viewModel.getCurrentUser().getUrlImg());
         //Glide.with(img_perfil.getContext()).clear(img_perfil);
         Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 

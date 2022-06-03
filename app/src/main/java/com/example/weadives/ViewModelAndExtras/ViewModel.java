@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.ViewModelAndExtras;
 
 import static java.lang.System.exit;
 
@@ -11,8 +11,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
+import com.example.weadives.Model.PublicacionClass;
+import com.example.weadives.Model.UserClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;

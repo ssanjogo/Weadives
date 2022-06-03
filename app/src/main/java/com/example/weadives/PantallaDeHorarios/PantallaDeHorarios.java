@@ -13,10 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cleveroad.adaptivetablelayout.AdaptiveTableLayout;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
-import com.example.weadives.ViewModel;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class PantallaDeHorarios extends AppCompatActivity {
 

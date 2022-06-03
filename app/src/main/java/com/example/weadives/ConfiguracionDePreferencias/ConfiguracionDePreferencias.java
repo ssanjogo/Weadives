@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,22 +28,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.weadives.DatabaseAdapter;
-import com.example.weadives.DatoGradosClass;
-import com.example.weadives.Directions;
-import com.example.weadives.LocaleHelper;
+import com.example.weadives.Model.Directions;
 import com.example.weadives.PantallaInicio.PantallaInicio;
-import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
-import com.example.weadives.ParametrosClass;
+import com.example.weadives.Model.ParametrosClass;
 import com.example.weadives.R;
-import com.example.weadives.ViewModel;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModelParametros;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ConfiguracionDePreferencias extends AppCompatActivity {

@@ -1,6 +1,9 @@
-package com.example.weadives;
+package com.example.weadives.Model;
 
 import android.content.res.Resources;
+
+import com.example.weadives.R;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
 
 import java.util.ArrayList;
 

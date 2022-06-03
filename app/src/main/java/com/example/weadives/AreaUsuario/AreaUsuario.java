@@ -22,13 +22,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.weadives.LocaleHelper;
+import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.Model.UserClass;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
 
 import java.util.List;
 

@@ -21,15 +21,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.ConfiguracionDePreferencias.ConfiguracionDePreferencias;
-import com.example.weadives.LocaleHelper;
+import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.PantallaDeHorarios.PantallaDeHorarios;
 import com.example.weadives.PantallaDeHorarios.ViewModelHorario;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaMapa.MarcadorClass;
 import com.example.weadives.PantallaMapa.ViewModelMapa;
 import com.example.weadives.R;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
 
 import java.util.ArrayList;
 

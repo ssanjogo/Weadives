@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.ViewModelAndExtras;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -8,8 +8,11 @@ import android.content.res.Resources;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
+import com.example.weadives.Model.DatoGradosClass;
+import com.example.weadives.Model.Directions;
+import com.example.weadives.Model.ParametrosClass;
+import com.example.weadives.Model.PublicacionClass;
+import com.example.weadives.Model.UserClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;

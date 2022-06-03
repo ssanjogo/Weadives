@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.Model;
 
 import java.util.ArrayList;
 
@@ -272,7 +272,7 @@ public class ParametrosClass {
     }
 
 
-    static ArrayList<ParametrosClass> descomprimir(String l){
+    public static ArrayList<ParametrosClass> descomprimir(String l){
             System.out.println(l);
             String[] parametrosStringList = l.split("¿");
             int count = l.length() - l.replace("¿", "").length();

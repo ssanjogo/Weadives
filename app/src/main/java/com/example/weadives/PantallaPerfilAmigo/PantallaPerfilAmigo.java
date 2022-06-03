@@ -22,13 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.weadives.AreaUsuario.AreaUsuario;
-import com.example.weadives.DatoGradosClass;
-import com.example.weadives.Directions;
+import com.example.weadives.Model.DatoGradosClass;
+import com.example.weadives.Model.Directions;
 import com.example.weadives.PantallaInicio.PantallaInicio;
-import com.example.weadives.ParametrosClass;
+import com.example.weadives.Model.ParametrosClass;
+import com.example.weadives.Model.PublicacionClass;
 import com.example.weadives.R;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,7 +88,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
 
         txt_nombrePerfil.setText(username);
         Glide.with(this).load(imagen).into(img_perfil);
-        System.out.println("Sett");
+        //System.out.println("Sett");
         /*
         while(!ViewModel.getInstance().getAcces()){
             System.out.println("Waiting for access");
@@ -100,11 +101,11 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                 publicacionList.clear();
                 publicacionList.addAll(list);
                 recyclerView.getAdapter().notifyDataSetChanged();
-                System.out.println("Set");
-                System.out.println(recyclerView.getAdapter().getItemCount());
+                //System.out.println("Set");
+                //System.out.println(recyclerView.getAdapter().getItemCount());
                 recyclerView.getAdapter().notifyDataSetChanged();
                 //recyclerView.setAdapter(new PublicacionesPerfilAdapter(publicacionList, PantallaPerfilAmigo.this));
-                System.out.println("post set");
+                //System.out.println("post set");
 
                 if (!btn_añadirAmigo.getText().equals(resources.getString(R.string.añadido))){
                     recyclerView.setVisibility(View.GONE);

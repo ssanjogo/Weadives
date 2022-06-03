@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.Model;
 
 public enum Traducciones {
     es,

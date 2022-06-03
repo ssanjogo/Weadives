@@ -1,11 +1,6 @@
-package com.example.weadives.AreaUsuario;
-
-import com.example.weadives.DatabaseAdapter;
-import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
-import com.example.weadives.ParametrosClass;
+package com.example.weadives.Model;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class UserClass {

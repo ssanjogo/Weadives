@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weadives.LocaleHelper;
+import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.R;
 
 public class PantallaGestorInundaciones extends AppCompatActivity {

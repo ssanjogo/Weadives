@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.ViewModelAndExtras;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -6,8 +6,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
+import com.example.weadives.Model.ParametrosClass;
+import com.example.weadives.Model.PublicacionClass;
+import com.example.weadives.Model.UserClass;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

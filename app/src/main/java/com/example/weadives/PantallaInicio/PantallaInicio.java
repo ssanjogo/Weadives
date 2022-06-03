@@ -19,14 +19,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.weadives.LocaleHelper;
+import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.PantallaMapa.PantallaMapa;
 import com.example.weadives.PantallaMapa.ViewModelMapa;
 import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
 import com.example.weadives.R;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
-import com.example.weadives.ViewModelParametros;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
+import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
 
 public class PantallaInicio extends AppCompatActivity {
 
@@ -74,7 +74,7 @@ public class PantallaInicio extends AppCompatActivity {
             viewModel.singOut();
         }
         ViewModelParametros p = ViewModelParametros.getSingletonInstance(resources2,this);
-        System.out.println(p.getLista());
+        //System.out.println(p.getLista());
 
         overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 
@@ -92,7 +92,7 @@ public class PantallaInicio extends AppCompatActivity {
                 //finishAffinity();
                 //startActivity(getIntent());
 
-                System.out.println(resources2.getString(R.string.marcador_vacio));
+                //System.out.println(resources2.getString(R.string.marcador_vacio));
                 mapViewModel.updateTextSelect(resources2);
             }
         });
@@ -196,7 +196,7 @@ public class PantallaInicio extends AppCompatActivity {
         super.onDestroy();
         viewModel = ViewModel.getInstance(this);
         if (!viewModel.iskeepSession()){
-            System.out.println("Cerramos session");
+            //System.out.println("Cerramos session");
             viewModel.singOut();
         }
     }

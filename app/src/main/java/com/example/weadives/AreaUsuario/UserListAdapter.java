@@ -17,11 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.weadives.PantallaPerfilAmigo.PantallaPerfilAmigo;
 import com.example.weadives.R;
-import com.example.weadives.ViewModel;
+import com.example.weadives.Model.UserClass;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
 
-import java.sql.SQLOutput;
 import java.util.List;
-import java.util.SortedMap;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserListViewHolder> {
 

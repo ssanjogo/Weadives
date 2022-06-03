@@ -2,7 +2,6 @@ package com.example.weadives.PantallaPerfilAmigo;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -19,12 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.ParametrosClass;
+import com.example.weadives.Model.PublicacionClass;
 import com.example.weadives.R;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
-import com.example.weadives.ViewModelParametros;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
+import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.List;
