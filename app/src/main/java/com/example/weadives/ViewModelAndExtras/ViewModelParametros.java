@@ -46,29 +46,29 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
     public ViewModelParametros(Resources r,Context c) {
         this.r=r;
         this.c=c;
-        System.out.println("AQUI LLEGA\n");
+        //System.out.println("AQUI LLEGA\n");
         String test=cargarPreferenciasParametros();
         //String test="";
-        System.out.println(test);
+        //System.out.println(test);
         if(test.length()!=0){lista=descomprimirArray(test);}else{
             lista=new ArrayList<>();
         }
 
-        System.out.println(lista);
+        //System.out.println(lista);
     }
     public void addParametro(ParametrosClass p){
-        System.out.println(lista);
-        System.out.println(mutableList);
+        //System.out.println(lista);
+        //System.out.println(mutableList);
         lista.add(p);
-        System.out.println(lista);
-        System.out.println(mutableList);
+        //System.out.println(lista);
+        //System.out.println(mutableList);
         guardarPersistencia();
         mutableList.setValue(lista);
     }
     public void modifyParametro(ParametrosClass p,ParametrosClass b,boolean publicar){
 
-        System.out.println(lista);
-        System.out.println(mutableList.toString());
+        //System.out.println(lista);
+        //System.out.println(mutableList.toString());
         lista.remove(b);
         lista.add(p);
         if(!p.getIdPublicacion().equals("0") && publicar){
@@ -89,8 +89,8 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
             }
 
         }
-        System.out.println(lista);
-        System.out.println(mutableList.toString());
+        //System.out.println(lista);
+        //System.out.println(mutableList.toString());
         guardarPersistencia();
         mutableList.setValue(lista);
     }
@@ -155,15 +155,32 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
     }
 
     public void deleteParametro(ParametrosClass p){
-        System.out.println(lista);
-        System.out.println(mutableList);
-        try{lista.remove(p);
+        //System.out.println(lista);
+        //System.out.println(mutableList);
+        try{
+            if(p.getIdPublicacion().length()>4){
+                PublicacionClass pub=null;
+                for(int i=0; i<listaPublic.size();i++){
+                    if(listaPublic.get(i).getIdPublicacion().equals(p.getIdPublicacion())){
+                        pub =listaPublic.get(i);
+                        break;
+                    }
+                }
+                if (currentUser!=null && pub!=null){
+                    listaPublic.remove(pub);
+                    ViewModel.getInstance().deletePublicacion(p.getIdPublicacion());
+
+                }
+            }
+
+            lista.remove(p);
+
         }catch (Exception e){
-            System.out.println(e);
+            //System.out.println(e);
         }
 
-        System.out.println(lista);
-        System.out.println(mutableList);
+        //System.out.println(lista);
+        //System.out.println(mutableList);
         guardarPersistencia();
         mutableList.setValue(lista);
     }
@@ -336,8 +353,17 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface {
         System.out.println("PUBLICACIONES RELLENADAS\n");
         this.listaPublic= (ArrayList<PublicacionClass>) publicacionClasses;
         System.out.println(lista.size());
+        boolean existe=false;
         for (PublicacionClass i : publicacionClasses) {
-            lista.add(i.getParametros());
+            for (ParametrosClass k : lista) {
+                if( i.getIdPublicacion().equals(k.getIdPublicacion())){
+                    existe=true;
+                }
+            }
+            if(!existe){
+                lista.add(i.getParametros());
+                existe=false;
+            }
         }
         System.out.println(lista.size());
     }
