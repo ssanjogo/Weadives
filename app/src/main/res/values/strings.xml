@@ -85,4 +85,5 @@
     <string name="nordoeste">NorthWest</string>
     <string name="no_dir">Any Direction</string>
     <string name="commentadded">Comment Added</string>
+    <string name="errorLogIn">Failed to log in</string>
 </resources>

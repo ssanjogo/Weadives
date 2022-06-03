@@ -142,7 +142,6 @@ public class DatabaseAdapter extends Activity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    //listener.setUserID(task.getResult().getUser().getUid());
                     saveUser(nombre, correo, task.getResult().getUser().getUid());
                 } else {
                     Log.w(TAG, "Error register");
@@ -212,6 +211,7 @@ public class DatabaseAdapter extends Activity {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
+                    System.out.println(u.toString());
                     listener.setUser(u);
                     listenerIntent.intent();
                 }

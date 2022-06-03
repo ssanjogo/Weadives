@@ -23,6 +23,7 @@ import com.example.weadives.PantallaGestorInundaciones.PantallaGestorInundacione
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.R;
 import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModelMapa;
 import com.example.weadives.databinding.PantallaMapaBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

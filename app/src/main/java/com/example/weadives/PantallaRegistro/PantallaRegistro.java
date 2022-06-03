@@ -108,9 +108,9 @@ public class PantallaRegistro extends AppCompatActivity {
     }
 
     private void recordarCorreo(String correo) {
-        SharedPreferences preferencias = getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences preferencias = getSharedPreferences("correo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencias.edit();
-        editor.putString("user", correo);
+        editor.putString("correo", correo);
         editor.commit();
     }
 }
