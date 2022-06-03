@@ -105,7 +105,6 @@ public class DatabaseAdapter extends Activity {
         void setStatusLogIn(boolean status);
         void setImage(String url);
         void setUser(UserClass u);
-        void setToast(String s);
         void notifyId(String id);
         void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses);
         void setListaPublicacionTemp(ArrayList<PublicacionClass> lista);
@@ -184,23 +183,21 @@ public class DatabaseAdapter extends Activity {
 
     public void updateToken(){
         DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    return;
+                }
+                // Get new FCM registration token
+                userRef.update("token", task.getResult()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            return;
-                        }
-                        // Get new FCM registration token
-                        userRef.update("token", task.getResult()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Log.e(TAG, "Update correcto");
-                            }
-                        });
-
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.e(TAG, "Update correcto");
                     }
                 });
+            }
+        });
     }
 
 

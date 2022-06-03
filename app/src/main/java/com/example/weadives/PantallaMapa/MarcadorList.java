@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import com.example.weadives.Model.ParametrosClass;
 
+import com.example.weadives.ViewModelAndExtras.ViewModelMapa;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
