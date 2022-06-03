@@ -23,7 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.ConfiguracionDePreferencias.ConfiguracionDePreferencias;
-import com.example.weadives.LocaleHelper;
+import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.PantallaDeHorarios.PantallaDeHorarios;
 import com.example.weadives.PantallaDeHorarios.ViewModelHorario;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
@@ -36,6 +36,8 @@ import com.example.weadives.ViewModelParametros;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
 
 import java.util.ArrayList;
 

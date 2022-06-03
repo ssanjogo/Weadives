@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.ViewModelAndExtras;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -6,8 +6,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
+import com.example.weadives.Model.ParametrosClass;
+import com.example.weadives.Model.PublicacionClass;
+import com.example.weadives.Model.UserClass;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -261,8 +262,8 @@ public class DatabaseAdapter extends Activity {
                         PublicacionClass pc = new PublicacionClass((HashMap<String, String>) publi.get("Map comentarios"), (HashMap<String, String>) publi.get("Map likes"), p, (String)publi.get("idPublicacion"), (String)publi.get("idUsuario"));
                         lista.add(pc);
                     }
-                    System.out.println("SOY EL DATABASE");
-                    System.out.println(lista);
+                    //System.out.println("SOY EL DATABASE");
+                    //System.out.println(lista);
                     listener.setListaPublicacionTemp(lista);
                 }
             }
@@ -395,7 +396,7 @@ public class DatabaseAdapter extends Activity {
             public void onComplete(@NonNull Task<Uri> task) {
                 if(task.isSuccessful()){
                     Uri uri = task.getResult();  //AQUI YA TENGO LA RUTA DE LA FOTO LISTA PARA INSERTRLA EN DATABASE
-                    System.out.println("URL BUENA: " + uri.toString());
+                    //System.out.println("URL BUENA: " + uri.toString());
                     listener.setImage(uri.toString());
                     assert uri != null;
                 }
@@ -411,7 +412,7 @@ public class DatabaseAdapter extends Activity {
     public void deleteAccount() {
         db.collection("Users").document(mAuth.getCurrentUser().getUid()).delete();
         mAuth.getCurrentUser().delete();
-        System.out.println("ELIMINAR USER: " + mAuth.getCurrentUser());
+        //System.out.println("ELIMINAR USER: " + mAuth.getCurrentUser());
         singout();
     }
 
@@ -443,23 +444,23 @@ public class DatabaseAdapter extends Activity {
 
             int i = 0;
             while(downloadTask.isInProgress()){
-                System.out.println("WHILE: " + i++);
-                System.out.println("Complete: " + downloadTask.isComplete());
-                System.out.println("Successful: " + downloadTask.isSuccessful());
-                System.out.println("Cancelled: " + downloadTask.isCanceled());
-                System.out.println("Paused: " + downloadTask.isPaused());
+                //System.out.println("WHILE: " + i++);
+                //System.out.println("Complete: " + downloadTask.isComplete());
+                //System.out.println("Successful: " + downloadTask.isSuccessful());
+                //System.out.println("Cancelled: " + downloadTask.isCanceled());
+                //System.out.println("Paused: " + downloadTask.isPaused());
             }
 
-            System.out.println("WE OOOUT!!:");
-            System.out.println("Complete: " + downloadTask.isComplete());
-            System.out.println("Successful: " + downloadTask.isSuccessful());
-            System.out.println("Cancelled: " + downloadTask.isCanceled());
-            System.out.println("Paused: " + downloadTask.isPaused());
-            System.out.println(downloadTask.getResult().getBytesTransferred());
-            System.out.println(localCSV.getPath());
+            //System.out.println("WE OOOUT!!:");
+            //System.out.println("Complete: " + downloadTask.isComplete());
+            //System.out.println("Successful: " + downloadTask.isSuccessful());
+            //System.out.println("Cancelled: " + downloadTask.isCanceled());
+            //System.out.println("Paused: " + downloadTask.isPaused());
+            //System.out.println(downloadTask.getResult().getBytesTransferred());
+            //System.out.println(localCSV.getPath());
             listenerHorario.getCsvRef(localCSV.getAbsolutePath());
         } catch (IOException e) {
-            System.out.println("TREMENDOO ERROOOR. " + e.getMessage());
+            //System.out.println("TREMENDOO ERROOOR. " + e.getMessage());
         }
     }
 

@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.weadives.DatabaseAdapter;
+import com.example.weadives.ViewModelAndExtras.DatabaseAdapter;
 import com.example.weadives.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;

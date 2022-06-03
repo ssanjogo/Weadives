@@ -27,11 +27,11 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.weadives.AreaUsuario.AreaUsuario;
-import com.example.weadives.LocaleHelper;
+import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
 import com.example.weadives.R;
-import com.example.weadives.ViewModel;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
 
 public class AjustesPerfil extends AppCompatActivity {
 

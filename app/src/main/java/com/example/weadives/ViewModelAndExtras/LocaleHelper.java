@@ -1,4 +1,4 @@
-package com.example.weadives;
+package com.example.weadives.ViewModelAndExtras;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;

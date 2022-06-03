@@ -2,7 +2,6 @@ package com.example.weadives.PantallaPerfilAmigo;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -19,12 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weadives.AreaUsuario.UserClass;
-import com.example.weadives.ParametrosClass;
+import com.example.weadives.Model.PublicacionClass;
 import com.example.weadives.R;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
-import com.example.weadives.ViewModelParametros;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModel;
+import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +65,6 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
         holder.txt_periodoOla.setText(resources.getString(R.string.periodoOla)+" : ");
         holder.txt_dirOla.setText(resources.getString(R.string.dirOlas)+" : ");
 
-
-
         holder.txt_activityNameOutput.setText(publicacionClassList.get(position).getParametros().getNombreActividad());
         holder.txt_vientoOutput.setText(Float.toString(publicacionClassList.get(position).getParametros().getViento())+" kt");
         holder.txt_presionOutput.setText(Float.toString(publicacionClassList.get(position).getParametros().getPresion())+" P");
@@ -85,18 +81,22 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
         holder.btn_comments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(context, "Comentarios", Toast.LENGTH_SHORT);
-                toast.show();
+                try{
+                //Toast toast = Toast.makeText(context, "Comentarios", Toast.LENGTH_SHORT);
+                //toast.show();
                 List commentList=publicacionClassList.get(position).getCommentInList();
                 holder.createNewCommentListDialog(holder,position);
                 loadSocial(holder, position);
+                }catch (Exception e){
+                    Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                    toast.show();}
 
             }
         });
         holder.btn_likes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                try{
                 if(publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),1)){
                     Toast toast = Toast.makeText(context, "Like", Toast.LENGTH_SHORT);
                     toast.show();
@@ -107,12 +107,15 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
                     Toast toast = Toast.makeText(context, resources.getString(R.string.AlreadyLike), Toast.LENGTH_SHORT);
                     toast.show();
                 }
+                }catch (Exception e){
+                    Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                    toast.show();}
             }
         });
         holder.btn_dislikes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                try{
                 if(publicacionClassList.get(position).like(ViewModel.getInstance().getUserId(),0)){
                     Toast toast = Toast.makeText(context, "Dislike", Toast.LENGTH_SHORT);
                     toast.show();
@@ -123,6 +126,9 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
                     Toast toast = Toast.makeText(context, (resources.getString(R.string.AlreadyLike)), Toast.LENGTH_SHORT);
                     toast.show();
                 }
+                }catch (Exception e){
+                    Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                    toast.show();}
 
 
             }
@@ -130,6 +136,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
     }
 
     private void loadSocial(PublicacionesPerfilViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        try{
         SingletonIdioma s= SingletonIdioma.getInstance();
         Resources resources=s.getResources();
         if(publicacionClassList.get(position).containlike(ViewModel.getInstance().getUserId(),1)){
@@ -141,6 +148,9 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
         holder.txt_numlikes.setText(Integer.toString(publicacionClassList.get(position).getNumLikes()));
         holder.txt_numlikes2.setText(Integer.toString(publicacionClassList.get(position).getNumDislikes()));
         holder.txt_numlikes3.setText(Integer.toString(publicacionClassList.get(position).getNumComments()));
+        }catch (Exception e){
+            Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+            toast.show();}
     }
 
 
@@ -229,7 +239,7 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
         }
 
         public void createNewCommentListDialog(PublicacionesPerfilViewHolder holder, @SuppressLint("RecyclerView") int position){
-
+            try{
             //Creamos el dialog
             dialogBuilder = new AlertDialog.Builder(context);
             View popupView=Linflater.inflate(R.layout.popup_listacomentarios,null);
@@ -257,6 +267,10 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             //Hacemos aparecer la ventana
             dialogBuilder.setView(popupView);
             dialog=dialogBuilder.create();
+            }catch (Exception e){
+                Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                toast.show();}
+
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener(){
                 @Override
                 public void onCancel(DialogInterface dialogInterface) {
@@ -270,8 +284,8 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             btn_test.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast toast = Toast.makeText(context, "TestButton", Toast.LENGTH_SHORT);
-                    toast.show();
+                    //Toast toast = Toast.makeText(context, "TestButton", Toast.LENGTH_SHORT);
+                    //toast.show();
                     createNewAddCommentDialog(holder,position);
 
 
@@ -283,13 +297,13 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
 
         private void updateComments(PublicacionesPerfilViewHolder holder, @SuppressLint("RecyclerView") int position) {
             mAdapter= new CommentListAdapter(publicacionClassList.get(position).getCommentInList(), context);
-            System.out.println(publicacionClassList.get(position).getCommentInList());
+            //System.out.println(publicacionClassList.get(position).getCommentInList());
             rv_commentList.setAdapter(mAdapter);
         }
 
 
         public void createNewAddCommentDialog(PublicacionesPerfilViewHolder holder, @SuppressLint("RecyclerView") int position){
-
+            try{
             //Creamos el dialog
             dialogBuilder2 = new AlertDialog.Builder(context);
             View popupView2=Linflater.inflate(R.layout.popup_addcomment,null);
@@ -307,17 +321,25 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
             dialogBuilder2.setView(popupView2);
             dialog2=dialogBuilder2.create();
             dialog2.show();
+            }catch (Exception e){
+                Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                toast.show();}
 
             //Metodos adicionales
             btn_addcomment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast toast = Toast.makeText(context, "Se ha añadido el comentario", Toast.LENGTH_SHORT);
+                    try{
+
+                    Toast toast = Toast.makeText(context, SingletonIdioma.getInstance().getResources().getString(R.string.commentadded), Toast.LENGTH_SHORT);
                     toast.show();
                     publicacionClassList.get(position).addComment(ViewModel.getInstance().getNom(),comment.getText().toString().replaceAll("[^A-Za-z0-9 ]",""));
                     updatePublications(publicacionClassList.get(position));
                     updateComments(holder,position);
                     dialog2.dismiss();
+                    }catch (Exception e){
+                        Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                        toast.show();}
 
                 }
 
@@ -328,7 +350,11 @@ public class PublicacionesPerfilAdapter extends RecyclerView.Adapter<Publicacion
         }
     }
     private void updatePublications(PublicacionClass publicacionClass) {
+        try{
         ViewModelParametros.getSingletonInstance().updatePublicacion(publicacionClass);
+        }catch (Exception e){
+            Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+            toast.show();}
     }
 
 

@@ -11,6 +11,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.weadives.AreaUsuario.UserClass;
 import com.example.weadives.PantallaMapa.MarcadorClass;
 import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
+import com.example.weadives.Model.DatoGradosClass;
+import com.example.weadives.Model.Directions;
+import com.example.weadives.Model.ParametrosClass;
+import com.example.weadives.Model.PublicacionClass;
+import com.example.weadives.Model.UserClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,10 +48,11 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
     public ViewModelParametros(Resources r,Context c) {
         this.r=r;
         this.c=c;
-        System.out.println("AQUI LLEGA\n");
+        //System.out.println("AQUI LLEGA\n");
         String test=cargarPreferenciasParametros();
         //String test="";
         System.out.println("p: "+test);
+        //System.out.println(test);
         if(test.length()!=0){lista=descomprimirArray(test);}else{
             lista=new ArrayList<>();
         }
@@ -54,21 +60,21 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
         idNotification = new MutableLiveData<>();
 
 
-        System.out.println(lista);
+        //System.out.println(lista);
     }
     public void addParametro(ParametrosClass p){
-        System.out.println(lista);
-        System.out.println(mutableList);
+        //System.out.println(lista);
+        //System.out.println(mutableList);
         lista.add(p);
-        System.out.println(lista);
-        System.out.println(mutableList);
+        //System.out.println(lista);
+        //System.out.println(mutableList);
         guardarPersistencia();
         mutableList.setValue(lista);
     }
     public void modifyParametro(ParametrosClass p,ParametrosClass b,boolean publicar){
 
-        System.out.println(lista);
-        System.out.println(mutableList.toString());
+        //System.out.println(lista);
+        //System.out.println(mutableList.toString());
         lista.remove(b);
         lista.add(p);
         if(!p.getIdPublicacion().equals("0") && publicar){
@@ -89,8 +95,8 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
             }
 
         }
-        System.out.println(lista);
-        System.out.println(mutableList.toString());
+        //System.out.println(lista);
+        //System.out.println(mutableList.toString());
         guardarPersistencia();
         mutableList.setValue(lista);
     }
@@ -131,7 +137,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
             String parametros=p.getParametros().toSaveString();
             String idPublicacion=p.getIdPublicacion();
             if(idPublicacion.equals("0")){
-                System.out.println("CREAR NUEVA PUBLICACION - ERROR");
+                //System.out.println("CREAR NUEVA PUBLICACION - ERROR");
             }
             String idUsuario=p.getIdUsuario();
             ViewModel.getInstance().updatePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
@@ -154,7 +160,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
             String parametros=p.getParametros().toSaveString();
             String idPublicacion=p.getIdPublicacion();
             if(idPublicacion.equals("0")){
-                System.out.println("CREAR NUEVA PUBLICACION - ERROR");
+                //System.out.println("CREAR NUEVA PUBLICACION - ERROR");
             }
             String idUsuario=p.getIdUsuario();
             ViewModel.getInstance().updatePublicacion(coments,likes,parametros,idPublicacion,idUsuario);
@@ -162,15 +168,32 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
     }
 
     public void deleteParametro(ParametrosClass p){
-        System.out.println(lista);
-        System.out.println(mutableList);
-        try{lista.remove(p);
+        //System.out.println(lista);
+        //System.out.println(mutableList);
+        try{
+            if(p.getIdPublicacion().length()>4){
+                PublicacionClass pub=null;
+                for(int i=0; i<listaPublic.size();i++){
+                    if(listaPublic.get(i).getIdPublicacion().equals(p.getIdPublicacion())){
+                        pub =listaPublic.get(i);
+                        break;
+                    }
+                }
+                if (currentUser!=null && pub!=null){
+                    listaPublic.remove(pub);
+                    ViewModel.getInstance().deletePublicacion(p.getIdPublicacion());
+
+                }
+            }
+
+            lista.remove(p);
+
         }catch (Exception e){
-            System.out.println(e);
+            //System.out.println(e);
         }
 
-        System.out.println(lista);
-        System.out.println(mutableList);
+        //System.out.println(lista);
+        //System.out.println(mutableList);
         guardarPersistencia();
         mutableList.setValue(lista);
     }
@@ -178,7 +201,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
         guardarPreferenciasParametros("");
         lista=new ArrayList<>();
         lista.add(new ParametrosClass());
-        System.out.println(lista);
+        //System.out.println(lista);
         mutableList = new MutableLiveData<ArrayList<ParametrosClass>>();
         mutableList.setValue(lista);
     }
@@ -244,24 +267,23 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
     private String comprimirArray(ArrayList<ParametrosClass> l){
         String str="";
         for(int i=0; i<l.size();i++){
-            System.out.println("aver: " + l.get(i).toSaveString());
             str=str+l.get(i).toSaveString()+"¿";
         }
         return str;
     }
     private ArrayList<ParametrosClass> descomprimirArray(String l){
-        System.out.println("HEHHEHEHEHHEHEH");
-        System.out.println(l);
+        //System.out.println("HEHHEHEHEHHEHEH");
+        //System.out.println(l);
         String[] parametrosStringList = l.split("¿");
         int count = l.length() - l.replace("¿", "").length();
-        System.out.println(count);
+        //System.out.println(count);
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
         String[] fixedParam;
         for (String i : parametrosStringList) {
-            System.out.println(i);
+            //System.out.println(i);
             fixedParam=i.split(",");
             for (String x : fixedParam) {
-                System.out.println(x);
+                //System.out.println(x);
             }
             parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12])), fixedParam[13]));
         }
@@ -273,7 +295,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
     public List<PublicacionClass> getPublications(){
         List<PublicacionClass> publicaciones = new ArrayList<>();
         if(currentUser!=null){
-            System.out.println("USUARIO LOGEADOOOO");
+            //System.out.println("USUARIO LOGEADOOOO");
             //DatabaseAdapter.getPublications;
             //publicaciones=fillPublicacionList();
 
@@ -344,13 +366,22 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
     }
 
     public void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses) {
-        System.out.println("PUBLICACIONES RELLENADAS\n");
+        //System.out.println("PUBLICACIONES RELLENADAS\n");
         this.listaPublic= (ArrayList<PublicacionClass>) publicacionClasses;
-        System.out.println(lista.size());
+        //System.out.println(lista.size());
+        boolean existe=false;
         for (PublicacionClass i : publicacionClasses) {
-            lista.add(i.getParametros());
+            for (ParametrosClass k : lista) {
+                if( i.getIdPublicacion().equals(k.getIdPublicacion())){
+                    existe=true;
+                }
+            }
+            if(!existe){
+                lista.add(i.getParametros());
+                existe=false;
+            }
         }
-        System.out.println(lista.size());
+        //System.out.println(lista.size());
     }
 
 

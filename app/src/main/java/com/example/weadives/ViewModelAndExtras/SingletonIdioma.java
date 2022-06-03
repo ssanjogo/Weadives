@@ -1,10 +1,12 @@
-package com.example.weadives;
+package com.example.weadives.ViewModelAndExtras;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.weadives.Model.Traducciones;
 
 import java.util.Locale;
 

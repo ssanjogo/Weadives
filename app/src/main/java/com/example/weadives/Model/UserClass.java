@@ -1,11 +1,6 @@
-package com.example.weadives.AreaUsuario;
-
-import com.example.weadives.DatabaseAdapter;
-import com.example.weadives.PantallaPerfilAmigo.PublicacionClass;
-import com.example.weadives.ParametrosClass;
+package com.example.weadives.Model;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class UserClass {
@@ -109,7 +104,7 @@ public class UserClass {
 
     public List<String> getListaSolicitudesRecibidas(){
         List<String> solicitudes_recibidas = Arrays.asList(this.solicitudes_recibidas.split(","));
-        System.out.println(solicitudes_recibidas);
+        //System.out.println(solicitudes_recibidas);
         return solicitudes_recibidas;
     }
 

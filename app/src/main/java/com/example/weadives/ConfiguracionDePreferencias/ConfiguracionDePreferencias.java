@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,15 +29,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.weadives.DatabaseAdapter;
-import com.example.weadives.DatoGradosClass;
-import com.example.weadives.Directions;
-import com.example.weadives.LocaleHelper;
+import com.example.weadives.Model.Directions;
 import com.example.weadives.PantallaInicio.PantallaInicio;
-import com.example.weadives.PantallaPrincipal.PantallaPrincipal;
-import com.example.weadives.ParametrosClass;
+import com.example.weadives.Model.ParametrosClass;
 import com.example.weadives.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,6 +40,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.example.weadives.ViewModel;
 import com.example.weadives.SingletonIdioma;
 import com.example.weadives.ViewModelParametros;
+import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
+import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -184,7 +179,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         //Spinner superior
         //ArrayList<ParametrosClass> test=descomprimirArray(cargarPreferenciasParametros());
         ArrayList<ParametrosClass> test= ViewModelParametros.getSingletonInstance().getLista();
-        System.out.println(test);
+        //System.out.println(test);
         if(test.size()==0){
             //test.add(new ParametrosClass());
             scrollView2.setVisibility(View.GONE);
@@ -226,6 +221,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                try{
                 if(!((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion().equals("-999")){
                     scrollView2.setVisibility(View.VISIBLE);
                 }
@@ -244,10 +240,10 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 editpomin.setText((Float.toString(((ParametrosClass) spinner.getSelectedItem()).getPeriodoOlaMin())));
 
                 if(((ParametrosClass) spinner.getSelectedItem()).getIdPublicacion().equals("0")){
-                    System.out.println("Desactivado");
+                    //System.out.println("Desactivado");
                     sw_mostrarEnPerfil.setChecked(false);
                 }else{
-                    System.out.println("Activado");
+                    //System.out.println("Activado");
                     sw_mostrarEnPerfil.setChecked(true);
                 }
 
@@ -262,38 +258,43 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
 
                 editName.setText(((ParametrosClass) spinner.getSelectedItem()).getNombreActividad());
-                System.out.println("DIRTESTEODIR2");
+                //System.out.println("DIRTESTEODIR2");
 
                 spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas()));
                 spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento()));
-                System.out.println(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
+                /*System.out.println(((ParametrosClass) spinner.getSelectedItem()).getDirectionOlas());
                 System.out.println(spn_dirOlas.getSelectedItemPosition());
                 System.out.println(((ParametrosClass) spinner.getSelectedItem()).getDirectionViento());
-                System.out.println(spn_dirViento.getSelectedItemPosition());
+                System.out.println(spn_dirViento.getSelectedItemPosition());*/
+                }catch (Exception e){
+                    Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                    toast.show();}
             }
 
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                scrollView2.setVisibility(View.GONE);
 
-
-                editName.setText("Nothing selected");
-                /*
-                editpmax.setText("");
-                editpmin.setText("");
-                edittmax.setText("");
-                edittmin.setText("");
-                editvmax.setText("");
-                editvmin.setText("");
-                editaomax.setText("");
-                editaomin.setText("");
-                editpomax.setText("");
-                editpomin.setText("");
-                spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
-                spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
-
-                 */
+                try{
+                    scrollView2.setVisibility(View.GONE);
+                    editName.setText("Nothing selected");
+                    /*
+                    editpmax.setText("");
+                    editpmin.setText("");
+                    edittmax.setText("");
+                    edittmin.setText("");
+                    editvmax.setText("");
+                    editvmin.setText("");
+                    editaomax.setText("");
+                    editaomin.setText("");
+                    editpomax.setText("");
+                    editpomin.setText("");
+                    spn_dirOlas.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
+                    spn_dirViento.setSelection(Directions.NO_DIRECTION.toInt(Directions.NO_DIRECTION));
+                     */
+            }catch (Exception e){
+                Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                toast.show();}
             }
         });
 
@@ -304,6 +305,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 .setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener()
                 {@Override
                 public void onClick(DialogInterface dialog, int which) {
+                    try{
                     btn_basura.startAnimation(animation);
                     ViewModelParametros.getSingletonInstance().deleteParametro((ParametrosClass) spinner.getSelectedItem());
                     spinner.setSelection(0);
@@ -320,6 +322,9 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                         spinner.setSelection(adapter.getPosition(newParametro));
                         spinner.setSelection(0);
                     }
+                    }catch (Exception e){
+                        Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                        toast.show();}
                 }
 
                 })
@@ -364,15 +369,15 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     change.setPeriodoOlaMax(Float.valueOf(String.valueOf(editpomax.getText())));
                     change.setPeriodoOlaMin(Float.valueOf(String.valueOf(editpomin.getText())));
 
-                    System.out.println("DIRECTIONTEST");
-                    System.out.println();
+                    //System.out.println("DIRECTIONTEST");
+                    //System.out.println();
                     change.setDirectionViento(Directions.fromInt(spn_dirViento.getSelectedItemPosition()));
                     change.setDirectionOlas(Directions.fromInt(spn_dirOlas.getSelectedItemPosition()));
 
 
                     //spinner.setAdapter(updateAdapter(test));
-                    System.out.println("DIRTESTEODIR");
-                    System.out.println(change.toString2());
+                    //System.out.println("DIRTESTEODIR");
+                    //System.out.println(change.toString2());
                     ViewModelParametros.getSingletonInstance().modifyParametro(change, (ParametrosClass) spinner.getSelectedItem(),sw_mostrarEnPerfil.isChecked());
 
                     if(sw_notificaciones.isChecked()){
@@ -398,8 +403,8 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
                     spinner.setSelection(adapter.getPosition(change));
                 }catch (Exception e){
-
-                }
+                    Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                    toast.show();}
 
                 //Intent seleccionDeAjuste = new Intent(getApplicationContext(), SeleccionDeAjuste.class);
                 //startActivity(seleccionDeAjuste);
@@ -409,6 +414,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         btn_añadir2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try{
                 btn_añadir2.startAnimation(animation);
                 scrollView2.setVisibility(View.VISIBLE);
                 /*editName.setText("");
@@ -435,6 +441,9 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 sw_notificaciones.setVisibility(View.VISIBLE);
                 btn_guardar.setVisibility(View.VISIBLE);
                 btn_basura.setVisibility(View.VISIBLE);
+                }catch (Exception e){
+                    Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                    toast.show();}
             }
         });
 
@@ -444,13 +453,15 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         final Observer<ArrayList<ParametrosClass>> nameObserver = new Observer<ArrayList<ParametrosClass>>() {
             @Override
             public void onChanged(@Nullable final ArrayList<ParametrosClass> list) {
+                try{
                 // Update the UI, in this case, a TextView.
-                System.out.println("OBSERVEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEER\n");
-                System.out.println(list);
                 ArrayAdapter<ParametrosClass> adapter= new ArrayAdapter<ParametrosClass>(context, R.layout.one_spinner_list,list);
                 adapter.setDropDownViewResource(R.layout.one_spinner_list);
                 spinner.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                }catch (Exception e){
+                    Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
+                    toast.show();}
 
 
             }
@@ -460,11 +471,16 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
     }
 
+
     private void guardarPreferenciasParametros(String string) {
         SharedPreferences preferencias = getSharedPreferences("parametros",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferencias.edit();
         editor.putString("parametros",string);
         editor.commit();
+    }
+
+    private void mostrarAjuste(ParametrosClass parametro) {
+        Toast.makeText(this,parametro.getNombreActividad(),Toast.LENGTH_SHORT).show();
     }
 
 
