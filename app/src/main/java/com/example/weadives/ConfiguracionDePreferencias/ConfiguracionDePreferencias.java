@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,7 +15,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -37,15 +37,12 @@ import com.example.weadives.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.example.weadives.ViewModel;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModelParametros;
 import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
 import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class ConfiguracionDePreferencias extends AppCompatActivity {

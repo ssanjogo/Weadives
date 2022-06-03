@@ -28,6 +28,7 @@ import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
 import com.example.weadives.ViewModelAndExtras.ViewModel;
 import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
 
+
 public class PantallaInicio extends AppCompatActivity {
 
     private ImageView Imagen_superior, btn_en, btn_es;

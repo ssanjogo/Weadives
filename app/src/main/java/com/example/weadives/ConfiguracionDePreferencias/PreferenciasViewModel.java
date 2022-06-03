@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.weadives.DatabaseAdapter;
+import com.example.weadives.ViewModelAndExtras.DatabaseAdapter;
 
 import java.util.ArrayList;
 import java.util.Map;

@@ -30,14 +30,9 @@ import com.example.weadives.PantallaLogIn.PantallaLogIn;
 import com.example.weadives.PantallaMapa.MarcadorClass;
 import com.example.weadives.PantallaMapa.ViewModelMapa;
 import com.example.weadives.R;
-import com.example.weadives.SingletonIdioma;
-import com.example.weadives.ViewModel;
-import com.example.weadives.ViewModelParametros;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
 import com.example.weadives.ViewModelAndExtras.ViewModel;
+import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
 
 import java.util.ArrayList;
 

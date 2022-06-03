@@ -4,7 +4,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 
-import com.example.weadives.ParametrosClass;
+import com.example.weadives.Model.ParametrosClass;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 

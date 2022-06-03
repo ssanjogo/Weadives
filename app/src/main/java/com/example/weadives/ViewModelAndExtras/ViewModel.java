@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.Model.PublicacionClass;
 import com.example.weadives.Model.UserClass;
+import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
