@@ -1,4 +1,4 @@
-package com.example.weadives.PantallaDeHorarios;
+package com.example.weadives.Model;
 
 import android.content.Context;
 import android.net.Uri;

@@ -13,8 +13,9 @@ import com.example.weadives.Model.Directions;
 import com.example.weadives.Model.ParametrosClass;
 import com.example.weadives.Model.PublicacionClass;
 import com.example.weadives.Model.UserClass;
-import com.example.weadives.PantallaMapa.MarcadorClass;
+import com.example.weadives.Model.MarcadorClass;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,6 +61,8 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
 
         //System.out.println(lista);
     }
+
+
     public void addParametro(ParametrosClass p){
         //System.out.println(lista);
         //System.out.println(mutableList);

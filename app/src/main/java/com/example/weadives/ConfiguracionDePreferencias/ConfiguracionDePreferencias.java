@@ -249,7 +249,6 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     sw_notificaciones.setChecked(false);
                     System.out.println(sw_notificaciones.isChecked());
                 }else{
-                    System.out.println("No le tira");
                     sw_notificaciones.setChecked(true);
                 }
 
@@ -494,7 +493,6 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     }
 
     private void deleteNotification(ParametrosClass change){
-        System.out.println("este:2" + spinner.getSelectedItem());
         ViewModelParametros.getSingletonInstance().deleteNotification(change.getIdNotification(), change);
 
     }

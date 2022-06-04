@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -19,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.ConfiguracionDePreferencias.ConfiguracionDePreferencias;
@@ -27,7 +25,7 @@ import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.PantallaDeHorarios.PantallaDeHorarios;
 import com.example.weadives.PantallaDeHorarios.ViewModelHorario;
 import com.example.weadives.PantallaLogIn.PantallaLogIn;
-import com.example.weadives.PantallaMapa.MarcadorClass;
+import com.example.weadives.Model.MarcadorClass;
 import com.example.weadives.ViewModelAndExtras.ViewModelMapa;
 import com.example.weadives.R;
 import com.example.weadives.ViewModelAndExtras.SingletonIdioma;

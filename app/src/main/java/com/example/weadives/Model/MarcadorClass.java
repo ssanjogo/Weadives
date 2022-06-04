@@ -1,4 +1,4 @@
-package com.example.weadives.PantallaMapa;
+package com.example.weadives.Model;
 
 
 

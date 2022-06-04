@@ -1,6 +1,7 @@
 package com.example.weadives.ViewModelAndExtras;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -48,9 +49,8 @@ public class DatabaseAdapter extends Activity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
-    private final StorageReference storageRef = storage.getReference();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+    private final StorageReference storageRef = storage.getReference();
     public static vmInterface listener;
     public static mapaInterface listenerMapa;
     public static horarioInterface listenerHorario;
@@ -121,6 +121,7 @@ public class DatabaseAdapter extends Activity {
     //Mapa
     public interface mapaInterface{
         void setLatLng(ArrayList<Double> lat, ArrayList<Double> lon);
+        void setImage(ArrayList<File> fileList);
     }
 
     public interface preferenciasInterface {
@@ -625,5 +626,37 @@ public class DatabaseAdapter extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void getWeatherImage(Context context, String type){
+        ArrayList<File> fileList = new ArrayList<>();
+        StorageReference imageRef;
+        String storagePath = "";
+        for(int i = 0; i < 72; i++){
+            storagePath = type + "/" + type + "_" + (i);
+            if(type == "PSL"){
+                imageRef = storage.getReference().child("/Fotos/" + storagePath + ".jpg");
+            }else{
+                imageRef = storage.getReference().child("/Fotos/" + storagePath + ".png");
+            }
+            String filename = type + "_" + i + ".png";
+            File localFile = new File(context.getFilesDir(), filename);
+            imageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    // Local temp file has been created
+                    fileList.add(localFile);
+                    System.out.println("bien");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                    System.out.println("falla: " + exception);
+
+                }
+            });
+        }
+        listenerMapa.setImage(fileList);
     }
 }

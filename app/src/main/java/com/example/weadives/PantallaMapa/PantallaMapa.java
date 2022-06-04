@@ -4,6 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,7 +21,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
 
 import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.PantallaGestorInundaciones.PantallaGestorInundaciones;
@@ -29,6 +37,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
@@ -37,9 +46,13 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback {
+public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback{
 
     private GoogleMap mMap;
     private PantallaMapaBinding binding;
@@ -54,10 +67,21 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private Button btn_cancelarEliminar;
     private TextView txt_nombreMarcadorEliminar;
     private SeekBar skb_seleccionarHora;
+    private Button btn_day0;
+    private Button btn_day1;
+    private Button btn_day2;
+    private ImageButton btn_hs;
+    private ImageButton btn_psl;
+    private ImageButton btn_wind;
+    private TextView txt_hora;
     // Maps
     private LatLng coordsMarcador;
     private Marker tempMarcador;
     private GroundOverlay imagenClima;
+    private ArrayList<File> imageList;
+    private int sel;
+    private LatLngBounds maldivesBounds;
+    private GroundOverlayOptions imagen;
     //ViewModel
     ViewModelMapa viewModelMapa;
 
@@ -66,6 +90,20 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModelMapa = ViewModelMapa.getInstance(this);
+        sel = 0;
+
+        final Observer<ArrayList<File>> observer = new Observer<ArrayList<File>>() {
+            @Override
+            public void onChanged(ArrayList<File> files) {
+                imageList = files;
+                skb_seleccionarHora.setVisibility(View.VISIBLE);
+                btn_day0.setVisibility(View.VISIBLE);
+                btn_day1.setVisibility(View.VISIBLE);
+                btn_day2.setVisibility(View.VISIBLE);
+                txt_hora.setVisibility(View.VISIBLE);
+            }
+        };
+        viewModelMapa.getFileData().observe(this, observer);
 
         ImageButton btn_home20;
         binding = PantallaMapaBinding.inflate(getLayoutInflater());
@@ -90,6 +128,9 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_home20=findViewById(R.id.btn_home20);
         btn_home20.bringToFront();
 
+        txt_hora = findViewById(R.id.txt_hora);
+        txt_hora.setVisibility(View.INVISIBLE);
+
         lay_layoutMarcador = findViewById(R.id.LinearLayoutMarcador);
         btn_aceptar = findViewById(R.id.btn_aceptar);
         btn_cancelar = findViewById(R.id.btn_cancelar);
@@ -101,11 +142,97 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_cancelarEliminar = findViewById(R.id.btn_cancelarEliminar);
         lay_layoutMarcadorEliminar.setVisibility(View.INVISIBLE);
 
+
         skb_seleccionarHora = findViewById(R.id.skb_seleccionarHora);
         skb_seleccionarHora.setProgress(0);
+        skb_seleccionarHora.setVisibility(View.INVISIBLE);
+
+        btn_hs = findViewById(R.id.btn_hs);
+        btn_psl = findViewById(R.id.btn_psl);
+        btn_wind = findViewById(R.id.btn_wind);
+
+        btn_day0 = findViewById(R.id.btn_day0);
+        btn_day0.setVisibility(View.INVISIBLE);
+        btn_day1 = findViewById(R.id.btn_day1);
+        btn_day1.setVisibility(View.INVISIBLE);
+        btn_day2 = findViewById(R.id.btn_day2);
+        btn_day2.setVisibility(View.INVISIBLE);
 
 
+        btn_hs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imagenClima.setImage(BitmapDescriptorFactory.fromResource(R.drawable.noimage));
+                skb_seleccionarHora.setVisibility(View.INVISIBLE);
+                btn_day0.setVisibility(View.INVISIBLE);
+                btn_day1.setVisibility(View.INVISIBLE);
+                btn_day2.setVisibility(View.INVISIBLE);
+                txt_hora.setVisibility(View.INVISIBLE);
+                viewModelMapa.getWeatherImage("HS");
+                sel = 0;
+                skb_seleccionarHora.setProgress(0);
+            }
+        });
 
+        btn_psl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imagenClima.setImage(BitmapDescriptorFactory.fromResource(R.drawable.noimage));
+                skb_seleccionarHora.setVisibility(View.INVISIBLE);
+                btn_day0.setVisibility(View.INVISIBLE);
+                btn_day1.setVisibility(View.INVISIBLE);
+                btn_day2.setVisibility(View.INVISIBLE);
+                txt_hora.setVisibility(View.INVISIBLE);
+                viewModelMapa.getWeatherImage("PSL");
+                sel = 0;
+                skb_seleccionarHora.setProgress(0);
+            }
+        });
+
+        btn_wind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imagenClima.setImage(BitmapDescriptorFactory.fromResource(R.drawable.noimage));
+                skb_seleccionarHora.setVisibility(View.INVISIBLE);
+                btn_day0.setVisibility(View.INVISIBLE);
+                btn_day1.setVisibility(View.INVISIBLE);
+                btn_day2.setVisibility(View.INVISIBLE);
+                txt_hora.setVisibility(View.INVISIBLE);
+                viewModelMapa.getWeatherImage("WIND");
+                sel = 0;
+                skb_seleccionarHora.setProgress(0);
+            }
+        });
+
+        btn_day0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sel = 0;
+                skb_seleccionarHora.setProgress(0);
+                cargarImagenClima(skb_seleccionarHora.getProgress() + sel);
+                txt_hora.setText(changeHora(skb_seleccionarHora.getProgress() + sel));
+            }
+        });
+
+        btn_day1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sel = 24;
+                skb_seleccionarHora.setProgress(0);
+                cargarImagenClima(skb_seleccionarHora.getProgress() + sel);
+                txt_hora.setText(changeHora(skb_seleccionarHora.getProgress() + sel));
+            }
+        });
+
+        btn_day2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sel = 48;
+                skb_seleccionarHora.setProgress(0);
+                cargarImagenClima(skb_seleccionarHora.getProgress() + sel);
+                txt_hora.setText(changeHora(skb_seleccionarHora.getProgress() + sel));
+            }
+        });
 
 
         btn_gestorNotificaciones.setOnClickListener(new View.OnClickListener(){
@@ -164,7 +291,8 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         skb_seleccionarHora.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                cargarImagenClima(getImagenClima(i));
+                cargarImagenClima(skb_seleccionarHora.getProgress() + sel);
+                txt_hora.setText(changeHora(skb_seleccionarHora.getProgress() + sel));
             }
 
             @Override
@@ -183,20 +311,27 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //Creación Overlay Options
+        maldivesBounds = new LatLngBounds( new LatLng(-5.467415, 65.490845), new LatLng(10.97052, 79.48093));
+        imagen = new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.noimage))
+                .positionFromBounds(maldivesBounds)
+                .transparency(0.5f);
+        //Aplicamos el Overlay y lo guardamos
+        imagenClima = mMap.addGroundOverlay(imagen);
         // Limites
-        LatLngBounds maldivesBounds = new LatLngBounds( new LatLng(-0.938178, 71.118660), new LatLng(7.181926, 75.214051));
+        LatLngBounds camera = new LatLngBounds( new LatLng(-0.938178, 71.118660), new LatLng(7.181926, 75.214051));
         // Mapa satelite
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         // Centrar camara
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(maldivesBounds.getCenter(), 7.5f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(camera.getCenter(), 7.5f));
         // Marcador limites
-        mMap.setLatLngBoundsForCameraTarget(maldivesBounds);
+        mMap.setLatLngBoundsForCameraTarget(camera);
         // Limitar zoom
         mMap.setMinZoomPreference(7.5f);
         // Actualizamos marcadores
         mMap.getUiSettings().setMapToolbarEnabled(false);
         actualizarMarcadores();
-        cargarImagenClima(getImagenClima(skb_seleccionarHora.getProgress()));
 
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -217,25 +352,13 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    private int getImagenClima(int tipo){
-        switch(tipo){
-            case 0: return R.drawable.imagen_clima0;
-            case 1: return R.drawable.imagen_clima1;
-            default: return R.drawable.imagen_clima0;
+    private void cargarImagenClima(int sel){
+        try {
+            imagenClima.setImage(BitmapDescriptorFactory.fromFile(imageList.get(sel).getName()));
+        }catch(Exception exception){
+            System.err.println(exception);
+            imagenClima.setImage(BitmapDescriptorFactory.fromResource(R.drawable.noimage));
         }
-    }
-    private void cargarImagenClima(int resourceId){
-        if (imagenClima == null){
-            LatLngBounds maldivesBounds = new LatLngBounds( new LatLng(-5.467415, 65.490845), new LatLng(10.97052, 79.48093));
-            GroundOverlayOptions imagen = new GroundOverlayOptions()
-                    .image(BitmapDescriptorFactory.fromResource(resourceId))
-                    .positionFromBounds(maldivesBounds)
-                    .transparency(0.5f);
-            imagenClima = mMap.addGroundOverlay(imagen);
-        } else {
-            imagenClima.setImage(BitmapDescriptorFactory.fromResource(resourceId));
-        }
-
     }
 
     private void actualizarMarcadores(){
@@ -248,5 +371,68 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private String cargarPreferencias() {
         SharedPreferences preferencias = getSharedPreferences("idioma", Context.MODE_PRIVATE);
         return preferencias.getString("idioma","en");
+    }
+
+    private String changeHora(int sel){
+        int temp = 0;
+        if(sel < 24){
+            temp = 0;
+        }else if(sel < 48){
+            temp = 24;
+        }else {
+            temp = 48;
+        }
+        switch(sel - temp){
+            case 0:
+                return "00:00";
+            case 1:
+                return "01:00";
+            case 2:
+                return "02:00";
+            case 3:
+                return "03:00";
+            case 4:
+                return "04:00";
+            case 5:
+                return "05:00";
+            case 6:
+                return "06:00";
+            case 7:
+                return "07:00";
+            case 8:
+                return "08:00";
+            case 9:
+                return "09:00";
+            case 10:
+                return "10:00";
+            case 11:
+                return "11:00";
+            case 12:
+                return "12:00";
+            case 13:
+                return "13:00";
+            case 14:
+                return "14:00";
+            case 15:
+                return "15:00";
+            case 16:
+                return "16:00";
+            case 17:
+                return "17:00";
+            case 18:
+                return "18:00";
+            case 19:
+                return "19:00";
+            case 20:
+                return "20:00";
+            case 21:
+                return "21:00";
+            case 22:
+                return "22:00";
+            case 23:
+                return "23:00";
+            default:
+                return "00:00";
+        }
     }
 }

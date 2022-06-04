@@ -233,7 +233,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
         dbA.updateDatos(hmFuturoAmigo);
         // Enviamos solicitud de amigo
-        createSolicitud(usuario.getId(),u.getId());
+        createSolicitud(usuario.getValue().getId(),u.getId());
 
 
         fillUserList();

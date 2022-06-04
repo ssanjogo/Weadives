@@ -23,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.cleveroad.adaptivetablelayout.LinkedAdaptiveTableAdapter;
 import com.cleveroad.adaptivetablelayout.ViewHolderImpl;
+import com.example.weadives.Model.TableDataSource;
 import com.example.weadives.R;
 
 public class AdapterTablaHorario extends LinkedAdaptiveTableAdapter<ViewHolderImpl> {

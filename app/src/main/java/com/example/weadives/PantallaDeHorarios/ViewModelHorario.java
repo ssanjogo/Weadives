@@ -8,7 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.weadives.ViewModelAndExtras.DatabaseAdapter;
-import com.example.weadives.PantallaMapa.MarcadorClass;
+import com.example.weadives.Model.MarcadorClass;
 
 public class ViewModelHorario extends AndroidViewModel implements DatabaseAdapter.horarioInterface{
 
