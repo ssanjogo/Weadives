@@ -127,7 +127,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                     horarioViewModel.setMarcador((MarcadorClass) DesplegableMarcadores.getSelectedItem());
                     ViewModelParametros.getSingletonInstance(resources, context).setMarcador((MarcadorClass) DesplegableMarcadores.getSelectedItem());
                 }
-                System.out.println(location + "  " + i);
+
                 if(i > 0){
                     btnHorario.setEnabled(true);
                     btn_gestionarParametros.setEnabled(true);
@@ -137,7 +137,7 @@ public class PantallaPrincipal extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                System.out.println("nothing selected but" + ((MarcadorClass) DesplegableMarcadores.getSelectedItem()).getName());
+
             }
         });
 
