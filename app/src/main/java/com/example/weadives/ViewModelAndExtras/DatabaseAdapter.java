@@ -626,13 +626,12 @@ public class DatabaseAdapter extends Activity {
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     // Local temp file has been created
                     fileList.add(localFile);
-                    System.out.println("bien");
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     // Handle any errors
-                    System.out.println("falla: " + exception);
+                    System.err.println(exception);
 
                 }
             });
