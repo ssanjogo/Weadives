@@ -65,14 +65,12 @@ public class PantallaInicio extends AppCompatActivity {
         s.setResources(resources2);
 
         viewModel = viewModel.getInstance(this);
-        ViewModelMapa mapViewModel = ViewModelMapa.getInstance(this, resources2);
 
         if (viewModel.accountNotNull() && cargarSesion()){
             viewModel.getUser();
         } else if (!cargarSesion()){
             viewModel.singOut();
         }
-        ViewModelParametros p = ViewModelParametros.getSingletonInstance(resources2,this);
 
         overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
 
@@ -96,7 +94,6 @@ public class PantallaInicio extends AppCompatActivity {
                 //finishAffinity();
                 //startActivity(getIntent());
                 //System.out.println(resources2.getString(R.string.marcador_vacio));
-                mapViewModel.updateTextSelect(resources2);
             }
         });
 
@@ -109,7 +106,6 @@ public class PantallaInicio extends AppCompatActivity {
                 s.setResources(resources2);
                 Toast toast = Toast.makeText(getApplicationContext(), "Idioma cambiado a Castellano", Toast.LENGTH_SHORT);
                 toast.show();
-                mapViewModel.updateTextSelect(resources2);
             }
         });
 

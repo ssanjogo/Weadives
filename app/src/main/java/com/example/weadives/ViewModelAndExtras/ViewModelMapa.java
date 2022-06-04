@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
@@ -30,24 +31,26 @@ public class ViewModelMapa extends AndroidViewModel implements DatabaseAdapter.m
     private static ViewModelMapa viewModelMapa;
     private MarcadorList marcadorList;
     private final DatabaseAdapter dbA;
-    private Resources r;
+    private Resources resources;
     private Context context;
     ArrayList<MarcadorClass> listaMarcador;
     private MutableLiveData<ArrayList<File>> fileData;
 
-    public Resources getR() {
-        return r;
+    public Resources getResources() {
+        return resources;
     }
 
-    public void setR(Resources r) {
-        this.r = r;
+    public void setResources(Resources resources) {
+        this.resources = resources;
     }
 
     public ViewModelMapa(@NonNull Application application) {
         super(application);
         context = getApplication().getApplicationContext();
+        resources = getApplication().getResources();
         marcadorList = new MarcadorList();
         dbA = new DatabaseAdapter(this);
+        dbA.getLatLng();
         cargarPersistencia();
     }
 
@@ -60,23 +63,11 @@ public class ViewModelMapa extends AndroidViewModel implements DatabaseAdapter.m
         return viewModelMapa;
     }
 
-    public static ViewModelMapa getInstance(FragmentActivity application, Resources r){
+    public static ViewModelMapa getInstance(AppCompatActivity application){
         if (viewModelMapa == null){
             viewModelMapa = new ViewModelProvider(application).get(ViewModelMapa.class);
-            viewModelMapa.setR(r);
-            MarcadorClass title2 = new MarcadorClass(r.getString(R.string.marcador_vacio));
-
-            viewModelMapa.marcadorList.getMarcadores().add(title2);
-            viewModelMapa.dbA.getLatLng();
         }
         return viewModelMapa;
-    }
-
-    public void updateTextSelect(Resources r){
-        setR(r);
-        viewModelMapa.marcadorList.deletePos(0);
-        MarcadorClass title2 = new MarcadorClass(r.getString(R.string.marcador_vacio));
-        viewModelMapa.marcadorList.insertPos(0,title2);
     }
 
     public void guardarMarcador(String nombre, LatLng coords){
@@ -133,10 +124,8 @@ public class ViewModelMapa extends AndroidViewModel implements DatabaseAdapter.m
     public void cargarPersistencia(){
         //Array de prueba
         ArrayList<MarcadorClass> marcadorList = new ArrayList<>();
-        marcadorList.add(new MarcadorClass("test", new LatLng(2.4688644409,74.4644393921)));
-
+        marcadorList.add(new MarcadorClass(resources.getString(R.string.marcador_vacio)));
         SharedPreferences preferencias = context.getSharedPreferences("marcadores",MODE_PRIVATE);
-
         marcadorList = descomprimirArray(preferencias.getString("marcadores", comprimirArray(marcadorList)));
         this.marcadorList.setMarcadores(marcadorList);
     }

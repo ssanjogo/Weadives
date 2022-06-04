@@ -83,15 +83,15 @@ public class PantallaPrincipal extends AppCompatActivity {
 
 
         viewModel = ViewModel.getInstance(this);
+
         mapViewModel = ViewModelMapa.getInstance(this);
         //mapViewModel.setR(resources);
 
         horarioViewModel = ViewModelHorario.getInstance(this);
         Intent intent = getIntent();
 
-        ArrayList<MarcadorClass> list = new ArrayList<>();
-        list = mapViewModel.getMarcadores();
-
+        //Obtenemos la lista de marcadores
+        ArrayList<MarcadorClass> list = list = mapViewModel.getMarcadores();
         adapter = new ArrayAdapter<MarcadorClass>(this, R.layout.one_spinner_list, list){
             @Override
             public boolean isEnabled(int position){
@@ -117,7 +117,6 @@ public class PantallaPrincipal extends AppCompatActivity {
                 return view;
             }
         };
-        adapter.setDropDownViewResource(R.layout.one_spinner_list);
         DesplegableMarcadores.setAdapter(adapter);
 
         DesplegableMarcadores.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -126,8 +125,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                 String location = ((MarcadorClass) DesplegableMarcadores.getSelectedItem()).getLocation();
                 if(!location.equals("0_0")){
                     horarioViewModel.setMarcador((MarcadorClass) DesplegableMarcadores.getSelectedItem());
-                    ViewModelParametros.getSingletonInstance().setMarcador((MarcadorClass) DesplegableMarcadores.getSelectedItem());
-                    System.out.println("AWAAWA");
+                    ViewModelParametros.getSingletonInstance(resources, context).setMarcador((MarcadorClass) DesplegableMarcadores.getSelectedItem());
                 }
                 System.out.println(location + "  " + i);
                 if(i > 0){
