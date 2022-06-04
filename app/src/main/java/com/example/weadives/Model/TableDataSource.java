@@ -31,7 +31,6 @@ public class TableDataSource {
     public TableDataSource(Context context, String nameFile) {
         this.context = context;
         this.nameFile = nameFile;
-        System.out.println("Empieza: " + nameFile);
         File initialFile = new File (this.nameFile);
         InputStream in = null;
         try {

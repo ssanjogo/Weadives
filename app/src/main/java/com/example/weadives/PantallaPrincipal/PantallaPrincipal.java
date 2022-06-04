@@ -89,14 +89,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         horarioViewModel = ViewModelHorario.getInstance(this);
         Intent intent = getIntent();
 
-       /* @Override
-        public void onBackPressed()
-        {
-            super.onBackPressed();
-            finish();
-            startActivity(getIntent());
-        }*/
-
         ArrayList<MarcadorClass> list = new ArrayList<>();
         list = mapViewModel.getMarcadores();
 
@@ -129,7 +121,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         DesplegableMarcadores.setAdapter(adapter);
 
         DesplegableMarcadores.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String location = ((MarcadorClass) DesplegableMarcadores.getSelectedItem()).getLocation();
@@ -187,6 +178,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                 Animation animation3= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
                 btn_gestionarParametros.startAnimation(animation3);
                 Intent configuracionParametros = new Intent(getApplicationContext(), ConfiguracionDePreferencias.class);
+                configuracionParametros.putExtra("Waypoint", ((MarcadorClass) DesplegableMarcadores.getSelectedItem()).nombre());
                 startActivity(configuracionParametros);
             }
         });

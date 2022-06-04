@@ -105,7 +105,6 @@ public class DatabaseAdapter extends Activity {
         void setStatusLogIn(boolean status);
         void setImage(String url);
         void setUser(UserClass u);
-        void setToast(String s);
         void notifyId(String id);
         void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses);
         void setListaPublicacionTemp(ArrayList<PublicacionClass> lista);
@@ -185,23 +184,21 @@ public class DatabaseAdapter extends Activity {
 
     public void updateToken(){
         DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    return;
+                }
+                // Get new FCM registration token
+                userRef.update("token", task.getResult()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            return;
-                        }
-                        // Get new FCM registration token
-                        userRef.update("token", task.getResult()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Log.e(TAG, "Update correcto");
-                            }
-                        });
-
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.e(TAG, "Update correcto");
                     }
                 });
+            }
+        });
     }
 
 
@@ -212,7 +209,6 @@ public class DatabaseAdapter extends Activity {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     UserClass u = new UserClass(document.getString("UID"), document.getString("Nombre"), document.getString("Correo"), document.getString("Imagen"), document.getString("Amigos"), document.getString("Solicitudes recibidas"), document.getString("Solicitudes enviadas"));
-                    System.out.println(u.toString());
                     listener.setUser(u);
                     listenerIntent.intent();
                 }
@@ -473,7 +469,6 @@ public class DatabaseAdapter extends Activity {
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
                         listenerPreferencias.setNotificationId(documentReference.getId());
-                        System.out.println("Se crea");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -493,7 +488,6 @@ public class DatabaseAdapter extends Activity {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                     } else {
                         Log.d(TAG, "No such document");
-                        System.out.println("No existe");
                         //TODO Aqui crear el doc si no existe
                         StorageReference coordRef = storage.getReference().child("/Weather_data/Coord_data/" + coords + ".csv");
                         localFile = null;
@@ -507,9 +501,7 @@ public class DatabaseAdapter extends Activity {
                             @Override
                             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                 // Local temp file has been created
-                                System.out.println("Tenemos file");
                                 createDocWithData(coords, localFile);
-                                System.out.println(localFile.toString());
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -526,7 +518,6 @@ public class DatabaseAdapter extends Activity {
     }
 
     public void deleteNotification(String id){
-        System.out.println("lo intenta");
         db.collection("Notificaciones").document(id)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -544,7 +535,6 @@ public class DatabaseAdapter extends Activity {
     }
 
     private void createDocWithData(String coord, File file){
-        System.out.println("tenemos file");
         Map<String, Object> coordData = new HashMap<>();
         /*Map<String, String> directions = new HashMap<>();
         directions.put("S", "SUD");
@@ -564,29 +554,22 @@ public class DatabaseAdapter extends Activity {
         }
         InputStreamReader streamReader = new InputStreamReader(in, StandardCharsets.UTF_8);
         try (CSVReader reader = new CSVReader(streamReader)) {
-            System.out.println("Leemos");
             data = reader.readAll();
-            System.out.println("1");
             ArrayList<String> _0 = new ArrayList<>(Arrays.asList(data.get(4)));
             _0.remove(0);
             coordData.put("preasure", _0);
-            System.out.println("2");
             ArrayList<String> _1 = new ArrayList<>(Arrays.asList(data.get(5)));
             _1.remove(0);
             coordData.put("temperatura", _1);
-            System.out.println("3");
             ArrayList<String> _2 = new ArrayList<>(Arrays.asList(data.get(2)));
             _2.remove(0);
             coordData.put("waveDirection", _2);
-            System.out.println("4");
             ArrayList<String> _3 = new ArrayList<>(Arrays.asList(data.get(1)));
             _3.remove(0);
             coordData.put("waveHeight", _3);
-            System.out.println("5");
             ArrayList<String> _4 = new ArrayList<>(Arrays.asList(data.get(6)));
             _4.remove(0);
             coordData.put("windDirection", _4);
-            System.out.println("6");
             ArrayList<String> _5 = new ArrayList<>(Arrays.asList(data.get(3)));
             _5.remove(0);
             coordData.put("wavePeriod", _5);
@@ -604,7 +587,6 @@ public class DatabaseAdapter extends Activity {
             coordData.put("windDirection", Arrays.asList(data.get(6)).remove(0));
             coordData.put("wavePeriod", Arrays.asList(data.get(3)).remove(0));
             coordData.put("wind", Arrays.asList(data.get(7)).remove(0));*/
-            System.out.println("Hemos cogido datos");
             db.collection("Datos")
                     .document(coord)
                     .set(coordData)
@@ -612,14 +594,12 @@ public class DatabaseAdapter extends Activity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "DocumentSnapshot successfully written!");
-                            System.out.println("funciona");
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.w(TAG, "Error writing document", e);
-                            System.out.println("No funca");
                         }
                     });
 

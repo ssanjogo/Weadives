@@ -53,6 +53,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
     private ScrollView scrollView2;
     private Switch sw_notificaciones, sw_mostrarEnPerfil;
     private String coords;
+    private TextView txt_coord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +68,11 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         sw_mostrarEnPerfil = findViewById(R.id.sw_mostrarEnPerfil);
         btn_basura=findViewById(R.id.btn_basura);
         btn_Interrogante=findViewById(R.id.btn_Interrogante);
+        txt_coord = findViewById(R.id.txt_coord);
         Intent intent = getIntent();
 
         //get Marcador
         coords = ViewModelParametros.getSingletonInstance().getMarcador().getLocation();
-        System.out.println("realcoords: " + coords);
 
         //sigue
         final Context context=this;
@@ -81,6 +82,13 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
         sw_notificaciones.setText(resources.getString(R.string.notificaciones));
         sw_mostrarEnPerfil.setText(resources.getString(R.string.mostrar_en_perfil));
         Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
+
+        txt_coord.setText(intent.getStringExtra("Waypoint"));
+
+        if (intent.getStringExtra("Waypoint").equals(resources.getString(R.string.marcador_vacio))){
+            sw_notificaciones.setEnabled(false);
+        }
+
         btn_Interrogante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,9 +253,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                 }
 
                 if(((ParametrosClass) spinner.getSelectedItem()).getIdNotification().equals("0")){
-                    System.out.println("Se hacesi");
                     sw_notificaciones.setChecked(false);
-                    System.out.println(sw_notificaciones.isChecked());
                 }else{
                     sw_notificaciones.setChecked(true);
                 }

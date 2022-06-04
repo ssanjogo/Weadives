@@ -62,4 +62,8 @@ public class MarcadorClass{
         return name + "," + latLng.latitude + "," + latLng.longitude + "," + r_lat + "," + r_lon + ",";
     }
 
+    public String nombre(){
+        return name;
+    }
+
 }

@@ -26,7 +26,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     private final MutableLiveData<List<UserClass>> listaUsuarios;
     private final MutableLiveData<List<UserClass>> listaAmigos;
     private final MutableLiveData<List<UserClass>> listaRecyclerView;
-    private final MutableLiveData<String> mToast;
     private final MutableLiveData<UserClass> usuario;
 
     private String url;
@@ -41,7 +40,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public static ViewModel getInstance(AppCompatActivity application){
         if (vm == null){
-            System.out.println("PASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             vm = new ViewModelProvider(application).get(ViewModel.class);
         }
         return vm;
@@ -62,7 +60,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         listaUsuarios = new MutableLiveData<>();
         listaRecyclerView = new MutableLiveData<>();
         listaAmigos = new MutableLiveData<>();
-        mToast = new MutableLiveData<>();
         statusLogIn = false;
         dbA = new DatabaseAdapter(this);
         dbA.getAllUsers();
@@ -74,10 +71,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         mutableListaTemp.setValue(listaTemp);
     }
 
-    public  MutableLiveData<ArrayList<PublicacionClass>> getMutable() {
-        System.out.println("GETMUTABLE");
-        System.out.println(mutableListaTemp);
-        System.out.println(listaTemp);
+    public  MutableLiveData<ArrayList<PublicacionClass>> getMutable(){
         if (mutableListaTemp == null) {
             mutableListaTemp = new MutableLiveData<>();
         }
@@ -91,10 +85,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public LiveData<List<UserClass>> getListaRecyclerView(){
         return this.listaRecyclerView;
-    }
-
-    public LiveData<String> getToast(){
-        return mToast;
     }
 
     public boolean accountNotNull(){
@@ -118,7 +108,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public UserClass getUserByUID(String uid){
-        System.out.println(listaUsuarios.getValue());
         for (int i = 0; i < listaUsuarios.getValue().size(); i++) {
             if (listaUsuarios.getValue().get(i).getId().equals(uid)){
                 return listaUsuarios.getValue().get(i);
@@ -128,7 +117,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public UserClass getCurrentUser(){
-        System.out.println("GET CURRENT USER " + usuario);
         return this.usuario.getValue();
     }
 
@@ -164,9 +152,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void singOut(){
         setLogInStatus(false);
         listaRecyclerView.setValue(null);
-        System.out.println("PASAAAAA " + usuario.getValue());
         this.usuario.setValue(null);
-        System.out.println("PASAAAAA2 " + usuario.getValue());
         dbA.singout();
     }
 
@@ -198,7 +184,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     }
 
     public void cambiarImagen(String imageUri){
-        System.out.println("PASA POR CAMBIAR IMAGEN");
         HashMap<String, Object> usuario = convertUserToHashMap(getCurrentUser());
         dbA.updateDatos(usuario);
     }
@@ -486,22 +471,13 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     public void setImage(String url) {
         this.url = url;
         this.usuario.getValue().setUrlImg(url);
-        //System.out.println("USUARIO: " + this.usuario.toString());
         cambiarImagen(url);
     }
 
     @Override
     public void setUser(UserClass u) {
         this.usuario.setValue(u);
-        System.out.println("VIEW MODEL " + usuario.getValue());
         ViewModelParametros.getSingletonInstance().setUser(u);
-        System.out.println("VIEW MODEL2 " + usuario.getValue());
-
-    }
-
-    @Override
-    public void setToast(String s) {
-        mToast.setValue(s);
     }
 
     @Override
@@ -517,8 +493,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     @Override
     public void setListaPublicacionTemp(ArrayList<PublicacionClass> lista) {
-        //System.out.println("SOY EL VIEWMODEL RECIBIENDO ");
-        //System.out.println(lista);
         mutableListaTemp.setValue(lista);
         listaTemp=lista;
         ViewModel.getInstance().getMutable().setValue(lista);
@@ -543,20 +517,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
 
     public void setGetPublicationsFrom(String id){
-        //System.out.println("SOY EL VIEWMODEL PIDIENDO ");
         dbA.getPublicationsFromUsuario(id);
         acces=false;
     }
 
     public ArrayList<PublicacionClass> getPublicationsFrom(){
-
-        //System.out.println("Metodo 3 ");
         return new ArrayList<>();
-        /*System.out.println(listaTemp);
-        if(listaTemp.size()==0){
-            return new ArrayList<>();
-        }
-        return listaTemp;*/
     }
 
     public boolean getAcces() {

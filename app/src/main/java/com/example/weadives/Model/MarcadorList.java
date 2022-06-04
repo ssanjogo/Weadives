@@ -1,5 +1,6 @@
 package com.example.weadives.Model;
 
+import com.example.weadives.ViewModelAndExtras.ViewModelMapa;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
