@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weadives.ConfiguracionDePreferencias.ConfiguracionDePreferencias;
+import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.ViewModelAndExtras.LocaleHelper;
 import com.example.weadives.PantallaDeHorarios.PantallaDeHorarios;
 import com.example.weadives.PantallaDeHorarios.ViewModelHorario;
@@ -147,6 +148,8 @@ public class PantallaPrincipal extends AppCompatActivity {
         btn_home.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
+                startActivity(pantallaInicio);
                 finish();
             }
         });
