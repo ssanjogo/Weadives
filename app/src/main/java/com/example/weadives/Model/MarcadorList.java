@@ -68,8 +68,6 @@ public class MarcadorList {
 
     private MarcadorClass buscarMarcador(String name, LatLng pos){
         for(MarcadorClass marcador : marcadorList){
-            System.out.println("1Nombre: "+name+"Posicion: "+pos);
-            System.out.println("2Nombre: "+marcador.getName()+"Posicion: "+marcador.getLatLng());
             if (marcador.getName().equals(name) && marcador.getLatLng().equals(pos)){
                 return marcador;
             }

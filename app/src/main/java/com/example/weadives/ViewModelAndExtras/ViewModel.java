@@ -477,17 +477,17 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     @Override
     public void setUser(UserClass u) {
         this.usuario.setValue(u);
-        ViewModelParametros.getSingletonInstance().setUser(u);
+        ViewModelParametros.getSingletonInstance(getApplication().getResources(), getApplication().getApplicationContext()).setUser(u);
     }
 
     @Override
     public void notifyId(String id) {
-        ViewModelParametros.getSingletonInstance().notifyId(id);
+        ViewModelParametros.getSingletonInstance(getApplication().getResources(), getApplication().getApplicationContext()).notifyId(id);
     }
 
     @Override
     public void setListaPublicacion(ArrayList<PublicacionClass> publicacionClasses) {
-       ViewModelParametros.getSingletonInstance().setListaPublicacion(publicacionClasses);
+       ViewModelParametros.getSingletonInstance(getApplication().getResources(), getApplication().getApplicationContext()).setListaPublicacion(publicacionClasses);
 
     }
 
