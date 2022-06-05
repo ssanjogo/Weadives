@@ -117,7 +117,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         setTheme(R.style.Theme_Weadives);
 
         btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
-        btn_gestorNotificaciones.setText(resources.getString(R.string.gestion_notificaciones));
+        btn_gestorNotificaciones.setText(SingletonIdioma.getInstance().getResources().getString(R.string.gestion_notificaciones));
         btn_gestorNotificaciones.setVisibility(View.INVISIBLE);
 
         btn_home20=findViewById(R.id.btn_home20);
