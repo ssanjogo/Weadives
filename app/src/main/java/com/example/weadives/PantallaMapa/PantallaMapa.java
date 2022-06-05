@@ -161,7 +161,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 btn_ayuda.startAnimation(animation);
                 AlertDialog dialogBuilder= new AlertDialog.Builder(PantallaMapa.this)
                         .setTitle(resources.getString(R.string.ayuda))
-                        .setMessage(resources.getString(R.string.ayudapreferencias)+"\n\n"+resources.getString(R.string.ayudapreferencias2))
+                        .setMessage(resources.getString(R.string.ayudamapa)+"\n\n"+resources.getString(R.string.ayudamapa2))
                         .setIcon(R.drawable.logo_weadives_copiarande)
                         .show();
             }
