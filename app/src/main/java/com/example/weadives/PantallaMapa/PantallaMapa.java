@@ -17,6 +17,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 
@@ -80,6 +81,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_Weadives);
         viewModelMapa = ViewModelMapa.getInstance(this);
         sel = 0;
 
@@ -112,9 +114,11 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         SingletonIdioma s= SingletonIdioma.getInstance();
         resources=s.getResources();
         context = LocaleHelper.setLocale(this, cargarPreferencias());
+        setTheme(R.style.Theme_Weadives);
 
         btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
         btn_gestorNotificaciones.setText(resources.getString(R.string.gestion_notificaciones));
+        btn_gestorNotificaciones.setVisibility(View.INVISIBLE);
 
         btn_home20=findViewById(R.id.btn_home20);
         btn_home20.bringToFront();
@@ -149,6 +153,19 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_day1.setVisibility(View.INVISIBLE);
         btn_day2 = findViewById(R.id.btn_day2);
         btn_day2.setVisibility(View.INVISIBLE);
+
+        Animation animation= AnimationUtils.loadAnimation(PantallaMapa.this,R.anim.blink_anim2);
+        btn_ayuda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_ayuda.startAnimation(animation);
+                AlertDialog dialogBuilder= new AlertDialog.Builder(PantallaMapa.this)
+                        .setTitle(resources.getString(R.string.ayuda))
+                        .setMessage(resources.getString(R.string.ayudapreferencias)+"\n\n"+resources.getString(R.string.ayudapreferencias2))
+                        .setIcon(R.drawable.logo_weadives_copiarande)
+                        .show();
+            }
+        });
 
 
         btn_hs.setOnClickListener(new View.OnClickListener() {
