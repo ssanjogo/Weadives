@@ -1,6 +1,6 @@
 <resources>
     <string name="id">en</string>
-    <string name="language">English</string>
+    <string name="language">ENGLISH</string>
     <string name="app_name">Weadives</string>
     <string name="AñadirNotificacion">Add notification</string>
     <string name="horarios">Schedules</string>
@@ -65,6 +65,8 @@
     <string name="AlreadyLike">You already Like/Disliked this</string>
     <string name="no_preferencias">There are no preferences</string>
     <string name="nuevo_parametro">New Parameter</string>
+    <string name="ayudaHorario_1"> In this page you can see de parameters of the meteorological prevision. The values have the following magnitudes: </string>
+    <string name="ayudaHorario_2"> Pressure = hPa.  Temperature = ªC.  Wind Speed = knots.  Wind Direction = wind direction.  Wave Height = meters.  Wave Period = seconds.  Wave Dir. = wave direction. </string>
     <string name="ayudapreferencias">In this page you will be able to create your own preferences. With the + button, you will be able to create a new preference which parameters can be changed writing in the txtLabel.</string>
     <string name="ayudapreferencias2" > With the button Save, you would be able to sabe the preference and using the switches you could activate notificatios or upload to your profile if you have one! </string>
     <string name="ayuda"> Guide to the user</string>

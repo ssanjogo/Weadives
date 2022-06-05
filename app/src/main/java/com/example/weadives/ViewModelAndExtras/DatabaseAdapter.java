@@ -436,25 +436,25 @@ public class DatabaseAdapter extends Activity {
                 .child(fileName + ".csv");
         try {
             File localCSV = File.createTempFile("weatherData", ".csv");
-
+            System.out.println(fileRef.getPath());
             FileDownloadTask downloadTask = fileRef.getFile(localCSV);
 
             int i = 0;
             while(downloadTask.isInProgress()){
-                //System.out.println("WHILE: " + i++);
-                //System.out.println("Complete: " + downloadTask.isComplete());
-                //System.out.println("Successful: " + downloadTask.isSuccessful());
-                //System.out.println("Cancelled: " + downloadTask.isCanceled());
-                //System.out.println("Paused: " + downloadTask.isPaused());
+                System.out.println("WHILE: " + i++);
+                System.out.println("Complete: " + downloadTask.isComplete());
+                System.out.println("Successful: " + downloadTask.isSuccessful());
+                System.out.println("Cancelled: " + downloadTask.isCanceled());
+                System.out.println("Paused: " + downloadTask.isPaused());
             }
 
-            //System.out.println("WE OOOUT!!:");
-            //System.out.println("Complete: " + downloadTask.isComplete());
-            //System.out.println("Successful: " + downloadTask.isSuccessful());
-            //System.out.println("Cancelled: " + downloadTask.isCanceled());
-            //System.out.println("Paused: " + downloadTask.isPaused());
-            //System.out.println(downloadTask.getResult().getBytesTransferred());
-            //System.out.println(localCSV.getPath());
+            System.out.println("WE OOOUT!!:");
+            System.out.println("Complete: " + downloadTask.isComplete());
+            System.out.println("Successful: " + downloadTask.isSuccessful());
+            System.out.println("Cancelled: " + downloadTask.isCanceled());
+            System.out.println("Paused: " + downloadTask.isPaused());
+            System.out.println(downloadTask.getResult().getBytesTransferred());
+            System.out.println(localCSV.getPath());
             listenerHorario.getCsvRef(localCSV.getAbsolutePath());
         } catch (IOException e) {
             //System.out.println("TREMENDOO ERROOOR. " + e.getMessage());

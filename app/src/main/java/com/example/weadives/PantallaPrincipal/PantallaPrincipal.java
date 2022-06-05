@@ -56,9 +56,8 @@ public class PantallaPrincipal extends AppCompatActivity {
 
         btnHorario.setText(resources.getString(R.string.horarios));
         btn_gestionarParametros.setText((resources.getString(R.string.gestionar_parametros)));
-
-
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,12 +95,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         adapter = new ArrayAdapter<MarcadorClass>(this, R.layout.one_spinner_list, list){
             @Override
             public boolean isEnabled(int position){
-                if(position == 0){
-                    return false;
-                }
-                else{
-                    return true;
-                }
+                return position != 0;
             }
 
             @Override

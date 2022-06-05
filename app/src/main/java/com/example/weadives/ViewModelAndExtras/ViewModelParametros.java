@@ -251,6 +251,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
         return preferencias.getString("parametros",comprimirArray(fillParametrosList()));
         //return preferencias.getString("parametros",comprimirArray(fillParametrosList()));
     }
+
     private ArrayList<ParametrosClass> fillParametrosList() {
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
         parametrosList.add(new ParametrosClass("Surf",  0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
@@ -263,6 +264,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
         parametrosList.add(new ParametrosClass("Volley Playa", 0.2f,0.1f,0.3f,0.2f,0.3f,0.3f, new DatoGradosClass(Directions.SUD),3.f,2.f,4.f,4.f,new DatoGradosClass(Directions.ESTE)));
         return parametrosList;
     }
+
     private String comprimirArray(ArrayList<ParametrosClass> l){
         String str="";
         for(int i=0; i<l.size();i++){
