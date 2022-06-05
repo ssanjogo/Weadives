@@ -119,7 +119,7 @@ public class PantallaInicio extends AppCompatActivity {
                     Intent testIntent = new Intent(getApplicationContext(), PantallaPrincipal.class);
                     //testIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(testIntent);
-                    finish();
+                    //finish();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast toast2 = Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT);
@@ -136,7 +136,7 @@ public class PantallaInicio extends AppCompatActivity {
                 try {
                     Intent testIntent = new Intent(getApplicationContext(), PantallaMapa.class);
                     startActivity(testIntent);
-                    finish();
+                    //finish();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast toast2 = Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT);

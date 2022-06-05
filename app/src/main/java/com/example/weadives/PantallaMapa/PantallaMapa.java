@@ -77,7 +77,13 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     //ViewModel
     ViewModelMapa viewModelMapa;
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent testIntent = new Intent(getApplicationContext(), PantallaInicio.class);
+        startActivity(testIntent);
+        this.finish();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +159,8 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_day1.setVisibility(View.INVISIBLE);
         btn_day2 = findViewById(R.id.btn_day2);
         btn_day2.setVisibility(View.INVISIBLE);
+
+
 
         Animation animation= AnimationUtils.loadAnimation(PantallaMapa.this,R.anim.blink_anim2);
         btn_ayuda.setOnClickListener(new View.OnClickListener() {
