@@ -380,6 +380,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
                     //spinner.setAdapter(updateAdapter(test));
                     //System.out.println("DIRTESTEODIR");
                     //System.out.println(change.toString2());
+                    System.out.println("HEEEEEEEEEEEEEEEEEEEEEEy");
                     ViewModelParametros.getSingletonInstance().modifyParametro(change, (ParametrosClass) spinner.getSelectedItem(),sw_mostrarEnPerfil.isChecked());
 
                     if(sw_notificaciones.isChecked()){
@@ -405,6 +406,7 @@ public class ConfiguracionDePreferencias extends AppCompatActivity {
 
                     spinner.setSelection(adapter.getPosition(change));
                 }catch (Exception e){
+                    System.out.println("ERROR");
                     Toast toast = Toast.makeText(context, "Error "+e.getMessage(), Toast.LENGTH_SHORT);
                     toast.show();}
 

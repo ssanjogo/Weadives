@@ -82,14 +82,18 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         super.onBackPressed();
         Intent testIntent = new Intent(getApplicationContext(), PantallaInicio.class);
         startActivity(testIntent);
+
         this.finish();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("TEST");
         setTheme(R.style.Theme_Weadives);
         viewModelMapa = ViewModelMapa.getInstance(this);
+
         sel = 0;
+
 
         final Observer<ArrayList<File>> observer = new Observer<ArrayList<File>>() {
             @Override
@@ -159,6 +163,8 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_day1.setVisibility(View.INVISIBLE);
         btn_day2 = findViewById(R.id.btn_day2);
         btn_day2.setVisibility(View.INVISIBLE);
+
+
 
 
 
@@ -327,6 +333,12 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        btn_day0.setVisibility(View.INVISIBLE);
+        btn_day1.setVisibility(View.INVISIBLE);
+        btn_day2.setVisibility(View.INVISIBLE);
+        txt_hora.setVisibility(View.INVISIBLE);
+        skb_seleccionarHora.setVisibility(View.INVISIBLE);
 
         //Creación Overlay Options
         maldivesBounds = new LatLngBounds( new LatLng(-5.467415, 65.490845), new LatLng(10.97052, 79.48093));
