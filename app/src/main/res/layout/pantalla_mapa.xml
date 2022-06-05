@@ -20,35 +20,66 @@
     <LinearLayout
         android:id="@+id/LinearLayoutMapa"
         android:layout_width="58dp"
-        android:layout_height="187dp"
+        android:layout_height="200dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="28dp"
-        android:background="@drawable/button_rounded_black"
+        android:background="@drawable/button_rounded_white"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
+        <ImageView
+            android:id="@+id/btn_ayudaMapa"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/interrogante" />
+
+        <ImageView
             android:id="@+id/btn_hs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/TODO"
-            android:src="@android:drawable/ic_dialog_map"
+            android:src="@drawable/btn_ola"
             tools:ignore="DuplicateSpeakableTextCheck" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_psl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/TODO"
-            android:src="@android:drawable/ic_menu_compass" />
+            android:src="@drawable/btn_presion" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_wind"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/TODO"
-            android:src="@android:drawable/ic_menu_mapmode" />
+            android:src="@drawable/btn_viento" />
+
     </LinearLayout>
 
     <Button

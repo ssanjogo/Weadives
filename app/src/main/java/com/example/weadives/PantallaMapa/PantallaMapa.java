@@ -4,11 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.ImageDecoder;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,13 +11,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 
@@ -37,7 +31,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
@@ -47,9 +40,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback{
@@ -70,9 +60,10 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private Button btn_day0;
     private Button btn_day1;
     private Button btn_day2;
-    private ImageButton btn_hs;
-    private ImageButton btn_psl;
-    private ImageButton btn_wind;
+    private ImageView btn_hs;
+    private ImageView btn_psl;
+    private ImageView btn_wind;
+    private ImageView btn_ayuda;
     private TextView txt_hora;
     // Maps
     private LatLng coordsMarcador;
@@ -150,6 +141,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_hs = findViewById(R.id.btn_hs);
         btn_psl = findViewById(R.id.btn_psl);
         btn_wind = findViewById(R.id.btn_wind);
+        btn_ayuda = findViewById(R.id.btn_ayudaMapa);
 
         btn_day0 = findViewById(R.id.btn_day0);
         btn_day0.setVisibility(View.INVISIBLE);

@@ -30,14 +30,14 @@
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/recyclerview_row.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/seleccion_de_ajuste.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/fragment_maps.xml" value="0.31354166666666666" />
-        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_mapa.xml" value="0.33" />
-        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_principal.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_mapa.xml" value="0.1933876811594203" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable-v24/button_rounded_black.xml" value="0.3165" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable-v24/button_rounded_grey.xml" value="0.2525" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.335" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/button_rounded.xml" value="0.194" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/button_rounded_black.xml" value="0.3165" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/button_rounded_border.xml" value="0.194" />
+        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/button_rounded_white.xml" value="0.146" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/ic_launcher_background.xml" value="0.335" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/layout_border.xml" value="0.2525" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable/menu_popup.xml" value="0.141" />
@@ -52,6 +52,7 @@
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_gestor_inundaciones.xml" value="0.25271739130434784" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_inicio.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_login.xml" value="0.33" />
+        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_mapa.xml" value="0.33" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_mi_perfil.xml" value="0.25" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_perfil_amigo.xml" value="0.14772727272727273" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_principal.xml" value="0.33" />
