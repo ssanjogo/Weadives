@@ -1,6 +1,8 @@
 package com.example.weadives.Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ParametrosClass {
 
@@ -45,7 +47,7 @@ public class ParametrosClass {
     private DatoGradosClass directionOlas;
     private String idPublicacion;
 
-    private String idNotification;
+    private HashMap<String, String> idNotification;
 
     public String getIdPublicacion() {
         return idPublicacion;
@@ -70,7 +72,8 @@ public class ParametrosClass {
         this.periodoOlaMin = 0;
         this.directionOlas = new DatoGradosClass(Directions.NO_DIRECTION);
         this.idPublicacion="0";
-        this.idNotification = "0";
+        this.idNotification = new HashMap<>();
+        this.idNotification.put("0","0");
 
     }
 
@@ -90,11 +93,12 @@ public class ParametrosClass {
         this.periodoOlaMax = periodoOlaMax;
         this.periodoOlaMin = periodoOlaMin;
         this.directionOlas = directionOlas;
-        this.idPublicacion="0";
-        this.idNotification= "0";
+        this.idPublicacion = "0";
+        this.idNotification= new HashMap<>();
+        this.idNotification.put("0","0");
     }
 
-    public ParametrosClass(String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas, String idNotification) {
+    public ParametrosClass(String nombreActividad, float presionMax, float presionMin, float temperaturaMax, float temperaturaMin, float vientoMax, float vientoMin, DatoGradosClass directionViento, float alturaOlaMax, float alturaOlaMin, float periodoOlaMax, float periodoOlaMin, DatoGradosClass directionOlas, HashMap<String, String> idNotification) {
         this.nombreActividad = nombreActividad.replaceAll("[^A-Za-z0-9 ]","");
         this.presionMax = presionMax;
         this.presionMin = presionMin;
@@ -127,7 +131,8 @@ public class ParametrosClass {
         this.periodoOlaMin = periodoOlaMin;
         this.directionOlas = directionOlas;
         this.idPublicacion=idPublicacion;
-        this.idNotification = "0";
+        this.idNotification = new HashMap<>();
+        this.idNotification.put("0","0");
     }
 
 
@@ -155,7 +160,8 @@ public class ParametrosClass {
     }
     public String toSaveString() {
         System.out.println("la id loco:" + idNotification);
-        return nombreActividad +
+        return hashMapToString(idNotification) +
+                "," + nombreActividad +
                 "," + presionMax +
                 "," + presionMin +
                 "," + temperaturaMax +
@@ -167,8 +173,7 @@ public class ParametrosClass {
                 "," + alturaOlaMin +
                 "," + periodoOlaMax +
                 "," + periodoOlaMin +
-                "," + directionOlas.getDir() +
-                "," + idNotification;
+                "," + directionOlas.getDir();
     }
 
     public float getViento() {
@@ -186,6 +191,14 @@ public class ParametrosClass {
     }
     public String getNombreActividad() {
         return nombreActividad;
+    }
+
+    private String hashMapToString(HashMap<String, String> map){
+        String save = "";
+        for (Map.Entry<String, String> entry: map.entrySet()){
+            save += entry.getKey() + "-" + entry.getValue() + "`";
+        }
+        return save;
     }
 
     public void setNombreActividad(String nombreActividad) {
@@ -296,32 +309,43 @@ public class ParametrosClass {
         this.directionOlas.setDir(directionOlas);
     }
 
-    public String getIdNotification() {
-        return idNotification;
+    public String getIdNotification(String coords) {
+
+        return idNotification.get(coords);
     }
 
-    public void setIdNotification(String idNotification) {
-        this.idNotification = idNotification;
+    public void setIdNotification(String coords, String idNotification) {
+        this.idNotification.put(coords, idNotification);
     }
 
     public static ArrayList<ParametrosClass> descomprimir(String l){
-            //System.out.println(l);
-            String[] parametrosStringList = l.split("¿");
-            int count = l.length() - l.replace("¿", "").length();
-            //System.out.println(count);
-            ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
-            String[] fixedParam;
-            for (String i : parametrosStringList) {
-                //System.out.println(i);
-                fixedParam=i.split(",");
-                for (String x : fixedParam) {
-                    //System.out.println(x);
-                }
-
-                parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12]))));
-            }
-
-            return parametrosList;
+        //System.out.println("HEHHEHEHEHHEHEH");
+        //System.out.println(l);
+        String[] parametrosStringList = l.split("¿");
+        int count = l.length() - l.replace("¿", "").length();
+        //System.out.println(count);
+        ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
+        String[] fixedParam;
+        HashMap<String, String> idNotification;
+        for (String i : parametrosStringList) {
+            //System.out.println(i);
+            fixedParam=i.split(",");
+            idNotification = descomprimirHashMap(fixedParam[0]);
+            parametrosList.add(new ParametrosClass(fixedParam[1], Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]),Float.parseFloat(fixedParam[7]), new DatoGradosClass(Directions.valueOf(fixedParam[8])),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),Float.parseFloat(fixedParam[12]),new DatoGradosClass(Directions.valueOf(fixedParam[13])), idNotification));
         }
+
+        return parametrosList;
+    }
+
+    private static HashMap<String, String> descomprimirHashMap(String save){
+        HashMap<String, String> map = new HashMap<>();
+        String[] hashmap = save.split("`");
+        String[] entry;
+        for (String i : hashmap){
+            entry = i.split("-");
+            map.put(entry[0], entry[1]);
+        }
+        return map;
+    }
 
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.weadives.Model.DatoGradosClass;
@@ -14,6 +15,9 @@ import com.example.weadives.Model.ParametrosClass;
 import com.example.weadives.Model.PublicacionClass;
 import com.example.weadives.Model.UserClass;
 import com.example.weadives.Model.MarcadorClass;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,8 +34,11 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
     public Context c;
     public Resources r;
     private UserClass currentUser;
+    private ParametrosClass oldParametro;
     private ParametrosClass currentParametro;
+    private boolean publicar;
     private MarcadorClass marcador;
+    private String coords = "";
     //private MutableLiveData<ArrayList<ParametrosClass>> mutableList;
 
     private ArrayList<ParametrosClass> lista;
@@ -50,6 +57,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
         this.c=c;
         //System.out.println("AQUI LLEGA\n");
         String test=cargarPreferenciasParametros();
+        //String test= comprimirArray(fillParametrosList());
         if(test.length()!=0){lista=descomprimirArray(test);}else{
             lista=new ArrayList<>();
         }
@@ -70,12 +78,41 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
         guardarPersistencia();
         mutableList.setValue(lista);
     }
-    public void modifyParametro(ParametrosClass p,ParametrosClass b,boolean publicar){
 
-        //System.out.println(lista);
-        //System.out.println(mutableList.toString());
+    public void changeParametro(ParametrosClass p,ParametrosClass b,boolean publicar, boolean notificar, HashMap<String, Object> data, String coords){
+        this.coords = coords;
+        oldParametro = b;
+        currentParametro = p;
+        this.publicar = publicar;
+        if(notificar){
+            if((p.getIdNotification(coords) == null || p.getIdNotification(coords).equals("0"))) {
+                FirebaseMessaging.getInstance().getToken()
+                        .addOnCompleteListener(new OnCompleteListener<String>() {
+                            @Override
+                            public void onComplete(@NonNull Task<String> task) {
+                                if (!task.isSuccessful()) {
+                                    return;
+                                }
+                                // Get new FCM registration token
+                                data.put("token", task.getResult());
+                                createCoordsNotification(coords, data);
+
+                            }
+                        });
+            }
+        } else {
+            if(!(p.getIdNotification(coords) == null || p.getIdNotification(coords).equals("0"))) {
+                deleteNotification();
+            }else{
+                modifyParametro(currentParametro, oldParametro, this.publicar);
+            }
+        }
+
+    }
+    public void modifyParametro(ParametrosClass p,ParametrosClass b,boolean publicar){
         lista.remove(b);
         lista.add(p);
+        System.out.println("id publicacion: " + p.getIdPublicacion());
         if(!p.getIdPublicacion().equals("0") && publicar){
             System.out.println("UPDATEEE");
             updatePreferencia(p);
@@ -84,6 +121,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
             subirPreferencia(p);
         }else if(!p.getIdPublicacion().equals("0") && !publicar){
             System.out.println("DELETE");
+            System.out.println("id: " + p.getIdPublicacion());
             ViewModel.getInstance().deletePublicacion(p.getIdPublicacion());
             PublicacionClass pub;
             for (PublicacionClass i : listaPublic) {
@@ -92,30 +130,24 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
                     listaPublic.remove(i);
                 }
             }
-
         }
+
         //System.out.println(lista);
         //System.out.println(mutableList.toString());
         guardarPersistencia();
         mutableList.setValue(lista);
     }
 
-    public void changeParametro(ParametrosClass oldP, ParametrosClass newP){
-        lista.remove(oldP);
-        lista.add(newP);
-        guardarPersistencia();
-        mutableList.setValue(lista);
-    }
     public void subirPreferencia(ParametrosClass par){
         if (currentUser!=null){
             PublicacionClass p;
-            HashMap<String, String> coments=new HashMap<>();
+            HashMap<String, String> coments = new HashMap<>();
             HashMap<String,String> likes = new HashMap<>();
-            String parametros=par.toSaveString();
-            String idPublicacion="-1";
-            String idUsuario=currentUser.getId();
+            String parametros = par.toSaveString();
+            String idPublicacion = "-1";
+            String idUsuario = currentUser.getId();
             ViewModel.getInstance().subirPublicacion(coments,likes,parametros,idPublicacion,idUsuario);
-            p=new PublicacionClass(coments,likes,par,idPublicacion,idUsuario);
+            p = new PublicacionClass(coments,likes,par,idPublicacion,idUsuario);
             listaPublic.add(p);
         }
     }
@@ -280,16 +312,26 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
         //System.out.println(count);
         ArrayList<ParametrosClass> parametrosList = new ArrayList<>();
         String[] fixedParam;
+        HashMap<String, String> idNotification;
         for (String i : parametrosStringList) {
             //System.out.println(i);
             fixedParam=i.split(",");
-            for (String x : fixedParam) {
-                //System.out.println(x);
-            }
-            parametrosList.add(new ParametrosClass(fixedParam[0], Float.parseFloat(fixedParam[1]),Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]), new DatoGradosClass(Directions.valueOf(fixedParam[7])),Float.parseFloat(fixedParam[8]),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),new DatoGradosClass(Directions.valueOf(fixedParam[12])), fixedParam[13]));
+            idNotification = descomprimirHashMap(fixedParam[0]);
+            parametrosList.add(new ParametrosClass(fixedParam[1], Float.parseFloat(fixedParam[2]),Float.parseFloat(fixedParam[3]),Float.parseFloat(fixedParam[4]),Float.parseFloat(fixedParam[5]),Float.parseFloat(fixedParam[6]),Float.parseFloat(fixedParam[7]), new DatoGradosClass(Directions.valueOf(fixedParam[8])),Float.parseFloat(fixedParam[9]),Float.parseFloat(fixedParam[10]),Float.parseFloat(fixedParam[11]),Float.parseFloat(fixedParam[12]),new DatoGradosClass(Directions.valueOf(fixedParam[13])), idNotification));
         }
 
         return parametrosList;
+    }
+
+    private HashMap<String, String> descomprimirHashMap(String save){
+        HashMap<String, String> map = new HashMap<>();
+        String[] hashmap = save.split("`");
+        String[] entry;
+        for (String i : hashmap){
+            entry = i.split("-");
+            map.put(entry[0], entry[1]);
+        }
+        return map;
     }
 
 
@@ -304,11 +346,6 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
             return listaPublic;
         }
         return publicaciones;
-    }
-    public void setPublications(List<PublicacionClass> l){
-        for (PublicacionClass i : l) {
-            lista.add(i.getParametros());
-        }
     }
     public void update(List<PublicacionClass> l){
 
@@ -379,6 +416,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
             }
             if(!existe){
                 lista.add(i.getParametros());
+                System.out.println("Culpable");
                 existe=false;
             }
         }
@@ -438,22 +476,18 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
 
     @Override
     public void setNotificationId(String id) {
-        System.out.println("docid: " + id);
-        ParametrosClass newParametro = currentParametro;
-        newParametro.setIdNotification(id);
-        changeParametro(currentParametro, newParametro);
+        currentParametro.setIdNotification(coords, id);
+        modifyParametro(currentParametro, oldParametro, this.publicar);
     }
 
-    public void deleteNotification(String idNotification, ParametrosClass old){
-        System.out.println("aver:2" + old.toString());
-        dbA.deleteNotification(idNotification);
-        ParametrosClass newP = old;
-        newP.setIdNotification("0");
-        changeParametro(old, newP);
+    public void deleteNotification(){
+        dbA.deleteNotification(currentParametro.getIdNotification(coords));
+        currentParametro.setIdNotification(coords, "0");
+        modifyParametro(currentParametro, oldParametro, this.publicar);
+
     }
-    public void createCoordsNotification(String coords, Map<String, Object> data, ParametrosClass old) {
+    public void createCoordsNotification(String coords, Map<String, Object> data) {
         dbA.createCoordsNotification(coords, data);
-        currentParametro = old;
     }
 
     public MarcadorClass getMarcador() {

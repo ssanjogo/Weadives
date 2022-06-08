@@ -488,7 +488,6 @@ public class DatabaseAdapter extends Activity {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                     } else {
                         Log.d(TAG, "No such document");
-                        //TODO Aqui crear el doc si no existe
                         StorageReference coordRef = storage.getReference().child("/Weather_data/Coord_data/" + coords + ".csv");
                         localFile = null;
                         try {

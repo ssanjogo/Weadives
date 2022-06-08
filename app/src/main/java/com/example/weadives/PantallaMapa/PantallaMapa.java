@@ -69,11 +69,10 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     // Maps
     private LatLng coordsMarcador;
     private Marker tempMarcador;
-    private GroundOverlay imagenClima;
     private ArrayList<File> imageList;
     private int sel;
     private LatLngBounds maldivesBounds;
-    private GroundOverlayOptions imagen;
+    GroundOverlay imagenClima;
     //ViewModel
     ViewModelMapa viewModelMapa;
 
@@ -88,7 +87,6 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("TEST");
         setTheme(R.style.Theme_Weadives);
         viewModelMapa = ViewModelMapa.getInstance(this);
 
@@ -185,7 +183,6 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_hs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imagenClima.setImage(BitmapDescriptorFactory.fromResource(R.drawable.noimage));
                 skb_seleccionarHora.setVisibility(View.INVISIBLE);
                 btn_day0.setVisibility(View.INVISIBLE);
                 btn_day1.setVisibility(View.INVISIBLE);
@@ -194,6 +191,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 viewModelMapa.getWeatherImage("HS");
                 sel = 0;
                 skb_seleccionarHora.setProgress(0);
+                defaultImage();
             }
         });
 
@@ -209,6 +207,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 viewModelMapa.getWeatherImage("PSL");
                 sel = 0;
                 skb_seleccionarHora.setProgress(0);
+                defaultImage();
             }
         });
 
@@ -224,6 +223,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 viewModelMapa.getWeatherImage("WIND");
                 sel = 0;
                 skb_seleccionarHora.setProgress(0);
+                defaultImage();
             }
         });
 
@@ -341,8 +341,8 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         skb_seleccionarHora.setVisibility(View.INVISIBLE);
 
         //Creación Overlay Options
-        maldivesBounds = new LatLngBounds( new LatLng(-5.467415, 65.490845), new LatLng(10.97052, 79.48093));
-        imagen = new GroundOverlayOptions()
+        maldivesBounds = new LatLngBounds(new LatLng(-5.467414855957031, 65.4908447265625), new LatLng(10.97052001953125, 79.48092651367188));
+        GroundOverlayOptions imagen = new GroundOverlayOptions()
                 .image(BitmapDescriptorFactory.fromResource(R.drawable.noimage))
                 .positionFromBounds(maldivesBounds)
                 .transparency(0.5f);
@@ -383,11 +383,25 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
 
     private void cargarImagenClima(int sel){
         try {
-            imagenClima.setImage(BitmapDescriptorFactory.fromFile(imageList.get(sel).getName()));
+            GroundOverlayOptions imagen = new GroundOverlayOptions()
+                    .image(BitmapDescriptorFactory.fromFile(imageList.get(sel).getName()))
+                    .positionFromBounds(maldivesBounds)
+                    .transparency(0.5f);
+            imagenClima.remove();
+            imagenClima = mMap.addGroundOverlay(imagen);
         }catch(Exception exception){
             System.err.println(exception);
-            imagenClima.setImage(BitmapDescriptorFactory.fromResource(R.drawable.noimage));
+            defaultImage();
         }
+    }
+
+    public void defaultImage(){
+        GroundOverlayOptions imagen = new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.noimage))
+                .positionFromBounds(maldivesBounds)
+                .transparency(0.5f);
+        imagenClima.remove();
+        imagenClima = mMap.addGroundOverlay(imagen);
     }
 
     private void actualizarMarcadores(){
