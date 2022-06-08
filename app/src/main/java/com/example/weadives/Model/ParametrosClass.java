@@ -159,7 +159,7 @@ public class ParametrosClass {
                 '}';
     }
     public String toSaveString() {
-        System.out.println("la id loco:" + idNotification);
+        //System.out.println("la id loco:" + idNotification);
         return hashMapToString(idNotification) +
                 "," + nombreActividad +
                 "," + presionMax +

@@ -46,13 +46,13 @@ public class ViewModelHorario extends AndroidViewModel implements DatabaseAdapte
 
     @Override
     public void getCsvRef(String CsvRef) {
-        System.out.println("Pasa por aqui?: " + CsvRef);
+        //System.out.println("Pasa por aqui?: " + CsvRef);
         setCsvRef(CsvRef);
     }
 
     public void setMarcador (MarcadorClass marcador){
         this.horarioLocation = marcador;
-        System.out.println("Marcador Horari: " + marcador);
+        //System.out.println("Marcador Horari: " + marcador);
     }
 
     public MarcadorClass getMarcador () { return this.horarioLocation; }

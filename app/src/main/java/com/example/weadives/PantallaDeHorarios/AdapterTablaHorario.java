@@ -104,7 +104,7 @@ public class AdapterTablaHorario extends LinkedAdaptiveTableAdapter<ViewHolderIm
         //vh.tvText.setOutlineAmbientShadowColor(0xffff00ff);
         //vh.tvText.setOutlineSpotShadowColor(0xff00ffff);
         //vh.tvText.setDrawingCacheBackgroundColor(0xffffffff);
-        System.out.println("Starts the print " + row + " " + column);
+        //System.out.println("Starts the print " + row + " " + column);
 
         /*      IN CASE WE WANT TO IMPLEMENT IMAGES IN THE SQUARES, UN COMMENT THIS
 
@@ -138,7 +138,7 @@ public class AdapterTablaHorario extends LinkedAdaptiveTableAdapter<ViewHolderIm
     public void onBindHeaderColumnViewHolder(@NonNull ViewHolderImpl viewHolder, int column) {
         int color = COLORS[column % COLORS.length];
         TestHeaderColumnViewHolder vh = (TestHeaderColumnViewHolder) viewHolder;
-        System.out.println("Prueba" + mTableDataSource.getColumnHeaderData(column));
+        //System.out.println("Prueba" + mTableDataSource.getColumnHeaderData(column));
         vh.tvText.setText(mTableDataSource.getColumnHeaderData(column));  // skip left top header
         GradientDrawable gd = new GradientDrawable(
                 mIsRtl ? GradientDrawable.Orientation.RIGHT_LEFT : GradientDrawable.Orientation.LEFT_RIGHT,

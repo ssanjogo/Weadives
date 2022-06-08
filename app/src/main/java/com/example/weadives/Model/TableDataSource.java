@@ -36,24 +36,14 @@ public class TableDataSource {
         try {
             in = new FileInputStream(initialFile);
         } catch (IOException e) {
-            System.out.println("Error opening csv file: " + e.getMessage());
+            //System.out.println("Error opening csv file: " + e.getMessage());
             e.printStackTrace();
         }
-        System.out.println(in);
+        //System.out.println(in);
         InputStreamReader streamReader = new InputStreamReader(in, StandardCharsets.UTF_8);
-        System.out.println(streamReader);
+        //System.out.println(streamReader);
         try (CSVReader reader = new CSVReader(streamReader)) {
             data = reader.readAll();
-            System.out.println("Lo lee");
-            System.out.println("filas:" + data.size());
-            System.out.println("col1:" + data.get(0).length);
-            System.out.println("col2:" + data.get(1).length);
-            System.out.println("col3:" + data.get(2).length);
-            System.out.println("col4:" + data.get(3).length);
-            System.out.println("col5:" + data.get(4).length);
-            System.out.println("col6:" + data.get(5).length);
-            System.out.println("col7:" + data.get(6).length);
-            System.out.println("col8:" + data.get(7).length);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();

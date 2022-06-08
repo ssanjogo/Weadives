@@ -52,9 +52,9 @@ public class PantallaDeHorarios extends AppCompatActivity {
         Intent intent = getIntent();
         TableDataSource dataSource = new TableDataSource(context,viewModelHorario.getCsvRef());
 
-        System.out.println(dataSource == null);
+        //System.out.println(dataSource == null);
         for (int i = 0; i < dataSource.getColumnsCount(); i++){
-            System.out.println("DATA TEST (7," + i + "): " + dataSource.getItemData(7,i));
+            //System.out.println("DATA TEST (7," + i + "): " + dataSource.getItemData(7,i));
         }
 
         AdapterTablaHorario adapterTablaHorario = new AdapterTablaHorario(this, dataSource);
