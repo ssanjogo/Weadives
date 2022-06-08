@@ -114,7 +114,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
         lista.add(p);
         //System.out.println("id publicacion: " + p.getIdPublicacion());
         if(!p.getIdPublicacion().equals("0") && publicar){
-            //System.out.println("UPDATEEE");
+            System.out.println("UPDATEEE");
             updatePreferencia(p);
         }else if(p.getIdPublicacion().equals("0") && publicar){
             //System.out.println("PUBLICAR");
@@ -165,7 +165,7 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
             for (HashMap.Entry<String, Integer> entry : p.getLikeList().entrySet()) {
                 likes.put(entry.getKey(), entry.getValue().toString() );
             }
-            String parametros=p.getParametros().toSaveString();
+            String parametros=par.toSaveString();
             String idPublicacion=p.getIdPublicacion();
             if(idPublicacion.equals("0")){
                 //System.out.println("CREAR NUEVA PUBLICACION - ERROR");
