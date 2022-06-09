@@ -31,6 +31,7 @@ import com.example.weadives.R;
 import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
 import com.example.weadives.Model.UserClass;
 import com.example.weadives.ViewModelAndExtras.ViewModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -73,14 +74,9 @@ public class AreaUsuario extends AppCompatActivity {
         txt_noAmigos.setText(resources.getString(R.string.noAmigos));
         etT_buscarPorNombre.setHint(resources.getString(R.string.buscar));
 
-        /*System.out.println("CURRENT USER " + viewModel.getCurrentUser());
-        txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
-        Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
-        limite = viewModel.sizelista();*/
-
         try{
             txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
-            Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
+            Picasso.with(this).load(viewModel.getUrl()).into(img_perfil);
             limite = viewModel.sizelista();
         }catch (Exception e){
             viewModel.setI(true);

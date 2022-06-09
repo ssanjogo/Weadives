@@ -32,6 +32,7 @@ import com.example.weadives.PantallaInicio.PantallaInicio;
 import com.example.weadives.PantallaMiPerfil.PantallaMiPerfil;
 import com.example.weadives.R;
 import com.example.weadives.ViewModelAndExtras.ViewModel;
+import com.squareup.picasso.Picasso;
 
 public class AjustesPerfil extends AppCompatActivity {
 
@@ -77,7 +78,7 @@ public class AjustesPerfil extends AppCompatActivity {
 
         etN_nombrepersona2.setText(viewModel.getCurrentUser().getUsername());
         etA_correo3.setText(viewModel.getCurrentUser().getCorreo());
-        Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
+        Picasso.with(this).load(viewModel.getUrl()).into(img_perfil);
         Animation animation= AnimationUtils.loadAnimation(context,R.anim.blink_anim2);
         btn_home6.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -97,7 +98,8 @@ public class AjustesPerfil extends AppCompatActivity {
                 alerta.setMessage(resources.getString(R.string.alertaEliminarImagen)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Glide.with(getApplication()).load("https://firebasestorage.googleapis.com/v0/b/weadives.appspot.com/o/Imagenes_Perfil%2FprofillePicBase.png?alt=media&token=544d8b5c-11de-4acb-9bdd-54bb5f5297af").into(img_perfil);
+                        Picasso.with(getApplicationContext()).load("https://firebasestorage.googleapis.com/v0/b/weadives.appspot.com/o/Imagenes_Perfil%2FprofillePicBase.png?alt=media&token=544d8b5c-11de-4acb-9bdd-54bb5f5297af").into(img_perfil);
+                        viewModel.setImage("https://firebasestorage.googleapis.com/v0/b/weadives.appspot.com/o/Imagenes_Perfil%2FprofillePicBase.png?alt=media&token=544d8b5c-11de-4acb-9bdd-54bb5f5297af");
                         viewModel.cambiarImagen2("https://firebasestorage.googleapis.com/v0/b/weadives.appspot.com/o/Imagenes_Perfil%2FprofillePicBase.png?alt=media&token=544d8b5c-11de-4acb-9bdd-54bb5f5297af");
                     }
                 }).setNegativeButton(resources.getString(R.string.negativo), new DialogInterface.OnClickListener() {
@@ -107,7 +109,7 @@ public class AjustesPerfil extends AppCompatActivity {
                     }
                 });
                 AlertDialog titulo = alerta.create();
-                titulo.setTitle(resources.getString(R.string.eliminarCuenta));
+                titulo.setTitle(resources.getString(R.string.eliminarImagen));
                 titulo.show();
             }
         });
@@ -126,8 +128,8 @@ public class AjustesPerfil extends AppCompatActivity {
                 }
 
                 if (!etP_contraseña3.getText().toString().equals("")) {
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(AjustesPerfil.this);
-                    alerta.setMessage(resources.getString(R.string.alertaCambiarContraseña)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
+                    AlertDialog.Builder alertaS = new AlertDialog.Builder(AjustesPerfil.this);
+                    alertaS.setMessage(resources.getString(R.string.alertaCambiarContraseña)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             viewModel.cambiarContraseña(etP_contraseña3.getText().toString());
@@ -139,7 +141,7 @@ public class AjustesPerfil extends AppCompatActivity {
                             dialogInterface.cancel();
                         }
                     });
-                    AlertDialog titulo = alerta.create();
+                    AlertDialog titulo = alertaS.create();
                     titulo.setTitle(resources.getString(R.string.cambiarContraseña));
                     titulo.show();
                 } else {
@@ -197,6 +199,7 @@ public class AjustesPerfil extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
             img_perfil.setImageURI(imageUri);
+            viewModel.setImage(imageUri.toString());
             viewModel.subirImagen(imageUri);
         }
     }

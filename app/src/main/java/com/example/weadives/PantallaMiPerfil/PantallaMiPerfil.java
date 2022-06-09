@@ -29,6 +29,7 @@ import com.example.weadives.R;
 import com.example.weadives.ViewModelAndExtras.SingletonIdioma;
 import com.example.weadives.ViewModelAndExtras.ViewModel;
 import com.example.weadives.ViewModelAndExtras.ViewModelParametros;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,9 +84,10 @@ public class PantallaMiPerfil extends AppCompatActivity {
         Intent intent = getIntent();
 
         txt_nombrePerfil.setText(viewModel.getCurrentUser().getUsername());
-        //System.out.println("AAAAAAAAAAA " + viewModel.getCurrentUser().getUrlImg());
+        System.out.println("AAAAAAAAAAA " + viewModel.getCurrentUser().getUrlImg());
         //Glide.with(img_perfil.getContext()).clear(img_perfil);
-        Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
+        Picasso.with(this).load(viewModel.getUrl()).into(img_perfil);
+        //Glide.with(this).load(viewModel.getCurrentUser().getUrlImg()).into(img_perfil);
 
         final Context context;
         SingletonIdioma s= SingletonIdioma.getInstance();

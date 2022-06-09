@@ -136,7 +136,6 @@ public class DatabaseAdapter extends Activity {
         void intent();
     }
 
-
     public void register (String nombre, String correo, String contraseña){
         mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -327,7 +326,7 @@ public class DatabaseAdapter extends Activity {
 
     public void updateDatos(HashMap<String, Object> user){
         db.collection("Users").document(user.get("UID").toString()).update(user);
-        getUser();
+        getUser2();
     }
 
     public void getAllUsers(){

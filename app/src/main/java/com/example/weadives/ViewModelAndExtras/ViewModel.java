@@ -35,8 +35,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     private static ViewModel vm;
     private ArrayList<PublicacionClass> listaTemp;
     private MutableLiveData<ArrayList<PublicacionClass>> mutableListaTemp;
-    private boolean acces = false;
-    private boolean I = false;
+    private boolean acces = false, I = false;
 
     public static ViewModel getInstance(AppCompatActivity application){
         if (vm == null){
@@ -44,8 +43,6 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         }
         return vm;
     }
-
-
 
     public static ViewModel getInstance(){
         if (vm == null){
@@ -478,6 +475,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
     @Override
     public void setUser(UserClass u) {
         this.usuario.setValue(u);
+        this.url = usuario.getValue().getUrlImg();
         ViewModelParametros.getSingletonInstance(getApplication().getResources(), getApplication().getApplicationContext()).setUser(u);
     }
 
