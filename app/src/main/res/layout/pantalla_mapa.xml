@@ -19,8 +19,8 @@
 
     <LinearLayout
         android:id="@+id/LinearLayoutMapa"
-        android:layout_width="58dp"
-        android:layout_height="200dp"
+        android:layout_width="60dp"
+        android:layout_height="250dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="28dp"
         android:background="@drawable/button_rounded_white"
@@ -59,6 +59,15 @@
             android:src="@drawable/btn_ola"
             tools:ignore="DuplicateSpeakableTextCheck" />
 
+        <TextView
+            android:id="@+id/txt_oleaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/oleaje"
+            android:textColor="@color/black"
+            android:textSize="10dp" />
+
         <ImageView
             android:id="@+id/btn_psl"
             android:layout_width="40dp"
@@ -72,6 +81,15 @@
             android:contentDescription="@string/TODO"
             android:src="@drawable/btn_presion" />
 
+        <TextView
+            android:id="@+id/txt_presion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/presion"
+            android:textColor="@color/black"
+            android:textSize="10dp" />
+
         <ImageView
             android:id="@+id/btn_wind"
             android:layout_width="40dp"
@@ -84,6 +102,15 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/TODO"
             android:src="@drawable/btn_viento" />
+
+        <TextView
+            android:id="@+id/txt_viento2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/viento"
+            android:textColor="@color/black"
+            android:textSize="10dp" />
 
     </LinearLayout>
 
