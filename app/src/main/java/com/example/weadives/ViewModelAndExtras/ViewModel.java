@@ -153,6 +153,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         setLogInStatus(false);
         listaRecyclerView.setValue(null);
         this.usuario.setValue(null);
+        ViewModelParametros.getSingletonInstance().setUser(null);
         dbA.singout();
     }
 
