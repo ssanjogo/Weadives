@@ -51,7 +51,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         if (vm.getCurrentUser().getListaSolicitudesRecibidas().size() == 1 && vm.getCurrentUser().getStringSolicitudesRecibidas().equals("")){
             limite = 0;
         }
-
         if(position >= limite) {
             holder.btn_accept.setVisibility(View.GONE);
             holder.btn_deny.setVisibility(View.GONE);

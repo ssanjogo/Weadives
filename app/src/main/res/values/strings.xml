@@ -90,4 +90,5 @@
     <string name="errorLogIn">Failed to log in</string>
     <string name ="ayudamapa">On this screen you can create and manage bookmarks. To create a new marker click on the map, to delete the marker click on it and select delete.</string>
     <string name ="ayudamapa2">To view the data select one of the types with the buttons on the right, indicate the day and with the Slider change to the desired time.</string>
+    <string name="oleaje">Swell</string>
 </resources>

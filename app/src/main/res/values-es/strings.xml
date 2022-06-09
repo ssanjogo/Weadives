@@ -92,4 +92,5 @@
     <string name="errorLogIn">Error al hacer log in</string>
     <string name ="ayudamapa">En esta pantalla podrás crear y administrar los marcadores. Para crear un nuevo marcador haz click en el mapa, para eliminar el marcador haz click sobre el y selecciona eliminar.</string>
     <string name ="ayudamapa2">Para visualizar los datos selecciona uno de los tipos con los botones de la derecha, indica el dia y con el Slider cambia a la hora deseada.</string>
+    <string name="oleaje">Oleaje</string>
 </resources>

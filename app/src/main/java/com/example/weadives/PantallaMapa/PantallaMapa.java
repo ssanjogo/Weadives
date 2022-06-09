@@ -48,24 +48,12 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private PantallaMapaBinding binding;
     private ImageButton btn_home20;
-    private Button btn_gestorNotificaciones;
-    private LinearLayout lay_layoutMarcador;
-    private Button btn_aceptar;
-    private Button btn_cancelar;
+    private LinearLayout lay_layoutMarcador, lay_layoutMarcadorEliminar;
     private EditText txt_nombreMarcador;
-    private LinearLayout lay_layoutMarcadorEliminar;
-    private Button btn_eliminar;
-    private Button btn_cancelarEliminar;
-    private TextView txt_nombreMarcadorEliminar;
+    private Button btn_day0, btn_day1, btn_day2, btn_eliminar, btn_cancelarEliminar, btn_gestorNotificaciones, btn_aceptar, btn_cancelar;
+    private TextView txt_nombreMarcadorEliminar, txt_hora, txt_presion, txt_viento, txt_oleaje;
     private SeekBar skb_seleccionarHora;
-    private Button btn_day0;
-    private Button btn_day1;
-    private Button btn_day2;
-    private ImageView btn_hs;
-    private ImageView btn_psl;
-    private ImageView btn_wind;
-    private ImageView btn_ayuda;
-    private TextView txt_hora;
+    private ImageView btn_hs, btn_psl, btn_wind, btn_ayuda;
     // Maps
     private LatLng coordsMarcador;
     private Marker tempMarcador;
@@ -74,7 +62,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private LatLngBounds maldivesBounds;
     GroundOverlay imagenClima;
     //ViewModel
-    ViewModelMapa viewModelMapa;
+    private ViewModelMapa viewModelMapa;
 
     @Override
     public void onBackPressed() {
@@ -133,6 +121,10 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
 
         txt_hora = findViewById(R.id.txt_hora);
         txt_hora.setVisibility(View.INVISIBLE);
+
+        txt_oleaje = findViewById(R.id.txt_oleaje);
+        txt_presion = findViewById(R.id.txt_presion);
+        txt_viento = findViewById(R.id.txt_viento2);
 
         lay_layoutMarcador = findViewById(R.id.LinearLayoutMarcador);
         btn_aceptar = findViewById(R.id.btn_aceptar);
