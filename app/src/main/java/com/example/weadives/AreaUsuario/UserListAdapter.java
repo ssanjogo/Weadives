@@ -32,7 +32,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     public UserListAdapter(List<UserClass> userClassList, Context context, ViewModel vm, int limite) {
         this.userClassList = userClassList;
         this.context = context;
-        this.vm = vm;
+        this.vm = ViewModel.getInstance();
         this.limite = limite;
     }
 
@@ -47,7 +47,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     public void onBindViewHolder(@NonNull UserListViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.txt_friendname.setText(userClassList.get(position).getUsername());
         Glide.with(context).load(userClassList.get(position).getUrlImg()).into(holder.profilepic);
-        if(position > limite) {
+        limite =  vm.getCurrentUser().getListaSolicitudesRecibidas().size();
+        if (vm.getCurrentUser().getListaSolicitudesRecibidas().size() == 1 && vm.getCurrentUser().getStringSolicitudesRecibidas().equals("")){
+            limite = 0;
+        }
+
+        if(position >= limite) {
             holder.btn_accept.setVisibility(View.GONE);
             holder.btn_deny.setVisibility(View.GONE);
         } else {

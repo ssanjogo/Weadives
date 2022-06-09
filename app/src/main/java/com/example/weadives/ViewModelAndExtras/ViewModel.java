@@ -221,7 +221,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         createSolicitud(usuario.getValue().getId(),u.getId());
 
 
-        fillUserList();
+        //fillUserList();
     }
 
     private void createSolicitud(String idS, String idR){
@@ -262,7 +262,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         HashMap<String, Object> hmFuturoAmigo = convertUserToHashMap(u);
         dbA.updateDatos(hmFuturoAmigo);
 
-        fillUserList();
+        //fillUserList();
     }
 
     protected UserClass eliminarDeSolE(UserClass u, String id2){
@@ -316,7 +316,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         HashMap<String, Object> hmFuturoAmigo = convertUserToHashMap(u);
         dbA.updateDatos(hmFuturoAmigo);
 
-        fillUserList();
+        //fillUserList();
     }
 
     public void rechazarSolicitud(String idSolicita){
@@ -330,7 +330,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         HashMap<String, Object> hmFuturoAmigo = convertUserToHashMap(u);
         dbA.updateDatos(hmFuturoAmigo);
 
-        fillUserList();
+        //fillUserList();
     }
 
     public void unfollow(String idAmigo){
@@ -363,7 +363,7 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
         HashMap<String, Object> hmUsuarioA = convertUserToHashMap(user);
         dbA.updateDatos(hmUsuarioA);
 
-        fillUserList();
+        //fillUserList();
     }
 
     public void buscarPorNombre(String nombre) {

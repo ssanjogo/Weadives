@@ -117,10 +117,10 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
             System.out.println("UPDATEEE");
             updatePreferencia(p);
         }else if(p.getIdPublicacion().equals("0") && publicar){
-            //System.out.println("PUBLICAR");
+            System.out.println("PUBLICAR");
             subirPreferencia(p);
         }else if(!p.getIdPublicacion().equals("0") && !publicar){
-            //System.out.println("DELETE");
+            System.out.println("DELETE");
             //System.out.println("id: " + p.getIdPublicacion());
             ViewModel.getInstance().deletePublicacion(p.getIdPublicacion());
             PublicacionClass pub;
