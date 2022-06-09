@@ -50,10 +50,12 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
     private ImageButton btn_home20;
     private LinearLayout lay_layoutMarcador, lay_layoutMarcadorEliminar;
     private EditText txt_nombreMarcador;
-    private Button btn_day0, btn_day1, btn_day2, btn_eliminar, btn_cancelarEliminar, btn_gestorNotificaciones, btn_aceptar, btn_cancelar;
+    private Button btn_day0, btn_day1, btn_day2;
+    private Button btn_eliminar, btn_cancelarEliminar, btn_gestorNotificaciones, btn_aceptar, btn_cancelar;
     private TextView txt_nombreMarcadorEliminar, txt_hora, txt_presion, txt_viento, txt_oleaje;
     private SeekBar skb_seleccionarHora;
-    private ImageView btn_hs, btn_psl, btn_wind, btn_ayuda;
+    private ImageView btn_hs, btn_psl, btn_wind, btn_ayuda, img_leyenda;
+
     // Maps
     private LatLng coordsMarcador;
     private Marker tempMarcador;
@@ -90,6 +92,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 btn_day1.setVisibility(View.VISIBLE);
                 btn_day2.setVisibility(View.VISIBLE);
                 txt_hora.setVisibility(View.VISIBLE);
+                img_leyenda.setVisibility(View.VISIBLE);
             }
         };
         viewModelMapa.getFileData().observe(this, observer);
@@ -112,9 +115,10 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         context = LocaleHelper.setLocale(this, cargarPreferencias());
         setTheme(R.style.Theme_Weadives);
 
-        btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
-        btn_gestorNotificaciones.setText(SingletonIdioma.getInstance().getResources().getString(R.string.gestion_notificaciones));
-        btn_gestorNotificaciones.setVisibility(View.INVISIBLE);
+        //El boton está comentado en el .xml!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //btn_gestorNotificaciones = findViewById(R.id.btn_gestorNotificaciones);
+        //btn_gestorNotificaciones.setText(SingletonIdioma.getInstance().getResources().getString(R.string.gestion_notificaciones));
+        //btn_gestorNotificaciones.setVisibility(View.INVISIBLE);
 
         btn_home20=findViewById(R.id.btn_home20);
         btn_home20.bringToFront();
@@ -154,6 +158,8 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         btn_day2 = findViewById(R.id.btn_day2);
         btn_day2.setVisibility(View.INVISIBLE);
 
+        img_leyenda = findViewById(R.id.img_leyenda);
+        img_leyenda.setVisibility(View.INVISIBLE);
 
 
 
@@ -180,6 +186,8 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 btn_day1.setVisibility(View.INVISIBLE);
                 btn_day2.setVisibility(View.INVISIBLE);
                 txt_hora.setVisibility(View.INVISIBLE);
+                img_leyenda.setVisibility(View.INVISIBLE);
+                img_leyenda.setImageResource(R.drawable.leyenda_hs);
                 viewModelMapa.getWeatherImage("HS");
                 sel = 0;
                 skb_seleccionarHora.setProgress(0);
@@ -196,6 +204,8 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 btn_day1.setVisibility(View.INVISIBLE);
                 btn_day2.setVisibility(View.INVISIBLE);
                 txt_hora.setVisibility(View.INVISIBLE);
+                img_leyenda.setVisibility(View.INVISIBLE);
+                img_leyenda.setImageResource(R.drawable.leyenda_psl);
                 viewModelMapa.getWeatherImage("PSL");
                 sel = 0;
                 skb_seleccionarHora.setProgress(0);
@@ -212,6 +222,8 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 btn_day1.setVisibility(View.INVISIBLE);
                 btn_day2.setVisibility(View.INVISIBLE);
                 txt_hora.setVisibility(View.INVISIBLE);
+                img_leyenda.setVisibility(View.INVISIBLE);
+                img_leyenda.setImageResource(R.drawable.leyenda_wind);
                 viewModelMapa.getWeatherImage("WIND");
                 sel = 0;
                 skb_seleccionarHora.setProgress(0);
@@ -249,7 +261,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
+        /*
         btn_gestorNotificaciones.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -259,6 +271,7 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
                 startActivity(testIntent);
             }
         });
+        */
 
         btn_home20.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -419,55 +432,55 @@ public class PantallaMapa extends FragmentActivity implements OnMapReadyCallback
         }
         switch(sel - temp){
             case 0:
-                return "00:00";
+                return " 00:00 ";
             case 1:
-                return "01:00";
+                return " 01:00 ";
             case 2:
-                return "02:00";
+                return " 02:00 ";
             case 3:
-                return "03:00";
+                return " 03:00 ";
             case 4:
-                return "04:00";
+                return " 04:00 ";
             case 5:
-                return "05:00";
+                return " 05:00 ";
             case 6:
-                return "06:00";
+                return " 06:00 ";
             case 7:
-                return "07:00";
+                return " 07:00 ";
             case 8:
-                return "08:00";
+                return " 08:00 ";
             case 9:
-                return "09:00";
+                return " 09:00 ";
             case 10:
-                return "10:00";
+                return " 10:00 ";
             case 11:
-                return "11:00";
+                return " 11:00 ";
             case 12:
-                return "12:00";
+                return " 12:00 ";
             case 13:
-                return "13:00";
+                return " 13:00 ";
             case 14:
-                return "14:00";
+                return " 14:00 ";
             case 15:
-                return "15:00";
+                return " 15:00 ";
             case 16:
-                return "16:00";
+                return " 16:00 ";
             case 17:
-                return "17:00";
+                return " 17:00 ";
             case 18:
-                return "18:00";
+                return " 18:00 ";
             case 19:
-                return "19:00";
+                return " 19:00 ";
             case 20:
-                return "20:00";
+                return " 20:00 ";
             case 21:
-                return "21:00";
+                return " 21:00 ";
             case 22:
-                return "22:00";
+                return " 22:00 ";
             case 23:
-                return "23:00";
+                return " 23:00 ";
             default:
-                return "00:00";
+                return " 00:00 ";
         }
     }
 }

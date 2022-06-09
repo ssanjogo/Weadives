@@ -29,18 +29,21 @@
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/popup_listacomentarios.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/recyclerview_row.xml" value="0.358695652173913" />
         <entry key="..\:/Users/Usuario/AndroidStudioProjects/Weadives/app/src/main/res/layout/seleccion_de_ajuste.xml" value="0.25833333333333336" />
+        <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/drawable-v24/button_rounded_beige.xml" value="0.2405" />
         <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/drawable-v24/button_rounded_grey.xml" value="0.3095" />
         <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/drawable/button_rounded.xml" value="0.3095" />
         <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/drawable/button_rounded_light_grey.xml" value="0.3095" />
+        <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/drawable/button_rounded_white.xml" value="0.2405" />
         <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/drawable/spinner_border.xml" value="0.204" />
         <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/layout/configuracion_de_preferencias.xml" value="0.33" />
         <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/layout/pantalla_horarios.xml" value="0.25" />
         <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/layout/pantalla_inicio.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/layout/pantalla_login.xml" value="0.1693840579710145" />
-        <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/layout/pantalla_mapa.xml" value="0.2898550724637681" />
+        <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/layout/pantalla_mapa.xml" value="0.484375" />
         <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/layout/pantalla_perfil_amigo.xml" value="0.23097826086956522" />
         <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/layout/pantalla_principal.xml" value="0.2644927536231884" />
-        <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/configuracion_de_preferencias.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/layout/popup_addcomment.xml" value="0.22056159420289856" />
+        <entry key="..\:/Users/chuan/AndroidStudioProjects/Weadives_2/app/src/main/res/layout/popup_listacomentarios.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/fragment_maps.xml" value="0.31354166666666666" />
         <entry key="..\:/Users/oscar/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_mapa.xml" value="0.1933876811594203" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/drawable-v24/button_rounded_black.xml" value="0.3165" />
@@ -58,21 +61,18 @@
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/ajustes_perfil.xml" value="0.33" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/area_usuario.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/configuracion_de_preferencias.xml" value="0.5" />
-        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_comment_list.xml" value="0.30480072463768115" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_frienduser_list.xml" value="0.5" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_parameter_list.xml" value="0.5" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_publicacion_list.xml" value="0.67" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_gestor_inundaciones.xml" value="0.25271739130434784" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_inicio.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_login.xml" value="0.33" />
-        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_mapa.xml" value="0.25" />
+        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_mapa.xml" value="0.33" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_mi_perfil.xml" value="0.25" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_perfil_amigo.xml" value="0.14772727272727273" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_principal.xml" value="0.33" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_registro.xml" value="0.33" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/perfil_personal.xml" value="0.25271739130434784" />
-        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/popup_addcomment.xml" value="0.30480072463768115" />
-        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/popup_listacomentarios.xml" value="0.30480072463768115" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/seleccion_de_ajuste.xml" value="0.25" />
       </map>
     </option>
