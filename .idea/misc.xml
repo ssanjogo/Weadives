@@ -58,6 +58,7 @@
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/ajustes_perfil.xml" value="0.33" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/area_usuario.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/configuracion_de_preferencias.xml" value="0.5" />
+        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_comment_list.xml" value="0.30480072463768115" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_frienduser_list.xml" value="0.5" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_parameter_list.xml" value="0.5" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/one_publicacion_list.xml" value="0.67" />
@@ -70,6 +71,8 @@
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_principal.xml" value="0.33" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/pantalla_registro.xml" value="0.33" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/perfil_personal.xml" value="0.25271739130434784" />
+        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/popup_addcomment.xml" value="0.30480072463768115" />
+        <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/popup_listacomentarios.xml" value="0.30480072463768115" />
         <entry key="..\:/Users/sara_/AndroidStudioProjects/Weadives/app/src/main/res/layout/seleccion_de_ajuste.xml" value="0.25" />
       </map>
     </option>
