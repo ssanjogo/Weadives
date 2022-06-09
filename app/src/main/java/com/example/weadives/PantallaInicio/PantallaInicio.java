@@ -41,6 +41,7 @@ public class PantallaInicio extends AppCompatActivity {
     private ViewModel viewModel;
     private ViewModelParametros viewModelParametros;
 
+
     @Override
     public void onResume(){
         super.onResume();
@@ -68,6 +69,7 @@ public class PantallaInicio extends AppCompatActivity {
         viewModelParametros = ViewModelParametros.getSingletonInstance(resources2, getApplicationContext());
 
         viewModel = ViewModel.getInstance(this);
+
 
         if (viewModel.accountNotNull() && cargarSesion()){
             viewModel.getUser();

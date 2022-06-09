@@ -85,13 +85,17 @@ public class PantallaPrincipal extends AppCompatActivity {
         viewModel = ViewModel.getInstance(this);
 
         mapViewModel = ViewModelMapa.getInstance(this);
+
         //mapViewModel.setR(resources);
 
         horarioViewModel = ViewModelHorario.getInstance(this);
         Intent intent = getIntent();
 
         //Obtenemos la lista de marcadores
+
         ArrayList<MarcadorClass> list = list = mapViewModel.getMarcadores();
+        mapViewModel.reload();
+
         adapter = new ArrayAdapter<MarcadorClass>(this, R.layout.one_spinner_list, list){
             @Override
             public boolean isEnabled(int position){

@@ -52,6 +52,8 @@ public class ViewModelMapa extends AndroidViewModel implements DatabaseAdapter.m
         dbA = new DatabaseAdapter(this);
         dbA.getLatLng();
         cargarPersistencia();
+        //System.out.println("LISTA");
+        //System.out.println(marcadorList.toString());
     }
 
 
@@ -113,21 +115,31 @@ public class ViewModelMapa extends AndroidViewModel implements DatabaseAdapter.m
 
 
     public void guardarPersistencia(){
+        //marcadorList.deletePos(0);
         String save = comprimirArray( marcadorList.getMarcadores());
         SharedPreferences preferencias = context.getSharedPreferences("marcadores", MODE_PRIVATE);
         SharedPreferences.Editor editor=preferencias.edit();
         editor.putString("marcadores",save);
         editor.commit();
+        //marcadorList.insertPos(0,new MarcadorClass(SingletonIdioma.getInstance().getResources().getString(R.string.marcador_vacio)));
 
     }
 
     public void cargarPersistencia(){
         //Array de prueba
         ArrayList<MarcadorClass> marcadorList = new ArrayList<>();
-        marcadorList.add(new MarcadorClass(resources.getString(R.string.marcador_vacio)));
+        marcadorList.add(new MarcadorClass(SingletonIdioma.getInstance().getResources().getString(R.string.marcador_vacio)));
         SharedPreferences preferencias = context.getSharedPreferences("marcadores",MODE_PRIVATE);
         marcadorList = descomprimirArray(preferencias.getString("marcadores", comprimirArray(marcadorList)));
         this.marcadorList.setMarcadores(marcadorList);
+    }
+
+    public void reload(){
+        //System.out.println("RELOAD");
+        //System.out.println(marcadorList.toString());
+        marcadorList.deletePos(0);
+        marcadorList.insertPos(0,new MarcadorClass(SingletonIdioma.getInstance().getResources().getString(R.string.marcador_vacio)));
+        //System.out.println(marcadorList.toString());
     }
 
     private String comprimirArray(ArrayList<MarcadorClass> marcadorList){

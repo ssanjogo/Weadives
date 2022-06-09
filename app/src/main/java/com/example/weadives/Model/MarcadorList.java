@@ -48,6 +48,13 @@ public class MarcadorList {
         marcadorList.add(pos,m);
     }
 
+    public String toString(){
+        String s="";
+        for(int i=0; i<marcadorList.size();i++){
+            s+=marcadorList.get(i).getName()+", ";
+        }
+        return s;
+    }
 
 
     public ArrayList<MarkerOptions> getMarkerOptionsList() {
