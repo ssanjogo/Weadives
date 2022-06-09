@@ -99,8 +99,9 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
 
                             }
                         });
+            } else {
+                modifyParametro(currentParametro, oldParametro, this.publicar);
             }
-            modifyParametro(currentParametro, oldParametro, this.publicar);
         } else {
             if(!(p.getIdNotification(coords) == null || p.getIdNotification(coords).equals("0"))) {
                 deleteNotification();
