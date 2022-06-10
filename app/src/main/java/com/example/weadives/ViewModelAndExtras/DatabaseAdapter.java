@@ -553,26 +553,25 @@ public class DatabaseAdapter extends Activity {
         InputStreamReader streamReader = new InputStreamReader(in, StandardCharsets.UTF_8);
         try (CSVReader reader = new CSVReader(streamReader)) {
             data = reader.readAll();
-            ArrayList<String> _0 = new ArrayList<>(Arrays.asList(data.get(4)));
+            ArrayList<String> _0 = new ArrayList<>(Arrays.asList(data.get(1)));
             _0.remove(0);
             coordData.put("preasure", _0);
-            ArrayList<String> _1 = new ArrayList<>(Arrays.asList(data.get(5)));
+            ArrayList<String> _1 = new ArrayList<>(Arrays.asList(data.get(2)));
             _1.remove(0);
             coordData.put("temperatura", _1);
-            ArrayList<String> _2 = new ArrayList<>(Arrays.asList(data.get(2)));
+            ArrayList<String> _2 = new ArrayList<>(Arrays.asList(data.get(7)));
             _2.remove(0);
             coordData.put("waveDirection", _2);
-            ArrayList<String> _3 = new ArrayList<>(Arrays.asList(data.get(1)));
+            ArrayList<String> _3 = new ArrayList<>(Arrays.asList(data.get(5)));
             _3.remove(0);
             coordData.put("waveHeight", _3);
-            ArrayList<String> _4 = new ArrayList<>(Arrays.asList(data.get(6)));
+            ArrayList<String> _4 = new ArrayList<>(Arrays.asList(data.get(4)));
             _4.remove(0);
             coordData.put("windDirection", _4);
-            ArrayList<String> _5 = new ArrayList<>(Arrays.asList(data.get(3)));
+            ArrayList<String> _5 = new ArrayList<>(Arrays.asList(data.get(6)));
             _5.remove(0);
             coordData.put("wavePeriod", _5);
-
-            ArrayList<String> _6 = new ArrayList<>(Arrays.asList(data.get(7)));
+            ArrayList<String> _6 = new ArrayList<>(Arrays.asList(data.get(3)));
             _6.remove(0);
             coordData.put("wind", _6);
 

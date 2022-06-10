@@ -96,7 +96,6 @@ public final class ViewModelParametros implements DatabaseAdapter.vmpInterface, 
                                 // Get new FCM registration token
                                 data.put("token", task.getResult());
                                 createCoordsNotification(coords, data);
-
                             }
                         });
             } else {
