@@ -409,7 +409,8 @@ public class DatabaseAdapter extends Activity {
         db.collection("Users").document(mAuth.getCurrentUser().getUid()).delete();
         mAuth.getCurrentUser().delete();
         //System.out.println("ELIMINAR USER: " + mAuth.getCurrentUser());
-        singout();
+        mAuth.signOut();
+        listener.setStatusLogIn(false);
     }
 
     public void getLatLng(){

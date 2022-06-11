@@ -66,11 +66,13 @@ public class PantallaLogIn extends AppCompatActivity implements DatabaseAdapter.
         dbA = new DatabaseAdapter(this);
         viewModel = ViewModel.getInstance(this);
 
-        if (viewModel.getLogInStatus() || viewModel.getCurrentUser() != null){
+        if (viewModel.getLogInStatus()) {
+            if (viewModel.getCurrentUser() != null) {
                 Intent areaUsuario = new Intent(getApplicationContext(), AreaUsuario.class);
                 areaUsuario.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(areaUsuario);
                 finish();
+            }
         }
 
         Intent intent = getIntent();

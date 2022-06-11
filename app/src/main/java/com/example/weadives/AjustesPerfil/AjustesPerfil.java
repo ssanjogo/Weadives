@@ -162,6 +162,8 @@ public class AjustesPerfil extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         viewModel.deleteAccount();
+                        viewModel.singOut();
+                        viewModel.setLogInStatus(false);
                         Intent pantallaInicio = new Intent(getApplicationContext(), PantallaInicio.class);
                         startActivity(pantallaInicio);
                         finish();
