@@ -232,31 +232,12 @@ public class ViewModel extends AndroidViewModel implements  DatabaseAdapter.vmIn
 
     public void cancelarEnvioSolicitud(String idSolicitado){
         UserClass u = getUserByUID(idSolicitado);
-        String solE = "", solR = "";
-        boolean first = true;
 
-        for (String id : this.usuario.getValue().getListaSolicitudesEnviadas()){
-            if (!id.equals(idSolicitado) && first){
-                solE += id;
-                first = false;
-            } else if (!id.equals(idSolicitado) && !first){
-                solE += ("," + id);
-            }
-        }
-        this.usuario.getValue().setStringSolicitudesEnviadas(solE);
+        usuario.setValue(eliminarDeSolE(usuario.getValue(), idSolicitado));
         HashMap<String, Object> hmCurrentUser = convertUserToHashMap(usuario.getValue());
         dbA.updateDatos(hmCurrentUser);
 
-        first = true;
-        for (String id2 : u.getListaSolicitudesRecibidas()){
-            if (!id2.equals(idSolicitado) && first){
-                solR += id2;
-                first = false;
-            } else if (!id2.equals(idSolicitado) && !first){
-                solR += ("," + id2);
-            }
-        }
-        u.setStringSolicitudesRecibidas(solR);
+        u = eliminarDeSolR(u, this.usuario.getValue().getId());
         HashMap<String, Object> hmFuturoAmigo = convertUserToHashMap(u);
         dbA.updateDatos(hmFuturoAmigo);
 

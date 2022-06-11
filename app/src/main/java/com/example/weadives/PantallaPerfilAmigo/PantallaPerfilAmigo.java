@@ -184,7 +184,7 @@ public class PantallaPerfilAmigo extends AppCompatActivity {
                     btn_añadirAmigo.setText(resources.getString(R.string.añadir_amigo));
                     btn_añadirAmigo.setBackground(resources.getDrawable(R.drawable.button_rounded));
                     btn_añadirAmigo.setTextColor(resources.getColor(R.color.white));
-                    viewModel.rechazarSolicitud(idAmigo);
+                    viewModel.cancelarEnvioSolicitud(idAmigo);
                 } else {
                     AlertDialog.Builder alerta = new AlertDialog.Builder(PantallaPerfilAmigo.this);
                     alerta.setMessage(resources.getString(R.string.alertaDejarDeSeguir)).setCancelable(true).setPositiveButton(resources.getString(R.string.afirmativo), new DialogInterface.OnClickListener() {
